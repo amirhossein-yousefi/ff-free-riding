@@ -1,0 +1,309 @@
+{
+ "title": "E6: CPU test evaluation of the L8/D128 kappa=0 seed-42 run (paper row tab:gated_k0_multiseed / F:96)",
+ "generated": "2026-09-25",
+ "scripts": [
+  "experiments/e6_l8/e6_eval_chunk.py",
+  "experiments/e6_l8/e6_aggregate.py"
+ ],
+ "identification": {
+  "paper_row": {
+   "seed42_printed_s2_tta": 86.88,
+   "seed123": [
+    85.94,
+    87.12,
+    86.47,
+    87.51
+   ],
+   "seed456": [
+    85.68,
+    86.84,
+    85.92,
+    87.01
+   ],
+   "mean_sd_printed_s2_tta": "87.13 +/- 0.33 (n=3, S2 TTA only)",
+   "tex": "appendix/B_full_config.tex:552-556; appendix/F_adaptive_collab_sweep.tex:96"
+  },
+  "candidates": {
+   "t1_k0": {
+    "gamma_tau": 1.0,
+    "gamma_kappa": 0.0,
+    "use_sam": false,
+    "best_s1_val": 0.8696,
+    "best_s2_val": 0.8688,
+    "sep_curr_nl_deepest_last_epoch": 6.93792682406546,
+    "has_events_jsonl": false
+   },
+   "t3_k0": {
+    "gamma_tau": 3.0,
+    "gamma_kappa": 0.0,
+    "use_sam": false,
+    "best_s1_val": 0.8682,
+    "best_s2_val": 0.8726,
+    "sep_curr_nl_deepest_last_epoch": 5.9436036800516066,
+    "has_events_jsonl": false
+   }
+  },
+  "conclusion": "the paper's kappa=0 L8 row is adaptive t1_k0 (gamma_tau=1, kappa=0): its val best_s2 0.8688 = printed 86.88 and its deepest sep 6.938 = printed 6.94; seeds 123/456 use the same gamma_tau=1, kappa=0, SAM off",
+  "seed42_config": {
+   "gamma_gating_mode": "adaptive",
+   "gamma_tau": 1.0,
+   "gamma_kappa": 0.0,
+   "gamma_scale": 0.7,
+   "num_blocks": 8,
+   "d_model": 128,
+   "use_sam": false,
+   "epochs_stage1": 180,
+   "epochs_stage2": 10,
+   "n_experts": 16,
+   "moe_top_k": 2
+  },
+  "seed123_456_config": {
+   "123": {
+    "gamma_gating_mode": "adaptive",
+    "gamma_tau": 1.0,
+    "gamma_kappa": 0.0,
+    "gamma_scale": 0.7,
+    "num_blocks": 8,
+    "d_model": 128,
+    "use_sam": false,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10,
+    "n_experts": 16,
+    "moe_top_k": 2
+   },
+   "456": {
+    "gamma_gating_mode": "adaptive",
+    "gamma_tau": 1.0,
+    "gamma_kappa": 0.0,
+    "gamma_scale": 0.7,
+    "num_blocks": 8,
+    "d_model": 128,
+    "use_sam": false,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10,
+    "n_experts": 16,
+    "moe_top_k": 2
+   }
+  }
+ },
+ "checkpoints": {
+  "stage1_best": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/checkpoints/ff_cifar10_adaptive_t1_k0_L8_L8_D128_P2_seed42_stage1_best.pt",
+  "stage2_best": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/checkpoints/ff_cifar10_adaptive_t1_k0_L8_L8_D128_P2_seed42_stage2_best.pt",
+  "stage1_best_sha256": "dfaa882f280eefc09ec91f8587107ebcf30fa94b49bfcd6f71b0ab7c57de811e",
+  "stage2_best_sha256": "7c07002970e4e672ff800e57e3067e7f9f56984cb46d56de3e807b51271a1e92"
+ },
+ "protocol": {
+  "S1": "stage1_best net_ema, FF goodness-sum over 10 label hypotheses (trainer predict_scores), top-1",
+  "S1-TTA": "S1 scores(original) + S1 scores(horizontal flip)",
+  "S2": "stage2_best AttentiveHybridHead on the frozen stage1_best net_ema (asserted identical), top-1",
+  "S2-TTA": "mean of S2 logits over original and flip (trainer evaluate_stage2)",
+  "normalization": {
+   "mean": [
+    0.4914,
+    0.4822,
+    0.4465
+   ],
+   "std": [
+    0.2023,
+    0.1994,
+    0.201
+   ]
+  },
+  "val_split": "regenerated with random.Random(42) shuffle, val_fraction 0.1; asserted equal to a stored seed-42 split_indices.json",
+  "device": "CPU fp32 (training-time eval ran on A100 with float32 matmul precision 'high' = TF32, so a few examples may flip)",
+  "chunks": {
+   "val": [
+    [
+     0,
+     2500
+    ],
+    [
+     2500,
+     5000
+    ]
+   ],
+   "test": [
+    [
+     0,
+     3400
+    ],
+    [
+     3400,
+     6700
+    ],
+    [
+     6700,
+     10000
+    ]
+   ]
+  }
+ },
+ "gates": {
+  "all_passed": false,
+  "checks": [
+   {
+    "check": "ckpt stage1 epoch == logged best-val epoch",
+    "got": 180,
+    "want": 180,
+    "ok": true
+   },
+   {
+    "check": "ckpt best_s1 == logged best_s1",
+    "got": 0.8696,
+    "want": 0.8696,
+    "ok": true
+   },
+   {
+    "check": "ckpt best_s2 == logged best_s2",
+    "got": 0.8688,
+    "want": 0.8688,
+    "ok": true
+   },
+   {
+    "check": "stage-2 backbone == stage1_best net_ema; strict loads clean",
+    "ok": true
+   },
+   {
+    "check": "combined forward == trainer predict_scores / extract_hybrid_features_all_labels",
+    "got": [
+     {
+      "scores": 0.0,
+      "feats_g": 0.0,
+      "feats_a": 0.0
+     }
+    ],
+    "ok": true
+   },
+   {
+    "check": "recomputed val S1-TTA == logged best_s1 (registered tol 1/5000)",
+    "got": 0.87,
+    "want": 0.8696,
+    "diff_examples": 2,
+    "ok": false
+   },
+   {
+    "check": "recomputed val S2-TTA == logged best_s2 (registered tol 1/5000)",
+    "got": 0.869,
+    "want": 0.8688,
+    "diff_examples": 1,
+    "ok": true
+   }
+  ],
+  "assessment": "Checkpoint-identity gates pass (epoch, best_s1, best_s2, backbone equality, strict loads, forward self-check). The recomputed-validation gate passes for S2-TTA (1 of 5000 off) and misses the registered 1-example tolerance for S1-TTA by one example (2 of 5000 off, 0.04 pp). Training-time eval ran on an A100 with set_float32_matmul_precision('high') (TF32); this CPU run is fp32, and 10 val examples have S1-TTA top-2 gaps below 0.3% of the score magnitude, so a 2-example flip is within TF32 numerical noise. Treat the seed-42 test values as carrying about +/-0.03 pp of numerical uncertainty.",
+  "near_tie_diagnostics": {
+   "val_S1-TTA": {
+    "median_abs_top_score": 55.453514099121094,
+    "n_rel_gap_lt_1e-3": 2,
+    "n_rel_gap_lt_3e-3": 10,
+    "n_rel_gap_lt_1e-2": 24
+   },
+   "val_S2-TTA": {
+    "median_abs_top_score": 0.9052546620368958,
+    "n_rel_gap_lt_1e-3": 0,
+    "n_rel_gap_lt_3e-3": 1,
+    "n_rel_gap_lt_1e-2": 10
+   },
+   "test_S1": {
+    "median_abs_top_score": 18.75438117980957,
+    "n_rel_gap_lt_1e-3": 6,
+    "n_rel_gap_lt_3e-3": 24,
+    "n_rel_gap_lt_1e-2": 63
+   },
+   "test_S1-TTA": {
+    "median_abs_top_score": 51.51988220214844,
+    "n_rel_gap_lt_1e-3": 7,
+    "n_rel_gap_lt_3e-3": 15,
+    "n_rel_gap_lt_1e-2": 53
+   },
+   "test_S2": {
+    "median_abs_top_score": 0.9112909436225891,
+    "n_rel_gap_lt_1e-3": 1,
+    "n_rel_gap_lt_3e-3": 5,
+    "n_rel_gap_lt_1e-2": 18
+   },
+   "test_S2-TTA": {
+    "median_abs_top_score": 0.8812258839607239,
+    "n_rel_gap_lt_1e-3": 1,
+    "n_rel_gap_lt_3e-3": 4,
+    "n_rel_gap_lt_1e-2": 10
+   }
+  }
+ },
+ "validation_recomputed": {
+  "S1": 0.8592,
+  "S1-TTA": 0.87,
+  "S2": 0.8628,
+  "S2-TTA": 0.869,
+  "n": 5000
+ },
+ "validation_logged": {
+  "best_s1_val_S1-TTA": 0.8696,
+  "best_s1_epoch": 180,
+  "best_s2_val_S2-TTA": 0.8688
+ },
+ "test_seed42": {
+  "S1": 0.8566,
+  "S1-TTA": 0.8665,
+  "S2": 0.8633,
+  "S2-TTA": 0.8684,
+  "n": 10000
+ },
+ "test_seed42_pct": {
+  "S1": 85.66,
+  "S1-TTA": 86.65,
+  "S2": 86.33,
+  "S2-TTA": 86.84
+ },
+ "n3_with_seed42_test": {
+  "S1": {
+   "per_seed_pct": [
+    85.66,
+    85.94,
+    85.68
+   ],
+   "mean_pct": 85.76,
+   "sd_pct_ddof1": 0.1562049935181393,
+   "n": 3
+  },
+  "S1-TTA": {
+   "per_seed_pct": [
+    86.65,
+    87.12,
+    86.84
+   ],
+   "mean_pct": 86.87,
+   "sd_pct_ddof1": 0.23643180835073824,
+   "n": 3
+  },
+  "S2": {
+   "per_seed_pct": [
+    86.33,
+    86.47,
+    85.92
+   ],
+   "mean_pct": 86.24000000000001,
+   "sd_pct_ddof1": 0.2858321185591274,
+   "n": 3
+  },
+  "S2-TTA": {
+   "per_seed_pct": [
+    86.84,
+    87.51,
+    87.01
+   ],
+   "mean_pct": 87.12,
+   "sd_pct_ddof1": 0.3482814953453664,
+   "n": 3
+  }
+ },
+ "published_n3_s2_tta_with_seed42_val": {
+  "values_pct": [
+   86.88,
+   87.51,
+   87.01
+  ],
+  "mean_pct": 87.13333333333333,
+  "sd_pct_ddof1": 0.33261589458914287
+ },
+ "note": "seeds 123/456 values are their logged final_test_eval (events.jsonl); seed 42 is this CPU recomputation"
+}

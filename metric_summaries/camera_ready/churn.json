@@ -1,0 +1,187 @@
+{
+ "_meta": {
+  "description": "Prediction churn = % of the 10,000 CIFAR-100 test images whose predicted label differs between two variants on the same seed (preds_*.npz). MGC vs cumulative and the trio pairs, four protocols.",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "mgc_vs_cumulative": {
+  "S1": {
+   "per_seed": {
+    "42": 25.31,
+    "123": 25.91,
+    "456": 26.2
+   },
+   "mean": 25.80666667,
+   "sd": 0.45390895,
+   "n": 3
+  },
+  "S1-TTA": {
+   "per_seed": {
+    "42": 23.92,
+    "123": 24.46,
+    "456": 23.87
+   },
+   "mean": 24.08333333,
+   "sd": 0.32715949,
+   "n": 3
+  },
+  "S2": {
+   "per_seed": {
+    "42": 24.05,
+    "123": 24.59,
+    "456": 24.61
+   },
+   "mean": 24.41666667,
+   "sd": 0.31770007,
+   "n": 3
+  },
+  "S2-TTA": {
+   "per_seed": {
+    "42": 22.74,
+    "123": 22.76,
+    "456": 22.74
+   },
+   "mean": 22.74666667,
+   "sd": 0.01154701,
+   "n": 3
+  }
+ },
+ "trio_pairs": {
+  "S1": {
+   "gamma0_minus_gated_k0": {
+    "per_seed": {
+     "42": 14.61,
+     "123": 21.01,
+     "456": 17.78
+    },
+    "mean": 17.8,
+    "sd": 3.20004687,
+    "n": 3
+   },
+   "gamma0_minus_cumulative": {
+    "per_seed": {
+     "42": 15.12,
+     "123": 20.84,
+     "456": 15.95
+    },
+    "mean": 17.30333333,
+    "sd": 3.09083052,
+    "n": 3
+   },
+   "gated_k0_minus_cumulative": {
+    "per_seed": {
+     "42": 14.71,
+     "123": 21.92,
+     "456": 17.44
+    },
+    "mean": 18.02333333,
+    "sd": 3.64022435,
+    "n": 3
+   }
+  },
+  "S1-TTA": {
+   "gamma0_minus_gated_k0": {
+    "per_seed": {
+     "42": 13.77,
+     "123": 19.96,
+     "456": 16.57
+    },
+    "mean": 16.76666667,
+    "sd": 3.09968278,
+    "n": 3
+   },
+   "gamma0_minus_cumulative": {
+    "per_seed": {
+     "42": 14.04,
+     "123": 19.69,
+     "456": 15.09
+    },
+    "mean": 16.27333333,
+    "sd": 3.0051345,
+    "n": 3
+   },
+   "gated_k0_minus_cumulative": {
+    "per_seed": {
+     "42": 13.75,
+     "123": 19.97,
+     "456": 15.94
+    },
+    "mean": 16.55333333,
+    "sd": 3.15503302,
+    "n": 3
+   }
+  },
+  "S2": {
+   "gamma0_minus_gated_k0": {
+    "per_seed": {
+     "42": 9.81,
+     "123": 18.98,
+     "456": 14.51
+    },
+    "mean": 14.43333333,
+    "sd": 4.58548071,
+    "n": 3
+   },
+   "gamma0_minus_cumulative": {
+    "per_seed": {
+     "42": 11.04,
+     "123": 18.88,
+     "456": 12.43
+    },
+    "mean": 14.11666667,
+    "sd": 4.18330412,
+    "n": 3
+   },
+   "gated_k0_minus_cumulative": {
+    "per_seed": {
+     "42": 10.48,
+     "123": 19.68,
+     "456": 14.28
+    },
+    "mean": 14.81333333,
+    "sd": 4.62313025,
+    "n": 3
+   }
+  },
+  "S2-TTA": {
+   "gamma0_minus_gated_k0": {
+    "per_seed": {
+     "42": 9.54,
+     "123": 17.39,
+     "456": 12.48
+    },
+    "mean": 13.13666667,
+    "sd": 3.96598454,
+    "n": 3
+   },
+   "gamma0_minus_cumulative": {
+    "per_seed": {
+     "42": 10.39,
+     "123": 17.73,
+     "456": 10.95
+    },
+    "mean": 13.02333333,
+    "sd": 4.08569863,
+    "n": 3
+   },
+   "gated_k0_minus_cumulative": {
+    "per_seed": {
+     "42": 9.69,
+     "123": 18.61,
+     "456": 12.82
+    },
+    "mean": 13.70666667,
+    "sd": 4.52561966,
+    "n": 3
+   }
+  }
+ },
+ "trio_mean_disagreement_S2-TTA_pct": 13.28888889
+}

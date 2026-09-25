@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# checkpoints (the public ones are on https://huggingface.co/Amirhossein75/ff-free-riding)
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+ckpt_s2/
+hf/
+hf_release/
+hf_check/
+full_release/
+
+# datasets (downloaded by the trainers; never redistributed)
+data/
+data_c10/
+data_c100/
+data_tiny_imagenet/
+
+# run outputs
+runs/
+out/
+ff_out/
+ff_work/
+analysis/60_paired_dissociation.json
+analysis/60_paired_dissociation.md
+
+# OS
+.DS_Store

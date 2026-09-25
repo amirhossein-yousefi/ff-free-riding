@@ -1,0 +1,659 @@
+{
+ "generated_by": "analysis/make_figures.py --fig grad_fd",
+ "generated_utc": "2026-09-25T03:25:13+00:00",
+ "figure": "amir-porjects/neuroips_review/camera_ready/paper/figures/fig_grad_attenuation_fd.pdf",
+ "inputs": {
+  "npz": {
+   "path": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/grad_attenuation/grad_attenuation_arrays.npz",
+   "sha256": "4ba47ba3e72da4ea35d47ada24ced12c5656caf6e0f357b0a1495d2f42b15eab"
+  },
+  "fd_results_json": {
+   "path": "amir-porjects/ff-wiki/_build/analyses/fd_results.json",
+   "sha256": "18aded6fbea6fd7d19cfaf4824cf19d6997c4f5b7e7278f118a4cdd0e4f60c62"
+  },
+  "grad_attenuation_data_json": {
+   "path": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/grad_attenuation/grad_attenuation_data.json",
+   "sha256": "b0c41d301957fc8b9ee4c4b66919db3041689a6912d0da004357230d57ce59b9"
+  },
+  "configs": {
+   "0.0": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_no_all_collab_L4_D128_bs512_seed42_20260315_124117/config.json",
+   "0.7": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_baseline_constant_L4_D128_bs512_seed42_20260313_232043/config.json",
+   "1.0": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_lcff_prefix_L4_D128_bs512_seed42_20260315_084228/config.json"
+  }
+ },
+ "beta": 4.0,
+ "n_examples": 1024,
+ "all_checks_pass": true,
+ "headline": {
+  "F_d_gamma0_all_blocks_zero": true,
+  "F_d_gamma07_blocks1to3": [
+   0.9299,
+   0.9523,
+   0.955
+  ],
+  "F_d_gamma07_blocks1to3_expected": [
+   0.9299,
+   0.9523,
+   0.955
+  ],
+  "F_d_gamma07_blocks1to3_ok": true
+ },
+ "variants": [
+  {
+   "tag": "\u03b3=0 (purely local)",
+   "gamma": 0.0,
+   "ok": true,
+   "vs_fd_results_json": {
+    "F_d": {
+     "recomputed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "published": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "max_abs_diff": 0.0,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "F_d_ci95": {
+     "recomputed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "published": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "max_abs_diff": 0.0,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "mean_R_d": {
+     "recomputed": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "published": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "max_rel_diff": 0.0,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "median_R_d": {
+     "recomputed": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "published": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "max_rel_diff": 0.0,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "R_at_batch_means (paper statistic)": {
+     "recomputed": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "published": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+     ],
+     "max_rel_diff": 0.0,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "frac_fully_starved_R_le_1e-2_pct": {
+     "recomputed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "published": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "max_abs_diff": 0.0,
+     "tol": 0.050000001,
+     "ok": true
+    },
+    "assumption_coverage_pct": {
+     "recomputed": [
+      96.875,
+      96.09375,
+      96.2890625,
+      96.484375
+     ],
+     "published": [
+      96.9,
+      96.1,
+      96.3,
+      96.5
+     ],
+     "max_abs_diff": 0.025000000000005684,
+     "tol": 0.050000001,
+     "ok": true
+    }
+   },
+   "vs_grad_attenuation_data_json": {
+    "m_mean_max_abs_diff": 1.2716918718069792e-07,
+    "P_prev_mean_max_abs_diff": 1.7811544239521027e-07,
+    "ok": true
+   },
+   "npz_internal": {
+    "M_eq_m_plus_gammaP_max_abs_err": 0.0,
+    "grad_eq_beta_sigmoid_max_abs_err": 3.1899442198835004e-07,
+    "ok": true
+   }
+  },
+  {
+   "tag": "\u03b3=0.7 (CP-FAIR-style)",
+   "gamma": 0.7,
+   "ok": true,
+   "vs_fd_results_json": {
+    "F_d": {
+     "recomputed": [
+      0.0,
+      0.9298952768380928,
+      0.95231286602947,
+      0.9549845127174384
+     ],
+     "published": [
+      0.0,
+      0.9299,
+      0.9523,
+      0.955
+     ],
+     "max_abs_diff": 1.548728256151044e-05,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "F_d_ci95": {
+     "recomputed": [
+      0.0,
+      0.012422154383340135,
+      0.011641692539379637,
+      0.01155243994619365
+     ],
+     "published": [
+      0.0,
+      0.0124,
+      0.0116,
+      0.0116
+     ],
+     "max_abs_diff": 4.7560053806348576e-05,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "mean_R_d": {
+     "recomputed": [
+      1.0,
+      0.07345113,
+      0.05630416,
+      0.05817233
+     ],
+     "published": [
+      1.0,
+      0.07345,
+      0.0563,
+      0.05817
+     ],
+     "max_rel_diff": 7.390815159061678e-05,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "median_R_d": {
+     "recomputed": [
+      1.0,
+      0.004400302,
+      2.548894e-06,
+      4.055502e-08
+     ],
+     "published": [
+      1.0,
+      0.0044,
+      2.549e-06,
+      4.056e-08
+     ],
+     "max_rel_diff": 0.00012268861935052437,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "R_at_batch_means (paper statistic)": {
+     "recomputed": [
+      1.0,
+      0.007152366,
+      9.807312e-06,
+      2.789711e-07
+     ],
+     "published": [
+      1.0,
+      0.007152,
+      9.807e-06,
+      2.79e-07
+     ],
+     "max_rel_diff": 0.00010369297602761022,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "frac_fully_starved_R_le_1e-2_pct": {
+     "recomputed": [
+      0.0,
+      65.52734375,
+      87.59765625,
+      90.234375
+     ],
+     "published": [
+      0.0,
+      65.5,
+      87.6,
+      90.2
+     ],
+     "max_abs_diff": 0.03437499999999716,
+     "tol": 0.050000001,
+     "ok": true
+    },
+    "assumption_coverage_pct": {
+     "recomputed": [
+      96.97265625,
+      96.09375,
+      96.484375,
+      96.19140625
+     ],
+     "published": [
+      97.0,
+      96.1,
+      96.5,
+      96.2
+     ],
+     "max_abs_diff": 0.02734375,
+     "tol": 0.050000001,
+     "ok": true
+    }
+   },
+   "vs_grad_attenuation_data_json": {
+    "m_mean_max_abs_diff": 7.826747605577111e-08,
+    "P_prev_mean_max_abs_diff": 1.6675039660185575e-07,
+    "ok": true
+   },
+   "npz_internal": {
+    "M_eq_m_plus_gammaP_max_abs_err": 5.245208738458018e-07,
+    "grad_eq_beta_sigmoid_max_abs_err": 2.9538728574252104e-07,
+    "ok": true
+   }
+  },
+  {
+   "tag": "\u03b3=1.0 (LCFF)",
+   "gamma": 1.0,
+   "ok": true,
+   "vs_fd_results_json": {
+    "F_d": {
+     "recomputed": [
+      0.0,
+      0.9435117057864134,
+      0.9545190010923041,
+      0.9581986600030753
+     ],
+     "published": [
+      0.0,
+      0.9435,
+      0.9545,
+      0.9582
+     ],
+     "max_abs_diff": 1.9001092304127276e-05,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "F_d_ci95": {
+     "recomputed": [
+      0.0,
+      0.012158080142266858,
+      0.01166395052034395,
+      0.011436631783450345
+     ],
+     "published": [
+      0.0,
+      0.0122,
+      0.0117,
+      0.0114
+     ],
+     "max_abs_diff": 4.191985773314283e-05,
+     "tol": 5.0001000000000005e-05,
+     "ok": true
+    },
+    "mean_R_d": {
+     "recomputed": [
+      1.0,
+      0.06347271,
+      0.05368417,
+      0.05136328
+     ],
+     "published": [
+      1.0,
+      0.06347,
+      0.05368,
+      0.05136
+     ],
+     "max_rel_diff": 7.764739135482162e-05,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "median_R_d": {
+     "recomputed": [
+      1.0,
+      0.0004910145,
+      3.941738e-06,
+      6.046865e-08
+     ],
+     "published": [
+      1.0,
+      0.000491,
+      3.942e-06,
+      6.047e-08
+     ],
+     "max_rel_diff": 6.648254568696978e-05,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "R_at_batch_means (paper statistic)": {
+     "recomputed": [
+      1.0,
+      0.0009666848,
+      1.313484e-05,
+      3.119526e-07
+     ],
+     "published": [
+      1.0,
+      0.0009667,
+      1.313e-05,
+      3.12e-07
+     ],
+     "max_rel_diff": 0.00036833205414478563,
+     "rtol": 0.001,
+     "ok": true
+    },
+    "frac_fully_starved_R_le_1e-2_pct": {
+     "recomputed": [
+      0.0,
+      79.39453125,
+      88.8671875,
+      92.08984375
+     ],
+     "published": [
+      0.0,
+      79.4,
+      88.9,
+      92.1
+     ],
+     "max_abs_diff": 0.032812500000005684,
+     "tol": 0.050000001,
+     "ok": true
+    },
+    "assumption_coverage_pct": {
+     "recomputed": [
+      96.77734375,
+      96.09375,
+      96.484375,
+      96.77734375
+     ],
+     "published": [
+      96.8,
+      96.1,
+      96.5,
+      96.8
+     ],
+     "max_abs_diff": 0.022656249999997158,
+     "tol": 0.050000001,
+     "ok": true
+    }
+   },
+   "vs_grad_attenuation_data_json": {
+    "m_mean_max_abs_diff": 1.3857788871973753e-07,
+    "P_prev_mean_max_abs_diff": 3.1803210731595755e-07,
+    "ok": true
+   },
+   "npz_internal": {
+    "M_eq_m_plus_gammaP_max_abs_err": 2.384185791015625e-07,
+    "grad_eq_beta_sigmoid_max_abs_err": 3.2075976719170285e-07,
+    "ok": true
+   }
+  }
+ ],
+ "caption_facts": {
+  "setting": "CIFAR-10 L4/D128, seed 42, three Stage-1 checkpoints (stage1_best, raw training weights, not EMA); first 1024 CIFAR-10 test images; one uniformly random wrong label per example as the negative (torch seed 42); beta = 4.",
+  "variants_differ_in_more_than_gamma": {
+   "0.0": {
+    "gamma_scale": 0.0,
+    "block_curr_lambda": 0.0,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.0,
+    "symba_alpha": 4.0,
+    "use_sam": false,
+    "epochs_stage1": 180,
+    "d_model": 128,
+    "num_blocks": 4
+   },
+   "0.7": {
+    "gamma_scale": 0.7,
+    "block_curr_lambda": 0.25,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.2,
+    "symba_alpha": 4.0,
+    "use_sam": false,
+    "epochs_stage1": 180,
+    "d_model": 128,
+    "num_blocks": 4
+   },
+   "1.0": {
+    "gamma_scale": 1.0,
+    "block_curr_lambda": 0.0,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.0,
+    "symba_alpha": 4.0,
+    "use_sam": false,
+    "epochs_stage1": 180,
+    "d_model": 128,
+    "num_blocks": 4
+   }
+  },
+  "variants_note": "gamma=0.7 (baseline_constant) also trains with the depth-scaled current-block loss (block_curr_lambda 0.25, slope 3 -> 0.25(1+d)) and depth-order 0.2; gamma=0 (no_all_collab) and gamma=1.0 (lcff_prefix) have both set to 0. SAM is off in all three. So 'only gamma differs' (submitted caption, D8) is false.",
+  "normalization_caveat": {
+   "snapshot_eval_std": [
+    0.247,
+    0.2435,
+    0.2616
+   ],
+   "trainer_eval_std": [
+    0.2023,
+    0.1994,
+    0.201
+   ],
+   "note": "snapshot_grad_attenuation.py normalizes with a different std than training (H23); E3 recomputes on EMA weights with the trainer std."
+  },
+  "panel_a_F_d": {
+   "0.0": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "0.7": [
+    0.0,
+    0.9299,
+    0.9523,
+    0.955
+   ],
+   "1.0": [
+    0.0,
+    0.9435,
+    0.9545,
+    0.9582
+   ]
+  },
+  "panel_a_F_d_ci95_halfwidth": {
+   "0.0": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "0.7": [
+    0.0,
+    0.0124,
+    0.0116,
+    0.0116
+   ],
+   "1.0": [
+    0.0,
+    0.0122,
+    0.0117,
+    0.0114
+   ]
+  },
+  "panel_a_ci_note": "normal-approximation 95% CI over the 1024 examples, 1.96*SD(ddof=0)/sqrt(N), as in fd_figure.py",
+  "pointwise_coverage_pct_m_ge0_and_P_ge0": {
+   "0.0": [
+    96.9,
+    96.1,
+    96.3,
+    96.5
+   ],
+   "0.7": [
+    97.0,
+    96.1,
+    96.5,
+    96.2
+   ],
+   "1.0": [
+    96.8,
+    96.1,
+    96.5,
+    96.8
+   ]
+  },
+  "pointwise_coverage_range_pct": [
+   96.1,
+   97.0
+  ],
+  "median_R_d": {
+   "0.0": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+   ],
+   "0.7": [
+    1.0,
+    0.0044,
+    2.55e-06,
+    4.06e-08
+   ],
+   "1.0": [
+    1.0,
+    0.000491,
+    3.94e-06,
+    6.05e-08
+   ]
+  },
+  "frac_R_le_1e-2_pct": {
+   "0.0": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "0.7": [
+    0.0,
+    65.5,
+    87.6,
+    90.2
+   ],
+   "1.0": [
+    0.0,
+    79.4,
+    88.9,
+    92.1
+   ]
+  },
+  "panel_b_block": 3,
+  "panel_b_envelope_median_m": {
+   "1.0": 0.8839,
+   "0.7": 0.7354,
+   "0.0": 2.7838
+  },
+  "panel_b_envelope_note": "curve = beta*sigma(-beta*(m~ + gamma*P)) with m~ the per-variant MEDIAN m^(3) (numpy median); the submitted caption's \\bar m is a median, not a mean.",
+  "panel_b_all_points_shown": "all 1024 examples per variant (the submitted Fig. 1(b) showed a random subsample of 400 and clipped the y-axis at 1e-4)",
+  "submitted_fig1b_hidden_below_1e-4_at_d3": {
+   "0.0": {
+    "frac_below_1e-4_pct": 54.5,
+    "min_grad": 1.756e-07
+   },
+   "0.7": {
+    "frac_below_1e-4_pct": 78.9,
+    "min_grad": 7.715e-13
+   },
+   "1.0": {
+    "frac_below_1e-4_pct": 82.4,
+    "min_grad": 1.355e-13
+   }
+  },
+  "panel_b_P_range": [
+   -5.44,
+   10.49
+  ],
+  "panel_b_frac_P_lt_0_pct": {
+   "0.0": 3.1,
+   "0.7": 3.1,
+   "1.0": 2.8
+  },
+  "per_block_median_margin_m": {
+   "0.0": [
+    1.91,
+    2.54,
+    2.73,
+    2.78
+   ],
+   "0.7": [
+    1.94,
+    2.65,
+    1.48,
+    0.74
+   ],
+   "1.0": [
+    1.91,
+    1.19,
+    1.01,
+    0.88
+   ]
+  }
+ }
+}

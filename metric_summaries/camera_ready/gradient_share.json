@@ -1,0 +1,573 @@
+{
+ "_meta": {
+  "description": "Per-term gradient share ||grad_t|| / ||grad_total|| of the Stage-1 per-block loss (seed 42, CIFAR-10 L4/D128, gated-ablation arms + MGC), 20 training-transform batches, raw training weights (ckpt['model']). 'disc' = the discrimination term on cumulative goodness (block_cum).",
+  "labels": "gated-ablation D128, raw training weights, seed 42; MGC arm trained with SAM, the two gated arms without SAM",
+  "linearity_note": "gradients of the terms sum to the total gradient up to float error: max relative error < 3e-4 at block 0 and about 1e-6 at blocks 1-3.",
+  "source": "amir-porjects/ff-wiki/_build/analyses/gradient_share_results.json",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "arms": {
+  "gamma0.7": {
+   "source_arm": "c10_d128_gamma07_baseline_constant_seed42",
+   "gate": {
+    "anchor_final_test_s1_top1_no_tta": 0.8618,
+    "recomputed_ema_test_top1_no_tta": 0.8617,
+    "delta": 9.999999999998899e-05,
+    "tol": 0.0005,
+    "gate_accuracy_pass": true,
+    "ckpt_best_s1": 0.8746,
+    "run_end_best_s1": 0.8746,
+    "split_indices_match": true
+   },
+   "use_sam": false,
+   "config_summary": {
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "constant",
+    "use_mgc": false,
+    "mgc_c0": null,
+    "block_lambda": 1.0,
+    "block_curr_lambda": 0.25,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.2,
+    "contrastive_lambda": 0.5,
+    "recon_lambda": 0.05,
+    "moe_balance_coef": 0.01,
+    "moe_zloss_coef": 0.001,
+    "use_sam": false,
+    "use_ema_hnm": true,
+    "batch_size": 512,
+    "d_model": 128,
+    "seed": 42
+   },
+   "n_batches": 20,
+   "batch_size": 512,
+   "epoch_stage1": 180,
+   "weights": "ckpt['model'] (raw Stage-1 training weights at best epoch)",
+   "per_block": [
+    {
+     "block": 0,
+     "disc_share_block_cum": 0.24741448,
+     "disc_cos_block_cum": 0.87453971,
+     "linearity_rel_err_max": 0.00024611957687423956,
+     "terms": {
+      "aspects": {
+       "share": 0.74446908,
+       "cos": 0.9796018
+      },
+      "block_cum": {
+       "share": 0.24741448,
+       "cos": 0.87453971
+      },
+      "block_curr": {
+       "share": 0.06185362,
+       "cos": 0.87453971
+      },
+      "moe_bal": {
+       "share": 0.00119478,
+       "cos": 0.02230135
+      },
+      "moe_z": {
+       "share": 0.00675369,
+       "cos": -0.01456757
+      },
+      "supcon": {
+       "share": 0.00519245,
+       "cos": 0.01158092
+      },
+      "recon": {
+       "share": 0.00186476,
+       "cos": 0.01142597
+      }
+     }
+    },
+    {
+     "block": 1,
+     "disc_share_block_cum": 0.1120766,
+     "disc_cos_block_cum": 0.82088834,
+     "linearity_rel_err_max": 8.22609378509768e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.54057832,
+       "cos": 0.86356261
+      },
+      "block_cum": {
+       "share": 0.1120766,
+       "cos": 0.82088834
+      },
+      "block_curr": {
+       "share": 0.5157237,
+       "cos": 0.81358891
+      },
+      "depth": {
+       "share": 0.17393437,
+       "cos": 0.10139497
+      },
+      "moe_bal": {
+       "share": 0.0029852,
+       "cos": -0.02198392
+      },
+      "moe_z": {
+       "share": 0.00549131,
+       "cos": 0.02243039
+      },
+      "supcon": {
+       "share": 0.00116518,
+       "cos": 0.00529518
+      },
+      "recon": {
+       "share": 9.383e-05,
+       "cos": -0.0430693
+      }
+     }
+    },
+    {
+     "block": 2,
+     "disc_share_block_cum": 0.0497919,
+     "disc_cos_block_cum": 0.83381383,
+     "linearity_rel_err_max": 8.120486334471125e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.53305115,
+       "cos": 0.69371802
+      },
+      "block_cum": {
+       "share": 0.0497919,
+       "cos": 0.83381383
+      },
+      "block_curr": {
+       "share": 0.72419937,
+       "cos": 0.78992661
+      },
+      "depth": {
+       "share": 0.20843551,
+       "cos": 0.02631726
+      },
+      "moe_bal": {
+       "share": 0.00174791,
+       "cos": -0.00128327
+      },
+      "moe_z": {
+       "share": 0.01472318,
+       "cos": 0.00329532
+      },
+      "supcon": {
+       "share": 0.00178748,
+       "cos": 0.00038348
+      },
+      "recon": {
+       "share": 0.00010199,
+       "cos": -0.00072042
+      }
+     }
+    },
+    {
+     "block": 3,
+     "disc_share_block_cum": 0.02979868,
+     "disc_cos_block_cum": 0.77965047,
+     "linearity_rel_err_max": 9.214541265114622e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.63819481,
+       "cos": 0.72314893
+      },
+      "block_cum": {
+       "share": 0.02979868,
+       "cos": 0.77965047
+      },
+      "block_curr": {
+       "share": 0.67094167,
+       "cos": 0.7521927
+      },
+      "depth": {
+       "share": 0.09918263,
+       "cos": 0.02223922
+      },
+      "moe_bal": {
+       "share": 0.00217685,
+       "cos": 8.967e-05
+      },
+      "moe_z": {
+       "share": 0.0212928,
+       "cos": 0.02791107
+      },
+      "supcon": {
+       "share": 0.00574782,
+       "cos": 0.00989994
+      },
+      "recon": {
+       "share": 0.00012878,
+       "cos": -0.00915738
+      }
+     }
+    }
+   ]
+  },
+  "gamma0": {
+   "source_arm": "c10_d128_gamma0_no_all_collab_seed42",
+   "gate": {
+    "anchor_final_test_s1_top1_no_tta": 0.8575,
+    "recomputed_ema_test_top1_no_tta": 0.8576,
+    "delta": 9.999999999998899e-05,
+    "tol": 0.0005,
+    "gate_accuracy_pass": true,
+    "ckpt_best_s1": 0.875,
+    "run_end_best_s1": 0.875,
+    "split_indices_match": true
+   },
+   "use_sam": false,
+   "config_summary": {
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": "constant",
+    "use_mgc": false,
+    "mgc_c0": null,
+    "block_lambda": 1.0,
+    "block_curr_lambda": 0.0,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.0,
+    "contrastive_lambda": 0.5,
+    "recon_lambda": 0.05,
+    "moe_balance_coef": 0.01,
+    "moe_zloss_coef": 0.001,
+    "use_sam": false,
+    "use_ema_hnm": true,
+    "batch_size": 512,
+    "d_model": 128,
+    "seed": 42
+   },
+   "n_batches": 20,
+   "batch_size": 512,
+   "epoch_stage1": 180,
+   "weights": "ckpt['model'] (raw Stage-1 training weights at best epoch)",
+   "per_block": [
+    {
+     "block": 0,
+     "disc_share_block_cum": 0.25639688,
+     "disc_cos_block_cum": 0.86224687,
+     "linearity_rel_err_max": 0.00022466248720356518,
+     "terms": {
+      "aspects": {
+       "share": 0.78831567,
+       "cos": 0.98675109
+      },
+      "block_cum": {
+       "share": 0.25639688,
+       "cos": 0.86224687
+      },
+      "moe_bal": {
+       "share": 0.00106234,
+       "cos": 0.03424016
+      },
+      "moe_z": {
+       "share": 0.00782172,
+       "cos": 0.03125359
+      },
+      "supcon": {
+       "share": 0.00457006,
+       "cos": 0.0080366
+      },
+      "recon": {
+       "share": 0.0019614,
+       "cos": -0.02827461
+      }
+     }
+    },
+    {
+     "block": 1,
+     "disc_share_block_cum": 0.23001492,
+     "disc_cos_block_cum": 0.74778245,
+     "linearity_rel_err_max": 8.463846824459097e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.84306692,
+       "cos": 0.98287865
+      },
+      "block_cum": {
+       "share": 0.23001492,
+       "cos": 0.74778245
+      },
+      "moe_bal": {
+       "share": 0.00333345,
+       "cos": -0.0306921
+      },
+      "moe_z": {
+       "share": 0.01452457,
+       "cos": 0.00714664
+      },
+      "supcon": {
+       "share": 0.00090053,
+       "cos": 0.02349144
+      },
+      "recon": {
+       "share": 0.00016851,
+       "cos": -0.00673176
+      }
+     }
+    },
+    {
+     "block": 2,
+     "disc_share_block_cum": 0.20164977,
+     "disc_cos_block_cum": 0.65618862,
+     "linearity_rel_err_max": 8.338405163290602e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.88030824,
+       "cos": 0.98420954
+      },
+      "block_cum": {
+       "share": 0.20164977,
+       "cos": 0.65618862
+      },
+      "moe_bal": {
+       "share": 0.00295805,
+       "cos": 0.00420138
+      },
+      "moe_z": {
+       "share": 0.03127269,
+       "cos": 0.03320779
+      },
+      "supcon": {
+       "share": 0.0020272,
+       "cos": 0.00939394
+      },
+      "recon": {
+       "share": 0.00015188,
+       "cos": -0.01197886
+      }
+     }
+    },
+    {
+     "block": 3,
+     "disc_share_block_cum": 0.18167811,
+     "disc_cos_block_cum": 0.60894885,
+     "linearity_rel_err_max": 7.978681164142105e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.90018218,
+       "cos": 0.98656848
+      },
+      "block_cum": {
+       "share": 0.18167811,
+       "cos": 0.60894885
+      },
+      "moe_bal": {
+       "share": 0.00289994,
+       "cos": 0.00946566
+      },
+      "moe_z": {
+       "share": 0.02672515,
+       "cos": 0.03797279
+      },
+      "supcon": {
+       "share": 0.00579098,
+       "cos": 0.03078843
+      },
+      "recon": {
+       "share": 0.00010191,
+       "cos": -0.00918418
+      }
+     }
+    }
+   ]
+  },
+  "mgc": {
+   "source_arm": "c10_d128_mgc_c1_seed42",
+   "gate": {
+    "anchor_final_test_s1_top1_no_tta": 0.8523,
+    "recomputed_ema_test_top1_no_tta": 0.8524,
+    "delta": 0.00010000000000010001,
+    "tol": 0.0005,
+    "gate_accuracy_pass": true,
+    "ckpt_best_s1": 0.8622,
+    "run_end_best_s1": 0.8622,
+    "split_indices_match": true
+   },
+   "use_sam": true,
+   "config_summary": {
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "constant",
+    "use_mgc": true,
+    "mgc_c0": 1.0,
+    "block_lambda": 1.0,
+    "block_curr_lambda": 0.25,
+    "block_curr_depth_slope": 3.0,
+    "depth_order_lambda": 0.2,
+    "contrastive_lambda": 0.5,
+    "recon_lambda": 0.05,
+    "moe_balance_coef": 0.01,
+    "moe_zloss_coef": 0.001,
+    "use_sam": true,
+    "use_ema_hnm": true,
+    "batch_size": 512,
+    "d_model": 128,
+    "seed": 42
+   },
+   "n_batches": 20,
+   "batch_size": 512,
+   "epoch_stage1": 180,
+   "weights": "ckpt['model'] (raw Stage-1 training weights at best epoch)",
+   "per_block": [
+    {
+     "block": 0,
+     "disc_share_block_cum": 0.26247558,
+     "disc_cos_block_cum": 0.86639714,
+     "linearity_rel_err_max": 0.0001961601956830701,
+     "terms": {
+      "aspects": {
+       "share": 0.7836419,
+       "cos": 0.9858439
+      },
+      "block_cum": {
+       "share": 0.26247558,
+       "cos": 0.86639714
+      },
+      "moe_bal": {
+       "share": 0.00104548,
+       "cos": 0.00156872
+      },
+      "moe_z": {
+       "share": 0.01179308,
+       "cos": -0.007895
+      },
+      "supcon": {
+       "share": 0.00532475,
+       "cos": 0.00767076
+      },
+      "recon": {
+       "share": 0.00376647,
+       "cos": -0.00531234
+      }
+     }
+    },
+    {
+     "block": 1,
+     "disc_share_block_cum": 0.36676783,
+     "disc_cos_block_cum": 0.63502914,
+     "linearity_rel_err_max": 7.244490122557219e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.71592369,
+       "cos": 0.94402261
+      },
+      "block_cum": {
+       "share": 0.36676783,
+       "cos": 0.63502914
+      },
+      "mgc_local": {
+       "share": 0.05413301,
+       "cos": 0.39844891
+      },
+      "depth": {
+       "share": 0.26512282,
+       "cos": 0.24221873
+      },
+      "moe_bal": {
+       "share": 0.00392583,
+       "cos": -0.01560092
+      },
+      "moe_z": {
+       "share": 0.00692556,
+       "cos": 0.03522866
+      },
+      "supcon": {
+       "share": 0.00151744,
+       "cos": -0.00097336
+      },
+      "recon": {
+       "share": 0.00015517,
+       "cos": -0.01016761
+      }
+     }
+    },
+    {
+     "block": 2,
+     "disc_share_block_cum": 0.43042469,
+     "disc_cos_block_cum": 0.54785575,
+     "linearity_rel_err_max": 8.69408976741435e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.79621132,
+       "cos": 0.84490694
+      },
+      "block_cum": {
+       "share": 0.43042469,
+       "cos": 0.54785575
+      },
+      "mgc_local": {
+       "share": 0.07551335,
+       "cos": 0.33772526
+      },
+      "depth": {
+       "share": 0.40578589,
+       "cos": 0.13052456
+      },
+      "moe_bal": {
+       "share": 0.00404161,
+       "cos": -0.02232153
+      },
+      "moe_z": {
+       "share": 0.02479565,
+       "cos": 0.02541937
+      },
+      "supcon": {
+       "share": 0.00346053,
+       "cos": 0.00756602
+      },
+      "recon": {
+       "share": 0.00016092,
+       "cos": -0.0021349
+      }
+     }
+    },
+    {
+     "block": 3,
+     "disc_share_block_cum": 0.36888109,
+     "disc_cos_block_cum": 0.49792091,
+     "linearity_rel_err_max": 8.37075624869789e-07,
+     "terms": {
+      "aspects": {
+       "share": 0.83403946,
+       "cos": 0.87313483
+      },
+      "block_cum": {
+       "share": 0.36888109,
+       "cos": 0.49792091
+      },
+      "mgc_local": {
+       "share": 0.09354982,
+       "cos": 0.29593838
+      },
+      "depth": {
+       "share": 0.36376309,
+       "cos": 0.1317266
+      },
+      "moe_bal": {
+       "share": 0.00405713,
+       "cos": 0.00429392
+      },
+      "moe_z": {
+       "share": 0.0345339,
+       "cos": 0.02401605
+      },
+      "supcon": {
+       "share": 0.00652392,
+       "cos": 0.00378195
+      },
+      "recon": {
+       "share": 0.00021731,
+       "cos": -0.00821644
+      }
+     }
+    }
+   ]
+  }
+ },
+ "linearity_rel_err_max_block0": 0.00024612,
+ "linearity_rel_err_max_blocks1to3": 9.2e-07,
+ "disc_cos_range": [
+  0.49792091,
+  0.87453971
+ ],
+ "mgc_block0_disc_share": 0.26247558
+}

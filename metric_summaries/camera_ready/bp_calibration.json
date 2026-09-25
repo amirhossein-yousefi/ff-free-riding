@@ -1,0 +1,293 @@
+{
+ "_meta": {
+  "description": "CIFAR-10 BP/FF calibration rows of Table 2 at n=3 (seeds 42/123/456). Seed 42 = the submitted single-seed runs in CF/ablations; seeds 123/456 = rebuttal runs in MR/bp_anchors. Single-crop test top-1 (no TTA) from final_metrics.json.",
+  "param_note": "5,539,530 parameters applies to the stripped-backbone BP rows only.",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "rows": {
+  "bp_strong": {
+   "label": "FF backbone (stripped) + BP, strong augmentation",
+   "per_seed": {
+    "42": {
+     "test_top1": 93.9,
+     "val_top1": 93.86,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "strong",
+     "eval_tta": false
+    },
+    "123": {
+     "test_top1": 94.0,
+     "val_top1": 93.92,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "strong",
+     "eval_tta": false
+    },
+    "456": {
+     "test_top1": 93.65,
+     "val_top1": 94.2,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "strong",
+     "eval_tta": false
+    }
+   },
+   "test_top1": {
+    "values": [
+     93.9,
+     94.0,
+     93.65
+    ],
+    "mean": 93.85,
+    "sd": 0.18027756,
+    "n": 3
+   },
+   "val_top1": {
+    "values": [
+     93.86,
+     93.92,
+     94.2
+    ],
+    "mean": 93.99333333,
+    "sd": 0.18147543,
+    "n": 3
+   },
+   "sources": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157/final_metrics.json",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_173842/final_metrics.json",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_013559/final_metrics.json"
+   }
+  },
+  "bp_weak": {
+   "label": "FF backbone (stripped) + BP, weak (simple) augmentation",
+   "per_seed": {
+    "42": {
+     "test_top1": 86.9,
+     "val_top1": 87.34,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "simple",
+     "eval_tta": false
+    },
+    "123": {
+     "test_top1": 87.29,
+     "val_top1": 87.38,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "simple",
+     "eval_tta": false
+    },
+    "456": {
+     "test_top1": 88.11,
+     "val_top1": 88.76,
+     "n_params": 5539530,
+     "n_params_millions": 5.53953,
+     "train_aug": "simple",
+     "eval_tta": false
+    }
+   },
+   "test_top1": {
+    "values": [
+     86.9,
+     87.29,
+     88.11
+    ],
+    "mean": 87.43333333,
+    "sd": 0.61760289,
+    "n": 3
+   },
+   "val_top1": {
+    "values": [
+     87.34,
+     87.38,
+     88.76
+    ],
+    "mean": 87.82666667,
+    "sd": 0.80853777,
+    "n": 3
+   },
+   "sources": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223/final_metrics.json",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_221323/final_metrics.json",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_061013/final_metrics.json"
+   }
+  },
+  "plain_cnn_bp": {
+   "label": "Plain CNN + BP",
+   "per_seed": {
+    "42": {
+     "test_top1": 89.86,
+     "val_top1": 90.78,
+     "n_params": 1148874,
+     "n_params_millions": 1.148874,
+     "train_aug": null,
+     "eval_tta": false
+    },
+    "123": {
+     "test_top1": 89.98,
+     "val_top1": 90.82,
+     "n_params": 1148874,
+     "n_params_millions": 1.148874,
+     "train_aug": null,
+     "eval_tta": false
+    },
+    "456": {
+     "test_top1": 90.39,
+     "val_top1": 91.14,
+     "n_params": 1148874,
+     "n_params_millions": 1.148874,
+     "train_aug": null,
+     "eval_tta": false
+    }
+   },
+   "test_top1": {
+    "values": [
+     89.86,
+     89.98,
+     90.39
+    ],
+    "mean": 90.07666667,
+    "sd": 0.27790886,
+    "n": 3
+   },
+   "val_top1": {
+    "values": [
+     90.78,
+     90.82,
+     91.14
+    ],
+    "mean": 90.91333333,
+    "sd": 0.19731531,
+    "n": 3
+   },
+   "sources": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed42_20260306_104748/final_metrics.json",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed123_20260726_005331/final_metrics.json",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed456_20260726_085009/final_metrics.json"
+   }
+  },
+  "plain_cnn_ff": {
+   "label": "Plain CNN + FF (co-design control)",
+   "per_seed": {
+    "42": {
+     "test_top1": 29.41,
+     "val_top1": 32.2,
+     "n_params": 1151168,
+     "n_params_millions": 1.151168,
+     "train_aug": null,
+     "eval_tta": false
+    },
+    "123": {
+     "test_top1": 29.75,
+     "val_top1": 30.34,
+     "n_params": 1151168,
+     "n_params_millions": 1.151168,
+     "train_aug": null,
+     "eval_tta": false
+    },
+    "456": {
+     "test_top1": 30.39,
+     "val_top1": 31.5,
+     "n_params": 1151168,
+     "n_params_millions": 1.151168,
+     "train_aug": null,
+     "eval_tta": false
+    }
+   },
+   "test_top1": {
+    "values": [
+     29.41,
+     29.75,
+     30.39
+    ],
+    "mean": 29.85,
+    "sd": 0.49759421,
+    "n": 3
+   },
+   "val_top1": {
+    "values": [
+     32.2,
+     30.34,
+     31.5
+    ],
+    "mean": 31.34666667,
+    "sd": 0.93943245,
+    "n": 3
+   },
+   "sources": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed42_20260306_121504/final_metrics.json",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed123_20260725_202326/final_metrics.json",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed456_20260726_042004/final_metrics.json"
+   }
+  }
+ },
+ "co_design_gap_pp": 60.22666667,
+ "augmentation_effect_pp": 6.41666667,
+ "strong_aug_seed42_rerun_determinism": {
+  "original": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157",
+  "rerun": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260725_144750",
+  "test_top1_equal": true,
+  "preds_test_sha256_equal": true
+ },
+ "gates": [
+  {
+   "check": "bp_strong mean vs AN",
+   "recomputed": 93.85,
+   "reference": 93.85,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "bp_strong sd vs AN",
+   "recomputed": 0.18027756,
+   "reference": 0.18,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "bp_weak mean vs AN",
+   "recomputed": 87.43333333,
+   "reference": 87.43,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "bp_weak sd vs AN",
+   "recomputed": 0.61760289,
+   "reference": 0.62,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "plain_cnn_bp mean vs AN",
+   "recomputed": 90.07666667,
+   "reference": 90.08,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "plain_cnn_bp sd vs AN",
+   "recomputed": 0.27790886,
+   "reference": 0.28,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "plain_cnn_ff mean vs AN",
+   "recomputed": 29.85,
+   "reference": 29.85,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "plain_cnn_ff sd vs AN",
+   "recomputed": 0.49759421,
+   "reference": 0.5,
+   "tol": 0.006,
+   "pass": true
+  }
+ ]
+}

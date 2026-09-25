@@ -1,0 +1,848 @@
+{
+ "_meta": {
+  "description": "CIFAR-100 dense L4/D256 dissociation trio (gamma=0, adaptive kappa=0, cumulative gamma=0.7), 3 seeds; four protocols from events.jsonl::final_test_eval; sep = last-Stage-1-epoch training sep_curr_nl from layer_metrics.jsonl (not recomputed on the selected checkpoint).",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "sep_label": "last-Stage-1-epoch training sep^cur_nl (layer_metrics.jsonl, final Stage-1 epoch 362)",
+  "excluded_aborted_duplicates": {
+   "cumulative": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed123/ff_cifar100_cifar100_cumulative_seed123_L4_D256_bs256_seed123_20260418_190627",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed456/ff_cifar100_cifar100_cumulative_seed456_L4_D256_bs256_seed456_20260419_141800"
+   ]
+  },
+  "all_gates_pass": true,
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "variants": {
+  "gamma0": {
+   "per_seed": {
+    "42": {
+     "S1": 66.17,
+     "S1-TTA": 66.92,
+     "S2": 68.27,
+     "S2-TTA": 68.94,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      0.53384433,
+      2.60117173,
+      3.62866826,
+      4.76903689
+     ],
+     "gpos_cur": [
+      1.39533922,
+      1.5795917,
+      1.34354376,
+      1.37872448
+     ]
+    },
+    "123": {
+     "S1": 66.36,
+     "S1-TTA": 66.8,
+     "S2": 68.6,
+     "S2-TTA": 69.16,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 85,
+     "sep_curr_nl": [
+      0.54255871,
+      2.6023951,
+      3.63406666,
+      4.81277975
+     ],
+     "gpos_cur": [
+      1.40817988,
+      1.56781926,
+      1.34295639,
+      1.38524853
+     ]
+    },
+    "456": {
+     "S1": 66.57,
+     "S1-TTA": 67.07,
+     "S2": 68.76,
+     "S2-TTA": 69.6,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 285,
+     "sep_curr_nl": [
+      0.54792995,
+      2.61227162,
+      3.61231277,
+      4.76999895
+     ],
+     "gpos_cur": [
+      1.42303853,
+      1.61749869,
+      1.37883978,
+      1.41168203
+     ]
+    }
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      66.17,
+      66.36,
+      66.57
+     ],
+     "mean": 66.36666667,
+     "sd": 0.20008332,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      66.92,
+      66.8,
+      67.07
+     ],
+     "mean": 66.93,
+     "sd": 0.13527749,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      68.27,
+      68.6,
+      68.76
+     ],
+     "mean": 68.54333333,
+     "sd": 0.24986663,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      68.94,
+      69.16,
+      69.6
+     ],
+     "mean": 69.23333333,
+     "sd": 0.33605555,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       0.53384433,
+       0.54255871,
+       0.54792995
+      ],
+      "mean": 0.54144433,
+      "sd": 0.00710863,
+      "n": 3
+     },
+     {
+      "values": [
+       2.60117173,
+       2.6023951,
+       2.61227162
+      ],
+      "mean": 2.60527948,
+      "sd": 0.00608618,
+      "n": 3
+     },
+     {
+      "values": [
+       3.62866826,
+       3.63406666,
+       3.61231277
+      ],
+      "mean": 3.6250159,
+      "sd": 0.01132752,
+      "n": 3
+     },
+     {
+      "values": [
+       4.76903689,
+       4.81277975,
+       4.76999895
+      ],
+      "mean": 4.78393853,
+      "sd": 0.02498186,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      4.76903689,
+      4.81277975,
+      4.76999895
+     ],
+     "mean": 4.78393853,
+     "sd": 0.02498186,
+     "n": 3
+    }
+   },
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed42/ff_cifar100_cifar100_gamma0_seed42_L4_D256_bs256_seed42_20260420_101044",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed123/ff_cifar100_cifar100_gamma0_seed123_L4_D256_bs256_seed123_20260421_124316",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed456/ff_cifar100_cifar100_gamma0_seed456_L4_D256_bs256_seed456_20260422_142245"
+   }
+  },
+  "gated_k0": {
+   "per_seed": {
+    "42": {
+     "S1": 66.07,
+     "S1-TTA": 66.85,
+     "S2": 68.29,
+     "S2-TTA": 68.64,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      0.53384433,
+      2.51685688,
+      2.70751632,
+      1.69727303
+     ],
+     "gpos_cur": [
+      1.39533922,
+      1.41662428,
+      1.00472792,
+      0.64988404
+     ]
+    },
+    "123": {
+     "S1": 66.17,
+     "S1-TTA": 67.09,
+     "S2": 68.02,
+     "S2-TTA": 68.79,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      0.54191554,
+      2.51152625,
+      2.73918563,
+      1.71044118
+     ],
+     "gpos_cur": [
+      1.41189576,
+      1.41957911,
+      0.99664527,
+      0.65342593
+     ]
+    },
+    "456": {
+     "S1": 66.82,
+     "S1-TTA": 68.1,
+     "S2": 69.0,
+     "S2-TTA": 69.77,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 208,
+     "sep_curr_nl": [
+      0.55158639,
+      2.54668283,
+      2.75314615,
+      1.71800461
+     ],
+     "gpos_cur": [
+      1.42716095,
+      1.46711566,
+      1.04116607,
+      0.65708418
+     ]
+    }
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      66.07,
+      66.17,
+      66.82
+     ],
+     "mean": 66.35333333,
+     "sd": 0.40722639,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      66.85,
+      67.09,
+      68.1
+     ],
+     "mean": 67.34666667,
+     "sd": 0.66335008,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      68.29,
+      68.02,
+      69.0
+     ],
+     "mean": 68.43666667,
+     "sd": 0.50619496,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      68.64,
+      68.79,
+      69.77
+     ],
+     "mean": 69.06666667,
+     "sd": 0.6137046,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       0.53384433,
+       0.54191554,
+       0.55158639
+      ],
+      "mean": 0.54244875,
+      "sd": 0.00888304,
+      "n": 3
+     },
+     {
+      "values": [
+       2.51685688,
+       2.51152625,
+       2.54668283
+      ],
+      "mean": 2.52502199,
+      "sd": 0.01894724,
+      "n": 3
+     },
+     {
+      "values": [
+       2.70751632,
+       2.73918563,
+       2.75314615
+      ],
+      "mean": 2.7332827,
+      "sd": 0.02338063,
+      "n": 3
+     },
+     {
+      "values": [
+       1.69727303,
+       1.71044118,
+       1.71800461
+      ],
+      "mean": 1.70857294,
+      "sd": 0.0104913,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      1.69727303,
+      1.71044118,
+      1.71800461
+     ],
+     "mean": 1.70857294,
+     "sd": 0.0104913,
+     "n": 3
+    }
+   },
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed42/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_bs256_seed42_20260422_185437",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed123/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_bs256_seed123_20260423_150626",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed456/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_bs256_seed456_20260424_153513"
+   }
+  },
+  "cumulative": {
+   "per_seed": {
+    "42": {
+     "S1": 66.7,
+     "S1-TTA": 67.18,
+     "S2": 68.09,
+     "S2-TTA": 68.57,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      0.53384433,
+      2.11216233,
+      1.92888402,
+      0.95222036
+     ],
+     "gpos_cur": [
+      1.39533922,
+      0.91057602,
+      0.49724894,
+      0.29151125
+     ]
+    },
+    "123": {
+     "S1": 66.55,
+     "S1-TTA": 67.24,
+     "S2": 68.36,
+     "S2-TTA": 68.88,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 70,
+     "sep_curr_nl": [
+      0.5392292,
+      2.11120411,
+      1.92795616,
+      0.95645402
+     ],
+     "gpos_cur": [
+      1.4063805,
+      0.91788285,
+      0.49308628,
+      0.2912079
+     ]
+    },
+    "456": {
+     "S1": 67.1,
+     "S1-TTA": 67.82,
+     "S2": 69.07,
+     "S2-TTA": 69.42,
+     "final_stage1_epoch": 362,
+     "first_stage1_epoch_logged": 274,
+     "sep_curr_nl": [
+      0.55190508,
+      2.16247586,
+      1.96151183,
+      0.96310405
+     ],
+     "gpos_cur": [
+      1.42608418,
+      0.95609041,
+      0.50686748,
+      0.2942477
+     ]
+    }
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      66.7,
+      66.55,
+      67.1
+     ],
+     "mean": 66.78333333,
+     "sd": 0.28431204,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      67.18,
+      67.24,
+      67.82
+     ],
+     "mean": 67.41333333,
+     "sd": 0.3534591,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      68.09,
+      68.36,
+      69.07
+     ],
+     "mean": 68.50666667,
+     "sd": 0.50619496,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      68.57,
+      68.88,
+      69.42
+     ],
+     "mean": 68.95666667,
+     "sd": 0.43015501,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       0.53384433,
+       0.5392292,
+       0.55190508
+      ],
+      "mean": 0.54165954,
+      "sd": 0.00927241,
+      "n": 3
+     },
+     {
+      "values": [
+       2.11216233,
+       2.11120411,
+       2.16247586
+      ],
+      "mean": 2.1286141,
+      "sd": 0.02932906,
+      "n": 3
+     },
+     {
+      "values": [
+       1.92888402,
+       1.92795616,
+       1.96151183
+      ],
+      "mean": 1.93945067,
+      "sd": 0.01911116,
+      "n": 3
+     },
+     {
+      "values": [
+       0.95222036,
+       0.95645402,
+       0.96310405
+      ],
+      "mean": 0.95725948,
+      "sd": 0.00548637,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      0.95222036,
+      0.95645402,
+      0.96310405
+     ],
+     "mean": 0.95725948,
+     "sd": 0.00548637,
+     "n": 3
+    }
+   },
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed42/ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed123/ff_cifar100_cifar100_cumulative_seed123_L4_D256_bs256_seed123_20260419_010632",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed456/ff_cifar100_cifar100_cumulative_seed456_L4_D256_bs256_seed456_20260420_051234"
+   }
+  }
+ },
+ "range_across_trio_pp": {
+  "S1": 0.43,
+  "S1-TTA": 0.48333333,
+  "S2": 0.10666666,
+  "S2-TTA": 0.27666666
+ },
+ "range_across_trio_pp_of_2dp_means": {
+  "S1": 0.43,
+  "S1-TTA": 0.48,
+  "S2": 0.1,
+  "S2-TTA": 0.27
+ },
+ "range_note": "the submitted paper computed ranges from the printed (2-dp) means (0.43/0.48/0.10/0.27); from unrounded means S2 and S2-TTA give 0.11/0.28.",
+ "deepest_sep_ratio": {
+  "gamma0_over_cumulative": 4.99753581,
+  "gated_k0_over_cumulative": 1.78485873,
+  "gamma0_over_gated_k0": 2.79996155
+ },
+ "gates": [
+  {
+   "check": "gamma0 s42 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.17,
+   "reference": 66.17,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s42 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 66.92,
+   "reference": 66.92,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s42 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.27,
+   "reference": 68.27,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s42 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.94,
+   "reference": 68.94,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s42 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 4.76903689,
+   "reference": 4.76903689,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s123 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.36,
+   "reference": 66.36,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s123 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 66.8,
+   "reference": 66.8,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s123 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.6,
+   "reference": 68.6,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s123 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 69.16,
+   "reference": 69.16,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s123 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 4.81277975,
+   "reference": 4.81277975,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s456 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.57,
+   "reference": 66.57,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s456 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 67.07,
+   "reference": 67.07,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s456 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.76,
+   "reference": 68.76,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s456 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 69.6,
+   "reference": 69.6,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gamma0 s456 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 4.76999895,
+   "reference": 4.76999895,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s42 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.07,
+   "reference": 66.07,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s42 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 66.85,
+   "reference": 66.85,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s42 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.29,
+   "reference": 68.29,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s42 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.64,
+   "reference": 68.64,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s42 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 1.69727303,
+   "reference": 1.69727303,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s123 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.17,
+   "reference": 66.17,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s123 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 67.09,
+   "reference": 67.09,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s123 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.02,
+   "reference": 68.02,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s123 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.79,
+   "reference": 68.79,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s123 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 1.71044118,
+   "reference": 1.71044118,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s456 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.82,
+   "reference": 66.82,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s456 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.1,
+   "reference": 68.1,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s456 S2 vs supplement aggregated_results.json",
+   "recomputed": 69.0,
+   "reference": 69.0,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s456 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 69.77,
+   "reference": 69.77,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "gated_k0 s456 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 1.71800461,
+   "reference": 1.71800461,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "cumulative s42 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.7,
+   "reference": 66.7,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s42 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 67.18,
+   "reference": 67.18,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s42 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.09,
+   "reference": 68.09,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s42 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.57,
+   "reference": 68.57,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s42 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 0.95222036,
+   "reference": 0.95222036,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "cumulative s123 S1 vs supplement aggregated_results.json",
+   "recomputed": 66.55,
+   "reference": 66.55,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s123 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 67.24,
+   "reference": 67.24,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s123 S2 vs supplement aggregated_results.json",
+   "recomputed": 68.36,
+   "reference": 68.36,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s123 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 68.88,
+   "reference": 68.88,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s123 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 0.95645402,
+   "reference": 0.95645402,
+   "tol": 1e-06,
+   "pass": true
+  },
+  {
+   "check": "cumulative s456 S1 vs supplement aggregated_results.json",
+   "recomputed": 67.1,
+   "reference": 67.1,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s456 S1-TTA vs supplement aggregated_results.json",
+   "recomputed": 67.82,
+   "reference": 67.82,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s456 S2 vs supplement aggregated_results.json",
+   "recomputed": 69.07,
+   "reference": 69.07,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s456 S2-TTA vs supplement aggregated_results.json",
+   "recomputed": 69.42,
+   "reference": 69.42,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "cumulative s456 deepest sep vs supplement sep_curr_nl_deep",
+   "recomputed": 0.96310405,
+   "reference": 0.96310405,
+   "tol": 1e-06,
+   "pass": true
+  }
+ ]
+}

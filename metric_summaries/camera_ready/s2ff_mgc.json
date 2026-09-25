@@ -1,0 +1,201 @@
+{
+ "_meta": {
+  "description": "Frozen-backbone readouts on CIFAR-100 (single crop, full 10k test). Strict-FF block = FF-shaped readout block trained only with the local FF goodness objective; CE block = same architecture trained with sampled-softmax CE; '+ sum' adds the frozen blocks' goodness. The Stage-2 attentive head is a probe, not part of the FF method.",
+  "protocol": "no TTA, all-100-hypothesis scoring, EMA stage1_best backbones; S1 gate within 0.01 pp for every run",
+  "goodness_sum_note": "goodness_sum_S1 = logged S1 (events.jsonl final_test_eval) so that it matches the other tables; the readout runs recompute it (goodness_sum_S1_recomputed_by_readout_run).",
+  "comparison_rule": "compare like with like: matched seed 42 (MGC s42 vs trio s42); never mix the MGC 3-seed mean with seed-42 trio values.",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "trio_seed42": {
+  "gamma0": {
+   "goodness_sum_S1": 66.17,
+   "goodness_sum_S1_recomputed_by_readout_run": 66.18,
+   "strict_ff_block_alone": 61.86,
+   "strict_ff_plus_sum": 66.01,
+   "ce_block_alone": 62.13,
+   "ce_plus_sum": 64.99,
+   "s2_attentive_probe": 68.27,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_results/s2ff_c100_gamma0_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_ce_results/s2ffce_c100_gamma0_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed42/ff_cifar100_cifar100_gamma0_seed42_L4_D256_bs256_seed42_20260420_101044/events.jsonl"
+   ]
+  },
+  "gated_k0": {
+   "goodness_sum_S1": 66.07,
+   "goodness_sum_S1_recomputed_by_readout_run": 66.07,
+   "strict_ff_block_alone": 62.6,
+   "strict_ff_plus_sum": 65.78,
+   "ce_block_alone": 62.87,
+   "ce_plus_sum": 65.0,
+   "s2_attentive_probe": 68.29,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_results/s2ff_c100_gated_k0_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_ce_results/s2ffce_c100_gated_k0_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed42/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_bs256_seed42_20260422_185437/events.jsonl"
+   ]
+  },
+  "cumulative": {
+   "goodness_sum_S1": 66.7,
+   "goodness_sum_S1_recomputed_by_readout_run": 66.7,
+   "strict_ff_block_alone": 62.76,
+   "strict_ff_plus_sum": 66.33,
+   "ce_block_alone": 62.74,
+   "ce_plus_sum": 64.96,
+   "s2_attentive_probe": 68.09,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_results/s2ff_c100_cumulative_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_ce_results/s2ffce_c100_cumulative_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed42/ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149/events.jsonl"
+   ]
+  }
+ },
+ "mgc_per_seed": {
+  "42": {
+   "goodness_sum_S1": 66.05,
+   "goodness_sum_S1_recomputed_by_readout_run": 66.06,
+   "strict_ff_block_alone": 64.07,
+   "strict_ff_plus_sum": 65.95,
+   "ce_block_alone": 64.47,
+   "ce_plus_sum": 65.79,
+   "s2_attentive_probe": 68.71,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_from_colab/s2ff_results/s2ff_mgc_c100_seed42.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/s2ff_ce/s2ff_ce_results/s2ffce_mgc_c100_seed42.json"
+   ]
+  },
+  "123": {
+   "goodness_sum_S1": 65.36,
+   "goodness_sum_S1_recomputed_by_readout_run": 65.35,
+   "strict_ff_block_alone": 63.73,
+   "strict_ff_plus_sum": 65.2,
+   "ce_block_alone": 63.88,
+   "ce_plus_sum": 65.21,
+   "s2_attentive_probe": 67.7,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_from_colab/s2ff_results/s2ff_mgc_c100_seed123.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/s2ff_ce/s2ff_ce_results/s2ffce_mgc_c100_seed123.json"
+   ]
+  },
+  "456": {
+   "goodness_sum_S1": 65.79,
+   "goodness_sum_S1_recomputed_by_readout_run": 65.8,
+   "strict_ff_block_alone": 64.06,
+   "strict_ff_plus_sum": 65.82,
+   "ce_block_alone": 64.31,
+   "ce_plus_sum": 65.64,
+   "s2_attentive_probe": 68.3,
+   "sources": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/s2ff_from_colab/s2ff_results/s2ff_mgc_c100_seed456.json",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/s2ff_ce/s2ff_ce_results/s2ffce_mgc_c100_seed456.json"
+   ]
+  }
+ },
+ "mgc_agg": {
+  "goodness_sum_S1": {
+   "values": [
+    66.05,
+    65.36,
+    65.79
+   ],
+   "mean": 65.73333333,
+   "sd": 0.34847286,
+   "n": 3
+  },
+  "strict_ff_block_alone": {
+   "values": [
+    64.07,
+    63.73,
+    64.06
+   ],
+   "mean": 63.95333333,
+   "sd": 0.19347696,
+   "n": 3
+  },
+  "strict_ff_plus_sum": {
+   "values": [
+    65.95,
+    65.2,
+    65.82
+   ],
+   "mean": 65.65666667,
+   "sd": 0.40079088,
+   "n": 3
+  },
+  "ce_block_alone": {
+   "values": [
+    64.47,
+    63.88,
+    64.31
+   ],
+   "mean": 64.22,
+   "sd": 0.30512293,
+   "n": 3
+  },
+  "ce_plus_sum": {
+   "values": [
+    65.79,
+    65.21,
+    65.64
+   ],
+   "mean": 65.54666667,
+   "sd": 0.30105371,
+   "n": 3
+  },
+  "s2_attentive_probe": {
+   "values": [
+    68.71,
+    67.7,
+    68.3
+   ],
+   "mean": 68.23666667,
+   "sd": 0.50796982,
+   "n": 3
+  }
+ },
+ "matched_seed42_mgc_minus_trio_strict_ff_alone_pp": {
+  "gamma0": 2.21,
+  "gated_k0": 1.47,
+  "cumulative": 1.31
+ },
+ "seed42_strict_ff_plus_sum": {
+  "gamma0": 66.01,
+  "gated_k0": 65.78,
+  "cumulative": 66.33,
+  "mgc": 65.95
+ },
+ "seed42_strict_ff_plus_sum_span_pp": 0.55,
+ "ce_minus_strict_ff_block_alone_pp": {
+  "gamma0": 0.27,
+  "gated_k0": 0.27,
+  "cumulative": -0.02,
+  "mgc_mean": 0.26666667
+ },
+ "S1_logged_vs_readout_recompute_max_abs_diff_pp": 0.01,
+ "trio_seed42_strict_ff_alone_span_pp": 0.9,
+ "gates": [
+  {
+   "check": "MGC s42 s2ff_alone vs AN s2ff_full",
+   "recomputed": 64.07,
+   "reference": 64.07,
+   "tol": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "MGC s123 s2ff_alone vs AN s2ff_full",
+   "recomputed": 63.73,
+   "reference": 63.73,
+   "tol": 1e-09,
+   "pass": true
+  },
+  {
+   "check": "MGC s456 s2ff_alone vs AN s2ff_full",
+   "recomputed": 64.06,
+   "reference": 64.06,
+   "tol": 1e-09,
+   "pass": true
+  }
+ ]
+}

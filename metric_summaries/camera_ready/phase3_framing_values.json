@@ -1,0 +1,94 @@
+{
+ "_meta": {
+  "description": "Phase 3 framing values: Fig. 7 within-depth correlation split (A11) and the L8/D128/32-expert four-protocol rows (A7).",
+  "generated_by": "analysis/phase3_framing_values.py",
+  "generated": "2026-09-25"
+ },
+ "fig7_accuracy_vs_ratio": {
+  "source": "results/fig_accuracy_vs_ratio_values.json",
+  "x": "gpos_cur(deepest block) / max(gpos_cur(block 0), 0.01) at the last Stage-1 epoch",
+  "y": "final-epoch Stage-2 eval_top1 (5k validation split) from epoch_metrics.jsonl",
+  "pooled": {
+   "n": 15,
+   "pearson_r": -0.4883423572120191,
+   "pearson_p": 0.06475338154287406,
+   "spearman_rho": -0.5178571428571428
+  },
+  "within_depth": {
+   "L4": {
+    "n": 9,
+    "pearson_r": 0.10489444957553079,
+    "pearson_p": 0.7882604181499547,
+    "spearman_rho": -0.2333333333333333,
+    "spearman_p": 0.5456987782182728,
+    "ratio_mean": 0.7932749008700414,
+    "acc_mean_pct": 87.39111111111112
+   },
+   "L8": {
+    "n": 6,
+    "pearson_r": -0.10373804048061908,
+    "pearson_p": 0.8449511319439958,
+    "spearman_rho": -0.2,
+    "spearman_p": 0.704,
+    "ratio_mean": 2.742568314239548,
+    "acc_mean_pct": 87.02333333333333
+   }
+  },
+  "depth_demeaned_pearson_r": -0.017360531608614435,
+  "leave_one_out_pearson_r": {
+   "L4_baseline_constant": -0.4755955809184572,
+   "L4_adaptive_t1_k0": -0.49078943363076655,
+   "L4_adaptive_t3_k0": -0.5123463649390279,
+   "L4_adaptive_t1_k2": -0.4773393657277783,
+   "L4_adaptive_t1_k4": -0.46699026816611877,
+   "L4_adaptive_prev_only": -0.487588473951723,
+   "L4_adaptive_prev_t1_k2": -0.4279312908366205,
+   "L4_lcff_prefix": -0.6191669557591739,
+   "L4_no_all_collab": -0.48287264294877696,
+   "L8_adaptive_t1_k0": -0.39745872098749707,
+   "L8_adaptive_t3_k0": -0.523444863373336,
+   "L8_adaptive_t1_k2": -0.3582785974763991,
+   "L8_adaptive_t1_k4": -0.5347359035487367,
+   "L8_adaptive_prev_only": -0.4795150340388724,
+   "L8_adaptive_prev_t1_k2": -0.5668573373256214
+  },
+  "reading": "the pooled r is carried by the L4-vs-L8 contrast (L8 runs: higher ratio, lower 180-epoch validation accuracy); within each depth |r| is about 0.1, and no single point's removal brings the pooled r above -0.35"
+ },
+ "l8_d128_32e_seed42": {
+  "note": "seed 42 only (single seed); the gamma=0 sibling run ..._20260315_185311 has identical final_test_eval and is a duplicate; the CP-FAIR sibling ..._20260315_071624 has no final_test_eval.",
+  "rows": {
+   "gamma0": {
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_noall_G0_L8D128_L8_D128_bs512_seed42_20260314_015458",
+    "S1": 88.06,
+    "S1-TTA": 88.73,
+    "S2": 88.57,
+    "S2-TTA": 89.22,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "use_sam": false
+   },
+   "cp_fair_gamma0.7": {
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_cpfair_G07_L8D128_L8_D128_bs512_seed42_20260315_190153",
+    "S1": 88.46,
+    "S1-TTA": 89.31,
+    "S2": 88.82,
+    "S2-TTA": 89.61,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "use_sam": false
+   },
+   "lcff_gamma1.0": {
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_lcff_G10_L8D128_L8_D128_bs512_seed42_20260316_140422",
+    "S1": 88.3,
+    "S1-TTA": 89.02,
+    "S2": 88.33,
+    "S2-TTA": 89.2,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "use_sam": false
+   }
+  },
+  "cp_fair_minus_gamma0_S2-TTA_pp": 0.39,
+  "cp_fair_minus_lcff_S2-TTA_pp": 0.41
+ }
+}

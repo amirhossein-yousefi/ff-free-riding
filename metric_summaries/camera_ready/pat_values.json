@@ -1,0 +1,444 @@
+{
+ "generated": "2026-09-25T05:49:54",
+ "sd": "sample (ddof=1)",
+ "tiny": {
+  "per_seed": {
+   "42": {
+    "run": "amir-porjects/tiny_imagenet_fair/from_drive_1/extracted/ff_tiny_imagenet_training/runs_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_bs256_seed42_20260412_104050",
+    "s1_top1_no_tta": 48.75,
+    "s1_top1_tta": 49.44,
+    "s2_top1_tta": 52.6,
+    "gamma_scale": 0.0,
+    "use_sam": false,
+    "hnm_k": [
+     20,
+     40
+    ],
+    "num_classes": 200
+   },
+   "123": {
+    "run": "amir-porjects/tiny_imagenet_fair/extracted_seeds/ff_tiny_imagenet_multiseed/runs_seed123/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_bs256_seed123_20260413_205048",
+    "s1_top1_no_tta": 48.449999999999996,
+    "s1_top1_tta": 49.16,
+    "s2_top1_tta": 52.42,
+    "gamma_scale": 0.0,
+    "use_sam": false,
+    "hnm_k": [
+     20,
+     40
+    ],
+    "num_classes": 200
+   },
+   "456": {
+    "run": "amir-porjects/tiny_imagenet_fair/extracted_seeds/ff_tiny_imagenet_multiseed/runs_seed456/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_bs256_seed456_20260414_212958",
+    "s1_top1_no_tta": 48.41,
+    "s1_top1_tta": 48.67,
+    "s2_top1_tta": 51.949999999999996,
+    "gamma_scale": 0.0,
+    "use_sam": false,
+    "hnm_k": [
+     20,
+     40
+    ],
+    "num_classes": 200
+   }
+  },
+  "agg": {
+   "s1_top1_no_tta": {
+    "mean": 48.54,
+    "sd": 0.19,
+    "values": [
+     48.75,
+     48.45,
+     48.41
+    ],
+    "mean_raw": 48.53666666666666,
+    "sd_raw": 0.18583146486355354
+   },
+   "s1_top1_tta": {
+    "mean": 49.09,
+    "sd": 0.39,
+    "values": [
+     49.44,
+     49.16,
+     48.67
+    ],
+    "mean_raw": 49.089999999999996,
+    "sd_raw": 0.38974350539809927
+   },
+   "s2_top1_tta": {
+    "mean": 52.32,
+    "sd": 0.34,
+    "values": [
+     52.6,
+     52.42,
+     51.95
+    ],
+    "mean_raw": 52.32333333333333,
+    "sd_raw": 0.33560889936551963
+   }
+  },
+  "scff_top1": 35.67,
+  "gap_vs_scff_pp": {
+   "s1_top1_no_tta": 12.87,
+   "s1_top1_tta": 13.42,
+   "s2_top1_tta": 16.65
+  }
+ },
+ "hnm_coverage": {
+  "formula": "1-(1-1/(C-1))^k (draws uniform over the C-1 wrong labels, with replacement)",
+  "cifar10_k8": 0.6103,
+  "cifar10_k16": 0.8481,
+  "tiny_k20": 0.0958,
+  "tiny_k40": 0.1825,
+  "k_ratio_tiny_over_c10": 2.5,
+  "class_ratio": 20.0,
+  "sources": [
+   "trainers/cp_fair_cifar10.py:_choose_hard_negatives (randint over C, resample y)",
+   "CIFAR-10 CP-FAIR config.json hard_negative_k_first/last = 8/16",
+   "Tiny config.json hard_negative_k_first/last = 20/40 (all 3 seeds)"
+  ]
+ },
+ "cp_fair_hparams": {
+  "run": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+  "symba_alpha": 4.0,
+  "sff_ni_weight": 0.5,
+  "block_lambda": 1.0,
+  "block_curr_lambda": 0.25,
+  "block_curr_depth_slope": 3.0,
+  "depth_order_lambda": 0.2,
+  "depth_margin_pos": 0.05,
+  "depth_margin_neg": 0.1,
+  "recon_lambda": 0.05,
+  "aspect_theta_inits": [
+   5.0,
+   2.5,
+   0.5,
+   1.0
+  ],
+  "aspect_lambdas": [
+   1.5,
+   0.2,
+   0.3,
+   0.3
+  ],
+  "aspect_loss_types": [
+   "margin",
+   "rank",
+   "rank",
+   "margin"
+  ],
+  "n_aspects": 4,
+  "contrastive_lambda": 0.5,
+  "contrastive_temp": 0.2,
+  "moe_balance_coef": 0.01,
+  "moe_zloss_coef": 0.001,
+  "gamma_scale": 0.7,
+  "use_mem": false,
+  "use_sam": true,
+  "hard_negative_k_first": 8,
+  "hard_negative_k_last": 16,
+  "proto_temp": 0.1,
+  "use_softmax_weights": true
+ },
+ "p23_goodness_magnitude": {
+  "nomem_l2": {
+   "run": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_do_this_first/runs/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_bs512_seed42_20260128_084102",
+   "epoch": 362,
+   "gpos_L3": 3.361,
+   "s1_tta": 91.31,
+   "use_mem": false
+  },
+  "baseline": {
+   "run": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260110_171401",
+   "epoch": 287,
+   "gpos_L3": 11.49,
+   "gpos_L3_epoch286_previous_segment": 11.573,
+   "s1_tta": 91.2
+  },
+  "ratio_final_epochs": 3.42,
+  "ratio_using_epoch286": 3.44,
+  "note": "baseline trajectory is split across resumed dirs (1-144, 145-286, 287); final Stage-1 epoch is 287"
+ },
+ "p18_l8_ratio": {
+  "ff_cifar10_adaptive_prev_only_L8_L8_D128_bs512_seed42_20260317_031838": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 2.2843,
+   "gpos_cumulative_L7_over_L0": 3.6504
+  },
+  "ff_cifar10_adaptive_prev_t1_k2_L8_L8_D128_bs512_seed42_20260317_105615": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 0.4532,
+   "gpos_cumulative_L7_over_L0": 4.5023
+  },
+  "ff_cifar10_adaptive_t1_k0_L8_L8_D128_bs512_seed42_20260315_201449": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 3.7329,
+   "gpos_cumulative_L7_over_L0": 3.739
+  },
+  "ff_cifar10_adaptive_t1_k2_L8_L8_D128_bs512_seed42_20260316_105222": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 3.3311,
+   "gpos_cumulative_L7_over_L0": 3.3919
+  },
+  "ff_cifar10_adaptive_t1_k4_L8_L8_D128_bs512_seed42_20260316_182534": {
+   "epoch": 43,
+   "gpos_cur_L7_over_L0": 0.9454,
+   "gpos_cumulative_L7_over_L0": 1.4229
+  },
+  "ff_cifar10_adaptive_t1_k4_L8_L8_D128_bs512_seed42_20260316_212730": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 3.5143,
+   "gpos_cumulative_L7_over_L0": 3.8607
+  },
+  "ff_cifar10_adaptive_t3_k0_L8_L8_D128_bs512_seed42_20260316_033950": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 3.1397,
+   "gpos_cumulative_L7_over_L0": 3.1387
+  },
+  "ff_cifar10_baseline_constant_L8_L8_D128_bs512_seed42_20260318_204046": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 0.3248,
+   "gpos_cumulative_L7_over_L0": 2.5019
+  },
+  "ff_cifar10_lcff_prefix_L8_L8_D128_bs512_seed42_20260319_105650": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 0.0646,
+   "gpos_cumulative_L7_over_L0": 2.7836
+  },
+  "ff_cifar10_no_all_collab_L8_L8_D128_bs512_seed42_20260318_062709": {
+   "epoch": 180,
+   "gpos_cur_L7_over_L0": 1.1844,
+   "gpos_cumulative_L7_over_L0": 1.1844
+  }
+ },
+ "p4_aspect_ablation_configs": {
+  "ff_aspect_ema_ablation/runs_aspect3_learned_only/ff_cifar10_ablation_aspect3_learned_only_L4_D256_bs512_seed42_20260411_135349": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.0,
+    0.0,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_cpfair_baseline/ff_cifar10_ablation_cpfair_baseline_L4_D256_bs512_seed42_20260323_030540": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.9058,
+    "stage1_test_top1_tta": 0.9131,
+    "stage2_test_top1_no_tta": 0.9042,
+    "stage2_test_top1_tta": 0.9124
+   }
+  },
+  "ff_aspect_ema_ablation/runs_ema_no_hnm/ff_cifar10_ablation_ema_no_hnm_L4_D256_bs512_seed42_20260415_001032": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_aspect1_energy_only/ff_cifar10_ablation_aspect1_energy_only_L4_D256_bs512_seed42_20260407_082250": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.2,
+    0.0,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.9014,
+    "stage1_test_top1_tta": 0.9113,
+    "stage2_test_top1_no_tta": 0.9014,
+    "stage2_test_top1_tta": 0.9151
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect1_energy_only/ff_cifar10_ablation_aspect1_energy_only_L4_D256_bs512_seed42_20260406_182727": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.2,
+    0.0,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_no_ema/ff_cifar10_ablation_no_ema_L4_D256_bs512_seed42_20260414_142342": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.8989,
+    "stage1_test_top1_tta": 0.9091,
+    "stage2_test_top1_no_tta": 0.9019,
+    "stage2_test_top1_tta": 0.909
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect2_attn_only/ff_cifar10_ablation_aspect2_attn_only_L4_D256_bs512_seed42_20260408_021606": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.0,
+    0.3,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_no_ema/ff_cifar10_ablation_no_ema_L4_D256_bs512_seed42_20260413_021648": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_aspect0_proto_only/ff_cifar10_ablation_aspect0_proto_only_L4_D256_bs512_seed42_20260406_080912": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.9032,
+    "stage1_test_top1_tta": 0.9116,
+    "stage2_test_top1_no_tta": 0.9017,
+    "stage2_test_top1_tta": 0.9097
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect2_attn_only/ff_cifar10_ablation_aspect2_attn_only_L4_D256_bs512_seed42_20260411_110956": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.0,
+    0.3,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.903,
+    "stage1_test_top1_tta": 0.9109,
+    "stage2_test_top1_no_tta": 0.9033,
+    "stage2_test_top1_tta": 0.9126
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect0_proto_only/ff_cifar10_ablation_aspect0_proto_only_L4_D256_bs512_seed42_20260405_080425": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_no_ema/ff_cifar10_ablation_no_ema_L4_D256_bs512_seed42_20260413_160350": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  },
+  "ff_aspect_ema_ablation/runs_ema_no_hnm/ff_cifar10_ablation_ema_no_hnm_L4_D256_bs512_seed42_20260415_160653": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    1.5,
+    0.2,
+    0.3,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.9083,
+    "stage1_test_top1_tta": 0.9154,
+    "stage2_test_top1_no_tta": 0.9096,
+    "stage2_test_top1_tta": 0.9148
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect3_learned_only/ff_cifar10_ablation_aspect3_learned_only_L4_D256_bs512_seed42_20260412_154041": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.0,
+    0.0,
+    0.3
+   ],
+   "use_mem": false,
+   "final_test_eval": {
+    "stage1_test_top1_no_tta": 0.9063,
+    "stage1_test_top1_tta": 0.9134,
+    "stage2_test_top1_no_tta": 0.9051,
+    "stage2_test_top1_tta": 0.9133
+   }
+  },
+  "ff_aspect_ema_ablation/runs_aspect2_attn_only/ff_cifar10_ablation_aspect2_attn_only_L4_D256_bs512_seed42_20260408_091632": {
+   "zip": "ff_aspect_ema_ablation-20260416T115425Z-3-019.zip",
+   "n_aspects": 4,
+   "aspect_lambdas": [
+    0.0,
+    0.0,
+    0.3,
+    0.0
+   ],
+   "use_mem": false,
+   "final_test_eval": null
+  }
+ },
+ "p22_single_aspect": {
+  "run": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_single_aspect/ff_cifar10_ablation_single_aspect_L4_D256_bs512_seed42_20260404_194358",
+  "n_aspects": 1,
+  "use_mem": false,
+  "final_test_eval": {
+   "stage1_test_top1_no_tta": 0.9018,
+   "stage1_test_top1_tta": 0.9087,
+   "stage2_test_top1_no_tta": 0.9006,
+   "stage2_test_top1_tta": 0.9083
+  },
+  "slot_kept": "g_list[:n_aspects] with g_list=[g_alignment, g_energy, g_attn, g_learned] (basic_fair_revised_valfix_cp_fair.py:1018-1019) -> prototype alignment"
+ }
+}

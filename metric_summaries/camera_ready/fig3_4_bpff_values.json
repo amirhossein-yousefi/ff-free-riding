@@ -1,0 +1,175 @@
+{
+ "generated_by": "analysis/make_figures.py --fig loss_bpff",
+ "generated_utc": "2026-09-25T03:25:14+00:00",
+ "figure": "amir-porjects/neuroips_review/camera_ready/paper/figures/fig3_4_loss_bpff_cr.pdf",
+ "ported_from": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/NeurIPS_FF_Net_Last_submitted/supplement_code/analysis/generate_figures.py :: fig3_4_loss_and_bpff (lines 288-394)",
+ "protocol_panel_b": "single-crop (no TTA) test top-1 on the 10k CIFAR-10 test set; mean +- sample SD (ddof=1) over seeds 42/123/456 where n=3",
+ "panel_a": {
+  "baseline": {
+   "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260108_214956",
+   "last_logged_stage1_epoch": 286,
+   "epochs_stage1_config": 362,
+   "loss_block_curr": [
+    0.019764252472668886,
+    0.0222367850324974,
+    0.020102172628334112,
+    0.014854998197995297
+   ],
+   "lambda_curr_per_block": [
+    0.5,
+    0.5,
+    0.5,
+    0.5
+   ],
+   "gamma_scale": 0.7,
+   "depth_order_lambda": 0.1,
+   "residual_weighted_loss_logged": false,
+   "finished_by": {
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260110_171401",
+    "stage1_epoch": 287,
+    "stage1_test_top1_tta": 0.912,
+    "note": "the plotted run's log ends at epoch 286 (no final_test_eval); a load-last continuation ran epoch 287 and the test evaluation (config epochs_stage1 = 287)"
+   }
+  },
+  "cp_fair": {
+   "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+   "last_logged_stage1_epoch": 362,
+   "epochs_stage1_config": 362,
+   "loss_block_curr": [
+    0.016153238007220728,
+    0.5227492806212656,
+    0.7059970916002646,
+    0.6338212055036392
+   ],
+   "lambda_curr_per_block": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+   ],
+   "gamma_scale": 0.7,
+   "depth_order_lambda": 0.2,
+   "residual_weighted_loss_logged": true
+  }
+ },
+ "panel_b": [
+  {
+   "key": "plain_cnn_bp",
+   "arch": "Plain CNN",
+   "training": "BP",
+   "aug": "strong",
+   "n": 3,
+   "per_seed": {
+    "42": 89.86,
+    "123": 89.98,
+    "456": 90.39
+   },
+   "mean": 90.07666666666667,
+   "sd_ddof1": 0.27790885796126263,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed42_20260306_104748",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed123_20260726_005331",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed456_20260726_085009"
+   },
+   "training_color": "BP"
+  },
+  {
+   "key": "plain_cnn_ff",
+   "arch": "Plain CNN",
+   "training": "FF",
+   "aug": "FF-pipeline",
+   "n": 3,
+   "per_seed": {
+    "42": 29.41,
+    "123": 29.75,
+    "456": 30.39
+   },
+   "mean": 29.849999999999998,
+   "sd_ddof1": 0.4975942121849894,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed42_20260306_121504",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed123_20260725_202326",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed456_20260726_042004"
+   },
+   "training_color": "FF"
+  },
+  {
+   "key": "bp_weak",
+   "arch": "Stripped FF backbone",
+   "training": "BP",
+   "aug": "weak",
+   "n": 3,
+   "per_seed": {
+    "42": 86.9,
+    "123": 87.29,
+    "456": 88.11
+   },
+   "mean": 87.43333333333334,
+   "sd_ddof1": 0.6176028929120467,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_221323",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_061013"
+   },
+   "training_color": "BP"
+  },
+  {
+   "key": "bp_strong",
+   "arch": "Stripped FF backbone",
+   "training": "BP",
+   "aug": "BP-strong",
+   "n": 3,
+   "per_seed": {
+    "42": 93.9,
+    "123": 94.0,
+    "456": 93.65
+   },
+   "mean": 93.85000000000001,
+   "sd_ddof1": 0.1802775637731971,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_173842",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_013559"
+   },
+   "training_color": "BP"
+  },
+  {
+   "key": "ff_stripped",
+   "arch": "Stripped FF backbone",
+   "training": "FF",
+   "aug": "FF-pipeline",
+   "n": 1,
+   "per_seed": {
+    "42": 89.03
+   },
+   "mean": 89.03,
+   "sd_ddof1": null,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106"
+   },
+   "note": "gamma_scale 0.7, block_curr_lambda 0.25 with depth slope 3.0 (already depth-scaled); no MoE, memory, contrastive or reconstruction; random wrong-label negatives",
+   "training_color": "FF"
+  },
+  {
+   "key": "cp_fair",
+   "arch": "Full FF backbone",
+   "training": "FF (CP-FAIR)",
+   "aug": "FF-pipeline",
+   "n": 1,
+   "per_seed": {
+    "42": 90.45
+   },
+   "mean": 90.45,
+   "sd_ddof1": null,
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035"
+   },
+   "note": "stage1_test_top1_no_tta from events.jsonl final_test_eval (S1, single crop)",
+   "training_color": "FF"
+  }
+ ],
+ "removed_annotations": [
+  "+2.1% (Ours+FF 89.03 vs weak-aug BP 86.90)",
+  "+1.4% (Ours+FF+depth 90.45 vs Ours+FF 89.03)"
+ ]
+}

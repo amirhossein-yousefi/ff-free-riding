@@ -1,0 +1,5 @@
+ff-free-riding
+Copyright 2026 Amirhossein Yousefiramandi
+
+The code in this repository is licensed under the Apache License, Version 2.0 (see LICENSE).
+The prediction files in preds_cifar100/ are licensed under CC BY 4.0 (see preds_cifar100/README.md).

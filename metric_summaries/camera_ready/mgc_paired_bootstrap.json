@@ -1,0 +1,181 @@
+{
+ "_meta": {
+  "description": "MGC minus cumulative, CIFAR-100 L4/D256, matched seeds 42/123/456 on the identical test order; pooled per-example correctness deltas (n=30,000), 5000-resample paired bootstrap, percentile 95% CI; exact McNemar per seed.",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "n_boot": 5000,
+  "rng": "numpy default_rng(0), fresh per protocol (template CR/mgc_c100_paired_churn.py)",
+  "within_pm1pp_rule": "CI entirely inside (-1, +1) pp",
+  "ci_conditioning": "CIs are conditional on the trained checkpoints (test-set resampling only).",
+  "cumulative_runs_used": "ONLY seed42_20260418_032149, seed123_20260419_010632, seed456_20260420_051234",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "mgc_minus_cumulative": {
+  "S1": {
+   "per_seed": {
+    "42": {
+     "acc_a": 66.05,
+     "acc_b": 66.7,
+     "delta_pp": -0.65,
+     "disagreement_pct": 25.31,
+     "a_right_b_wrong": 639,
+     "a_wrong_b_right": 704,
+     "mcnemar_exact_p": 0.08070411
+    },
+    "123": {
+     "acc_a": 65.36,
+     "acc_b": 66.55,
+     "delta_pp": -1.19,
+     "disagreement_pct": 25.91,
+     "a_right_b_wrong": 629,
+     "a_wrong_b_right": 748,
+     "mcnemar_exact_p": 0.00146429
+    },
+    "456": {
+     "acc_a": 65.79,
+     "acc_b": 67.1,
+     "delta_pp": -1.31,
+     "disagreement_pct": 26.2,
+     "a_right_b_wrong": 632,
+     "a_wrong_b_right": 763,
+     "mcnemar_exact_p": 0.00049595
+    }
+   },
+   "pooled": {
+    "n_examples": 30000,
+    "delta_pp": -1.05,
+    "ci95_pp": [
+     -1.45675,
+     -0.62333333
+    ],
+    "within_pm1pp": false
+   }
+  },
+  "S1-TTA": {
+   "per_seed": {
+    "42": {
+     "acc_a": 66.79,
+     "acc_b": 67.18,
+     "delta_pp": -0.39,
+     "disagreement_pct": 23.92,
+     "a_right_b_wrong": 627,
+     "a_wrong_b_right": 666,
+     "mcnemar_exact_p": 0.29060868
+    },
+    "123": {
+     "acc_a": 66.3,
+     "acc_b": 67.24,
+     "delta_pp": -0.94,
+     "disagreement_pct": 24.46,
+     "a_right_b_wrong": 625,
+     "a_wrong_b_right": 719,
+     "mcnemar_exact_p": 0.01116029
+    },
+    "456": {
+     "acc_a": 66.66,
+     "acc_b": 67.82,
+     "delta_pp": -1.16,
+     "disagreement_pct": 23.87,
+     "a_right_b_wrong": 577,
+     "a_wrong_b_right": 693,
+     "mcnemar_exact_p": 0.00124234
+    }
+   },
+   "pooled": {
+    "n_examples": 30000,
+    "delta_pp": -0.83,
+    "ci95_pp": [
+     -1.23341667,
+     -0.42
+    ],
+    "within_pm1pp": false
+   }
+  },
+  "S2": {
+   "per_seed": {
+    "42": {
+     "acc_a": 68.71,
+     "acc_b": 68.09,
+     "delta_pp": 0.62,
+     "disagreement_pct": 24.05,
+     "a_right_b_wrong": 683,
+     "a_wrong_b_right": 621,
+     "mcnemar_exact_p": 0.09113535
+    },
+    "123": {
+     "acc_a": 67.7,
+     "acc_b": 68.36,
+     "delta_pp": -0.66,
+     "disagreement_pct": 24.59,
+     "a_right_b_wrong": 638,
+     "a_wrong_b_right": 704,
+     "mcnemar_exact_p": 0.07596762
+    },
+    "456": {
+     "acc_a": 68.3,
+     "acc_b": 69.07,
+     "delta_pp": -0.77,
+     "disagreement_pct": 24.61,
+     "a_right_b_wrong": 638,
+     "a_wrong_b_right": 715,
+     "mcnemar_exact_p": 0.03877375
+    }
+   },
+   "pooled": {
+    "n_examples": 30000,
+    "delta_pp": -0.27,
+    "ci95_pp": [
+     -0.68,
+     0.14
+    ],
+    "within_pm1pp": true
+   }
+  },
+  "S2-TTA": {
+   "per_seed": {
+    "42": {
+     "acc_a": 69.19,
+     "acc_b": 68.57,
+     "delta_pp": 0.62,
+     "disagreement_pct": 22.74,
+     "a_right_b_wrong": 655,
+     "a_wrong_b_right": 593,
+     "mcnemar_exact_p": 0.08417646
+    },
+    "123": {
+     "acc_a": 68.78,
+     "acc_b": 68.88,
+     "delta_pp": -0.1,
+     "disagreement_pct": 22.76,
+     "a_right_b_wrong": 615,
+     "a_wrong_b_right": 625,
+     "mcnemar_exact_p": 0.79828539
+    },
+    "456": {
+     "acc_a": 69.29,
+     "acc_b": 69.42,
+     "delta_pp": -0.13,
+     "disagreement_pct": 22.74,
+     "a_right_b_wrong": 627,
+     "a_wrong_b_right": 640,
+     "mcnemar_exact_p": 0.73603635
+    }
+   },
+   "pooled": {
+    "n_examples": 30000,
+    "delta_pp": 0.13,
+    "ci95_pp": [
+     -0.26675,
+     0.53333333
+    ],
+    "within_pm1pp": true
+   }
+  }
+ }
+}

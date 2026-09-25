@@ -1,0 +1,637 @@
+{
+ "_meta": {
+  "description": "MGC (missing-gradient compensation, c0=1) on CIFAR-100 dense L4/D256, 3 seeds (Colab runs), versus the cumulative (gamma=0.7) arm on matched seeds.",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "implementation_note": "faithful implementation, not exact recovery: eps=1e-6, positive-part clamp, only lambda mean and p95 logged per block. The MGC arm REPLACES the baseline's depth-scaled current-block term; block 0 therefore loses its 0.25 auxiliary and its compensator is zero.",
+  "resumed_run_note": "seed 456 was resumed: its layer_metrics.jsonl and epoch_metrics.jsonl start at epoch 192 (final_test_eval is complete); lam_mean_whole_logged for seed 456 therefore averages epochs 192-362 only.",
+  "cumulative_runs_used": "ONLY seed42_20260418_032149, seed123_20260419_010632, seed456_20260420_051234",
+  "sep_label": "last-Stage-1-epoch training sep^cur_nl (layer_metrics.jsonl, final Stage-1 epoch)",
+  "trainer": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/mgc_c100_trainer.py",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "mgc": {
+  "per_seed": {
+   "42": {
+    "S1": 66.05,
+    "S1-TTA": 66.79,
+    "S2": 68.71,
+    "S2-TTA": 69.19,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 1,
+    "sep_curr_nl": [
+     0.54610761,
+     3.44664468,
+     5.67020169,
+     5.65239603
+    ],
+    "gpos_cur": [
+     1.39227878,
+     1.4615559,
+     1.69644924,
+     1.61984509
+    ],
+    "lam_mean_final": [
+     0.0,
+     0.84364171,
+     0.95387229,
+     0.97061603
+    ],
+    "lam_p95_final": [
+     0.0,
+     0.99999987,
+     1.0,
+     1.0
+    ],
+    "lam_mean_whole_logged": [
+     0.0,
+     0.64005932,
+     0.86581674,
+     0.91513734
+    ]
+   },
+   "123": {
+    "S1": 65.36,
+    "S1-TTA": 66.3,
+    "S2": 67.7,
+    "S2-TTA": 68.78,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 1,
+    "sep_curr_nl": [
+     0.53257612,
+     3.3290312,
+     5.56748661,
+     5.57388988
+    ],
+    "gpos_cur": [
+     1.36202527,
+     1.42594531,
+     1.66518659,
+     1.61175269
+    ],
+    "lam_mean_final": [
+     0.0,
+     0.834273,
+     0.95298071,
+     0.97007264
+    ],
+    "lam_p95_final": [
+     0.0,
+     0.9999997,
+     1.0,
+     1.0
+    ],
+    "lam_mean_whole_logged": [
+     0.0,
+     0.62895701,
+     0.86096037,
+     0.91253462
+    ]
+   },
+   "456": {
+    "S1": 65.79,
+    "S1-TTA": 66.66,
+    "S2": 68.3,
+    "S2-TTA": 69.29,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 192,
+    "sep_curr_nl": [
+     0.52867925,
+     3.38108198,
+     5.59139135,
+     5.61375091
+    ],
+    "gpos_cur": [
+     1.37103535,
+     1.44050491,
+     1.66203841,
+     1.60183519
+    ],
+    "lam_mean_final": [
+     0.0,
+     0.83699067,
+     0.95358033,
+     0.97087214
+    ],
+    "lam_p95_final": [
+     0.0,
+     0.99999977,
+     1.0,
+     1.0
+    ],
+    "lam_mean_whole_logged": [
+     0.0,
+     0.77548016,
+     0.93402465,
+     0.95927884
+    ]
+   }
+  },
+  "agg": {
+   "S1": {
+    "values": [
+     66.05,
+     65.36,
+     65.79
+    ],
+    "mean": 65.73333333,
+    "sd": 0.34847286,
+    "n": 3
+   },
+   "S1-TTA": {
+    "values": [
+     66.79,
+     66.3,
+     66.66
+    ],
+    "mean": 66.58333333,
+    "sd": 0.25383722,
+    "n": 3
+   },
+   "S2": {
+    "values": [
+     68.71,
+     67.7,
+     68.3
+    ],
+    "mean": 68.23666667,
+    "sd": 0.50796982,
+    "n": 3
+   },
+   "S2-TTA": {
+    "values": [
+     69.19,
+     68.78,
+     69.29
+    ],
+    "mean": 69.08666667,
+    "sd": 0.2702468,
+    "n": 3
+   },
+   "sep_curr_nl_per_block": [
+    {
+     "values": [
+      0.54610761,
+      0.53257612,
+      0.52867925
+     ],
+     "mean": 0.53578766,
+     "sd": 0.00914726,
+     "n": 3
+    },
+    {
+     "values": [
+      3.44664468,
+      3.3290312,
+      3.38108198
+     ],
+     "mean": 3.38558595,
+     "sd": 0.05893596,
+     "n": 3
+    },
+    {
+     "values": [
+      5.67020169,
+      5.56748661,
+      5.59139135
+     ],
+     "mean": 5.60969322,
+     "sd": 0.0537477,
+     "n": 3
+    },
+    {
+     "values": [
+      5.65239603,
+      5.57388988,
+      5.61375091
+     ],
+     "mean": 5.61334561,
+     "sd": 0.03925464,
+     "n": 3
+    }
+   ],
+   "sep_curr_nl_deepest": {
+    "values": [
+     5.65239603,
+     5.57388988,
+     5.61375091
+    ],
+    "mean": 5.61334561,
+    "sd": 0.03925464,
+    "n": 3
+   },
+   "lam_mean_final_per_block": [
+    {
+     "values": [
+      0.0,
+      0.0,
+      0.0
+     ],
+     "mean": 0.0,
+     "sd": 0.0,
+     "n": 3
+    },
+    {
+     "values": [
+      0.84364171,
+      0.834273,
+      0.83699067
+     ],
+     "mean": 0.83830179,
+     "sd": 0.00482001,
+     "n": 3
+    },
+    {
+     "values": [
+      0.95387229,
+      0.95298071,
+      0.95358033
+     ],
+     "mean": 0.95347778,
+     "sd": 0.00045455,
+     "n": 3
+    },
+    {
+     "values": [
+      0.97061603,
+      0.97007264,
+      0.97087214
+     ],
+     "mean": 0.97052027,
+     "sd": 0.00040826,
+     "n": 3
+    }
+   ]
+  },
+  "run_dirs": {
+   "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed42_20260724_220559",
+   "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed123_20260724_191009",
+   "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed456_20260725_194446"
+  }
+ },
+ "cumulative": {
+  "per_seed": {
+   "42": {
+    "S1": 66.7,
+    "S1-TTA": 67.18,
+    "S2": 68.09,
+    "S2-TTA": 68.57,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 1,
+    "sep_curr_nl": [
+     0.53384433,
+     2.11216233,
+     1.92888402,
+     0.95222036
+    ],
+    "gpos_cur": [
+     1.39533922,
+     0.91057602,
+     0.49724894,
+     0.29151125
+    ]
+   },
+   "123": {
+    "S1": 66.55,
+    "S1-TTA": 67.24,
+    "S2": 68.36,
+    "S2-TTA": 68.88,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 70,
+    "sep_curr_nl": [
+     0.5392292,
+     2.11120411,
+     1.92795616,
+     0.95645402
+    ],
+    "gpos_cur": [
+     1.4063805,
+     0.91788285,
+     0.49308628,
+     0.2912079
+    ]
+   },
+   "456": {
+    "S1": 67.1,
+    "S1-TTA": 67.82,
+    "S2": 69.07,
+    "S2-TTA": 69.42,
+    "final_stage1_epoch": 362,
+    "first_stage1_epoch_logged": 274,
+    "sep_curr_nl": [
+     0.55190508,
+     2.16247586,
+     1.96151183,
+     0.96310405
+    ],
+    "gpos_cur": [
+     1.42608418,
+     0.95609041,
+     0.50686748,
+     0.2942477
+    ]
+   }
+  },
+  "agg": {
+   "S1": {
+    "values": [
+     66.7,
+     66.55,
+     67.1
+    ],
+    "mean": 66.78333333,
+    "sd": 0.28431204,
+    "n": 3
+   },
+   "S1-TTA": {
+    "values": [
+     67.18,
+     67.24,
+     67.82
+    ],
+    "mean": 67.41333333,
+    "sd": 0.3534591,
+    "n": 3
+   },
+   "S2": {
+    "values": [
+     68.09,
+     68.36,
+     69.07
+    ],
+    "mean": 68.50666667,
+    "sd": 0.50619496,
+    "n": 3
+   },
+   "S2-TTA": {
+    "values": [
+     68.57,
+     68.88,
+     69.42
+    ],
+    "mean": 68.95666667,
+    "sd": 0.43015501,
+    "n": 3
+   },
+   "sep_curr_nl_per_block": [
+    {
+     "values": [
+      0.53384433,
+      0.5392292,
+      0.55190508
+     ],
+     "mean": 0.54165954,
+     "sd": 0.00927241,
+     "n": 3
+    },
+    {
+     "values": [
+      2.11216233,
+      2.11120411,
+      2.16247586
+     ],
+     "mean": 2.1286141,
+     "sd": 0.02932906,
+     "n": 3
+    },
+    {
+     "values": [
+      1.92888402,
+      1.92795616,
+      1.96151183
+     ],
+     "mean": 1.93945067,
+     "sd": 0.01911116,
+     "n": 3
+    },
+    {
+     "values": [
+      0.95222036,
+      0.95645402,
+      0.96310405
+     ],
+     "mean": 0.95725948,
+     "sd": 0.00548637,
+     "n": 3
+    }
+   ],
+   "sep_curr_nl_deepest": {
+    "values": [
+     0.95222036,
+     0.95645402,
+     0.96310405
+    ],
+    "mean": 0.95725948,
+    "sd": 0.00548637,
+    "n": 3
+   }
+  },
+  "run_dirs": {
+   "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed42/ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149",
+   "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed123/ff_cifar100_cifar100_cumulative_seed123_L4_D256_bs256_seed123_20260419_010632",
+   "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed456/ff_cifar100_cifar100_cumulative_seed456_L4_D256_bs256_seed456_20260420_051234"
+  }
+ },
+ "delta_mgc_minus_cumulative_pp": {
+  "S1": {
+   "values": [
+    -0.65,
+    -1.19,
+    -1.31
+   ],
+   "mean": -1.05,
+   "sd": 0.35156792,
+   "n": 3
+  },
+  "S1-TTA": {
+   "values": [
+    -0.39,
+    -0.94,
+    -1.16
+   ],
+   "mean": -0.83,
+   "sd": 0.39661064,
+   "n": 3
+  },
+  "S2": {
+   "values": [
+    0.62,
+    -0.66,
+    -0.77
+   ],
+   "mean": -0.27,
+   "sd": 0.77272246,
+   "n": 3
+  },
+  "S2-TTA": {
+   "values": [
+    0.62,
+    -0.1,
+    -0.13
+   ],
+   "mean": 0.13,
+   "sd": 0.42461747,
+   "n": 3
+  }
+ },
+ "deepest_block_sep": {
+  "mgc": {
+   "values": [
+    5.65239603,
+    5.57388988,
+    5.61375091
+   ],
+   "mean": 5.61334561,
+   "sd": 0.03925464,
+   "n": 3
+  },
+  "cumulative": {
+   "values": [
+    0.95222036,
+    0.95645402,
+    0.96310405
+   ],
+   "mean": 0.95725948,
+   "sd": 0.00548637,
+   "n": 3
+  },
+  "ratio_mgc_over_cumulative_unrounded": 5.86397495,
+  "ratio_of_2dp_rounded_means": 5.84375
+ },
+ "lambda_telemetry": {
+  "final_epoch_mean_lambda_per_block_mean_over_seeds": [
+   {
+    "values": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "mean": 0.0,
+    "sd": 0.0,
+    "n": 3
+   },
+   {
+    "values": [
+     0.84364171,
+     0.834273,
+     0.83699067
+    ],
+    "mean": 0.83830179,
+    "sd": 0.00482001,
+    "n": 3
+   },
+   {
+    "values": [
+     0.95387229,
+     0.95298071,
+     0.95358033
+    ],
+    "mean": 0.95347778,
+    "sd": 0.00045455,
+    "n": 3
+   },
+   {
+    "values": [
+     0.97061603,
+     0.97007264,
+     0.97087214
+    ],
+    "mean": 0.97052027,
+    "sd": 0.00040826,
+    "n": 3
+   }
+  ],
+  "seed42_whole_training_mean_lambda_per_block": [
+   0.0,
+   0.64005932,
+   0.86581674,
+   0.91513734
+  ],
+  "note": "lambda at block 0 is identically 0 (no compensator at block 0)."
+ },
+ "four_variant_c100": {
+  "range_pp_per_protocol": {
+   "S1": 1.05,
+   "S1-TTA": 0.83,
+   "S2": 0.30666666,
+   "S2-TTA": 0.27666666
+  },
+  "range_pp_per_protocol_of_2dp_means": {
+   "S1": 1.05,
+   "S1-TTA": 0.83,
+   "S2": 0.3,
+   "S2-TTA": 0.27
+  },
+  "note": "table convention = ranges and ratios of the printed (2-dp) means, so a reader can verify them from the table; unrounded values kept alongside.",
+  "deepest_sep_mean": {
+   "gamma0": 4.78393853,
+   "gated_k0": 1.70857294,
+   "cumulative": 0.95725948,
+   "mgc": 5.61334561
+  },
+  "deepest_sep_max_over_min_unrounded": 5.86397495,
+  "deepest_sep_max_over_min_2dp": 5.84375
+ },
+ "config_diff_cumulative_vs_mgc": {
+  "42": {
+   "mgc_c0": [
+    null,
+    1.0
+   ],
+   "mgc_eps": [
+    null,
+    1e-06
+   ],
+   "mgc_rho": [
+    null,
+    0.0
+   ],
+   "use_mgc": [
+    null,
+    true
+   ]
+  },
+  "123": {
+   "mgc_c0": [
+    null,
+    1.0
+   ],
+   "mgc_eps": [
+    null,
+    1e-06
+   ],
+   "mgc_rho": [
+    null,
+    0.0
+   ],
+   "use_mgc": [
+    null,
+    true
+   ]
+  },
+  "456": {
+   "mgc_c0": [
+    null,
+    1.0
+   ],
+   "mgc_eps": [
+    null,
+    1e-06
+   ],
+   "mgc_rho": [
+    null,
+    0.0
+   ],
+   "use_mgc": [
+    null,
+    true
+   ]
+  }
+ }
+}

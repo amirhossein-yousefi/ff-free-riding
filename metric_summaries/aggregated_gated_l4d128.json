@@ -1,0 +1,146 @@
+{
+  "_readme": "CIFAR-10 hardness-gated kappa=0 (adaptive, gamma_0=0.7, tau=1), L4/D128, 180+10 epochs, seeds 42/123/456. Corrected camera-ready version (errata D1, D13); SD = sample SD (ddof=1) unless labelled population.",
+  "per_seed": {
+    "42": {
+      "s1_no_tta": 85.86,
+      "s1_tta": 86.81,
+      "s2_no_tta": 86.35,
+      "s2_tta": 87.27,
+      "s1_top5_tta": 99.48,
+      "s2_top5_tta": 99.52,
+      "sep_curr_nl_deep": 3.1084362748025476,
+      "gpos_cur_deep": 2.364113450050354,
+      "gpos_cur_l0": 1.706142324140702,
+      "ratio_LdL0": 1.385648440109496,
+      "final_stage1_epoch": 180,
+      "use_sam": false,
+      "sam_rho": 0.1,
+      "sam_adaptive": true,
+      "gamma_gating_mode": "adaptive",
+      "gamma_0": 0.7,
+      "gamma_kappa": 0.0,
+      "gamma_tau": 1.0,
+      "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410",
+      "source": "events.jsonl::final_test_eval (accuracy, %); layer_metrics.jsonl last Stage-1 epoch (sep, gpos)"
+    },
+    "123": {
+      "s1_no_tta": 85.87,
+      "s1_tta": 86.91,
+      "s2_no_tta": 86.03,
+      "s2_tta": 87.23,
+      "s1_top5_tta": 99.51,
+      "s2_top5_tta": 99.58,
+      "sep_curr_nl_deep": 1.9365429028697398,
+      "gpos_cur_deep": 1.2459944267382568,
+      "gpos_cur_l0": 1.6148451265247388,
+      "ratio_LdL0": 0.7715875697750193,
+      "final_stage1_epoch": 180,
+      "use_sam": true,
+      "sam_rho": 0.1,
+      "sam_adaptive": true,
+      "gamma_gating_mode": "adaptive",
+      "gamma_0": 0.7,
+      "gamma_kappa": 0.0,
+      "gamma_tau": 1.0,
+      "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed123/ff_cifar10_cifar10_gated_k0_seed123_L4_D128_bs512_seed123_20260426_071309",
+      "source": "events.jsonl::final_test_eval (accuracy, %); layer_metrics.jsonl last Stage-1 epoch (sep, gpos)"
+    },
+    "456": {
+      "s1_no_tta": 85.55,
+      "s1_tta": 86.62,
+      "s2_no_tta": 85.82,
+      "s2_tta": 86.96,
+      "s1_top5_tta": 99.5,
+      "s2_top5_tta": 99.51,
+      "sep_curr_nl_deep": 1.8260077018847412,
+      "gpos_cur_deep": 1.1347351622307438,
+      "gpos_cur_l0": 1.582471333701035,
+      "ratio_LdL0": 0.717065224541452,
+      "final_stage1_epoch": 180,
+      "use_sam": true,
+      "sam_rho": 0.1,
+      "sam_adaptive": true,
+      "gamma_gating_mode": "adaptive",
+      "gamma_0": 0.7,
+      "gamma_kappa": 0.0,
+      "gamma_tau": 1.0,
+      "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed456/ff_cifar10_cifar10_gated_k0_seed456_L4_D128_bs512_seed456_20260426_150234",
+      "source": "events.jsonl::final_test_eval (accuracy, %); layer_metrics.jsonl last Stage-1 epoch (sep, gpos)"
+    }
+  },
+  "aggregated_n3": {
+    "s1_no_tta": {
+      "values": [
+        85.86,
+        85.87,
+        85.55
+      ],
+      "mean": 85.76,
+      "sd_sample": 0.181934,
+      "sd_population": 0.148549,
+      "n": 3
+    },
+    "s1_tta": {
+      "values": [
+        86.81,
+        86.91,
+        86.62
+      ],
+      "mean": 86.78,
+      "sd_sample": 0.147309,
+      "sd_population": 0.120277,
+      "n": 3
+    },
+    "s2_no_tta": {
+      "values": [
+        86.35,
+        86.03,
+        85.82
+      ],
+      "mean": 86.066667,
+      "sd_sample": 0.266896,
+      "sd_population": 0.217919,
+      "n": 3
+    },
+    "s2_tta": {
+      "values": [
+        87.27,
+        87.23,
+        86.96
+      ],
+      "mean": 87.153333,
+      "sd_sample": 0.168622,
+      "sd_population": 0.137679,
+      "n": 3
+    },
+    "sep_curr_nl_deep": {
+      "values": [
+        3.1084362748025476,
+        1.9365429028697398,
+        1.8260077018847412
+      ],
+      "mean": 2.290329,
+      "sd_sample": 0.710654,
+      "sd_population": 0.580247,
+      "n": 3
+    }
+  },
+  "sam_note": "SAM differs across seeds: seed 42 (the gated-ablation run) used use_sam=false; seeds 123 and 456 (the multi-seed runs) used use_sam=true (rho=0.1, adaptive). The n=3 aggregate therefore pools two configurations (erratum D13).",
+  "errata": {
+    "D1": "The v1 file stored paper_seed42.s2_tta = 85.87, a Stage-1 value printed as S2-TTA; the genuine seed-42 S2-TTA is 87.27 (events.jsonl final_test_eval). The v1 aggregate 86.69 +/- 0.72 used that value; the corrected n=3 S2-TTA is 87.15 +/- 0.17 (sample SD). The rebuttal's +/-0.14 was the population SD.",
+    "D13": "seed 42 was run with SAM off, seeds 123/456 with SAM on (see sam_note).",
+    "sep": "sep_curr_nl_deep for seed 42 is now the unrounded logged value 3.10844 (v1 stored 3.11), so the sample SD is 0.7106 (v1: 0.7116)."
+  },
+  "v1_values_replaced": {
+    "paper_seed42": {
+      "s2_tta": 85.87,
+      "sep_curr_nl_deep": 3.11
+    },
+    "aggregated_n3": {
+      "s2_tta_mean": 86.68666666666667,
+      "s2_tta_std": 0.7200231477760464,
+      "sep_mean": 2.290850201584827,
+      "sep_std": 0.7115541454077211
+    }
+  }
+}

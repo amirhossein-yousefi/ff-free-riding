@@ -1,0 +1,234 @@
+{
+ "title": "D3: parameter counts, CIFAR-10 L4/D256 FF MoE (CP-FAIR seed 42, net_ema) and logged comparators",
+ "generated": "2026-09-25",
+ "checkpoint": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/checkpoints/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage1_best.pt",
+ "ckpt_meta": {
+  "epoch_stage1": 340,
+  "best_s1": 0.919
+ },
+ "strict_load_missing": [],
+ "strict_load_unexpected": [],
+ "config": {
+  "num_blocks": 4,
+  "d_model": 256,
+  "num_heads": 8,
+  "n_experts": 32,
+  "moe_top_k": 4,
+  "mlp_mult": 4,
+  "patch_size": 2,
+  "stem_channels": 384,
+  "use_conv_stem": true,
+  "label_embed_dim": 64,
+  "n_aspects": 4,
+  "proj_dim": 256,
+  "recon_mult": 2,
+  "use_mem": false,
+  "use_rope": true,
+  "head_hidden": 1536,
+  "head_num_heads": 4
+ },
+ "state_dict_elements": 107213802,
+ "buffer_elements": 5266,
+ "counts": {
+  "total_trainable": 107212648,
+  "expert": 100958208,
+  "per_expert": 788736,
+  "n_expert_modules": 128,
+  "non_expert": 6254440,
+  "active_per_token_top_k": 18874216,
+  "active_per_token_top_k_excl_training_only_heads": 17295188,
+  "active_per_token_top_k_inference_path": 16235348,
+  "total_excl_training_only_heads_and_unused_mem": 104573780,
+  "training_only_heads": 1579028,
+  "unused_mem_path_use_mem_false": 1059840,
+  "stage2_attentive_head_probe": 25211409
+ },
+ "definitions": {
+  "active_per_token_top_k": "non-expert + num_blocks * top_k * per_expert (parameters touched for one image-label forward; the conv stem is per image)",
+  "training_only_heads": "contrastive_proj (SupCon projection), reconstructor (reconstruction loss; run only in training mode), theta_aspect_raw/block_theta_raw (margin thresholds inside the losses)",
+  "unused_mem_path": "mem_enc, ln_gattn, g_attn: memory cross-attention; skipped because use_mem=False, so these parameters are never used (training or inference)",
+  "active_per_token_top_k_inference_path": "what the S1 goodness-sum rule touches per image-label: active_per_token_top_k minus training_only_heads minus unused_mem_path"
+ },
+ "by_module": {
+  "blocks.*.alpha_raw": {
+   "params": 16,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.attn_pool": {
+   "params": 1054720,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.block_theta_raw": {
+   "params": 4,
+   "category": "training_only_heads"
+  },
+  "blocks.*.contrastive_proj": {
+   "params": 526336,
+   "category": "training_only_heads"
+  },
+  "blocks.*.g_attn": {
+   "params": 1052672,
+   "category": "unused_mem_path"
+  },
+  "blocks.*.in_proj": {
+   "params": 328704,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.label_emb": {
+   "params": 2560,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.lin_head": {
+   "params": 66052,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.ln_attn": {
+   "params": 1024,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.ln_gattn": {
+   "params": 1024,
+   "category": "unused_mem_path"
+  },
+  "blocks.*.ln_head": {
+   "params": 1024,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.ln_in": {
+   "params": 1280,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.ln_moe": {
+   "params": 1024,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.mem_enc": {
+   "params": 6144,
+   "category": "unused_mem_path"
+  },
+  "blocks.*.moe": {
+   "params": 100991104,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.prototypes": {
+   "params": 10240,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.reconstructor": {
+   "params": 1052672,
+   "category": "training_only_heads"
+  },
+  "blocks.*.self_attn": {
+   "params": 1052672,
+   "category": "non_expert_inference"
+  },
+  "blocks.*.theta_aspect_raw": {
+   "params": 16,
+   "category": "training_only_heads"
+  },
+  "embed.proj": {
+   "params": 393472,
+   "category": "non_expert_inference"
+  },
+  "embed.stem": {
+   "params": 669888,
+   "category": "non_expert_inference"
+  }
+ },
+ "empirical_usage_check": {
+  "n_params_tensors": 744,
+  "non_expert_tensors_without_grad": [
+   "blocks.*.block_theta_raw",
+   "blocks.*.contrastive_proj.0.bias",
+   "blocks.*.contrastive_proj.0.weight",
+   "blocks.*.contrastive_proj.2.bias",
+   "blocks.*.contrastive_proj.2.weight",
+   "blocks.*.g_attn.Wk.bias",
+   "blocks.*.g_attn.Wk.weight",
+   "blocks.*.g_attn.Wo.bias",
+   "blocks.*.g_attn.Wo.weight",
+   "blocks.*.g_attn.Wq.bias",
+   "blocks.*.g_attn.Wq.weight",
+   "blocks.*.g_attn.Wv.bias",
+   "blocks.*.g_attn.Wv.weight",
+   "blocks.*.ln_gattn.weight",
+   "blocks.*.mem_enc.to_tok.0.bias",
+   "blocks.*.mem_enc.to_tok.0.weight",
+   "blocks.*.mem_enc.to_tok.2.weight",
+   "blocks.*.reconstructor.0.weight",
+   "blocks.*.reconstructor.1.bias",
+   "blocks.*.reconstructor.1.weight",
+   "blocks.*.reconstructor.3.bias",
+   "blocks.*.reconstructor.3.weight",
+   "blocks.*.theta_aspect_raw"
+  ],
+  "all_non_expert_tensors_without_grad_are_train_only_or_mem": true,
+  "train_only_or_mem_tensors_with_grad": [],
+  "n_expert_tensors_with_grad": 376
+ },
+ "stage2_head": {
+  "params": 25211409,
+  "state_dict_elements": 25211409,
+  "strict_missing": [],
+  "strict_unexpected": [],
+  "checkpoint": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/checkpoints/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage2_best.pt"
+ },
+ "logged_comparators": {
+  "bp_stripped_weak_aug_seed42": {
+   "num_parameters": 5539530,
+   "source": "ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223/final_metrics.json",
+   "test_top1": 0.869
+  },
+  "bp_stripped_strong_aug_seed42": {
+   "num_parameters": 5539530,
+   "source": "ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157/final_metrics.json",
+   "test_top1": 0.939
+  },
+  "bp_stripped_weak_aug_seed123": {
+   "num_parameters": 5539530,
+   "source": "mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_221323/final_metrics.json",
+   "test_top1": 0.8729
+  },
+  "bp_stripped_weak_aug_seed456": {
+   "num_parameters": 5539530,
+   "source": "mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_061013/final_metrics.json",
+   "test_top1": 0.8811
+  },
+  "bp_stripped_strong_aug_seed123": {
+   "num_parameters": 5539530,
+   "source": "mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_173842/final_metrics.json",
+   "test_top1": 0.94
+  },
+  "bp_stripped_strong_aug_seed456": {
+   "num_parameters": 5539530,
+   "source": "mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_013559/final_metrics.json",
+   "test_top1": 0.9365
+  },
+  "ff_stripped_seed42": {
+   "num_parameters": 6737636,
+   "source": "ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106/final_metrics.json",
+   "test_top1": 0.8903
+  },
+  "bp_full_backbone_same_arch_seed42": {
+   "num_parameters": 103639882,
+   "source": "ablations/full_backbone_bp/runs_full_backbone_bp/bp_full_backbone_full_backbone_bp_cifar10_v1_L4_D256_P2_E32_K4_seed42_20260307_143455/final_metrics.json",
+   "test_top1": 0.9126
+  },
+  "plain_cnn_bp_seed42": {
+   "num_parameters": 1148874,
+   "source": "ablations/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed42_20260306_104748/final_metrics.json",
+   "test_top1": 0.8986
+  },
+  "plain_cnn_ff_seed42": {
+   "num_parameters": 1151168,
+   "source": "ablations/plain_cnn_ff_baseli_ff/runs_plain_cnn_ff/ff_plaincnn_plain_cnn_ff_cifar10_v1_seed42_20260306_121504/final_metrics.json",
+   "test_top1": 0.2941
+  }
+ },
+ "plan_prior_recount": {
+  "total": 107212648,
+  "active_top4": 18874216,
+  "active_excl_training_only_heads": 17218916,
+  "non_expert": 6254440
+ }
+}

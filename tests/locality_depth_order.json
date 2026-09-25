@@ -1,0 +1,168 @@
+{
+ "_meta": {
+  "description": "Depth-order locality audit (supplement/analysis/verify_locality.py --depth-order): real train_epoch_stage1, tiny config (3 blocks, D32, 4 aspect slots, depth_order_lambda 0.2), 3 synthetic batches of 8, SAM off/on; leak = gradient arriving on block j while block l != j trains; v1 comparison = bit-identical parameters and EMA parameters after 3 steps. The cumulative-goodness check (v1 mode) passed for all five modules as well.",
+  "all_pass": true
+ },
+ "modules": {
+  "cp_fair_cifar10": {
+   "pass": true,
+   "v1_compared": true,
+   "sam=False": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 6,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.3117403984069824,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   },
+   "sam=True": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 12,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.2871517241001129,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   }
+  },
+  "cp_fair_cifar100": {
+   "pass": true,
+   "v1_compared": true,
+   "sam=False": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 6,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.3117403984069824,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   },
+   "sam=True": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 12,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.2871517241001129,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   }
+  },
+  "cp_fair_tiny_imagenet": {
+   "pass": true,
+   "v1_compared": true,
+   "sam=False": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 6,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.15501408278942108,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   },
+   "sam=True": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 12,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.16134849190711975,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   }
+  },
+  "cp_fair_hardness_gated": {
+   "pass": true,
+   "v1_compared": true,
+   "sam=False": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 6,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.11482873558998108,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   },
+   "sam=True": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 12,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.09812083095312119,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   }
+  },
+  "cp_fair_core": {
+   "pass": true,
+   "v1_compared": true,
+   "sam=False": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 6,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.3117403984069824,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   },
+   "sam=True": {
+    "leak_events": 0,
+    "leaked_params": [],
+    "discard_events": 0,
+    "v1_leak_events": 12,
+    "v1_leaked_params": [
+     "blocks[0].alpha_raw (during block 1)",
+     "blocks[1].alpha_raw (during block 2)"
+    ],
+    "v1_max_leaked_grad": 0.2871517241001129,
+    "v1_discard_events": 4,
+    "params_bit_identical_to_v1": true,
+    "ema_params_bit_identical_to_v1": true
+   }
+  }
+ }
+}

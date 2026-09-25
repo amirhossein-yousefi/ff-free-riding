@@ -1,0 +1,60 @@
+{
+ "generated_by": "analysis/make_figures.py --fig dissociation_summary",
+ "generated_utc": "2026-09-25T06:07:59+00:00",
+ "figure": "amir-porjects/neuroips_review/camera_ready/paper/figures/fig_dissociation_summary.pdf",
+ "source": "amir-porjects/neuroips_review/camera_ready/results/c100_trio.json",
+ "protocol": "CIFAR-100 dense L4/D256, seeds 42/123/456; x = last-Stage-1-epoch deepest-block sep_curr_nl, y = S2-TTA test top-1; mean +- sample SD (ddof=1)",
+ "points": {
+  "cumulative": {
+   "sep_mean": 0.95725948,
+   "sep_sd": 0.00548637,
+   "acc_mean": 68.95666667,
+   "acc_sd": 0.43015501,
+   "acc_values": [
+    68.57,
+    68.88,
+    69.42
+   ],
+   "sep_values": [
+    0.95222036,
+    0.95645402,
+    0.96310405
+   ]
+  },
+  "gated_k0": {
+   "sep_mean": 1.70857294,
+   "sep_sd": 0.0104913,
+   "acc_mean": 69.06666667,
+   "acc_sd": 0.6137046,
+   "acc_values": [
+    68.64,
+    68.79,
+    69.77
+   ],
+   "sep_values": [
+    1.69727303,
+    1.71044118,
+    1.71800461
+   ]
+  },
+  "gamma0": {
+   "sep_mean": 4.78393853,
+   "sep_sd": 0.02498186,
+   "acc_mean": 69.23333333,
+   "acc_sd": 0.33605555,
+   "acc_values": [
+    68.94,
+    69.16,
+    69.6
+   ],
+   "sep_values": [
+    4.76903689,
+    4.81277975,
+    4.76999895
+   ]
+  }
+ },
+ "sep_ratio_max_over_min_unrounded": 4.997535809204,
+ "s2_tta_range_pp_unrounded": 0.2766666599999894,
+ "replaces_annotation": "4.97x change in block health => 0.27 pp accuracy (2-dp printed means)"
+}

@@ -1,0 +1,106 @@
+{
+ "generated": "2026-09-25T05:47:10",
+ "trainer_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/NeurIPS_FF_Net_Last_submitted/supplement_code/trainers",
+ "n_batches": 3,
+ "batch": 8,
+ "tiny_config": "3 blocks, D32, 2 experts top-1, 4 aspect slots, use_mem=False, depth_order_lambda=0.2, delta+=0.05, delta-=0.1",
+ "modules": {
+  "cp_fair_cifar10|sam=False": {
+   "leak_events": 6,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.3117403984069824,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_cifar10|sam=True": {
+   "leak_events": 12,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.2871516942977905,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_cifar100|sam=False": {
+   "leak_events": 6,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.3117403984069824,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_cifar100|sam=True": {
+   "leak_events": 12,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.2871516942977905,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_tiny_imagenet|sam=False": {
+   "leak_events": 6,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.1550140678882599,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_tiny_imagenet|sam=True": {
+   "leak_events": 12,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.16134849190711975,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_hardness_gated|sam=False": {
+   "leak_events": 6,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.11482873558998108,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  },
+  "cp_fair_hardness_gated|sam=True": {
+   "leak_events": 12,
+   "leaked_params": [
+    "blocks[0].alpha_raw (during block 1)",
+    "blocks[1].alpha_raw (during block 2)"
+   ],
+   "max_leaked_grad": 0.09812083095312119,
+   "leak_events_with_fix": 0,
+   "discard_events": 4,
+   "params_identical_with_and_without_fix": true,
+   "ema_params_identical_with_and_without_fix": true
+  }
+ },
+ "runtime_s": 44.0
+}

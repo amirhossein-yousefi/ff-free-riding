@@ -1,0 +1,36 @@
+{
+  "param_matched": {
+    "A_plain_cnn_big_ff": {
+      "top1": 31.69,
+      "top5": 82.38,
+      "n_params": 7163360,
+      "src": "final_metrics.json",
+      "rule": "FF \u03b3=0",
+      "arch": "Plain CNN big (~7M)"
+    },
+    "B_plain_cnn_big_bp": {
+      "top1": 92.10000000000001,
+      "top5": 99.79,
+      "n_params": 7157610,
+      "src": "final_metrics.json",
+      "rule": "BP",
+      "arch": "Plain CNN big (~7M)"
+    },
+    "C_moe_small_ff": {
+      "top1": 89.46,
+      "top5": 99.63,
+      "n_params": null,
+      "src": "preds_stage2_test_tta.npz",
+      "rule": "FF \u03b3=0",
+      "arch": "MoE Trans. small"
+    },
+    "D_moe_small_bp": {
+      "top1": 91.33,
+      "top5": 99.78,
+      "n_params": null,
+      "src": "preds_test.npz",
+      "rule": "BP",
+      "arch": "MoE Trans. small"
+    }
+  }
+}

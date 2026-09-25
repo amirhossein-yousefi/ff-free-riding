@@ -1,0 +1,2051 @@
+{
+ "_meta": {
+  "description": "Compute budget of the runs reported in the paper, from raw run logs (checklist item 8).",
+  "method": "* Device: env.json::device0 of the run directory. Run directories without env.json get a device\n    only when it is documented elsewhere (see DEVICE_NOTES); otherwise \"unknown\".\n  * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.\n  * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2\n    epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive\n    epoch_metrics.jsonl timestamps of every listed segment of the run. The estimate covers resumed\n    runs (whose earlier segments may be missing or partial) and excludes data download, setup and\n    final evaluation, so it is slightly below the logged wall time of an uninterrupted run.\n  * BP controls log per-epoch training time (history.jsonl::time_sec); their cost is its sum.\n  * Runner-log durations (BP anchors, frozen-backbone readouts) pair the START and DONE/exit lines.\n  * Every run directory is named explicitly (timestamps included); nothing is globbed.",
+  "generated_by": "analysis/compute_budget.py",
+  "generated": "2026-09-25",
+  "submitted_checklist_values_superseded": {
+   "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE) / ~15 A100-h (CIFAR-100 dense) measured",
+   "Tiny ImageNet": "~8 h per seed (submitted; that is the last resumed segment) vs ~29 A100-h per seed measured",
+   "hardware": "'A100 (Colab and an internal DGX)' (submitted) vs A100 on Colab plus a DGX Spark with a GB10 GPU (env.json)",
+   "total": "~289 A100-h across 56 runs (submitted) vs the totals below"
+  }
+ },
+ "camera_ready_gpu_runs": {
+  "mgc_c100": [
+   {
+    "label": "ff_cifar100_mgc_c100_L4_D256_bs256_seed42_20260724_220559",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed42_20260724_220559"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 139.3,
+    "median_stage2_epoch_s": 211.5,
+    "est_full_run_h": 15.18,
+    "logged_wall_h_last_segment": 16.32,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar100_mgc_c100_L4_D256_bs256_seed123_20260724_191009",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed123_20260724_191009"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 139.5,
+    "median_stage2_epoch_s": 211.3,
+    "est_full_run_h": 15.2,
+    "logged_wall_h_last_segment": 16.45,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar100_mgc_c100_L4_D256_bs256_seed456_20260725_194446",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar100_mgc_c100_L4_D256_bs256_seed456_20260725_194446"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 192,
+    "median_stage1_epoch_s": 141.4,
+    "median_stage2_epoch_s": 211.7,
+    "est_full_run_h": 15.4,
+    "logged_wall_h_last_segment": 8.99,
+    "has_final_test_eval": true
+   }
+  ],
+  "mgc_d128": [
+   {
+    "label": "ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 254.3,
+    "median_stage2_epoch_s": 52.5,
+    "est_full_run_h": 12.86,
+    "logged_wall_h_last_segment": 13.41,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_mgc_c1_L4_D128_bs512_seed123_20260723_205123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed123_20260723_205123"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 145.8,
+    "median_stage2_epoch_s": 25.4,
+    "est_full_run_h": 7.36,
+    "logged_wall_h_last_segment": 8.64,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_mgc_c1_L4_D128_bs512_seed456_20260724_053002",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed456_20260724_053002"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 146.4,
+    "median_stage2_epoch_s": 25.2,
+    "est_full_run_h": 7.39,
+    "logged_wall_h_last_segment": 7.57,
+    "has_final_test_eval": true
+   }
+  ],
+  "hinge": [
+   {
+    "label": "ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260723_214017",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260723_214017"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 150.8,
+    "median_stage2_epoch_s": 25.8,
+    "est_full_run_h": 7.61,
+    "logged_wall_h_last_segment": 8.85,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_hinge_g07_L4_D128_bs512_seed123_20260724_191321",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed123_20260724_191321"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 152.1,
+    "median_stage2_epoch_s": 25.9,
+    "est_full_run_h": 7.68,
+    "logged_wall_h_last_segment": 8.69,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_hinge_g07_L4_D128_bs512_seed456_20260725_194352",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed456_20260725_194352"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 171,
+    "median_stage1_epoch_s": 163.4,
+    "median_stage2_epoch_s": 27.7,
+    "est_full_run_h": 8.25,
+    "logged_wall_h_last_segment": 1.3,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_063123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_063123"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 153.9,
+    "median_stage2_epoch_s": 26.2,
+    "est_full_run_h": 7.77,
+    "logged_wall_h_last_segment": 7.97,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_hinge_g0_L4_D128_bs512_seed123_20260725_035433",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed123_20260725_035433"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 155.5,
+    "median_stage2_epoch_s": 26.1,
+    "est_full_run_h": 7.85,
+    "logged_wall_h_last_segment": 7.97,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "ff_cifar10_hinge_g0_L4_D128_bs512_seed456_20260725_210209",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed456_20260725_210209"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 170.5,
+    "median_stage2_epoch_s": 28.1,
+    "est_full_run_h": 8.6,
+    "logged_wall_h_last_segment": 8.73,
+    "has_final_test_eval": true
+   }
+  ]
+ },
+ "camera_ready_gpu_summary": {
+  "mgc_c100": {
+   "A100": {
+    "n_runs": 3,
+    "per_run_h_min": 15.18,
+    "per_run_h_max": 15.4,
+    "sum_h": 45.8,
+    "uninterrupted_runs_logged_wall_h": [
+     16.32,
+     16.45,
+     2
+    ]
+   }
+  },
+  "mgc_d128": {
+   "GB10": {
+    "n_runs": 1,
+    "per_run_h_min": 12.86,
+    "per_run_h_max": 12.86,
+    "sum_h": 12.9,
+    "uninterrupted_runs_logged_wall_h": [
+     13.41,
+     13.41,
+     1
+    ]
+   },
+   "A100": {
+    "n_runs": 2,
+    "per_run_h_min": 7.36,
+    "per_run_h_max": 7.39,
+    "sum_h": 14.8,
+    "uninterrupted_runs_logged_wall_h": [
+     7.57,
+     8.64,
+     2
+    ]
+   }
+  },
+  "hinge": {
+   "A100": {
+    "n_runs": 6,
+    "per_run_h_min": 7.61,
+    "per_run_h_max": 8.6,
+    "sum_h": 47.8,
+    "uninterrupted_runs_logged_wall_h": [
+     7.97,
+     8.85,
+     5
+    ]
+   }
+  }
+ },
+ "bp_anchor_chain_gb10": {
+  "runs": [
+   {
+    "run": "ff_backbone_stripped_bp_strongaug seed 123",
+    "start": "2026-07-25 17:38:41",
+    "end": "2026-07-25 20:23:25",
+    "hours": 2.75,
+    "status": "DONE"
+   },
+   {
+    "run": "plain_cnn_ff_baseli_ff seed 123",
+    "start": "2026-07-25 20:23:25",
+    "end": "2026-07-25 22:13:22",
+    "hours": 1.83,
+    "status": "DONE"
+   },
+   {
+    "run": "ff_backbone_stripped_bp seed 123",
+    "start": "2026-07-25 22:13:22",
+    "end": "2026-07-26 00:53:30",
+    "hours": 2.67,
+    "status": "DONE"
+   },
+   {
+    "run": "plain_cnn_ff_baseline seed 123",
+    "start": "2026-07-26 00:53:30",
+    "end": "2026-07-26 01:35:57",
+    "hours": 0.71,
+    "status": "DONE"
+   },
+   {
+    "run": "ff_backbone_stripped_bp_strongaug seed 456",
+    "start": "2026-07-26 01:35:57",
+    "end": "2026-07-26 04:20:03",
+    "hours": 2.73,
+    "status": "DONE"
+   },
+   {
+    "run": "plain_cnn_ff_baseli_ff seed 456",
+    "start": "2026-07-26 04:20:03",
+    "end": "2026-07-26 06:10:12",
+    "hours": 1.84,
+    "status": "DONE"
+   },
+   {
+    "run": "ff_backbone_stripped_bp seed 456",
+    "start": "2026-07-26 06:10:12",
+    "end": "2026-07-26 08:50:08",
+    "hours": 2.67,
+    "status": "DONE"
+   },
+   {
+    "run": "plain_cnn_ff_baseline seed 456",
+    "start": "2026-07-26 08:50:08",
+    "end": "2026-07-26 09:32:43",
+    "hours": 0.71,
+    "status": "DONE"
+   }
+  ],
+  "sum_h": 15.91,
+  "device": "NVIDIA GB10 (DGX Spark; launched by a local runner script that waits on nvidia-smi; no env.json)",
+  "accidental_seed42_rerun": {
+   "label": "bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260725_144750",
+   "segments": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260725_144750"
+   ],
+   "device": "NVIDIA GB10 (DGX Spark; launched by a local runner script that waits on nvidia-smi; no env.json)",
+   "device_source": "note",
+   "epochs_logged": 362,
+   "sum_epoch_time_h": 2.75,
+   "final_metrics_device": "cuda"
+  }
+ },
+ "frozen_backbone_readouts_gb10": {
+  "s2ff_trio": [
+   {
+    "run": "gamma0",
+    "start": "2026-07-26 09:33:42",
+    "end": "2026-07-26 09:33:45",
+    "hours": 0.0,
+    "status": "1"
+   },
+   {
+    "run": "gated_k0",
+    "start": "2026-07-26 09:33:45",
+    "end": "2026-07-26 10:18:34",
+    "hours": 0.75,
+    "status": "0"
+   },
+   {
+    "run": "cumulative",
+    "start": "2026-07-26 10:18:34",
+    "end": "2026-07-26 11:03:12",
+    "hours": 0.74,
+    "status": "0"
+   },
+   {
+    "run": "gamma0",
+    "start": "2026-07-26 11:22:55",
+    "end": "2026-07-26 12:07:38",
+    "hours": 0.75,
+    "status": "0"
+   }
+  ],
+  "s2ffce_trio": [
+   {
+    "run": "gamma0",
+    "start": "2026-07-27 17:30:40",
+    "end": "2026-07-27 19:41:37",
+    "hours": 2.18,
+    "status": "0"
+   },
+   {
+    "run": "gated_k0",
+    "start": "2026-07-27 19:41:37",
+    "end": "2026-07-27 21:52:34",
+    "hours": 2.18,
+    "status": "0"
+   },
+   {
+    "run": "cumulative",
+    "start": "2026-07-27 21:52:34",
+    "end": "2026-07-28 00:03:32",
+    "hours": 2.18,
+    "status": "0"
+   }
+  ],
+  "sum_h_exit0": 8.78,
+  "device": "NVIDIA GB10 (DGX Spark; launched by a local runner script that waits on nvidia-smi; no env.json)",
+  "not_measured": "S2-FF / S2-FF-CE on the three MGC backbones ran on Colab; their runner logs are not in the archive."
+ },
+ "aborted_or_smoke_gb10": {
+  "aborted_hinge_seed42": [
+   {
+    "label": "ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260724_120246",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260724_120246"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 261.8,
+    "median_stage2_epoch_s": null,
+    "est_full_run_h": 13.09,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false,
+    "logged_epoch_span_h": 3.27
+   },
+   {
+    "label": "ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_152743",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_152743"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 261.6,
+    "median_stage2_epoch_s": null,
+    "est_full_run_h": 13.08,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false,
+    "logged_epoch_span_h": 1.6
+   }
+  ],
+  "aborted_epoch_span_h": 4.87
+ },
+ "camera_ready_totals_h": {
+  "A100": 108.3,
+  "GB10": 40.3,
+  "method": "full-run estimates (median epoch time x configured epochs) + runner-log durations"
+ },
+ "camera_ready_totals_wall_h": {
+  "A100": 114.8,
+  "GB10": 40.9,
+  "method": "logged run_start->run_end for uninterrupted runs, full-run estimate for resumed runs, + runner-log durations"
+ },
+ "in_progress_not_included": [
+  "F1 MGC block-0 control (experiments/f1_mgc_block0, DGX Spark GB10), started 2026-09-25",
+  "F2 CIFAR-10 gamma=0 seed-42 rerun (experiments/f2_gamma0_s42, DGX Spark GB10), queued after F1"
+ ],
+ "submitted_paper_runs": {
+  "c10_d256_moe_a100": [
+   {
+    "label": "gamma0_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260311_120026",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 309.1,
+    "median_stage2_epoch_s": 63.4,
+    "est_full_run_h": 31.43,
+    "logged_wall_h_last_segment": 7.99,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "lcff_d256_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/lcff_prefix/runs/ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260311_120438",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/lcff_prefix/runs/ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260312_132019"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 306.4,
+    "median_stage2_epoch_s": 59.6,
+    "est_full_run_h": 31.14,
+    "logged_wall_h_last_segment": 7.72,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_cpfair_baseline",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_cpfair_baseline/ff_cifar10_ablation_cpfair_baseline_L4_D256_bs512_seed42_20260323_030540"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 274,
+    "median_stage1_epoch_s": 312.4,
+    "median_stage2_epoch_s": 57.0,
+    "est_full_run_h": 31.73,
+    "logged_wall_h_last_segment": 8.24,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_gamma0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_gamma0/ff_cifar10_ablation_gamma0_L4_D256_bs512_seed42_20260331_114340",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_gamma0/ff_cifar10_ablation_gamma0_L4_D256_bs512_seed42_20260402_121810"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 307.4,
+    "median_stage2_epoch_s": 59.9,
+    "est_full_run_h": 31.24,
+    "logged_wall_h_last_segment": 20.85,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_block_curr",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_block_curr/ff_cifar10_ablation_no_block_curr_L4_D256_bs512_seed42_20260330_030138",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_block_curr/ff_cifar10_ablation_no_block_curr_L4_D256_bs512_seed42_20260330_223332"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 312.6,
+    "median_stage2_epoch_s": 59.0,
+    "est_full_run_h": 31.76,
+    "logged_wall_h_last_segment": 13.17,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_depth_order",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_depth_order/ff_cifar10_ablation_no_depth_order_L4_D256_bs512_seed42_20260327_055341",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_depth_order/ff_cifar10_ablation_no_depth_order_L4_D256_bs512_seed42_20260327_094917",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_depth_order/ff_cifar10_ablation_no_depth_order_L4_D256_bs512_seed42_20260329_220935"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 305.5,
+    "median_stage2_epoch_s": 69.6,
+    "est_full_run_h": 31.1,
+    "logged_wall_h_last_segment": 4.86,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_hnm",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_hnm/ff_cifar10_ablation_no_hnm_L4_D256_bs512_seed42_20260325_164111",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_hnm/ff_cifar10_ablation_no_hnm_L4_D256_bs512_seed42_20260326_084811"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 236.2,
+    "median_stage2_epoch_s": 64.6,
+    "est_full_run_h": 24.11,
+    "logged_wall_h_last_segment": 8.83,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_moe",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_moe/ff_cifar10_ablation_no_moe_L4_D256_bs512_seed42_20260326_173825",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_moe/ff_cifar10_ablation_no_moe_L4_D256_bs512_seed42_20260326_205045"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 119.2,
+    "median_stage2_epoch_s": 21.8,
+    "est_full_run_h": 12.1,
+    "logged_wall_h_last_segment": 9.05,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_sam",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_sam/ff_cifar10_ablation_no_sam_L4_D256_bs512_seed42_20260324_053035"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 356,
+    "median_stage1_epoch_s": 159.1,
+    "median_stage2_epoch_s": 67.3,
+    "est_full_run_h": 16.37,
+    "logged_wall_h_last_segment": 0.83,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_no_supcon",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_no_supcon/ff_cifar10_ablation_no_supcon_L4_D256_bs512_seed42_20260325_082544"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 270,
+    "median_stage1_epoch_s": 299.1,
+    "median_stage2_epoch_s": 60.2,
+    "est_full_run_h": 30.41,
+    "logged_wall_h_last_segment": 8.25,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "component_single_aspect",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_single_aspect/ff_cifar10_ablation_single_aspect_L4_D256_bs512_seed42_20260403_090931",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_single_aspect/ff_cifar10_ablation_single_aspect_L4_D256_bs512_seed42_20260403_185707",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/component_ablation_v2_from_drive/extracted/ff_component_ablation/runs_single_aspect/ff_cifar10_ablation_single_aspect_L4_D256_bs512_seed42_20260404_194358"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 300.3,
+    "median_stage2_epoch_s": 60.0,
+    "est_full_run_h": 30.53,
+    "logged_wall_h_last_segment": 4.2,
+    "has_final_test_eval": true
+   }
+  ],
+  "c10_d256_moe_gb10": [
+   {
+    "label": "cp_fair_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260218_144731",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1067.6,
+    "median_stage2_epoch_s": 202.0,
+    "est_full_run_h": 108.48,
+    "logged_wall_h_last_segment": 63.64,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "cp_fair_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed123/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_bs512_seed123_20260318_001952",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed123/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_bs512_seed123_20260320_001527"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1066.7,
+    "median_stage2_epoch_s": 205.6,
+    "est_full_run_h": 108.41,
+    "logged_wall_h_last_segment": 104.19,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "cp_fair_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed456/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_bs512_seed456_20260324_135535",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed456/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_bs512_seed456_20260327_080127"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1066.2,
+    "median_stage2_epoch_s": 204.6,
+    "est_full_run_h": 108.35,
+    "logged_wall_h_last_segment": 54.82,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "cp_fair_s789",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed789/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_bs512_seed789_20260330_064018"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1062.9,
+    "median_stage2_epoch_s": 209.6,
+    "est_full_run_h": 108.04,
+    "logged_wall_h_last_segment": 109.27,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gamma0_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1077.6,
+    "median_stage2_epoch_s": 201.3,
+    "est_full_run_h": 109.47,
+    "logged_wall_h_last_segment": 110.06,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gamma0_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1079.8,
+    "median_stage2_epoch_s": 205.9,
+    "est_full_run_h": 109.73,
+    "logged_wall_h_last_segment": 110.15,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_nomem_l2",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_do_this_first/runs/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_bs512_seed42_20260128_084102"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     300
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1064.5,
+    "median_stage2_epoch_s": 202.2,
+    "est_full_run_h": 123.89,
+    "logged_wall_h_last_segment": 124.75,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_cp_fair_lc",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_v2/runs/ff_cifar10_cifar10_cp_fair_v2_low_contrastive_L4_D256_bs512_seed42_20260223_165508"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1070.4,
+    "median_stage2_epoch_s": 208.5,
+    "est_full_run_h": 108.8,
+    "logged_wall_h_last_segment": 142.76,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_multi_tech",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/atlas_ff/runs/ff_cifar10_cifar10_atlas_ff_triangle_multineg_div_probe_L4_D256_bs512_seed42_20260301_191325",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/atlas_ff/runs/ff_cifar10_cifar10_atlas_ff_triangle_multineg_div_probe_L4_D256_bs512_seed42_20260305_203646"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1094.9,
+    "median_stage2_epoch_s": 171.0,
+    "est_full_run_h": 111.04,
+    "logged_wall_h_last_segment": 10.94,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_baseline",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260106_173831",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260108_214956",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_L4_D256_bs512_seed42_20260110_171401"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     287,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1095.0,
+    "median_stage2_epoch_s": 206.7,
+    "est_full_run_h": 88.45,
+    "logged_wall_h_last_segment": 1.65,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_topk_depth",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_topk_depthsched/runs/ff_cifar10_cifar10_opt_load_last_fair_reviewfix_moe_valsplit_workersfix_topkNL_depthsched_L4_D256_bs512_seed42_20260208_001416"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     287,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1531.7,
+    "median_stage2_epoch_s": 209.0,
+    "est_full_run_h": 123.27,
+    "logged_wall_h_last_segment": 124.05,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_prefix_freeze",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/freez_layer_1_v2/runs/ff_cifar10_cifar10_opt_triangle_greedy_gaspectA_workersfix_v2_L4_D256_bs512_seed42_20260117_144151"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     287,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 708.1,
+    "median_stage2_epoch_s": 206.7,
+    "est_full_run_h": 57.6,
+    "logged_wall_h_last_segment": 78.3,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_greedy_freeze",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/freez_layer_1/runs/ff_cifar10_cifar10_opt_triangle_greedy_gaspectA_workersfix_L4_D256_bs512_seed42_20260115_231345"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     287,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 411.9,
+    "median_stage2_epoch_s": 209.6,
+    "est_full_run_h": 34.0,
+    "logged_wall_h_last_segment": 38.52,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_dp_fair",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_dp_fair/runs/ff_cifar10_cifar10_dp_fair_progressive_depth_L4_D256_bs512_seed42_20260213_145420",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_dp_fair/runs/ff_cifar10_cifar10_dp_fair_progressive_depth_L4_D256_bs512_seed42_20260218_131415"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 941.1,
+    "median_stage2_epoch_s": 168.9,
+    "est_full_run_h": 95.57,
+    "logged_wall_h_last_segment": 1.09,
+    "has_final_test_eval": true
+   }
+  ],
+  "c10_l4_d128_gated_s42": [
+   {
+    "label": "baseline_constant",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_baseline_constant_L4_D128_bs512_seed42_20260313_232043"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 76.9,
+    "median_stage2_epoch_s": 24.7,
+    "est_full_run_h": 3.92,
+    "logged_wall_h_last_segment": 4.06,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "no_all_collab",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_no_all_collab_L4_D128_bs512_seed42_20260315_124117"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 76.2,
+    "median_stage2_epoch_s": 24.4,
+    "est_full_run_h": 3.88,
+    "logged_wall_h_last_segment": 4.0,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_t1_k0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 74.5,
+    "median_stage2_epoch_s": 23.9,
+    "est_full_run_h": 3.79,
+    "logged_wall_h_last_segment": 3.92,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "lcff_prefix",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_lcff_prefix_L4_D128_bs512_seed42_20260315_084228"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 75.9,
+    "median_stage2_epoch_s": 24.1,
+    "est_full_run_h": 3.86,
+    "logged_wall_h_last_segment": 3.98,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_t1_k2",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k2_L4_D128_bs512_seed42_20260314_112422"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 75.1,
+    "median_stage2_epoch_s": 23.9,
+    "est_full_run_h": 3.82,
+    "logged_wall_h_last_segment": 3.96,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_t1_k4",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k4_L4_D128_bs512_seed42_20260314_152252"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "max logged epoch",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 78.2,
+    "median_stage2_epoch_s": 24.7,
+    "est_full_run_h": 3.98,
+    "logged_wall_h_last_segment": 4.12,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_t3_k0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t3_k0_L4_D128_bs512_seed42_20260314_071928"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 77.7,
+    "median_stage2_epoch_s": 24.7,
+    "est_full_run_h": 3.95,
+    "logged_wall_h_last_segment": 4.08,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_prev_only",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_prev_only_L4_D128_bs512_seed42_20260314_192927",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_prev_only_L4_D128_bs512_seed42_20260315_042603"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 78.2,
+    "median_stage2_epoch_s": 24.1,
+    "est_full_run_h": 3.98,
+    "logged_wall_h_last_segment": 0.27,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_prev_t1_k2",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_prev_t1_k2_L4_D128_bs512_seed42_20260315_044213"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 76.3,
+    "median_stage2_epoch_s": 24.5,
+    "est_full_run_h": 3.88,
+    "logged_wall_h_last_segment": 4.0,
+    "has_final_test_eval": true
+   }
+  ],
+  "c10_l8_d128_gated_s42": [
+   {
+    "label": "baseline_constant",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_baseline_constant_L8_L8_D128_bs512_seed42_20260318_204046"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 273.4,
+    "median_stage2_epoch_s": 137.4,
+    "est_full_run_h": 14.05,
+    "logged_wall_h_last_segment": 14.27,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "no_all_collab",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_no_all_collab_L8_L8_D128_bs512_seed42_20260318_062709"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 273.1,
+    "median_stage2_epoch_s": 136.0,
+    "est_full_run_h": 14.03,
+    "logged_wall_h_last_segment": 14.23,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "lcff_prefix",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_lcff_prefix_L8_L8_D128_bs512_seed42_20260319_105650"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 273.3,
+    "median_stage2_epoch_s": 344.7,
+    "est_full_run_h": 14.62,
+    "logged_wall_h_last_segment": 15.97,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_prev_only",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_prev_only_L8_L8_D128_bs512_seed42_20260317_031838"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 145.2,
+    "median_stage2_epoch_s": 47.6,
+    "est_full_run_h": 7.39,
+    "logged_wall_h_last_segment": 7.63,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_prev_t1_k2",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_prev_t1_k2_L8_L8_D128_bs512_seed42_20260317_105615"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 136.6,
+    "median_stage2_epoch_s": 45.4,
+    "est_full_run_h": 6.96,
+    "logged_wall_h_last_segment": 7.24,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "adaptive_t1_k0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_t1_k0_L8_L8_D128_bs512_seed42_20260315_201449"
+    ],
+    "device": "A100 (inferred: median epoch time)",
+    "device_source": "inferred from median Stage-1 epoch time (A100 137-145 s, GB10 273 s for this config)",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 140.3,
+    "median_stage2_epoch_s": 46.7,
+    "est_full_run_h": 7.14,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
+   },
+   {
+    "label": "adaptive_t1_k2",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_t1_k2_L8_L8_D128_bs512_seed42_20260316_105222"
+    ],
+    "device": "A100 (inferred: median epoch time)",
+    "device_source": "inferred from median Stage-1 epoch time (A100 137-145 s, GB10 273 s for this config)",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 143.1,
+    "median_stage2_epoch_s": 47.5,
+    "est_full_run_h": 7.29,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
+   },
+   {
+    "label": "adaptive_t1_k4",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_t1_k4_L8_L8_D128_bs512_seed42_20260316_212730"
+    ],
+    "device": "A100 (inferred: median epoch time)",
+    "device_source": "inferred from median Stage-1 epoch time (A100 137-145 s, GB10 273 s for this config)",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 44,
+    "median_stage1_epoch_s": 145.1,
+    "median_stage2_epoch_s": 47.2,
+    "est_full_run_h": 7.39,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
+   },
+   {
+    "label": "adaptive_t3_k0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_t3_k0_L8_L8_D128_bs512_seed42_20260316_033950"
+    ],
+    "device": "A100 (inferred: median epoch time)",
+    "device_source": "inferred from median Stage-1 epoch time (A100 137-145 s, GB10 273 s for this config)",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 136.2,
+    "median_stage2_epoch_s": 45.8,
+    "est_full_run_h": 6.94,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
+   }
+  ],
+  "c10_gated_k0_multiseed": [
+   {
+    "label": "k0_L4_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed123/ff_cifar10_cifar10_gated_k0_seed123_L4_D128_bs512_seed123_20260426_071309"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 152.8,
+    "median_stage2_epoch_s": 25.3,
+    "est_full_run_h": 7.71,
+    "logged_wall_h_last_segment": 7.82,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "k0_L4_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed456/ff_cifar10_cifar10_gated_k0_seed456_L4_D128_bs512_seed456_20260426_150234"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 144.0,
+    "median_stage2_epoch_s": 25.0,
+    "est_full_run_h": 7.27,
+    "logged_wall_h_last_segment": 7.46,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "k0_L8_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed123/ff_cifar10_cifar10_gated_k0_L8_seed123_L8_D128_bs512_seed123_20260427_041411"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 140.2,
+    "median_stage2_epoch_s": 46.9,
+    "est_full_run_h": 7.14,
+    "logged_wall_h_last_segment": 7.44,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "k0_L8_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed456/ff_cifar10_cifar10_gated_k0_L8_seed456_L8_D128_bs512_seed456_20260427_114056"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 140.8,
+    "median_stage2_epoch_s": 47.1,
+    "est_full_run_h": 7.17,
+    "logged_wall_h_last_segment": 7.43,
+    "has_final_test_eval": true
+   }
+  ],
+  "c10_l8_d128_32e_s42": [
+   {
+    "label": "l8_32e_cp_fair",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_cpfair_G07_L8D128_L8_D128_bs512_seed42_20260315_071624",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_cpfair_G07_L8D128_L8_D128_bs512_seed42_20260315_190153"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 565.2,
+    "median_stage2_epoch_s": 206.8,
+    "est_full_run_h": 29.41,
+    "logged_wall_h_last_segment": 19.04,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "l8_32e_lcff",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_lcff_G10_L8D128_L8_D128_bs512_seed42_20260316_140422"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 555.1,
+    "median_stage2_epoch_s": 200.3,
+    "est_full_run_h": 28.87,
+    "logged_wall_h_last_segment": 31.24,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "l8_32e_gamma0",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_noall_G0_L8D128_L8_D128_bs512_seed42_20260314_015458",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/scaling_L8D128_32e/runs_scale_L8D128/ff_cifar10_scale_noall_G0_L8D128_L8_D128_bs512_seed42_20260315_185311"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 556.5,
+    "median_stage2_epoch_s": 209.4,
+    "est_full_run_h": 28.99,
+    "logged_wall_h_last_segment": 0.14,
+    "has_final_test_eval": true
+   }
+  ],
+  "c100_trio_dense": [
+   {
+    "label": "cumulative_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed42/ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 139.7,
+    "median_stage2_epoch_s": 212.0,
+    "est_full_run_h": 15.22,
+    "logged_wall_h_last_segment": 15.74,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "cumulative_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed123/ff_cifar100_cifar100_cumulative_seed123_L4_D256_bs256_seed123_20260419_010632"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 70,
+    "median_stage1_epoch_s": 141.6,
+    "median_stage2_epoch_s": 212.5,
+    "est_full_run_h": 15.42,
+    "logged_wall_h_last_segment": 13.19,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "cumulative_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed456/ff_cifar100_cifar100_cumulative_seed456_L4_D256_bs256_seed456_20260420_051234"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 274,
+    "median_stage1_epoch_s": 140.7,
+    "median_stage2_epoch_s": 211.0,
+    "est_full_run_h": 15.32,
+    "logged_wall_h_last_segment": 4.97,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gamma0_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed42/ff_cifar100_cifar100_gamma0_seed42_L4_D256_bs256_seed42_20260420_101044"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 139.0,
+    "median_stage2_epoch_s": 211.5,
+    "est_full_run_h": 15.16,
+    "logged_wall_h_last_segment": 15.68,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gamma0_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed123/ff_cifar100_cifar100_gamma0_seed123_L4_D256_bs256_seed123_20260421_124316"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 85,
+    "median_stage1_epoch_s": 141.6,
+    "median_stage2_epoch_s": 214.7,
+    "est_full_run_h": 15.43,
+    "logged_wall_h_last_segment": 12.62,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gamma0_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gamma0_seed456/ff_cifar100_cifar100_gamma0_seed456_L4_D256_bs256_seed456_20260422_142245"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 285,
+    "median_stage1_epoch_s": 140.4,
+    "median_stage2_epoch_s": 211.4,
+    "est_full_run_h": 15.29,
+    "logged_wall_h_last_segment": 4.53,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gated_k0_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed42/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_bs256_seed42_20260422_185437"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 138.3,
+    "median_stage2_epoch_s": 210.6,
+    "est_full_run_h": 15.08,
+    "logged_wall_h_last_segment": 15.57,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gated_k0_s123",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed123/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_bs256_seed123_20260423_150626"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 140.1,
+    "median_stage2_epoch_s": 212.6,
+    "est_full_run_h": 15.27,
+    "logged_wall_h_last_segment": 15.76,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "gated_k0_s456",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_gated_k0_seed456/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_bs256_seed456_20260424_153513"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 208,
+    "median_stage1_epoch_s": 140.2,
+    "median_stage2_epoch_s": 211.1,
+    "est_full_run_h": 15.27,
+    "logged_wall_h_last_segment": 7.57,
+    "has_final_test_eval": true
+   }
+  ],
+  "c100_32e_baseline": [
+   {
+    "label": "c100_32e_s123",
+    "segments": [
+     "amir-porjects/cifar_100_fair/runs/ff_cifar100_c100_baseline_constant_s123_L4_D256_bs256_seed123_20260405_094547"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1272.6,
+    "median_stage2_epoch_s": 2098.4,
+    "est_full_run_h": 139.62,
+    "logged_wall_h_last_segment": 144.12,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "c100_32e_s456",
+    "segments": [
+     "amir-porjects/cifar_100_fair/runs/ff_cifar100_c100_baseline_constant_s456_L4_D256_bs256_seed456_20260411_095313"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1275.2,
+    "median_stage2_epoch_s": 2102.9,
+    "est_full_run_h": 139.91,
+    "logged_wall_h_last_segment": 144.19,
+    "has_final_test_eval": true
+   }
+  ],
+  "tiny_imagenet": [
+   {
+    "label": "tiny_s42",
+    "segments": [
+     "amir-porjects/tiny_imagenet_fair/from_drive_1/extracted/ff_tiny_imagenet_training/runs_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_bs256_seed42_20260411_081714",
+     "amir-porjects/tiny_imagenet_fair/from_drive_1/extracted/ff_tiny_imagenet_training/runs_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_bs256_seed42_20260412_104050"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 238.1,
+    "median_stage2_epoch_s": 849.1,
+    "est_full_run_h": 28.66,
+    "logged_wall_h_last_segment": 7.96,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "tiny_s123",
+    "segments": [
+     "amir-porjects/tiny_imagenet_fair/extracted_seeds/ff_tiny_imagenet_multiseed/runs_seed123/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_bs256_seed123_20260413_205048"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 332,
+    "median_stage1_epoch_s": 239.3,
+    "median_stage2_epoch_s": 851.8,
+    "est_full_run_h": 28.79,
+    "logged_wall_h_last_segment": 8.14,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "tiny_s456",
+    "segments": [
+     "amir-porjects/tiny_imagenet_fair/extracted_seeds/ff_tiny_imagenet_multiseed/runs_seed456/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_bs256_seed456_20260414_212958"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 209,
+    "median_stage1_epoch_s": 237.5,
+    "median_stage2_epoch_s": 849.5,
+    "est_full_run_h": 28.6,
+    "logged_wall_h_last_segment": 16.87,
+    "has_final_test_eval": true
+   }
+  ],
+  "bp_ff_controls_s42": [
+   {
+    "label": "bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device_source": "note",
+    "epochs_logged": 362,
+    "sum_epoch_time_h": 2.74,
+    "final_metrics_device": "cuda"
+   },
+   {
+    "label": "bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device_source": "note",
+    "epochs_logged": 362,
+    "sum_epoch_time_h": 5.32,
+    "final_metrics_device": "cuda"
+   },
+   {
+    "label": "ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device_source": "note",
+    "epochs_logged": 362,
+    "sum_epoch_time_h": 11.81,
+    "final_metrics_device": "cuda"
+   }
+  ]
+ },
+ "submitted_paper_summary": {
+  "c10_d256_moe_a100": {
+   "A100": {
+    "n_runs": 11,
+    "per_run_h_min": 12.1,
+    "per_run_h_max": 31.76,
+    "sum_h": 301.9,
+    "uninterrupted_runs_logged_wall_h": null
+   }
+  },
+  "c10_d256_moe_gb10": {
+   "GB10": {
+    "n_runs": 14,
+    "per_run_h_min": 34.0,
+    "per_run_h_max": 123.89,
+    "sum_h": 1395.1,
+    "uninterrupted_runs_logged_wall_h": [
+     38.52,
+     142.76,
+     8
+    ]
+   }
+  },
+  "c10_l4_d128_gated_s42": {
+   "A100": {
+    "n_runs": 9,
+    "per_run_h_min": 3.79,
+    "per_run_h_max": 3.98,
+    "sum_h": 35.1,
+    "uninterrupted_runs_logged_wall_h": [
+     3.92,
+     4.12,
+     8
+    ]
+   }
+  },
+  "c10_l8_d128_gated_s42": {
+   "GB10": {
+    "n_runs": 3,
+    "per_run_h_min": 14.03,
+    "per_run_h_max": 14.62,
+    "sum_h": 42.7,
+    "uninterrupted_runs_logged_wall_h": [
+     14.23,
+     15.97,
+     3
+    ]
+   },
+   "A100": {
+    "n_runs": 6,
+    "per_run_h_min": 6.94,
+    "per_run_h_max": 7.39,
+    "sum_h": 43.1,
+    "uninterrupted_runs_logged_wall_h": [
+     7.24,
+     7.63,
+     2
+    ]
+   }
+  },
+  "c10_gated_k0_multiseed": {
+   "A100": {
+    "n_runs": 4,
+    "per_run_h_min": 7.14,
+    "per_run_h_max": 7.71,
+    "sum_h": 29.3,
+    "uninterrupted_runs_logged_wall_h": [
+     7.43,
+     7.82,
+     4
+    ]
+   }
+  },
+  "c10_l8_d128_32e_s42": {
+   "GB10": {
+    "n_runs": 3,
+    "per_run_h_min": 28.87,
+    "per_run_h_max": 29.41,
+    "sum_h": 87.3,
+    "uninterrupted_runs_logged_wall_h": [
+     31.24,
+     31.24,
+     1
+    ]
+   }
+  },
+  "c100_trio_dense": {
+   "A100": {
+    "n_runs": 9,
+    "per_run_h_min": 15.08,
+    "per_run_h_max": 15.43,
+    "sum_h": 137.5,
+    "uninterrupted_runs_logged_wall_h": [
+     15.57,
+     15.76,
+     4
+    ]
+   }
+  },
+  "c100_32e_baseline": {
+   "GB10": {
+    "n_runs": 2,
+    "per_run_h_min": 139.62,
+    "per_run_h_max": 139.91,
+    "sum_h": 279.5,
+    "uninterrupted_runs_logged_wall_h": [
+     144.12,
+     144.19,
+     2
+    ]
+   }
+  },
+  "tiny_imagenet": {
+   "A100": {
+    "n_runs": 3,
+    "per_run_h_min": 28.6,
+    "per_run_h_max": 28.79,
+    "sum_h": 86.0,
+    "uninterrupted_runs_logged_wall_h": null
+   }
+  },
+  "bp_ff_controls_s42": {
+   "A100": {
+    "n_runs": 3,
+    "per_run_h_min": 2.74,
+    "per_run_h_max": 11.81,
+    "sum_h": 19.9,
+    "uninterrupted_runs_logged_wall_h": null
+   }
+  }
+ },
+ "not_measured_reported_runs": [
+  "13-variant sweep rows fixed-nl, block0-label and gamma-ramp (logs not identified in the local archive)",
+  "CIFAR-100 32-expert gamma=0.7 baseline seed 42 (run not retained)",
+  "plain-CNN BP/FF seed-42 rows of Table 2 (no per-epoch timing logged)",
+  "HNM k-sweep and aspect/EMA deep-dive ablations",
+  "text-domain runs (9; logs inside the text-run archive)"
+ ],
+ "totals_measured_h": {
+  "A100": 761.0,
+  "GB10": 1844.9,
+  "unknown": 0.0
+ },
+ "cpu_recomputations": {
+  "e3_ema_accuracy_gates_s": [
+   344.0,
+   202.1,
+   205.5
+  ],
+  "e6_chunks": {
+   "test_00000_03400.json": 415.1,
+   "test_03400_06700.json": 429.1,
+   "test_06700_10000.json": 261.9,
+   "val_00000_02500.json": 225.6,
+   "val_02500_05000.json": 296.0
+  },
+  "e6_total_s": 1627.6,
+  "supplement_equivalence_wall_s": {
+   "test_equiv_cp_fair_cifar10.py": {
+    "n_tests": 19,
+    "n_failed": 0,
+    "n_skipped": 0,
+    "wall_sec": 532.5,
+    "trainer_sha256": "e48a51e2e84651205dd0e1a6094e062b322cd3a6addfd9a354392514562a595a",
+    "references": {
+     "f2_fork_trainer": {
+      "available": true,
+      "file": "trainer.py",
+      "sha256": "c78d850bd965a7bfaf0f6cfc7752820d0e4d3aa9518fc0348b1a31461ceb7e06",
+      "sha256_ok": true
+     },
+     "v1_trainer": {
+      "available": true,
+      "file": "cp_fair_cifar10.py",
+      "sha256": "340f6933ae09dc2c5b4b95ca47a8458f165e67d0c5b6f4145d2db7a4dcc1bc19",
+      "sha256_ok": true
+     }
+    }
+   },
+   "test_equiv_cp_fair_cifar100.py": {
+    "n_tests": 25,
+    "n_failed": 0,
+    "n_skipped": 0,
+    "wall_sec": 254.7,
+    "trainer_sha256": "8f357700861700e2d03f43f50fde14995d783930e383affe01ddf55686fd5f3a",
+    "references": {
+     "rebuttal_mgc_c100_trainer": {
+      "available": true,
+      "file": "mgc_c100_trainer.py",
+      "sha256": "48ab31dd18e881a8827a7ae936ec0634ce2cb313f381812af995c660a6f3b98e",
+      "sha256_ok": true
+     },
+     "v1_trainer": {
+      "available": true,
+      "file": "cp_fair_cifar100.py",
+      "sha256": "0fa6c0427cb3ec66e5d89bf6bea2957d7a38da405f9686bcd2a7289180645a1d",
+      "sha256_ok": true
+     }
+    }
+   },
+   "test_equiv_cp_fair_core.py": {
+    "n_tests": 16,
+    "n_failed": 0,
+    "n_skipped": 0,
+    "wall_sec": 106.7,
+    "trainer_sha256": "9e0b084d3ab65b11541db7e4d64f46d1295e96d248997347a6e07d4c869ecd09",
+    "references": {
+     "v1_trainer": {
+      "available": true,
+      "file": "cp_fair_core.py",
+      "sha256": "23f640916d00abe2f36124944744705a9ecc652de819361143266ffb79cdf540",
+      "sha256_ok": true
+     }
+    }
+   },
+   "test_equiv_cp_fair_hardness_gated.py": {
+    "n_tests": 40,
+    "n_failed": 0,
+    "n_skipped": 0,
+    "wall_sec": 222.6,
+    "trainer_sha256": "3dc353c7c1430630b84519771cfcb92d5b27d952b8f8a1c688747c347ca95493",
+    "references": {
+     "f1_fork_trainer": {
+      "available": true,
+      "file": "trainer.py",
+      "sha256": "83fa1519b4a5793e1e1fd0db5beebbc7180fbb5f2939ae71cc6f30e4daf1082d",
+      "sha256_ok": true
+     },
+     "rebuttal_hinge_trainer": {
+      "available": true,
+      "file": "hinge_trainer.py",
+      "sha256": "545d5c3aed4a1c090e67e53e3b6e21061e9afddc389502c408969fa5e58d3c0d",
+      "sha256_ok": true
+     },
+     "rebuttal_mgc_trainer": {
+      "available": true,
+      "file": "mgc_trainer.py",
+      "sha256": "b0515dbb8e00288d003f4e2a8ffad792dc49fd7e8ca509eec8a02e130089cb24",
+      "sha256_ok": true
+     },
+     "v1_trainer": {
+      "available": true,
+      "file": "cp_fair_hardness_gated.py",
+      "sha256": "71d684e4e90500b777cc8b106ea0bb4c86c65492ca4224a70b1e21346348aa3b",
+      "sha256_ok": true
+     }
+    }
+   },
+   "test_equiv_cp_fair_tiny_imagenet.py": {
+    "n_tests": 17,
+    "n_failed": 0,
+    "n_skipped": 0,
+    "wall_sec": 168.9,
+    "trainer_sha256": "f00761361e904a44209efa44034687cf76cb2f694ebf94d581715a60362462ec",
+    "references": {
+     "v1_trainer": {
+      "available": true,
+      "file": "cp_fair_tiny_imagenet.py",
+      "sha256": "aef8aae711bb82af7419d297d640f5ca18ecbd12aab2eda616984d410bf578a7",
+      "sha256_ok": true
+     }
+    }
+   }
+  },
+  "threads": 6,
+  "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads. The E1 tier-2 / E2 CPU batch was still running when this file was written and is not included."
+ }
+}

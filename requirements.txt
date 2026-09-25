@@ -1,0 +1,18 @@
+# Camera-ready tested environment (Python 3.12). The CPU equivalence tests (tests/), the
+# locality audit (scripts/reproduce_locality_audit.sh) and the analysis scripts (analysis/)
+# were run with exactly these versions.
+#
+# Training: the reported runs were trained with PyTorch 2.9.1+cu130 (DGX Spark, GB10) and
+# 2.10.0+cu128 / 2.11.0+cu128 (Colab, A100-SXM4-40GB), Python 3.12; each run's env.json
+# records the exact versions. Install the torch/torchvision wheels that match your CUDA version.
+#
+# The v1 supplement pinned torch==2.3.0, torchvision==0.18.0, numpy==1.26.4 and
+# matplotlib==3.8.4. Those pins are replaced here: scipy 1.18.1 requires numpy>=2.0 and
+# Python>=3.12, and the recorded training runs used PyTorch 2.9-2.11.
+torch==2.14.0
+torchvision==0.29.0
+numpy==2.5.2
+matplotlib==3.11.2
+tqdm==4.70.1
+scipy==1.18.1
+scikit-learn==1.9.1

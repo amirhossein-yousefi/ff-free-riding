@@ -1,0 +1,440 @@
+{
+ "_meta": {
+  "description": "Squared-hinge barrier max(0, theta - u)^2, theta=2, CIFAR-10 L4/D128, 180+10 epochs, SAM on, 3 seeds per arm (gamma=0.7 cumulative vs gamma=0).",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "lineage": "ALL seeds (incl. seed 42) from MR/from_colab/runs_from_colab. The DGX seed-42 dirs in MR/runs are aborted (see aborted_dgx_seed42) and are never aggregated.",
+  "resumed_run_note": "gamma=0.7 seed 456 was resumed: its layer log starts at epoch 171 (final_test_eval complete).",
+  "sep_label": "last-Stage-1-epoch training sep^cur_nl (layer_metrics.jsonl, epoch 180)",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "arms": {
+  "gamma0.7": {
+   "per_seed": {
+    "42": {
+     "S1": 85.22,
+     "S1-TTA": 86.59,
+     "S2": 85.65,
+     "S2-TTA": 87.04,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      2.53788772,
+      1.93473943,
+      1.65968353,
+      1.68776871
+     ],
+     "gpos_cur": [
+      4.24413486,
+      1.1237002,
+      0.78599815,
+      0.79355151
+     ]
+    },
+    "123": {
+     "S1": 85.77,
+     "S1-TTA": 87.1,
+     "S2": 86.0,
+     "S2-TTA": 87.2,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      2.57966478,
+      1.9905284,
+      1.64124101,
+      1.67523668
+     ],
+     "gpos_cur": [
+      4.19203042,
+      1.15893578,
+      0.77561805,
+      0.79431517
+     ]
+    },
+    "456": {
+     "S1": 85.63,
+     "S1-TTA": 86.86,
+     "S2": 86.18,
+     "S2-TTA": 87.01,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 171,
+     "sep_curr_nl": [
+      2.5392388,
+      1.95814531,
+      1.63608853,
+      1.6528303
+     ],
+     "gpos_cur": [
+      4.15884149,
+      1.13334055,
+      0.77048041,
+      0.78423724
+     ]
+    }
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.22,
+      85.77,
+      85.63
+     ],
+     "mean": 85.54,
+     "sd": 0.28583212,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.59,
+      87.1,
+      86.86
+     ],
+     "mean": 86.85,
+     "sd": 0.25514702,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      85.65,
+      86.0,
+      86.18
+     ],
+     "mean": 85.94333333,
+     "sd": 0.26950572,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      87.04,
+      87.2,
+      87.01
+     ],
+     "mean": 87.08333333,
+     "sd": 0.10214369,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       2.53788772,
+       2.57966478,
+       2.5392388
+      ],
+      "mean": 2.55226377,
+      "sd": 0.02373959,
+      "n": 3
+     },
+     {
+      "values": [
+       1.93473943,
+       1.9905284,
+       1.95814531
+      ],
+      "mean": 1.96113771,
+      "sd": 0.02801461,
+      "n": 3
+     },
+     {
+      "values": [
+       1.65968353,
+       1.64124101,
+       1.63608853
+      ],
+      "mean": 1.64567102,
+      "sd": 0.01240563,
+      "n": 3
+     },
+     {
+      "values": [
+       1.68776871,
+       1.67523668,
+       1.6528303
+      ],
+      "mean": 1.67194523,
+      "sd": 0.01770024,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      1.68776871,
+      1.67523668,
+      1.6528303
+     ],
+     "mean": 1.67194523,
+     "sd": 0.01770024,
+     "n": 3
+    }
+   },
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260723_214017",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed123_20260724_191321",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g07_L4_D128_bs512_seed456_20260725_194352"
+   }
+  },
+  "gamma0": {
+   "per_seed": {
+    "42": {
+     "S1": 85.59,
+     "S1-TTA": 86.8,
+     "S2": 85.56,
+     "S2-TTA": 86.95,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      2.52144871,
+      3.63331388,
+      4.21986394,
+      4.25202797
+     ],
+     "gpos_cur": [
+      4.22209445,
+      3.23271646,
+      2.53388496,
+      2.36076321
+     ]
+    },
+    "123": {
+     "S1": 85.85,
+     "S1-TTA": 86.96,
+     "S2": 86.33,
+     "S2-TTA": 87.25,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      2.59923763,
+      3.80472704,
+      4.35837834,
+      4.57090901
+     ],
+     "gpos_cur": [
+      4.25050394,
+      3.30823453,
+      2.65370985,
+      2.3254704
+     ]
+    },
+    "456": {
+     "S1": 85.27,
+     "S1-TTA": 86.3,
+     "S2": 85.61,
+     "S2-TTA": 86.59,
+     "final_stage1_epoch": 180,
+     "first_stage1_epoch_logged": 1,
+     "sep_curr_nl": [
+      2.48688703,
+      3.67601391,
+      4.2677987,
+      4.50064025
+     ],
+     "gpos_cur": [
+      4.12748959,
+      3.16361463,
+      2.54933404,
+      2.2520618
+     ]
+    }
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.59,
+      85.85,
+      85.27
+     ],
+     "mean": 85.57,
+     "sd": 0.29051678,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.8,
+      86.96,
+      86.3
+     ],
+     "mean": 86.68666667,
+     "sd": 0.3442867,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      85.56,
+      86.33,
+      85.61
+     ],
+     "mean": 85.83333333,
+     "sd": 0.43085187,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      86.95,
+      87.25,
+      86.59
+     ],
+     "mean": 86.93,
+     "sd": 0.33045423,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       2.52144871,
+       2.59923763,
+       2.48688703
+      ],
+      "mean": 2.53585779,
+      "sd": 0.0575446,
+      "n": 3
+     },
+     {
+      "values": [
+       3.63331388,
+       3.80472704,
+       3.67601391
+      ],
+      "mean": 3.70468494,
+      "sd": 0.08923082,
+      "n": 3
+     },
+     {
+      "values": [
+       4.21986394,
+       4.35837834,
+       4.2677987
+      ],
+      "mean": 4.28201366,
+      "sd": 0.07034279,
+      "n": 3
+     },
+     {
+      "values": [
+       4.25202797,
+       4.57090901,
+       4.50064025
+      ],
+      "mean": 4.44119241,
+      "sd": 0.16754645,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      4.25202797,
+      4.57090901,
+      4.50064025
+     ],
+     "mean": 4.44119241,
+     "sd": 0.16754645,
+     "n": 3
+    }
+   },
+   "run_dirs": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_063123",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed123_20260725_035433",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_hinge_g0_L4_D128_bs512_seed456_20260725_210209"
+   }
+  }
+ },
+ "delta_gamma07_minus_gamma0_pp": {
+  "S1": -0.03,
+  "S1-TTA": 0.16333333,
+  "S2": 0.11,
+  "S2-TTA": 0.15333333
+ },
+ "deepest_sep_ratio_gamma0_over_gamma07": 2.65630257,
+ "block0_sep": {
+  "gamma0.7": {
+   "values": [
+    2.53788772,
+    2.57966478,
+    2.5392388
+   ],
+   "mean": 2.55226377,
+   "sd": 0.02373959,
+   "n": 3
+  },
+  "gamma0": {
+   "values": [
+    2.52144871,
+    2.59923763,
+    2.48688703
+   ],
+   "mean": 2.53585779,
+   "sd": 0.0575446,
+   "n": 3
+  }
+ },
+ "configs": {
+  "g07_s42": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.7,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  },
+  "g07_s123": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.7,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  },
+  "g07_s456": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.7,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  },
+  "g0_s42": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.0,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  },
+  "g0_s123": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.0,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  },
+  "g0_s456": {
+   "barrier_type": "sq_hinge",
+   "barrier_margin": 2.0,
+   "gamma_scale": 0.0,
+   "use_sam": true,
+   "use_mgc": false,
+   "d_model": 128,
+   "epochs_stage1": 180
+  }
+ },
+ "aborted_dgx_seed42": {
+  "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260724_120246": {
+   "last_epoch": 46,
+   "has_final_test_eval": false
+  },
+  "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_152743": {
+   "last_epoch": 23,
+   "has_final_test_eval": false
+  }
+ }
+}

@@ -1,0 +1,947 @@
+{
+ "_header": {
+  "items": "D1 D2 D4 D5 D7 D13",
+  "script": "amir-porjects/neuroips_review/camera_ready/analysis/d_errata_values.py",
+  "created": "2026-09-25",
+  "sd": "sample (ddof=1) unless labelled population"
+ },
+ "runs": {
+  "l4_k0_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.86,
+    "stage1_test_top1_tta": 86.81,
+    "stage2_test_top1_no_tta": 86.35,
+    "stage2_test_top1_tta": 87.27
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410/events.jsonl final_test_eval",
+   "best_val_s1": 87.24,
+   "best_val_s2_tta": 87.2,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1428,
+    2.9547,
+    3.3929,
+    3.1084
+   ],
+   "sep_nl_last": [
+    0.9223,
+    0.9635,
+    0.9774,
+    0.9847
+   ]
+  },
+  "l4_const_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_baseline_constant_L4_D128_bs512_seed42_20260313_232043",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 86.18,
+    "stage1_test_top1_tta": 87.25,
+    "stage2_test_top1_no_tta": 86.4,
+    "stage2_test_top1_tta": 87.42
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_baseline_constant_L4_D128_bs512_seed42_20260313_232043/events.jsonl final_test_eval",
+   "best_val_s1": 87.46,
+   "best_val_s2_tta": 87.38,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1558,
+    2.1612,
+    1.3159,
+    0.7421
+   ],
+   "sep_nl_last": [
+    0.9219,
+    0.966,
+    0.98,
+    0.985
+   ]
+  },
+  "l4_lcff_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_lcff_prefix_L4_D128_bs512_seed42_20260315_084228",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 1.0,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.8,
+    "stage1_test_top1_tta": 86.83,
+    "stage2_test_top1_no_tta": 85.89,
+    "stage2_test_top1_tta": 86.84
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_lcff_prefix_L4_D128_bs512_seed42_20260315_084228/events.jsonl final_test_eval",
+   "best_val_s1": 86.76,
+   "best_val_s2_tta": 86.92,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1363,
+    1.113,
+    1.0054,
+    0.9427
+   ],
+   "sep_nl_last": [
+    0.9196,
+    0.9623,
+    0.976,
+    0.9831
+   ]
+  },
+  "l4_g0_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_no_all_collab_L4_D128_bs512_seed42_20260315_124117",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.75,
+    "stage1_test_top1_tta": 86.87,
+    "stage2_test_top1_no_tta": 86.25,
+    "stage2_test_top1_tta": 87.21
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation/runs/ff_cifar10_no_all_collab_L4_D128_bs512_seed42_20260315_124117/events.jsonl final_test_eval",
+   "best_val_s1": 87.5,
+   "best_val_s2_tta": 87.6,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.159,
+    2.0583,
+    2.3807,
+    2.6078
+   ],
+   "sep_nl_last": [
+    0.922,
+    0.9633,
+    0.9794,
+    0.987
+   ]
+  },
+  "l4_k0_s123": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed123/ff_cifar10_cifar10_gated_k0_seed123_L4_D128_bs512_seed123_20260426_071309",
+   "config": {
+    "seed": 123,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.87,
+    "stage1_test_top1_tta": 86.91,
+    "stage2_test_top1_no_tta": 86.03,
+    "stage2_test_top1_tta": 87.23
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed123/ff_cifar10_cifar10_gated_k0_seed123_L4_D128_bs512_seed123_20260426_071309/events.jsonl final_test_eval",
+   "best_val_s1": 86.56,
+   "best_val_s2_tta": 87.18,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1158,
+    2.6352,
+    2.659,
+    1.9365
+   ],
+   "sep_nl_last": [
+    0.9225,
+    0.963,
+    0.9791,
+    0.9868
+   ]
+  },
+  "l4_k0_s456": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed456/ff_cifar10_cifar10_gated_k0_seed456_L4_D128_bs512_seed456_20260426_150234",
+   "config": {
+    "seed": 456,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.55,
+    "stage1_test_top1_tta": 86.62,
+    "stage2_test_top1_no_tta": 85.82,
+    "stage2_test_top1_tta": 86.96
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_gated_multiseed/runs_gated_k0_seed456/ff_cifar10_cifar10_gated_k0_seed456_L4_D128_bs512_seed456_20260426_150234/events.jsonl final_test_eval",
+   "best_val_s1": 86.0,
+   "best_val_s2_tta": 86.72,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.0824,
+    2.5908,
+    2.5131,
+    1.826
+   ],
+   "sep_nl_last": [
+    0.9203,
+    0.9618,
+    0.978,
+    0.9848
+   ]
+  },
+  "l8_k0_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_adaptive_t1_k0_L8_L8_D128_bs512_seed42_20260315_201449",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": null,
+   "best_val_s1": 86.96,
+   "best_val_s2_tta": 86.88,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1453,
+    3.4634,
+    4.7111,
+    4.4268,
+    4.7259,
+    5.5413,
+    6.2342,
+    6.9379
+   ],
+   "sep_nl_last": [
+    0.9196,
+    0.9634,
+    0.9832,
+    0.9914,
+    0.9956,
+    0.9973,
+    0.9982,
+    0.9989
+   ]
+  },
+  "l8_k0_s123": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed123/ff_cifar10_cifar10_gated_k0_L8_seed123_L8_D128_bs512_seed123_20260427_041411",
+   "config": {
+    "seed": 123,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.94,
+    "stage1_test_top1_tta": 87.12,
+    "stage2_test_top1_no_tta": 86.47,
+    "stage2_test_top1_tta": 87.51
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed123/ff_cifar10_cifar10_gated_k0_L8_seed123_L8_D128_bs512_seed123_20260427_041411/events.jsonl final_test_eval",
+   "best_val_s1": 87.14,
+   "best_val_s2_tta": 87.32,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1805,
+    3.5914,
+    4.9,
+    4.8563,
+    5.2308,
+    5.8924,
+    6.5079,
+    6.7024
+   ],
+   "sep_nl_last": [
+    0.9225,
+    0.9647,
+    0.9836,
+    0.991,
+    0.9949,
+    0.9969,
+    0.998,
+    0.9988
+   ]
+  },
+  "l8_k0_s456": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed456/ff_cifar10_cifar10_gated_k0_L8_seed456_L8_D128_bs512_seed456_20260427_114056",
+   "config": {
+    "seed": 456,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "adaptive",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.68,
+    "stage1_test_top1_tta": 86.84,
+    "stage2_test_top1_no_tta": 85.92,
+    "stage2_test_top1_tta": 87.01
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar10_l8_gated_multiseed/runs_gated_k0_L8_seed456/ff_cifar10_cifar10_gated_k0_L8_seed456_L8_D128_bs512_seed456_20260427_114056/events.jsonl final_test_eval",
+   "best_val_s1": 86.84,
+   "best_val_s2_tta": 87.06,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1681,
+    3.5586,
+    4.9229,
+    4.628,
+    4.7222,
+    5.3202,
+    6.0413,
+    6.2953
+   ],
+   "sep_nl_last": [
+    0.9221,
+    0.9626,
+    0.9829,
+    0.9906,
+    0.995,
+    0.9969,
+    0.9981,
+    0.9987
+   ]
+  },
+  "l8_g0_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_no_all_collab_L8_L8_D128_bs512_seed42_20260318_062709",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.77,
+    "stage1_test_top1_tta": 86.83,
+    "stage2_test_top1_no_tta": 86.35,
+    "stage2_test_top1_tta": 87.21
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_no_all_collab_L8_L8_D128_bs512_seed42_20260318_062709/events.jsonl final_test_eval",
+   "best_val_s1": 87.02,
+   "best_val_s2_tta": 87.1,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1275,
+    2.0793,
+    2.5432,
+    2.8008,
+    2.9234,
+    3.0093,
+    3.0425,
+    3.0196
+   ],
+   "sep_nl_last": [
+    0.9184,
+    0.9619,
+    0.9831,
+    0.9911,
+    0.9948,
+    0.9971,
+    0.9982,
+    0.9984
+   ]
+  },
+  "l8_const_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_baseline_constant_L8_L8_D128_bs512_seed42_20260318_204046",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.87,
+    "stage1_test_top1_tta": 86.85,
+    "stage2_test_top1_no_tta": 86.29,
+    "stage2_test_top1_tta": 86.97
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_baseline_constant_L8_L8_D128_bs512_seed42_20260318_204046/events.jsonl final_test_eval",
+   "best_val_s1": 86.7,
+   "best_val_s2_tta": 87.06,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1234,
+    2.5292,
+    2.2423,
+    1.0887,
+    0.8613,
+    0.8579,
+    0.8686,
+    0.8227
+   ],
+   "sep_nl_last": [
+    0.9195,
+    0.9633,
+    0.9827,
+    0.9891,
+    0.9929,
+    0.9956,
+    0.9972,
+    0.998
+   ]
+  },
+  "l8_lcff_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_lcff_prefix_L8_L8_D128_bs512_seed42_20260319_105650",
+   "config": {
+    "seed": 42,
+    "use_sam": false,
+    "num_blocks": 8,
+    "d_model": 128,
+    "n_experts": 16,
+    "moe_top_k": 2,
+    "gamma_scale": 1.0,
+    "gamma_gating_mode": "constant",
+    "gamma_kappa": 0.0,
+    "gamma_tau": 1.0,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 180,
+    "epochs_stage2": 10
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 85.49,
+    "stage1_test_top1_tta": 86.8,
+    "stage2_test_top1_no_tta": 85.72,
+    "stage2_test_top1_tta": 86.79
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/ff_gated_ablation_L8/runs/ff_cifar10_lcff_prefix_L8_L8_D128_bs512_seed42_20260319_105650/events.jsonl final_test_eval",
+   "best_val_s1": 86.86,
+   "best_val_s2_tta": 87.38,
+   "stage1_last_epoch": 180,
+   "sep_curr_nl_last": [
+    1.1331,
+    1.1547,
+    1.2756,
+    1.1304,
+    0.8985,
+    0.4001,
+    0.2727,
+    0.1524
+   ],
+   "sep_nl_last": [
+    0.9188,
+    0.963,
+    0.9815,
+    0.9894,
+    0.9928,
+    0.9939,
+    0.9944,
+    0.9947
+   ]
+  },
+  "c10_g0_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+   "config": {
+    "seed": 42,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 90.52,
+    "stage1_test_top1_tta": 91.45,
+    "stage2_test_top1_no_tta": 90.37,
+    "stage2_test_top1_tta": 91.39
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/events.jsonl final_test_eval",
+   "best_val_s1": 91.98,
+   "best_val_s2_tta": 92.06,
+   "stage1_last_epoch": 362,
+   "sep_curr_nl_last": [
+    2.3022,
+    2.8859,
+    3.1747,
+    3.2756
+   ],
+   "sep_nl_last": [
+    0.9907,
+    0.9921,
+    0.994,
+    0.9949
+   ]
+  },
+  "c10_g0_s123": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110",
+   "config": {
+    "seed": 123,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 90.54,
+    "stage1_test_top1_tta": 91.4,
+    "stage2_test_top1_no_tta": 90.51,
+    "stage2_test_top1_tta": 91.51
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110/events.jsonl final_test_eval",
+   "best_val_s1": 91.78,
+   "best_val_s2_tta": 91.64,
+   "stage1_last_epoch": 362,
+   "sep_curr_nl_last": [
+    2.2905,
+    4.7893,
+    6.6345,
+    7.8521
+   ],
+   "sep_nl_last": [
+    0.9905,
+    0.9916,
+    0.9931,
+    0.9937
+   ]
+  },
+  "c10_g0_s456": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437",
+   "config": {
+    "seed": 456,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 0.0,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 90.44,
+    "stage1_test_top1_tta": 91.1,
+    "stage2_test_top1_no_tta": 90.44,
+    "stage2_test_top1_tta": 91.22
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437/events.jsonl final_test_eval",
+   "best_val_s1": 91.4,
+   "best_val_s2_tta": 91.58,
+   "stage1_last_epoch": 362,
+   "sep_curr_nl_last": [
+    2.2955,
+    4.8896,
+    6.8753,
+    7.9733
+   ],
+   "sep_nl_last": [
+    0.9902,
+    0.9922,
+    0.9935,
+    0.9938
+   ]
+  },
+  "c10_cpfair_s42": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+   "config": {
+    "seed": 42,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 0.7,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.25,
+    "depth_order_lambda": 0.2,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 90.45,
+    "stage1_test_top1_tta": 91.36,
+    "stage2_test_top1_no_tta": 90.42,
+    "stage2_test_top1_tta": 91.27
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035/events.jsonl final_test_eval",
+   "best_val_s1": 91.9,
+   "best_val_s2_tta": 91.8,
+   "stage1_last_epoch": 362,
+   "sep_curr_nl_last": [
+    2.2998,
+    3.3456,
+    1.5708,
+    0.6077
+   ],
+   "sep_nl_last": [
+    0.9901,
+    0.9925,
+    0.9938,
+    0.9947
+   ]
+  },
+  "c10_lcff_s42_completed": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/lcff_prefix/runs/ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260312_132019",
+   "config": {
+    "seed": 42,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 1.0,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": {
+    "stage1_test_top1_no_tta": 90.52,
+    "stage1_test_top1_tta": 91.22,
+    "stage2_test_top1_no_tta": 90.44,
+    "stage2_test_top1_tta": 91.08
+   },
+   "test_source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/lcff_prefix/runs/ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260312_132019/events.jsonl final_test_eval",
+   "best_val_s1": 91.6,
+   "best_val_s2_tta": 91.52,
+   "stage1_last_epoch": 362,
+   "sep_curr_nl_last": [
+    2.3244,
+    1.021,
+    0.9367,
+    0.7044
+   ],
+   "sep_nl_last": [
+    0.99,
+    0.9931,
+    0.9946,
+    0.9952
+   ]
+  },
+  "c10_lcff_s42_aborted_ep277": {
+   "dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/lcff_prefix/runs/ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260311_120438",
+   "config": {
+    "seed": 42,
+    "use_sam": true,
+    "num_blocks": 4,
+    "d_model": 256,
+    "n_experts": 32,
+    "moe_top_k": 4,
+    "gamma_scale": 1.0,
+    "gamma_gating_mode": null,
+    "gamma_kappa": null,
+    "gamma_tau": null,
+    "block_curr_lambda": 0.0,
+    "depth_order_lambda": 0.0,
+    "epochs_stage1": 362,
+    "epochs_stage2": 20
+   },
+   "test": null,
+   "best_val_s1": 91.36,
+   "best_val_s2_tta": null,
+   "stage1_last_epoch": 277,
+   "sep_curr_nl_last": [
+    2.0979,
+    0.9236,
+    0.8409,
+    0.6396
+   ],
+   "sep_nl_last": [
+    0.9849,
+    0.9885,
+    0.9905,
+    0.9915
+   ]
+  }
+ },
+ "aggregates": {
+  "D1_l4_k0_n3": {
+   "stage1_test_top1_no_tta": {
+    "values": [
+     85.86,
+     85.87,
+     85.55
+    ],
+    "n": 3,
+    "mean": 85.76,
+    "sd_sample": 0.1819,
+    "sd_population": 0.1485
+   },
+   "stage1_test_top1_tta": {
+    "values": [
+     86.81,
+     86.91,
+     86.62
+    ],
+    "n": 3,
+    "mean": 86.78,
+    "sd_sample": 0.1473,
+    "sd_population": 0.1203
+   },
+   "stage2_test_top1_no_tta": {
+    "values": [
+     86.35,
+     86.03,
+     85.82
+    ],
+    "n": 3,
+    "mean": 86.07,
+    "sd_sample": 0.2669,
+    "sd_population": 0.2179
+   },
+   "stage2_test_top1_tta": {
+    "values": [
+     87.27,
+     87.23,
+     86.96
+    ],
+    "n": 3,
+    "mean": 87.15,
+    "sd_sample": 0.1686,
+    "sd_population": 0.1377
+   }
+  },
+  "D1_l4_k0_sep_deep_n3": {
+   "values": [
+    3.1084,
+    1.9365,
+    1.826
+   ],
+   "n": 3,
+   "mean": 2.29,
+   "sd_sample": 0.7106,
+   "sd_population": 0.5802
+  },
+  "D2_l8_k0_test_n2": {
+   "stage1_test_top1_no_tta": {
+    "values": [
+     85.94,
+     85.68
+    ],
+    "n": 2,
+    "mean": 85.81,
+    "sd_sample": 0.1838,
+    "sd_population": 0.13
+   },
+   "stage1_test_top1_tta": {
+    "values": [
+     87.12,
+     86.84
+    ],
+    "n": 2,
+    "mean": 86.98,
+    "sd_sample": 0.198,
+    "sd_population": 0.14
+   },
+   "stage2_test_top1_no_tta": {
+    "values": [
+     86.47,
+     85.92
+    ],
+    "n": 2,
+    "mean": 86.2,
+    "sd_sample": 0.3889,
+    "sd_population": 0.275
+   },
+   "stage2_test_top1_tta": {
+    "values": [
+     87.51,
+     87.01
+    ],
+    "n": 2,
+    "mean": 87.26,
+    "sd_sample": 0.3536,
+    "sd_population": 0.25
+   }
+  },
+  "D2_l8_k0_s42_val_only_best_s2_tta": 86.88,
+  "D2_l8_k0_sep_deep_n3": {
+   "values": [
+    6.9379,
+    6.7024,
+    6.2953
+   ],
+   "n": 3,
+   "mean": 6.65,
+   "sd_sample": 0.3251,
+   "sd_population": 0.2654
+  },
+  "D4_c10_g0_n3": {
+   "stage1_test_top1_no_tta": {
+    "values": [
+     90.52,
+     90.54,
+     90.44
+    ],
+    "n": 3,
+    "mean": 90.5,
+    "sd_sample": 0.0529,
+    "sd_population": 0.0432
+   },
+   "stage1_test_top1_tta": {
+    "values": [
+     91.45,
+     91.4,
+     91.1
+    ],
+    "n": 3,
+    "mean": 91.32,
+    "sd_sample": 0.1893,
+    "sd_population": 0.1546
+   },
+   "stage2_test_top1_no_tta": {
+    "values": [
+     90.37,
+     90.51,
+     90.44
+    ],
+    "n": 3,
+    "mean": 90.44,
+    "sd_sample": 0.07,
+    "sd_population": 0.0572
+   },
+   "stage2_test_top1_tta": {
+    "values": [
+     91.39,
+     91.51,
+     91.22
+    ],
+    "n": 3,
+    "mean": 91.37,
+    "sd_sample": 0.1457,
+    "sd_population": 0.119
+   }
+  },
+  "D5_sep_ratio_g0_over_lcff": 4.65,
+  "D5_sep_ratio_g0_over_cpfair": 5.39,
+  "D1_l4_d128_range_s2tta": 0.58,
+  "D2_l8_best_mean_minus_lcff": 0.47
+ }
+}

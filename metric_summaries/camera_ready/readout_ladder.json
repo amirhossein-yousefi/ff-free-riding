@@ -1,0 +1,434 @@
+{
+ "_meta": {
+  "description": "Validation-fitted readout ladder R0-R3 on the frozen CIFAR-100 trio (fit on each run's own 5k validation split, evaluated once on the full 10k test; S1 no-TTA, EMA weights). Exploratory and checkpoint-conditional.",
+  "rungs": {
+   "R0": "plain sum over blocks (control; reproduces asserted S1 no-TTA top-1 on full 10k)",
+   "R1": "per-depth scalar weights w_d, NLL(=logistic-regression) fit, L params",
+   "R2": "per-depth temperature T_d, log-opinion pool of per-block softmax(g_d/T_d) (= per-block PRODUCT of experts). NOTE: pooled softmax == softmax(sum_d g/T_d), so R2 is exactly R1 constrained to positive weights; argmax family identical.",
+   "R3": "margin-gated input-dependent w_d(x)=sigmoid(a_d*m_d(x)+b_d), m_d = block top1-top2 goodness margin (standardized by fit-split=VAL per-depth std), 2 params/depth, NLL fit, fixed prescale s3=2*max(invT_R2), warm start at R2's exact solution."
+  },
+  "R2_note": "R2 (per-depth temperature log-opinion pool) is exactly R1 constrained to positive weights; when the R1 weights are positive, R2 is identical to R1.",
+  "sd_note": "sample SDs (ddof=1) recomputed from per-checkpoint eval_acc; the source JSON's delta_vs_R0_pp_std are population SDs (kept under posted_population_sd_gain_DO_NOT_PRINT).",
+  "interaction_ci_note": "differential-gain CIs are copied from the source (5000-fold paired bootstrap over the full 10k test); the per-example val/test dumps behind them were in a deleted temporary scratchpad and are not recomputable here.",
+  "do_not_use": "readout_spectrum_results.json (fitted on the test split)",
+  "source": "amir-porjects/ff-wiki/_build/analyses/val_refit_readout_results.json",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "per_variant": {
+  "gamma0": {
+   "eval_acc_pp": {
+    "R0": {
+     "values": [
+      66.18,
+      66.37,
+      66.57
+     ],
+     "mean": 66.37333333,
+     "sd": 0.19502137,
+     "n": 3
+    },
+    "R1": {
+     "values": [
+      67.52,
+      67.82,
+      67.95
+     ],
+     "mean": 67.76333333,
+     "sd": 0.22052967,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      67.52,
+      67.81,
+      68.02
+     ],
+     "mean": 67.78333333,
+     "sd": 0.2510644,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      67.47,
+      67.84,
+      68.05
+     ],
+     "mean": 67.78666667,
+     "sd": 0.29365513,
+     "n": 3
+    }
+   },
+   "gain_vs_R0_pp": {
+    "R1": {
+     "values": [
+      1.34,
+      1.45,
+      1.38
+     ],
+     "mean": 1.39,
+     "sd": 0.05567764,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      1.34,
+      1.44,
+      1.45
+     ],
+     "mean": 1.41,
+     "sd": 0.06082763,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      1.29,
+      1.47,
+      1.48
+     ],
+     "mean": 1.41333333,
+     "sd": 0.10692677,
+     "n": 3
+    }
+   },
+   "posted_population_sd_gain_DO_NOT_PRINT": {
+    "R1": 0.045,
+    "R2": 0.05,
+    "R3": 0.087
+   },
+   "best_by_fit_readouts": [
+    "R1",
+    "R1",
+    "R1"
+   ]
+  },
+  "gated_k0": {
+   "eval_acc_pp": {
+    "R0": {
+     "values": [
+      66.07,
+      66.18,
+      66.82
+     ],
+     "mean": 66.35666667,
+     "sd": 0.40501029,
+     "n": 3
+    },
+    "R1": {
+     "values": [
+      67.6,
+      67.36,
+      68.25
+     ],
+     "mean": 67.73666667,
+     "sd": 0.46047077,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      67.61,
+      67.37,
+      68.31
+     ],
+     "mean": 67.76333333,
+     "sd": 0.48839874,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      67.59,
+      67.36,
+      68.33
+     ],
+     "mean": 67.76,
+     "sd": 0.50685304,
+     "n": 3
+    }
+   },
+   "gain_vs_R0_pp": {
+    "R1": {
+     "values": [
+      1.53,
+      1.18,
+      1.43
+     ],
+     "mean": 1.38,
+     "sd": 0.18027756,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      1.54,
+      1.19,
+      1.49
+     ],
+     "mean": 1.40666667,
+     "sd": 0.18929694,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      1.52,
+      1.18,
+      1.51
+     ],
+     "mean": 1.40333333,
+     "sd": 0.19347696,
+     "n": 3
+    }
+   },
+   "posted_population_sd_gain_DO_NOT_PRINT": {
+    "R1": 0.147,
+    "R2": 0.155,
+    "R3": 0.158
+   },
+   "best_by_fit_readouts": [
+    "R3",
+    "R3",
+    "R3"
+   ]
+  },
+  "cumulative": {
+   "eval_acc_pp": {
+    "R0": {
+     "values": [
+      66.7,
+      66.56,
+      67.1
+     ],
+     "mean": 66.78666667,
+     "sd": 0.28023799,
+     "n": 3
+    },
+    "R1": {
+     "values": [
+      67.06,
+      67.5,
+      67.6
+     ],
+     "mean": 67.38666667,
+     "sd": 0.28728615,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      67.11,
+      67.59,
+      67.64
+     ],
+     "mean": 67.44666667,
+     "sd": 0.29263174,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      67.2,
+      67.54,
+      67.63
+     ],
+     "mean": 67.45666667,
+     "sd": 0.22678918,
+     "n": 3
+    }
+   },
+   "gain_vs_R0_pp": {
+    "R1": {
+     "values": [
+      0.36,
+      0.94,
+      0.5
+     ],
+     "mean": 0.6,
+     "sd": 0.30265492,
+     "n": 3
+    },
+    "R2": {
+     "values": [
+      0.41,
+      1.03,
+      0.54
+     ],
+     "mean": 0.66,
+     "sd": 0.32695565,
+     "n": 3
+    },
+    "R3": {
+     "values": [
+      0.5,
+      0.98,
+      0.53
+     ],
+     "mean": 0.67,
+     "sd": 0.26888659,
+     "n": 3
+    }
+   },
+   "posted_population_sd_gain_DO_NOT_PRINT": {
+    "R1": 0.247,
+    "R2": 0.267,
+    "R3": 0.22
+   },
+   "best_by_fit_readouts": [
+    "R3",
+    "R1",
+    "R3"
+   ]
+  }
+ },
+ "trio_span_pp_per_rung": {
+  "R0": 0.43,
+  "R1": 0.37666666,
+  "R2": 0.33666666,
+  "R3": 0.33
+ },
+ "R0_vs_logged_S1_max_abs_diff_pp": 0.01,
+ "differential_gain_R1": {
+  "gamma0_minus_cumulative": {
+   "diff_pp": 0.79,
+   "ci95_pp": [
+    0.48,
+    1.107
+   ]
+  },
+  "gated_k0_minus_cumulative": {
+   "diff_pp": 0.78,
+   "ci95_pp": [
+    0.46,
+    1.103
+   ]
+  }
+ },
+ "differential_gain_all": {
+  "R1": {
+   "gamma0": {
+    "mean_gain_pp": 1.39
+   },
+   "gated_k0": {
+    "mean_gain_pp": 1.38
+   },
+   "cumulative": {
+    "mean_gain_pp": 0.6
+   },
+   "gamma0_minus_cumulative": {
+    "diff_pp": 0.79,
+    "ci95_pp": [
+     0.48,
+     1.107
+    ]
+   },
+   "gated_k0_minus_cumulative": {
+    "diff_pp": 0.78,
+    "ci95_pp": [
+     0.46,
+     1.103
+    ]
+   }
+  },
+  "R2": {
+   "gamma0": {
+    "mean_gain_pp": 1.41
+   },
+   "gated_k0": {
+    "mean_gain_pp": 1.407
+   },
+   "cumulative": {
+    "mean_gain_pp": 0.66
+   },
+   "gamma0_minus_cumulative": {
+    "diff_pp": 0.75,
+    "ci95_pp": [
+     0.433,
+     1.07
+    ]
+   },
+   "gated_k0_minus_cumulative": {
+    "diff_pp": 0.747,
+    "ci95_pp": [
+     0.427,
+     1.067
+    ]
+   }
+  },
+  "R3": {
+   "gamma0": {
+    "mean_gain_pp": 1.413
+   },
+   "gated_k0": {
+    "mean_gain_pp": 1.403
+   },
+   "cumulative": {
+    "mean_gain_pp": 0.67
+   },
+   "gamma0_minus_cumulative": {
+    "diff_pp": 0.743,
+    "ci95_pp": [
+     0.423,
+     1.073
+    ]
+   },
+   "gated_k0_minus_cumulative": {
+    "diff_pp": 0.733,
+    "ci95_pp": [
+     0.417,
+     1.05
+    ]
+   }
+  },
+  "best_by_fit": {
+   "gamma0": {
+    "mean_gain_pp": 1.39
+   },
+   "gated_k0": {
+    "mean_gain_pp": 1.403
+   },
+   "cumulative": {
+    "mean_gain_pp": 0.657
+   },
+   "gamma0_minus_cumulative": {
+    "diff_pp": 0.733,
+    "ci95_pp": [
+     0.41,
+     1.043
+    ]
+   },
+   "gated_k0_minus_cumulative": {
+    "diff_pp": 0.747,
+    "ci95_pp": [
+     0.427,
+     1.073
+    ]
+   }
+  }
+ },
+ "gates": [
+  {
+   "check": "span R0 vs AN",
+   "recomputed": 0.43,
+   "reference": 0.43,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "span R1 vs AN",
+   "recomputed": 0.37666666,
+   "reference": 0.376,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "span R2 vs AN",
+   "recomputed": 0.33666666,
+   "reference": 0.336,
+   "tol": 0.006,
+   "pass": true
+  },
+  {
+   "check": "span R3 vs AN",
+   "recomputed": 0.33,
+   "reference": 0.33,
+   "tol": 0.006,
+   "pass": true
+  }
+ ]
+}

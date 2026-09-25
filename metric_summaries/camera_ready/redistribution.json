@@ -1,0 +1,96 @@
+{
+ "_meta": {
+  "description": "Arithmetic redistribution demo (Prop. redistribution): re-split the cumulative CIFAR-100 seed-42 model's real S1 goodness-sum scores S(x,c) into per-block parts with arbitrary depth profiles; the deepest block's own share moves 14% -> 98% while 0 of 10,000 predictions change. Covers exactly-redistributing changes only, not objective changes such as MGC.",
+  "source_preds": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/extracted/ff_cifar100_multiseed/runs_cumulative_seed42/ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149/preds_stage1_test_no_tta.npz",
+  "empirical_counterpart": "prediction churn between trained variants: see churn.json",
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "n": 10000,
+ "baseline_acc_s1_no_tta": 66.7,
+ "decompositions": [
+  {
+   "profile": "measured-cumulative-like",
+   "weights": [
+    0.5,
+    0.2,
+    0.16,
+    0.14
+   ],
+   "L3_own_share_pct": 14.0,
+   "reconstruction_max_abs_err": 8.881784197001252e-16,
+   "prediction_flips": 0
+  },
+  {
+   "profile": "uniform",
+   "weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+   ],
+   "L3_own_share_pct": 25.0,
+   "reconstruction_max_abs_err": 0.0,
+   "prediction_flips": 0
+  },
+  {
+   "profile": "reversed",
+   "weights": [
+    0.14,
+    0.16,
+    0.2,
+    0.5
+   ],
+   "L3_own_share_pct": 50.0,
+   "reconstruction_max_abs_err": 8.881784197001252e-16,
+   "prediction_flips": 0
+  },
+  {
+   "profile": "adversarial-healthy",
+   "weights": [
+    0.005,
+    0.005,
+    0.01,
+    0.98
+   ],
+   "L3_own_share_pct": 98.0,
+   "reconstruction_max_abs_err": 8.881784197001252e-16,
+   "prediction_flips": 0
+  }
+ ],
+ "zero_sum_transfer": {
+  "max_abs_score_change": 8.881784197001252e-16,
+  "prediction_flips": 0,
+  "L3_mean_goodness_change_pct": -44.7
+ },
+ "gates": [
+  {
+   "check": "baseline acc vs AN",
+   "recomputed": 66.7,
+   "reference": 66.7,
+   "tol": 0.005,
+   "pass": true
+  },
+  {
+   "check": "measured-cumulative-like flips/share vs AN",
+   "pass": true
+  },
+  {
+   "check": "uniform flips/share vs AN",
+   "pass": true
+  },
+  {
+   "check": "reversed flips/share vs AN",
+   "pass": true
+  },
+  {
+   "check": "adversarial-healthy flips/share vs AN",
+   "pass": true
+  },
+  {
+   "check": "zero-sum transfer vs AN",
+   "pass": true
+  }
+ ]
+}

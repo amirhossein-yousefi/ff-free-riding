@@ -1,0 +1,292 @@
+{
+ "_meta": {
+  "description": "CIFAR-10 flagship pair, CP-FAIR minus gamma=0 (L4/D256), matched seeds 42/123/456, 10k test each; paired bootstrap (5000) + exact McNemar per seed. Provenance-gated against supplement aggregated_results.json. CIs conditional on the checkpoints.",
+  "procedure": "exact replay of ff-wiki/_build/analyses/paired_bootstrap_cifar10.py (rng.choice, one default_rng(0) over S1-TTA then S2-TTA); the no-TTA protocols use a separate fresh default_rng(0) and were not posted.",
+  "config_note": "gamma=0 seed 42 used a different configuration from seeds 123/456 (block_curr_lambda 0 / depth_order_lambda 0 vs 0.25 / 0.2; D7/X1).",
+  "run_dirs": {
+   "gamma0": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437"
+   },
+   "cp_fair": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed123/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_bs512_seed123_20260320_001527",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/runs_seed456/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_bs512_seed456_20260327_080127"
+   }
+  },
+  "all_gates_pass": true,
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "cp_fair_minus_gamma0": {
+  "S1-TTA": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "acc_cp_fair": 91.36,
+     "acc_gamma0": 91.45,
+     "delta_pp": -0.09,
+     "ci95_pp": [
+      -0.52,
+      0.32
+     ],
+     "disagreement_pct": 5.83,
+     "flips_cpfair_only_right": 233,
+     "flips_gamma0_only_right": 242,
+     "mcnemar_p": 0.71361211
+    },
+    {
+     "seed": 123,
+     "acc_cp_fair": 91.34,
+     "acc_gamma0": 91.4,
+     "delta_pp": -0.06,
+     "ci95_pp": [
+      -0.48,
+      0.36
+     ],
+     "disagreement_pct": 5.68,
+     "flips_cpfair_only_right": 235,
+     "flips_gamma0_only_right": 241,
+     "mcnemar_p": 0.81876283
+    },
+    {
+     "seed": 456,
+     "acc_cp_fair": 91.39,
+     "acc_gamma0": 91.1,
+     "delta_pp": 0.29,
+     "ci95_pp": [
+      -0.15,
+      0.75
+     ],
+     "disagreement_pct": 6.27,
+     "flips_cpfair_only_right": 274,
+     "flips_gamma0_only_right": 245,
+     "mcnemar_p": 0.21901033
+    }
+   ],
+   "pooled": {
+    "n": 30000,
+    "delta_pp": 0.04666667,
+    "ci95_pp": [
+     -0.20333333,
+     0.29333333
+    ],
+    "within_pm1pp": true
+   }
+  },
+  "S2-TTA": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "acc_cp_fair": 91.27,
+     "acc_gamma0": 91.39,
+     "delta_pp": -0.12,
+     "ci95_pp": [
+      -0.56,
+      0.32
+     ],
+     "disagreement_pct": 5.98,
+     "flips_cpfair_only_right": 239,
+     "flips_gamma0_only_right": 251,
+     "mcnemar_p": 0.61928394
+    },
+    {
+     "seed": 123,
+     "acc_cp_fair": 91.21,
+     "acc_gamma0": 91.51,
+     "delta_pp": -0.3,
+     "ci95_pp": [
+      -0.73,
+      0.12
+     ],
+     "disagreement_pct": 5.64,
+     "flips_cpfair_only_right": 215,
+     "flips_gamma0_only_right": 245,
+     "mcnemar_p": 0.17626833
+    },
+    {
+     "seed": 456,
+     "acc_cp_fair": 91.44,
+     "acc_gamma0": 91.22,
+     "delta_pp": 0.22,
+     "ci95_pp": [
+      -0.24,
+      0.67
+     ],
+     "disagreement_pct": 6.22,
+     "flips_cpfair_only_right": 265,
+     "flips_gamma0_only_right": 243,
+     "mcnemar_p": 0.35148964
+    }
+   ],
+   "pooled": {
+    "n": 30000,
+    "delta_pp": -0.06666667,
+    "ci95_pp": [
+     -0.32008333,
+     0.19
+    ],
+    "within_pm1pp": true
+   }
+  },
+  "S1": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "acc_cp_fair": 90.45,
+     "acc_gamma0": 90.52,
+     "delta_pp": -0.07,
+     "ci95_pp": [
+      -0.58,
+      0.41
+     ],
+     "disagreement_pct": 7.73,
+     "flips_cpfair_only_right": 307,
+     "flips_gamma0_only_right": 314,
+     "mcnemar_p": 0.80975571
+    },
+    {
+     "seed": 123,
+     "acc_cp_fair": 90.45,
+     "acc_gamma0": 90.54,
+     "delta_pp": -0.09,
+     "ci95_pp": [
+      -0.58,
+      0.4
+     ],
+     "disagreement_pct": 7.5,
+     "flips_cpfair_only_right": 311,
+     "flips_gamma0_only_right": 320,
+     "mcnemar_p": 0.75015341
+    },
+    {
+     "seed": 456,
+     "acc_cp_fair": 90.43,
+     "acc_gamma0": 90.44,
+     "delta_pp": -0.01,
+     "ci95_pp": [
+      -0.51,
+      0.48
+     ],
+     "disagreement_pct": 7.91,
+     "flips_cpfair_only_right": 322,
+     "flips_gamma0_only_right": 323,
+     "mcnemar_p": 1.0
+    }
+   ],
+   "pooled": {
+    "n": 30000,
+    "delta_pp": -0.05666667,
+    "ci95_pp": [
+     -0.34666667,
+     0.23
+    ],
+    "within_pm1pp": true
+   }
+  },
+  "S2": {
+   "per_seed": [
+    {
+     "seed": 42,
+     "acc_cp_fair": 90.42,
+     "acc_gamma0": 90.37,
+     "delta_pp": 0.05,
+     "ci95_pp": [
+      -0.44,
+      0.55
+     ],
+     "disagreement_pct": 7.92,
+     "flips_cpfair_only_right": 320,
+     "flips_gamma0_only_right": 315,
+     "mcnemar_p": 0.87389357
+    },
+    {
+     "seed": 123,
+     "acc_cp_fair": 90.39,
+     "acc_gamma0": 90.51,
+     "delta_pp": -0.12,
+     "ci95_pp": [
+      -0.61,
+      0.37
+     ],
+     "disagreement_pct": 7.5,
+     "flips_cpfair_only_right": 302,
+     "flips_gamma0_only_right": 314,
+     "mcnemar_p": 0.65765413
+    },
+    {
+     "seed": 456,
+     "acc_cp_fair": 90.59,
+     "acc_gamma0": 90.44,
+     "delta_pp": 0.15,
+     "ci95_pp": [
+      -0.35,
+      0.63025
+     ],
+     "disagreement_pct": 7.72,
+     "flips_cpfair_only_right": 326,
+     "flips_gamma0_only_right": 311,
+     "mcnemar_p": 0.57913423
+    }
+   ],
+   "pooled": {
+    "n": 30000,
+    "delta_pp": 0.02666667,
+    "ci95_pp": [
+     -0.26,
+     0.31341667
+    ],
+    "within_pm1pp": true
+   }
+  }
+ },
+ "min_mcnemar_p_tta_protocols": 0.17626833,
+ "min_mcnemar_p_tta_protocols_floor_2dp": 0.17,
+ "min_mcnemar_p_all_protocols": 0.17626833,
+ "gates": [
+  {
+   "check": "S1-TTA pooled delta vs AN",
+   "recomputed": 0.04666667,
+   "reference": 0.047,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "S1-TTA pooled CI[0] vs AN",
+   "recomputed": -0.20333333,
+   "reference": -0.203,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "S1-TTA pooled CI[1] vs AN",
+   "recomputed": 0.29333333,
+   "reference": 0.293,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "S2-TTA pooled delta vs AN",
+   "recomputed": -0.06666667,
+   "reference": -0.067,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "S2-TTA pooled CI[0] vs AN",
+   "recomputed": -0.32008333,
+   "reference": -0.32,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "S2-TTA pooled CI[1] vs AN",
+   "recomputed": 0.19,
+   "reference": 0.19,
+   "tol": 0.0006,
+   "pass": true
+  }
+ ]
+}

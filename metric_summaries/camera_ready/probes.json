@@ -1,0 +1,1118 @@
+{
+ "_meta": {
+  "description": "Label-free probes on frozen CIFAR-100 trio features (fit on each run's own 5k validation split, evaluated on the full 10k test). Source: clean_probes_c100.json ONLY (simple_probes_c100.json feats_true panels are label-leaked, H24).",
+  "fit_eval_protocol": "fit on the run's OWN 5000-example val split (split_indices.json val_idx; verified identical across variants within each seed, different across seeds \u2014 val_refit_verification_record.json step1); eval on the full official 10k test set; logistic = StandardScaler(val) + multinomial L2, C by 5-fold stratified CV on val (grid logspace(-3,2,6), StratifiedKFold seed 0); knn = k=10 cosine on raw features (sklearn KNeighborsClassifier)",
+  "feature_definitions": {
+   "goodness_flat": "per-block per-class goodness increments g[l,c] from predict_scores(return_all_depths=True) first-differenced, flattened [N,400]; label-free input-conditional scores over all 100 hypotheses (the g-branch of the real S2 head)",
+   "goodness_blocksoftmax": "softmax over the 100 classes within each block, flattened [N,400] (scale-free)",
+   "goodness_block3": "last-block goodness slice [N,100]",
+   "pooled_meanemb": "per-block attn-pooled activations blk.get_pooled_rep(relu(h)) [N,4,256] with the label slot of every block replaced by blk.label_emb.weight.mean(0) (uniform-prior label token); exact label-free forward because use_mem=False in all 9 runs (label enters only via _append_label); concat=[N,1024], block3=[N,256]",
+   "pooled_zerotok": "same with label slot = zero vector"
+  },
+  "sd_note": "sample SDs (ddof=1) recomputed from per-checkpoint acc_test10k; the source per_variant 'std' fields are population SDs and are not used.",
+  "knn_normalization_note": "k-NN stability depends on per-block normalization: the 10-NN trio span is 1.47 pp on block-softmax goodness but 8.58 pp on raw goodness.",
+  "source": "amir-porjects/ff-wiki/_build/analyses/clean_probes_c100.json",
+  "all_gates_pass": true,
+  "generated_by": "analysis/aggregate.py",
+  "generated": "2026-09-25",
+  "sd_convention": "sample SD (ddof=1) over seeds"
+ },
+ "panels": {
+  "ridge_goodness_blocksoftmax": {
+   "label": "ridge, 400-D goodness (block-softmax normalized)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      66.93,
+      66.76,
+      67.47
+     ],
+     "mean": 67.05333333,
+     "sd": 0.37072002,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      66.43,
+      67.04,
+      67.82
+     ],
+     "mean": 67.09666667,
+     "sd": 0.69673046,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      66.79,
+      67.12,
+      67.41
+     ],
+     "mean": 67.10666667,
+     "sd": 0.31021498,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 0.05333334,
+   "span_lt_1pp": true,
+   "posted": true
+  },
+  "logistic_goodness_blocksoftmax": {
+   "label": "logistic, 400-D goodness (block-softmax normalized)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      66.53,
+      66.03,
+      66.89
+     ],
+     "mean": 66.48333333,
+     "sd": 0.43189505,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      65.96,
+      65.94,
+      66.93
+     ],
+     "mean": 66.27666667,
+     "sd": 0.56589163,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      65.43,
+      65.73,
+      66.56
+     ],
+     "mean": 65.90666667,
+     "sd": 0.5853489,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 0.57666666,
+   "span_lt_1pp": true,
+   "posted": false
+  },
+  "logistic_goodness_flat": {
+   "label": "logistic, 400-D goodness (raw)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      61.64,
+      61.96,
+      61.88
+     ],
+     "mean": 61.82666667,
+     "sd": 0.16653328,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      61.81,
+      62.02,
+      63.11
+     ],
+     "mean": 62.31333333,
+     "sd": 0.69787774,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      61.55,
+      62.3,
+      62.65
+     ],
+     "mean": 62.16666667,
+     "sd": 0.56199051,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 0.48666666,
+   "span_lt_1pp": true,
+   "posted": false
+  },
+  "ridge_goodness_flat": {
+   "label": "ridge, 400-D goodness (raw)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      61.22,
+      61.74,
+      62.31
+     ],
+     "mean": 61.75666667,
+     "sd": 0.5451911,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      60.5,
+      60.59,
+      62.14
+     ],
+     "mean": 61.07666667,
+     "sd": 0.92197252,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      60.5,
+      60.96,
+      62.01
+     ],
+     "mean": 61.15666667,
+     "sd": 0.77397244,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 0.68,
+   "span_lt_1pp": true,
+   "posted": false
+  },
+  "knn10cos_goodness_blocksoftmax": {
+   "label": "k-NN-10 (cosine), 400-D goodness (block-softmax normalized)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      59.6,
+      58.52,
+      59.9
+     ],
+     "mean": 59.34,
+     "sd": 0.72580989,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      60.44,
+      59.71,
+      62.29
+     ],
+     "mean": 60.81333333,
+     "sd": 1.32989975,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      59.8,
+      59.98,
+      60.75
+     ],
+     "mean": 60.17666667,
+     "sd": 0.50461206,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 1.47333333,
+   "span_lt_1pp": false,
+   "posted": true
+  },
+  "knn10cos_goodness_flat": {
+   "label": "k-NN-10 (cosine), 400-D goodness (raw)",
+   "family": "goodness",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      39.06,
+      40.66,
+      39.31
+     ],
+     "mean": 39.67666667,
+     "sd": 0.86071676,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      45.96,
+      47.44,
+      47.0
+     ],
+     "mean": 46.8,
+     "sd": 0.76,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      47.41,
+      48.72,
+      48.63
+     ],
+     "mean": 48.25333333,
+     "sd": 0.7317331,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 8.57666666,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "logistic_goodness_block3": {
+   "label": "logistic, block-3 goodness (100-D)",
+   "family": "block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      47.57,
+      47.73,
+      46.89
+     ],
+     "mean": 47.39666667,
+     "sd": 0.44601943,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      54.66,
+      54.06,
+      55.49
+     ],
+     "mean": 54.73666667,
+     "sd": 0.71807613,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      55.59,
+      56.14,
+      55.67
+     ],
+     "mean": 55.8,
+     "sd": 0.29715316,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 8.40333333,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "knn10cos_goodness_block3": {
+   "label": "k-NN-10 (cosine), block-3 goodness (100-D)",
+   "family": "block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      33.73,
+      35.12,
+      33.78
+     ],
+     "mean": 34.21,
+     "sd": 0.78847955,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      37.82,
+      37.96,
+      39.13
+     ],
+     "mean": 38.30333333,
+     "sd": 0.71932839,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      40.39,
+      41.76,
+      40.57
+     ],
+     "mean": 40.90666667,
+     "sd": 0.74446849,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 6.69666667,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "logistic_pooled_meanemb_concat": {
+   "label": "logistic, pooled embedding, all blocks (mean label token)",
+   "family": "pooled",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      55.88,
+      54.19,
+      56.04
+     ],
+     "mean": 55.37,
+     "sd": 1.02503658,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      55.52,
+      54.33,
+      56.51
+     ],
+     "mean": 55.45333333,
+     "sd": 1.09152798,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      54.36,
+      53.37,
+      54.72
+     ],
+     "mean": 54.15,
+     "sd": 0.69907081,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 1.30333333,
+   "span_lt_1pp": false,
+   "posted": true
+  },
+  "knn10cos_pooled_meanemb_concat": {
+   "label": "k-NN-10 (cosine), pooled embedding, all blocks (mean label token)",
+   "family": "pooled",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      35.72,
+      37.69,
+      39.16
+     ],
+     "mean": 37.52333333,
+     "sd": 1.72604558,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      37.25,
+      34.36,
+      37.87
+     ],
+     "mean": 36.49333333,
+     "sd": 1.87334816,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      34.5,
+      31.75,
+      32.21
+     ],
+     "mean": 32.82,
+     "sd": 1.47299016,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 4.70333333,
+   "span_lt_1pp": false,
+   "posted": true
+  },
+  "logistic_pooled_zerotok_concat": {
+   "label": "logistic, pooled embedding, all blocks (zero label token)",
+   "family": "pooled",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      55.29,
+      54.17,
+      55.98
+     ],
+     "mean": 55.14666667,
+     "sd": 0.91347323,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      55.24,
+      52.37,
+      56.04
+     ],
+     "mean": 54.55,
+     "sd": 1.92984455,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      53.43,
+      53.39,
+      54.67
+     ],
+     "mean": 53.83,
+     "sd": 0.72773622,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 1.31666667,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "knn10cos_pooled_zerotok_concat": {
+   "label": "k-NN-10 (cosine), pooled embedding, all blocks (zero label token)",
+   "family": "pooled",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      35.87,
+      37.64,
+      39.07
+     ],
+     "mean": 37.52666667,
+     "sd": 1.60300759,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      37.43,
+      34.11,
+      37.65
+     ],
+     "mean": 36.39666667,
+     "sd": 1.98336415,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      34.29,
+      31.31,
+      31.08
+     ],
+     "mean": 32.22666667,
+     "sd": 1.7905958,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 5.3,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "logistic_pooled_meanemb_block3": {
+   "label": "logistic, pooled embedding, block 3 (mean label token)",
+   "family": "pooled_block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      38.73,
+      36.79,
+      38.6
+     ],
+     "mean": 38.04,
+     "sd": 1.08448144,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      40.74,
+      34.75,
+      34.26
+     ],
+     "mean": 36.58333333,
+     "sd": 3.60810661,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      34.68,
+      33.7,
+      32.63
+     ],
+     "mean": 33.67,
+     "sd": 1.02532922,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 4.37,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "knn10cos_pooled_meanemb_block3": {
+   "label": "k-NN-10 (cosine), pooled embedding, block 3 (mean label token)",
+   "family": "pooled_block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      22.74,
+      23.91,
+      24.57
+     ],
+     "mean": 23.74,
+     "sd": 0.92676858,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      26.17,
+      23.16,
+      22.02
+     ],
+     "mean": 23.78333333,
+     "sd": 2.14406934,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      21.42,
+      20.8,
+      17.08
+     ],
+     "mean": 19.76666667,
+     "sd": 2.34728212,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 4.01666666,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "logistic_pooled_zerotok_block3": {
+   "label": "logistic, pooled embedding, block 3 (zero label token)",
+   "family": "pooled_block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      39.26,
+      37.82,
+      39.27
+     ],
+     "mean": 38.78333333,
+     "sd": 0.83428612,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      40.85,
+      34.59,
+      34.36
+     ],
+     "mean": 36.6,
+     "sd": 3.68240411,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      35.26,
+      33.86,
+      31.97
+     ],
+     "mean": 33.69666667,
+     "sd": 1.65107036,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 5.08666666,
+   "span_lt_1pp": false,
+   "posted": false
+  },
+  "knn10cos_pooled_zerotok_block3": {
+   "label": "k-NN-10 (cosine), pooled embedding, block 3 (zero label token)",
+   "family": "pooled_block3",
+   "per_variant": {
+    "gamma0": {
+     "values": [
+      22.93,
+      23.82,
+      24.08
+     ],
+     "mean": 23.61,
+     "sd": 0.60307545,
+     "n": 3
+    },
+    "gated_k0": {
+     "values": [
+      26.53,
+      23.36,
+      21.61
+     ],
+     "mean": 23.83333333,
+     "sd": 2.49391927,
+     "n": 3
+    },
+    "cumulative": {
+     "values": [
+      20.97,
+      19.98,
+      16.13
+     ],
+     "mean": 19.02666667,
+     "sd": 2.55695783,
+     "n": 3
+    }
+   },
+   "trio_span_pp": 4.80666666,
+   "span_lt_1pp": false,
+   "posted": false
+  }
+ },
+ "anchors": {
+  "anchor_s1_no_tta": {
+   "per_variant_mean_pp": {
+    "gamma0": 66.3667,
+    "gated_k0": 66.3533,
+    "cumulative": 66.7833
+   },
+   "span_pp": 0.43
+  },
+  "anchor_s2_no_tta": {
+   "per_variant_mean_pp": {
+    "gamma0": 68.5433,
+    "gated_k0": 68.4367,
+    "cumulative": 68.5067
+   },
+   "span_pp": 0.107
+  }
+ },
+ "pooled_block3_span_range_pp": [
+  4.01666666,
+  5.08666666
+ ],
+ "gates": [
+  {
+   "check": "ridge_goodness_blocksoftmax gamma0 mean vs source per_variant",
+   "recomputed": 67.05333333,
+   "reference": 67.0533,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_blocksoftmax gated_k0 mean vs source per_variant",
+   "recomputed": 67.09666667,
+   "reference": 67.0967,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_blocksoftmax cumulative mean vs source per_variant",
+   "recomputed": 67.10666667,
+   "reference": 67.1067,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_blocksoftmax span vs source trio_spans",
+   "recomputed": 0.05333334,
+   "reference": 0.053,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_blocksoftmax gamma0 mean vs source per_variant",
+   "recomputed": 66.48333333,
+   "reference": 66.4833,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_blocksoftmax gated_k0 mean vs source per_variant",
+   "recomputed": 66.27666667,
+   "reference": 66.2767,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_blocksoftmax cumulative mean vs source per_variant",
+   "recomputed": 65.90666667,
+   "reference": 65.9067,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_blocksoftmax span vs source trio_spans",
+   "recomputed": 0.57666666,
+   "reference": 0.577,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_flat gamma0 mean vs source per_variant",
+   "recomputed": 61.82666667,
+   "reference": 61.8267,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_flat gated_k0 mean vs source per_variant",
+   "recomputed": 62.31333333,
+   "reference": 62.3133,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_flat cumulative mean vs source per_variant",
+   "recomputed": 62.16666667,
+   "reference": 62.1667,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_flat span vs source trio_spans",
+   "recomputed": 0.48666666,
+   "reference": 0.487,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_flat gamma0 mean vs source per_variant",
+   "recomputed": 61.75666667,
+   "reference": 61.7567,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_flat gated_k0 mean vs source per_variant",
+   "recomputed": 61.07666667,
+   "reference": 61.0767,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_flat cumulative mean vs source per_variant",
+   "recomputed": 61.15666667,
+   "reference": 61.1567,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "ridge_goodness_flat span vs source trio_spans",
+   "recomputed": 0.68,
+   "reference": 0.68,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_blocksoftmax gamma0 mean vs source per_variant",
+   "recomputed": 59.34,
+   "reference": 59.34,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_blocksoftmax gated_k0 mean vs source per_variant",
+   "recomputed": 60.81333333,
+   "reference": 60.8133,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_blocksoftmax cumulative mean vs source per_variant",
+   "recomputed": 60.17666667,
+   "reference": 60.1767,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_blocksoftmax span vs source trio_spans",
+   "recomputed": 1.47333333,
+   "reference": 1.473,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_flat gamma0 mean vs source per_variant",
+   "recomputed": 39.67666667,
+   "reference": 39.6767,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_flat gated_k0 mean vs source per_variant",
+   "recomputed": 46.8,
+   "reference": 46.8,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_flat cumulative mean vs source per_variant",
+   "recomputed": 48.25333333,
+   "reference": 48.2533,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_flat span vs source trio_spans",
+   "recomputed": 8.57666666,
+   "reference": 8.577,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_block3 gamma0 mean vs source per_variant",
+   "recomputed": 47.39666667,
+   "reference": 47.3967,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 54.73666667,
+   "reference": 54.7367,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_block3 cumulative mean vs source per_variant",
+   "recomputed": 55.8,
+   "reference": 55.8,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_goodness_block3 span vs source trio_spans",
+   "recomputed": 8.40333333,
+   "reference": 8.403,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_block3 gamma0 mean vs source per_variant",
+   "recomputed": 34.21,
+   "reference": 34.21,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 38.30333333,
+   "reference": 38.3033,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_block3 cumulative mean vs source per_variant",
+   "recomputed": 40.90666667,
+   "reference": 40.9067,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_goodness_block3 span vs source trio_spans",
+   "recomputed": 6.69666667,
+   "reference": 6.697,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_concat gamma0 mean vs source per_variant",
+   "recomputed": 55.37,
+   "reference": 55.37,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_concat gated_k0 mean vs source per_variant",
+   "recomputed": 55.45333333,
+   "reference": 55.4533,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_concat cumulative mean vs source per_variant",
+   "recomputed": 54.15,
+   "reference": 54.15,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_concat span vs source trio_spans",
+   "recomputed": 1.30333333,
+   "reference": 1.303,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_concat gamma0 mean vs source per_variant",
+   "recomputed": 37.52333333,
+   "reference": 37.5233,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_concat gated_k0 mean vs source per_variant",
+   "recomputed": 36.49333333,
+   "reference": 36.4933,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_concat cumulative mean vs source per_variant",
+   "recomputed": 32.82,
+   "reference": 32.82,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_concat span vs source trio_spans",
+   "recomputed": 4.70333333,
+   "reference": 4.703,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_concat gamma0 mean vs source per_variant",
+   "recomputed": 55.14666667,
+   "reference": 55.1467,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_concat gated_k0 mean vs source per_variant",
+   "recomputed": 54.55,
+   "reference": 54.55,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_concat cumulative mean vs source per_variant",
+   "recomputed": 53.83,
+   "reference": 53.83,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_concat span vs source trio_spans",
+   "recomputed": 1.31666667,
+   "reference": 1.317,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_concat gamma0 mean vs source per_variant",
+   "recomputed": 37.52666667,
+   "reference": 37.5267,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_concat gated_k0 mean vs source per_variant",
+   "recomputed": 36.39666667,
+   "reference": 36.3967,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_concat cumulative mean vs source per_variant",
+   "recomputed": 32.22666667,
+   "reference": 32.2267,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_concat span vs source trio_spans",
+   "recomputed": 5.3,
+   "reference": 5.3,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_block3 gamma0 mean vs source per_variant",
+   "recomputed": 38.04,
+   "reference": 38.04,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 36.58333333,
+   "reference": 36.5833,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_block3 cumulative mean vs source per_variant",
+   "recomputed": 33.67,
+   "reference": 33.67,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_meanemb_block3 span vs source trio_spans",
+   "recomputed": 4.37,
+   "reference": 4.37,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_block3 gamma0 mean vs source per_variant",
+   "recomputed": 23.74,
+   "reference": 23.74,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 23.78333333,
+   "reference": 23.7833,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_block3 cumulative mean vs source per_variant",
+   "recomputed": 19.76666667,
+   "reference": 19.7667,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_meanemb_block3 span vs source trio_spans",
+   "recomputed": 4.01666666,
+   "reference": 4.017,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_block3 gamma0 mean vs source per_variant",
+   "recomputed": 38.78333333,
+   "reference": 38.7833,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 36.6,
+   "reference": 36.6,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_block3 cumulative mean vs source per_variant",
+   "recomputed": 33.69666667,
+   "reference": 33.6967,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "logistic_pooled_zerotok_block3 span vs source trio_spans",
+   "recomputed": 5.08666666,
+   "reference": 5.087,
+   "tol": 0.0015,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_block3 gamma0 mean vs source per_variant",
+   "recomputed": 23.61,
+   "reference": 23.61,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_block3 gated_k0 mean vs source per_variant",
+   "recomputed": 23.83333333,
+   "reference": 23.8333,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_block3 cumulative mean vs source per_variant",
+   "recomputed": 19.02666667,
+   "reference": 19.0267,
+   "tol": 0.0006,
+   "pass": true
+  },
+  {
+   "check": "knn10cos_pooled_zerotok_block3 span vs source trio_spans",
+   "recomputed": 4.80666666,
+   "reference": 4.807,
+   "tol": 0.0015,
+   "pass": true
+  }
+ ]
+}

@@ -1,0 +1,995 @@
+{
+ "_meta": {
+  "description": "supplement/tests/check_manifest_commands.py: each repro_manifest.csv command (env + FF_SEED) replayed through the trainer's main() until config.json, compared with the reference run's config.json; allowed differences: device, keys added by the camera-ready trainers, and block_curr_depth_slope when block_curr_lambda = 0 (LCFF D256)."
+ },
+ "n_checks": 43,
+ "n_failed": 0,
+ "n_skipped": 0,
+ "tests": {
+  "row01_tab:main_results|gamma=0 (purely local)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row02_tab:main_results|CP-FAIR|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row10_tab:freeriding|gamma=0|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row11_tab:freeriding|CP-FAIR|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row12_tab:freeriding|LCFF|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "block_curr_depth_slope": [
+      0.0,
+      3.0
+     ]
+    },
+    "inert_diff_accepted": {
+     "block_curr_depth_slope": [
+      0.0,
+      3.0
+     ]
+    },
+    "run": "ff_cifar10_cifar10_cp_fair_ablation_lcff_prefix_L4_D256_bs512_seed42_20260312_132019",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row13_tab:dissociation_full|gamma=0.7 constant L4 D128 (single seed)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_baseline_constant_L4_D128_bs512_seed42_20260313_232043",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row14_tab:dissociation_full|gamma=0 (block-local) L4 D128 (single seed)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_no_all_collab_L4_D128_bs512_seed42_20260315_124117",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row15_tab:dissociation_full|kappa=0 tau=1 adaptive L4 D128 (single seed)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row16_tab:dissociation_full|LCFF L4 D128 (single seed)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_lcff_prefix_L4_D128_bs512_seed42_20260315_084228",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row17_tab:multiseed|CP-FAIR (n=4)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_bs512_seed123_20260320_001527",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row17_tab:multiseed|CP-FAIR (n=4)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260220_202035",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row17_tab:multiseed|CP-FAIR (n=4)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_bs512_seed456_20260327_080127",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row17_tab:multiseed|CP-FAIR (n=4)|seed789": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_bs512_seed789_20260330_064018",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row18_tab:gamma0_multiseed|gamma=0 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row18_tab:gamma0_multiseed|gamma=0 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row18_tab:gamma0_multiseed|gamma=0 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row19_tab:gated_k0_multiseed|L4/D128 kappa=0 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gated_k0_seed123_L4_D128_bs512_seed123_20260426_071309",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row19_tab:gated_k0_multiseed|L4/D128 kappa=0 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_adaptive_t1_k0_L4_D128_bs512_seed42_20260314_032410",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row19_tab:gated_k0_multiseed|L4/D128 kappa=0 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gated_k0_seed456_L4_D128_bs512_seed456_20260426_150234",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row20_tab:gated_k0_multiseed|L8/D128 kappa=0 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gated_k0_L8_seed123_L8_D128_bs512_seed123_20260427_041411",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row20_tab:gated_k0_multiseed|L8/D128 kappa=0 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_adaptive_t1_k0_L8_L8_D128_bs512_seed42_20260315_201449",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row20_tab:gated_k0_multiseed|L8/D128 kappa=0 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gated_k0_L8_seed456_L8_D128_bs512_seed456_20260427_114056",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row22_tab:cifar100_dissociation_multiseed|gamma=0 (n=3, no-MoE refined)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gamma0_seed123_L4_D256_bs256_seed123_20260421_124316",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row22_tab:cifar100_dissociation_multiseed|gamma=0 (n=3, no-MoE refined)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gamma0_seed42_L4_D256_bs256_seed42_20260420_101044",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row22_tab:cifar100_dissociation_multiseed|gamma=0 (n=3, no-MoE refined)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gamma0_seed456_L4_D256_bs256_seed456_20260422_142245",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row23_tab:cifar100_dissociation_multiseed|kappa=0 adaptive (n=3, no-MoE refined)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gated_k0_seed123_L4_D256_bs256_seed123_20260423_150626",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row23_tab:cifar100_dissociation_multiseed|kappa=0 adaptive (n=3, no-MoE refined)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gated_k0_seed42_L4_D256_bs256_seed42_20260422_185437",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row23_tab:cifar100_dissociation_multiseed|kappa=0 adaptive (n=3, no-MoE refined)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_gated_k0_seed456_L4_D256_bs256_seed456_20260424_153513",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row24_tab:cifar100_dissociation_multiseed|cumulative (n=3, no-MoE refined)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_cumulative_seed123_L4_D256_bs256_seed123_20260419_010632",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row24_tab:cifar100_dissociation_multiseed|cumulative (n=3, no-MoE refined)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_cumulative_seed42_L4_D256_bs256_seed42_20260418_032149",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row24_tab:cifar100_dissociation_multiseed|cumulative (n=3, no-MoE refined)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "mgc_c0": [
+      "<MISSING>",
+      1.0
+     ],
+     "mgc_eps": [
+      "<MISSING>",
+      1e-06
+     ],
+     "mgc_rho": [
+      "<MISSING>",
+      0.0
+     ],
+     "use_mgc": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_cifar100_cumulative_seed456_L4_D256_bs256_seed456_20260420_051234",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row35_tab:mgc_full|MGC c0=1, CIFAR-100 L4/D256 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_mgc_c100_L4_D256_bs256_seed123_20260724_191009",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row35_tab:mgc_full|MGC c0=1, CIFAR-100 L4/D256 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_mgc_c100_L4_D256_bs256_seed42_20260724_220559",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row35_tab:mgc_full|MGC c0=1, CIFAR-100 L4/D256 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar100_mgc_c100_L4_D256_bs256_seed456_20260725_194446",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row36_tab:mgc_full|MGC c0=1, CIFAR-10 L4/D128 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_mgc_c1_L4_D128_bs512_seed123_20260723_205123",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row36_tab:mgc_full|MGC c0=1, CIFAR-10 L4/D128 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row36_tab:mgc_full|MGC c0=1, CIFAR-10 L4/D128 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ],
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_mgc_c1_L4_D128_bs512_seed456_20260724_053002",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row37_tab:hinge|squared hinge, cumulative gamma=0.7 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g07_L4_D128_bs512_seed123_20260724_191321",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row37_tab:hinge|squared hinge, cumulative gamma=0.7 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g07_L4_D128_bs512_seed42_20260723_214017",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row37_tab:hinge|squared hinge, cumulative gamma=0.7 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g07_L4_D128_bs512_seed456_20260725_194352",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row38_tab:hinge|squared hinge, block-local gamma=0 (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g0_L4_D128_bs512_seed123_20260725_035433",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row38_tab:hinge|squared hinge, block-local gamma=0 (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g0_L4_D128_bs512_seed42_20260724_063123",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row38_tab:hinge|squared hinge, block-local gamma=0 (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "curr_aux_off": [
+      "<MISSING>",
+      false
+     ],
+     "mgc_keep_l0_aux": [
+      "<MISSING>",
+      false
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_hinge_g0_L4_D128_bs512_seed456_20260725_210209",
+    "unexpected": {}
+   },
+   "status": "pass"
+  }
+ }
+}
