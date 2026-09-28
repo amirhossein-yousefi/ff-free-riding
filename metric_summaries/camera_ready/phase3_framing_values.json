@@ -1,6 +1,6 @@
 {
  "_meta": {
-  "description": "Phase 3 framing values: Fig. 7 within-depth correlation split (A11) and the L8/D128/32-expert four-protocol rows (A7).",
+  "description": "Phase 3 framing values: Fig. 10 (fig:accuracy_vs_ratio) within-depth correlation split (A11) and the L8/D128/32-expert four-protocol rows (A7).",
   "generated_by": "analysis/phase3_framing_values.py",
   "generated": "2026-09-25"
  },

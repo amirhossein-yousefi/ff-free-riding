@@ -225,7 +225,7 @@
     },
     "job_log": null,
     "resumed": false,
-    "resume_evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+    "resume_evidence": "0 resume events in events.jsonl; no job log in the run archive; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
    },
    "456": {
     "arm": "mgc",
@@ -298,7 +298,7 @@
     },
     "job_log": null,
     "resumed": false,
-    "resume_evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+    "resume_evidence": "0 resume events in events.jsonl; no job log in the run archive; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
    }
   },
   "a": {
@@ -4307,7 +4307,7 @@
   {
    "check": "mgc s123: no resume",
    "pass": true,
-   "evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+   "evidence": "0 resume events in events.jsonl; no job log in the run archive; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
   },
   {
    "check": "mgc s123: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
@@ -4324,7 +4324,7 @@
   {
    "check": "mgc s456: no resume",
    "pass": true,
-   "evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+   "evidence": "0 resume events in events.jsonl; no job log in the run archive; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
   },
   {
    "check": "mgc s456: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",

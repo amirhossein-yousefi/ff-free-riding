@@ -28,6 +28,13 @@
     "edited": "2026-09-25, after this run",
     "change": "two comment lines reworded (lines 38 and 2940, the [CR] barrier comments); no code, docstring or line-count change",
     "verification": "compile() of the tested and the released file gives byte-identical marshalled code objects (same bytecode, constants and line table; Python 3.12.3) and identical ast.dump, so every result recorded above applies unchanged to the released file"
+   },
+   "cp_fair_tiny_imagenet.py": {
+    "tested_sha256": "f00761361e904a44209efa44034687cf76cb2f694ebf94d581715a60362462ec",
+    "released_sha256": "f72ddbbe6ccb001a70dc3126b886144aff10407b0d28ef6ede1973eae577e9fa",
+    "edited": "2026-09-28, after this run",
+    "change": "three comment lines updated to the camera-ready appendix numbering (lines 2766, 2806, 2813: paper App. C -> paper App. H.7, Tab. 40); no code, docstring or line-count change",
+    "verification": "compile() of the tested and the released file gives byte-identical marshalled code objects (same bytecode, constants and line table; Python 3.12.3) and identical ast.dump, so every result recorded above applies unchanged to the released file"
    }
   }
  },

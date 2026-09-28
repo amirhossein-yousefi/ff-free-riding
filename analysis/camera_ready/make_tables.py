@@ -862,7 +862,7 @@ def t_f1_control():
 
 # ============================================================================= F2: gamma=0 multi-seed table
 def t_gamma0_multiseed():
-    """CIFAR-10 L4/D256 gamma = 0 per seed (App. B multi-seed tables), from results/f2_gamma0_s42.json:
+    """CIFAR-10 L4/D256 gamma = 0 per seed (App. D.4 multi-seed tables), from results/f2_gamma0_s42.json:
     published seed 42 (lambda_curr = lambda_depth = 0), the F2 matched-config rerun of seed 42, seeds 123/456,
     the published n = 3 (kept as the headline) and the matched n = 3 next to it. sep = deepest-block
     sep_curr_nl at the last Stage-1 epoch (362; F2's registered P2 metric) and at the validation-selected

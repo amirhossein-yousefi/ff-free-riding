@@ -15,6 +15,17 @@ location; paths come from environment variables:
 
 All scripts run on CPU. Hide GPUs with `CUDA_VISIBLE_DEVICES=''` where a script imports torch.
 
+**Figure and theorem numbers in the v1 scripts.** The top-level v1 scripts
+(`generate_figures.py`, `plot_grad_attenuation.py`, `scripts/plot_dynamics.py`) and
+`recovered/gradshare/measure_grad_share.py` keep the submitted version's numbering in their section
+headers, plot titles and descriptions ("Figure 2", "Figure 5", "Figure 7 (Appendix)", "Prop.~1",
+"Theorem 1", and so on). Those numbers do not match the camera-ready paper; use the LaTeX labels.
+Examples: separation across depth is `fig:freeriding` (App. H.1), goodness magnitude vs. separation
+is `fig:magnitude_vs_sep` (App. N), MoE routing is `fig:moe_routing` (App. H.5), and the
+attenuation theorem is `thm:attenuation` (Theorem 3.1). Figure 1 of the camera-ready paper,
+`fig:grad_attenuation`, is rendered by `camera_ready/make_figures.py`, not by `plot_grad_attenuation.py`.
+`figure_regen/` holds the camera-ready copies of the plotting scripts behind Figs. 4–9, 11–19 and 24. The changes are presentation-only except in the Tiny ImageNet Figs. 17 and 19: Fig. 19 now plots every logged segment, and Fig. 17 recomputes its Block-0 points from the logs (App. O, item B16). Its `README.md` gives each script's figure, raw logs and command.
+
 Several scripts, and the `source` fields of a few `metric_summaries/camera_ready/*.json`, name
 `amir-porjects/ff-wiki/_build/analyses/`. That directory is the author's internal archive of the
 rebuttal-era analysis JSONs (the outputs of the `recovered/` scripts); "wiki" in check labels, such

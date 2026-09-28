@@ -2763,7 +2763,7 @@ class FFConfig:
     num_classes: int = 200  # Tiny ImageNet
     img_size: int = 64
     patch_size: int = 4  # 64/2(stem)/4(patch) = 8x8 = 64 patches (same as CIFAR-100)
-    d_model: int = 256  # Matches reported runs (paper App. C)
+    d_model: int = 256  # Matches reported runs (paper App. H.7, Tab. 40)
     num_blocks: int = 4
     num_heads: int = 8   # 256/8 = 32 head_dim
     n_experts: int = 1   # Dense MLP, no MoE (component ablation showed MoE redundant)
@@ -2803,14 +2803,14 @@ class FFConfig:
     sff_ni_weight: float = 0.5
 
     # HNM k = candidate draws (with replacement). For 200 classes,
-    # k=20→40 was used in the reported runs (paper App. C).
+    # k=20→40 was used in the reported runs (paper App. H.7, Tab. 40).
     hard_negative_k_first: int = 20
     hard_negative_k_last: int = 40
     queue_size: int = 16384
     queue_neg_samples: int = 4096
 
     gamma_scale: float = 0.0  # γ=0 (purely block-local) for the headline Tiny runs
-    depth_order_lambda: float = 0.0   # Depth ordering disabled for Tiny (paper App. C)
+    depth_order_lambda: float = 0.0   # Depth ordering disabled for Tiny (paper App. H.7, Tab. 40)
     depth_margin_pos: float = 0.05
     depth_margin_neg: float = 0.1    # CP-FAIR: doubled — DP-FAIR showed 0.05 too weak for g_nl ordering
 

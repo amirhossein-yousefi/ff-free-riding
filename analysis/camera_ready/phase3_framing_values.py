@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Phase 3 (framing, A7/A11) derived values -> results/phase3_framing_values.json.
 
-(1) A11 / Fig. 7 (fig:accuracy_vs_ratio): the pooled Pearson r = -0.49 (n=15) over the L4+L8 D128
+(1) A11 / Fig. 10 (fig:accuracy_vs_ratio; Fig. 7 when submitted): the pooled Pearson r = -0.49 (n=15) over the L4+L8 D128
     conditions, split by depth. Input: results/fig_accuracy_vs_ratio_values.json (the exact 15 points
     plotted). Reports within-depth Pearson/Spearman, the depth-demeaned Pearson, and leave-one-out r,
     so the caption can say what carries the pooled association.
@@ -99,7 +99,7 @@ def l8_32e_rows() -> dict:
 def main() -> None:
     out = {
         "_meta": {
-            "description": "Phase 3 framing values: Fig. 7 within-depth correlation split (A11) and the "
+            "description": "Phase 3 framing values: Fig. 10 (fig:accuracy_vs_ratio) within-depth correlation split (A11) and the "
                            "L8/D128/32-expert four-protocol rows (A7).",
             "generated_by": "analysis/phase3_framing_values.py",
             "generated": str(date.today()),

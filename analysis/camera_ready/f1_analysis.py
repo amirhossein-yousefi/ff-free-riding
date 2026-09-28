@@ -217,7 +217,7 @@ def read_run(arm, s):
         + (f"{n_seg} START segment(s), {lg['n_from_scratch']} from-scratch start(s) and "
            f"{lg['n_checkpoint_resume_loads']} checkpoint resume load(s) in the job log; " if lg and n_seg else
            (f"job log: {lg['n_from_scratch']} from-scratch start, {lg['n_checkpoint_resume_loads']} checkpoint resume "
-            f"load(s); " if lg else "no job log on this host; "))
+            f"load(s); " if lg else "no job log in the run archive; "))
         + f"Stage-1 layer log epochs {min(eps)}-{ep}, contiguous={contiguous}"
         + ("" if arm != "mgc" else "; the MGC-D128 trainer did not log resume events, so a resume is detectable only "
            "through a new run directory / a layer log that starts after epoch 1"))

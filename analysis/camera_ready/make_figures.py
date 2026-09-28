@@ -29,13 +29,14 @@ Figures (vector PDF, written to --output-dir, default CR/paper/figures):
       The submitted Fig. 1(a) (per-block current margin, median + IQR) as a stand-alone
       panel, so its caption numbers keep a figure if Fig. 1(a) leaves the main text.
 
-  dissociation_summary -> fig_dissociation_summary.pdf   (App. F; verifier fix)
+  dissociation_summary -> fig_dissociation_summary.pdf   (verifier fix; dropped from the camera-ready
+      paper in the appendix trim, its values are printed in Tabs. 3 and 15)
       CIFAR-100 trio deepest-block sep vs. S2-TTA test top-1 (3-seed mean +- sample SD) from
       results/c100_trio.json; annotation uses the unrounded ratio / range (5.0x, 0.28 pp) instead
       of the submitted plot's printed-mean "4.97x ... 0.27 pp".  Values: results/
       fig_dissociation_summary_values.json.
 
-  accuracy_vs_ratio -> fig_accuracy_vs_ratio.pdf        (App. C; verifier fix)
+  accuracy_vs_ratio -> fig_accuracy_vs_ratio.pdf        (App. H.4, Fig. 10; verifier fix)
       Port of plot_accuracy_vs_ratio() (analyze_additional_L8.py), same 15 L4+L8 D128 runs and
       quantities; the y-axis now says what is plotted (final-epoch Stage-2 validation accuracy,
       5k split) instead of "S2 Test Accuracy".  Values: results/fig_accuracy_vs_ratio_values.json.
