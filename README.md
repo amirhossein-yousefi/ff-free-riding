@@ -44,7 +44,8 @@ probe from a released Stage-1 checkpoint as described in
   title     = {Cumulative-Goodness Free-Riding in Forward-Forward Networks: Real, Repairable, but Not Accuracy-Dominant},
   author    = {Yousefiramandi, Amirhossein},
   booktitle = {Advances in Neural Information Processing Systems (NeurIPS 2026)},
-  year      = {2026}
+  year      = {2026},
+  url       = {https://arxiv.org/abs/2605.06240}
 }
 ```
 
