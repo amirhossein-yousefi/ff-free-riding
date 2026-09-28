@@ -1,0 +1,965 @@
+{
+ "_header": {
+  "description": "E1 tier 2 (CR-18): deepest-block sep_curr_nl recomputed on the validation-selected stage1_best checkpoints (net_ema, eval mode) through the trainer's diagnostic path (forward_block + EMA-teacher hard negatives), vs accuracy of the same checkpoints.",
+  "created": "2026-09-26",
+  "script": "amir-porjects/neuroips_review/camera_ready/experiments/e1_sep/aggregate_e1_tier2.py",
+  "measure_script": "amir-porjects/neuroips_review/camera_ready/experiments/e1_sep/measure_sep_tier2.py",
+  "n_points": 18,
+  "missing_or_failed": [],
+  "disclosure": "C10 gamma=0 seed 42 is excluded from tier 2: its published checkpoint is unrecoverable (n=18 instead of 19; tier 1 covers all 19). Seed 42 also used a different config (D7).",
+  "sd": "per-point SE = per-batch SD (ddof=1)/sqrt(N batches)",
+  "exploratory": "all correlations are exploratory (small n, configurations differ in many respects)"
+ },
+ "points": [
+  {
+   "name": "c10_gamma0_seed123",
+   "config": "c10_d256_gamma0",
+   "dataset": "cifar10",
+   "seed": 123,
+   "ckpt_sha256": "a384cdeb874ab2e3c1f11c5a81cbc7b0f3030741144a2cfd8caafcf20950cb07",
+   "epoch_stage1": 260,
+   "sep_tier2": 6.651249051094055,
+   "sep_tier2_se": 0.04889476416069986,
+   "sep_tier1_logged_at_ckpt_epoch": 5.6495516163179245,
+   "acc": {
+    "S2-TTA": 0.9151,
+    "S1": 0.9054
+   },
+   "gate": {
+    "recomputed": 0.9054,
+    "anchor": 0.9054,
+    "strict": true,
+    "source": "recomputed here (448s)"
+   },
+   "per_block_tier2": [
+    2.0119132101535797,
+    4.431635451316834,
+    5.770709991455078,
+    6.651249051094055
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_gamma0_seed456",
+   "config": "c10_d256_gamma0",
+   "dataset": "cifar10",
+   "seed": 456,
+   "ckpt_sha256": "7158a581631e719563b3cbada0357409f1a29cd9cd5f333c5565f5aaa5852094",
+   "epoch_stage1": 260,
+   "sep_tier2": 6.751665449142456,
+   "sep_tier2_se": 0.05655997048614331,
+   "sep_tier1_logged_at_ckpt_epoch": 6.414208719100075,
+   "acc": {
+    "S2-TTA": 0.9122,
+    "S1": 0.9044
+   },
+   "gate": {
+    "recomputed": 0.9044,
+    "anchor": 0.9044,
+    "strict": true,
+    "source": "recomputed here (750s)"
+   },
+   "per_block_tier2": [
+    2.044822430610657,
+    4.461632513999939,
+    5.870288944244384,
+    6.751665449142456
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_cp_fair_seed42",
+   "config": "c10_d256_cp_fair",
+   "dataset": "cifar10",
+   "seed": 42,
+   "ckpt_sha256": "d8c7f2c358850170ff75d1828aa1a340240bca1b8579c02833ed042dd29dbdf9",
+   "epoch_stage1": 340,
+   "sep_tier2": 0.6043432354927063,
+   "sep_tier2_se": 0.003869807507493131,
+   "sep_tier1_logged_at_ckpt_epoch": 0.6088833918516663,
+   "acc": {
+    "S2-TTA": 0.9127,
+    "S1": 0.9045
+   },
+   "gate": {
+    "recomputed": 0.9045,
+    "anchor": 0.9045,
+    "strict": true,
+    "source": "recomputed here (436s)"
+   },
+   "per_block_tier2": [
+    2.2917651414871214,
+    3.3492265820503233,
+    1.594261795282364,
+    0.6043432354927063
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_cp_fair_seed123",
+   "config": "c10_d256_cp_fair",
+   "dataset": "cifar10",
+   "seed": 123,
+   "ckpt_sha256": "a88fe83598fd22031e5e9fe434fc87e8bbc718c02c4912782ba2ab94a75f7a70",
+   "epoch_stage1": 240,
+   "sep_tier2": 0.46232366263866426,
+   "sep_tier2_se": 0.004084077647985224,
+   "sep_tier1_logged_at_ckpt_epoch": 0.4371981596809694,
+   "acc": {
+    "S2-TTA": 0.9121,
+    "S1": 0.9045
+   },
+   "gate": {
+    "recomputed": 0.9045,
+    "anchor": 0.9045,
+    "strict": true,
+    "source": "recomputed here (434s)"
+   },
+   "per_block_tier2": [
+    1.9099660992622376,
+    2.8603166818618773,
+    1.179391825199127,
+    0.46232366263866426
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_cp_fair_seed456",
+   "config": "c10_d256_cp_fair",
+   "dataset": "cifar10",
+   "seed": 456,
+   "ckpt_sha256": "025018a5b4dceb7f8b8379f9a91edba0bf2a52381fa4a6af8ccf10d48f682429",
+   "epoch_stage1": 220,
+   "sep_tier2": 0.4287034168839455,
+   "sep_tier2_se": 0.003958340300427315,
+   "sep_tier1_logged_at_ckpt_epoch": 0.3870499897962329,
+   "acc": {
+    "S2-TTA": 0.9144,
+    "S1": 0.9043
+   },
+   "gate": {
+    "recomputed": 0.9042,
+    "anchor": 0.9043,
+    "strict": true,
+    "source": "recomputed here (437s)"
+   },
+   "per_block_tier2": [
+    1.8201825320720673,
+    2.585109496116638,
+    1.0958555400371552,
+    0.4287034168839455
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_cp_fair_seed789",
+   "config": "c10_d256_cp_fair",
+   "dataset": "cifar10",
+   "seed": 789,
+   "ckpt_sha256": "14aad1dbfdbbb623fb3a0fa0475f4a5a640293a12a11c65444632611fcb9136a",
+   "epoch_stage1": 260,
+   "sep_tier2": 0.49347797185182574,
+   "sep_tier2_se": 0.0026534460674586475,
+   "sep_tier1_logged_at_ckpt_epoch": 0.4568431552114158,
+   "acc": {
+    "S2-TTA": 0.9119,
+    "S1": 0.9009
+   },
+   "gate": {
+    "recomputed": 0.901,
+    "anchor": 0.9009,
+    "strict": true,
+    "source": "recomputed here (439s)"
+   },
+   "per_block_tier2": [
+    2.0199907541275026,
+    3.0349200963974,
+    1.2695189416408539,
+    0.49347797185182574
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_gated_adaptive_t1_k0_seed42",
+   "config": "c10_d128_gated_k0_samoff",
+   "dataset": "cifar10",
+   "seed": 42,
+   "ckpt_sha256": "d54b7e096d7cb6513ed69cfa9b67388137144e4ad3ae271a2909d4c8982ba26a",
+   "epoch_stage1": 180,
+   "sep_tier2": 2.492461693286896,
+   "sep_tier2_se": 0.028704575542494063,
+   "sep_tier1_logged_at_ckpt_epoch": 3.1084362748025476,
+   "acc": {
+    "S2-TTA": 0.8727,
+    "S1": 0.8586
+   },
+   "gate": {
+    "recomputed": 0.8586,
+    "anchor": 0.8586,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c10_gated_adaptive_t1_k0_seed42.json"
+   },
+   "per_block_tier2": [
+    1.1655989706516265,
+    3.0431230068206787,
+    3.1612499475479128,
+    2.492461693286896
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_gated_k0_seed123",
+   "config": "c10_d128_gated_k0_samon",
+   "dataset": "cifar10",
+   "seed": 123,
+   "ckpt_sha256": "58b0028f63a201241a8da741a39b05e8faab81fd33e2f3b2965eacecafc7d2c2",
+   "epoch_stage1": 180,
+   "sep_tier2": 2.0526894867420196,
+   "sep_tier2_se": 0.01478588063420551,
+   "sep_tier1_logged_at_ckpt_epoch": 1.9365429028697398,
+   "acc": {
+    "S2-TTA": 0.8723,
+    "S1": 0.8587
+   },
+   "gate": {
+    "recomputed": 0.8589,
+    "anchor": 0.8587,
+    "strict": false,
+    "source": "recomputed here (108s)"
+   },
+   "per_block_tier2": [
+    1.1419909417629241,
+    2.7567321419715882,
+    2.7542963862419128,
+    2.0526894867420196
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c10_gated_k0_seed456",
+   "config": "c10_d128_gated_k0_samon",
+   "dataset": "cifar10",
+   "seed": 456,
+   "ckpt_sha256": "cdf938ba018c18eac4c3c51d8924ed08e3e2e54fa796ae88807fb5c5dbbb6fd3",
+   "epoch_stage1": 180,
+   "sep_tier2": 1.7634022653102874,
+   "sep_tier2_se": 0.01197334496697778,
+   "sep_tier1_logged_at_ckpt_epoch": 1.8260077018847412,
+   "acc": {
+    "S2-TTA": 0.8696,
+    "S1": 0.8555
+   },
+   "gate": {
+    "recomputed": 0.8554,
+    "anchor": 0.8555,
+    "strict": true,
+    "source": "recomputed here (109s)"
+   },
+   "per_block_tier2": [
+    1.1091767430305481,
+    2.6775798201560974,
+    2.6228703618049622,
+    1.7634022653102874
+   ],
+   "n_batches": 20,
+   "batch_size": 512,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gamma0_seed42",
+   "config": "c100_d256_gamma0",
+   "dataset": "cifar100",
+   "seed": 42,
+   "ckpt_sha256": "d2e2a0548597355d633c7c3acad1ef01c274323f279ca1055e77a1c807e2848c",
+   "epoch_stage1": 362,
+   "sep_tier2": 5.106146049499512,
+   "sep_tier2_se": 0.03623941793988138,
+   "sep_tier1_logged_at_ckpt_epoch": 4.7690368897574285,
+   "acc": {
+    "S2-TTA": 0.6894,
+    "S1": 0.6617
+   },
+   "gate": {
+    "recomputed": 0.6618,
+    "anchor": 0.6617,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gamma0_seed42.json"
+   },
+   "per_block_tier2": [
+    0.5548241570591926,
+    2.846156454086304,
+    3.9526344656944277,
+    5.106146049499512
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gamma0_seed123",
+   "config": "c100_d256_gamma0",
+   "dataset": "cifar100",
+   "seed": 123,
+   "ckpt_sha256": "decc3110d2195112b5f851dafc73043588a58255ba22c75ee228897d1496a450",
+   "epoch_stage1": 360,
+   "sep_tier2": 5.137266516685486,
+   "sep_tier2_se": 0.02847830122057663,
+   "sep_tier1_logged_at_ckpt_epoch": 4.789237019675118,
+   "acc": {
+    "S2-TTA": 0.6916,
+    "S1": 0.6636
+   },
+   "gate": {
+    "recomputed": 0.6637,
+    "anchor": 0.6636,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gamma0_seed123.json"
+   },
+   "per_block_tier2": [
+    0.5588789895176888,
+    2.8495614767074584,
+    3.9474452137947083,
+    5.137266516685486
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gamma0_seed456",
+   "config": "c100_d256_gamma0",
+   "dataset": "cifar100",
+   "seed": 456,
+   "ckpt_sha256": "09b878e2669545e045ef76de77025da11caac3369160ad8dc80faaf8cff74f54",
+   "epoch_stage1": 340,
+   "sep_tier2": 5.023474335670471,
+   "sep_tier2_se": 0.031925332550254454,
+   "sep_tier1_logged_at_ckpt_epoch": 4.742346142360143,
+   "acc": {
+    "S2-TTA": 0.696,
+    "S1": 0.6657
+   },
+   "gate": {
+    "recomputed": 0.6658,
+    "anchor": 0.6657,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gamma0_seed456.json"
+   },
+   "per_block_tier2": [
+    0.5631334155797958,
+    2.8084409713745115,
+    3.8602781534194945,
+    5.023474335670471
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gated_k0_seed42",
+   "config": "c100_d256_gated_k0",
+   "dataset": "cifar100",
+   "seed": 42,
+   "ckpt_sha256": "58e0c770f80a4f70d9d6c814884ecbb1caf1162a270caf3294282b67d69fd4ca",
+   "epoch_stage1": 340,
+   "sep_tier2": 1.8556138634681703,
+   "sep_tier2_se": 0.010042139871482898,
+   "sep_tier1_logged_at_ckpt_epoch": 1.6913990313666207,
+   "acc": {
+    "S2-TTA": 0.6864,
+    "S1": 0.6607
+   },
+   "gate": {
+    "recomputed": 0.6606,
+    "anchor": 0.6607,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gated_k0_seed42.json"
+   },
+   "per_block_tier2": [
+    0.5492584422230721,
+    2.7408830165863036,
+    2.958512806892395,
+    1.8556138634681703
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gated_k0_seed123",
+   "config": "c100_d256_gated_k0",
+   "dataset": "cifar100",
+   "seed": 123,
+   "ckpt_sha256": "4ad924afe1d33fd1b31edf54587e82ca2df1217ddef224156ae5c51db26a1dcf",
+   "epoch_stage1": 320,
+   "sep_tier2": 1.8247386336326599,
+   "sep_tier2_se": 0.00795116528532126,
+   "sep_tier1_logged_at_ckpt_epoch": 1.6852389989580427,
+   "acc": {
+    "S2-TTA": 0.6879,
+    "S1": 0.6617
+   },
+   "gate": {
+    "recomputed": 0.6619,
+    "anchor": 0.6617,
+    "strict": false,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gated_k0_seed123.json"
+   },
+   "per_block_tier2": [
+    0.5306575804948807,
+    2.651441049575806,
+    2.9019515037536623,
+    1.8247386336326599
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_gated_k0_seed456",
+   "config": "c100_d256_gated_k0",
+   "dataset": "cifar100",
+   "seed": 456,
+   "ckpt_sha256": "dfc6fac39b92f648b83720b40200dc4202163aea52c466f1ba0e59f61deb036d",
+   "epoch_stage1": 360,
+   "sep_tier2": 1.8676900327205659,
+   "sep_tier2_se": 0.009961395015546581,
+   "sep_tier1_logged_at_ckpt_epoch": 1.7176268325533186,
+   "acc": {
+    "S2-TTA": 0.6977,
+    "S1": 0.6682
+   },
+   "gate": {
+    "recomputed": 0.6682,
+    "anchor": 0.6682,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_gated_k0_seed456.json"
+   },
+   "per_block_tier2": [
+    0.5746022164821625,
+    2.756438648700714,
+    3.0045337080955505,
+    1.8676900327205659
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_cumulative_seed42",
+   "config": "c100_d256_cumulative",
+   "dataset": "cifar100",
+   "seed": 42,
+   "ckpt_sha256": "537cf9e2e27e73009596a9de9f52097ee98d33ad1055783a8f434e20ab44cc3b",
+   "epoch_stage1": 340,
+   "sep_tier2": 1.0370707154273986,
+   "sep_tier2_se": 0.004936756037703538,
+   "sep_tier1_logged_at_ckpt_epoch": 0.9500553938320705,
+   "acc": {
+    "S2-TTA": 0.6857,
+    "S1": 0.667
+   },
+   "gate": {
+    "recomputed": 0.6669,
+    "anchor": 0.667,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_cumulative_seed42.json"
+   },
+   "per_block_tier2": [
+    0.5492584422230721,
+    2.3458683133125304,
+    2.1101413130760194,
+    1.0370707154273986
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_cumulative_seed123",
+   "config": "c100_d256_cumulative",
+   "dataset": "cifar100",
+   "seed": 123,
+   "ckpt_sha256": "21cbdd0eed82bf2846ace41fb03cca1c41f446c15d10cfd3d3ad0b48e0ad6d3f",
+   "epoch_stage1": 340,
+   "sep_tier2": 1.0474497973918915,
+   "sep_tier2_se": 0.005842361390124304,
+   "sep_tier1_logged_at_ckpt_epoch": 0.9533461018971034,
+   "acc": {
+    "S2-TTA": 0.6888,
+    "S1": 0.6655
+   },
+   "gate": {
+    "recomputed": 0.6655,
+    "anchor": 0.6655,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_cumulative_seed123.json"
+   },
+   "per_block_tier2": [
+    0.5574926808476448,
+    2.3535993337631225,
+    2.140681576728821,
+    1.0474497973918915
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  },
+  {
+   "name": "c100_cumulative_seed456",
+   "config": "c100_d256_cumulative",
+   "dataset": "cifar100",
+   "seed": 456,
+   "ckpt_sha256": "354783dfa1827d5e8d3b130d88e765c141db5cdc473b445e42aeb5cbd28593d6",
+   "epoch_stage1": 320,
+   "sep_tier2": 1.0374207258224488,
+   "sep_tier2_se": 0.005076743398956913,
+   "sep_tier1_logged_at_ckpt_epoch": 0.9588988031659808,
+   "acc": {
+    "S2-TTA": 0.6942,
+    "S1": 0.671
+   },
+   "gate": {
+    "recomputed": 0.671,
+    "anchor": 0.671,
+    "strict": true,
+    "source": "E2 dump amir-porjects/neuroips_review/camera_ready/experiments/e2_exit/dumps/c100_cumulative_seed456.json"
+   },
+   "per_block_tier2": [
+    0.5484107688069344,
+    2.3333367705345154,
+    2.102111208438873,
+    1.0374207258224488
+   ],
+   "n_batches": 20,
+   "batch_size": 256,
+   "data_seed": 20260725
+  }
+ ],
+ "analysis": {
+  "S2-TTA": {
+   "accuracy_protocol": "stage2_test_top1_tta",
+   "across_points": {
+    "n": 18,
+    "spearman": -0.05882352941176471,
+    "perm_p_two_sided": 0.8168718312816872,
+    "n_perm": 100000
+   },
+   "within_config": {
+    "statistic": "Pearson r of config-centered sep vs config-centered acc",
+    "r": -0.0029308689784408467,
+    "stratified_perm_p_two_sided": 0.9893301066989331,
+    "n_perm": 100000,
+    "n_configs": 7
+   },
+   "across_configs": {
+    "n_configs": 7,
+    "configs": [
+     "c100_d256_cumulative",
+     "c100_d256_gamma0",
+     "c100_d256_gated_k0",
+     "c10_d128_gated_k0_samoff",
+     "c10_d128_gated_k0_samon",
+     "c10_d256_cp_fair",
+     "c10_d256_gamma0"
+    ],
+    "sep_means": [
+     1.0406470795472462,
+     5.08896230061849,
+     1.8493475099404655,
+     2.492461693286896,
+     1.9080458760261534,
+     0.4972120717167854,
+     6.701457250118255
+    ],
+    "acc_means_pct": [
+     68.95666666666666,
+     69.23333333333333,
+     69.06666666666666,
+     87.27000000000001,
+     87.095,
+     91.2775,
+     91.36500000000001
+    ],
+    "spearman": 0.3571428571428572,
+    "exact_perm_p_two_sided": 0.4444444444444444
+   },
+   "per_config": {
+    "c100_d256_cumulative": {
+     "n": 3,
+     "sep": [
+      1.0370707154273986,
+      1.0474497973918915,
+      1.0374207258224488
+     ],
+     "acc_pct": [
+      68.57,
+      68.88,
+      69.42
+     ],
+     "spearman": 0.5
+    },
+    "c100_d256_gamma0": {
+     "n": 3,
+     "sep": [
+      5.106146049499512,
+      5.137266516685486,
+      5.023474335670471
+     ],
+     "acc_pct": [
+      68.94,
+      69.16,
+      69.6
+     ],
+     "spearman": -0.5
+    },
+    "c100_d256_gated_k0": {
+     "n": 3,
+     "sep": [
+      1.8556138634681703,
+      1.8247386336326599,
+      1.8676900327205659
+     ],
+     "acc_pct": [
+      68.64,
+      68.78999999999999,
+      69.77
+     ],
+     "spearman": 0.5
+    },
+    "c10_d128_gated_k0_samoff": {
+     "n": 1,
+     "sep": [
+      2.492461693286896
+     ],
+     "acc_pct": [
+      87.27000000000001
+     ],
+     "spearman": null
+    },
+    "c10_d128_gated_k0_samon": {
+     "n": 2,
+     "sep": [
+      2.0526894867420196,
+      1.7634022653102874
+     ],
+     "acc_pct": [
+      87.22999999999999,
+      86.96000000000001
+     ],
+     "spearman": null
+    },
+    "c10_d256_cp_fair": {
+     "n": 4,
+     "sep": [
+      0.6043432354927063,
+      0.46232366263866426,
+      0.4287034168839455,
+      0.49347797185182574
+     ],
+     "acc_pct": [
+      91.27,
+      91.21000000000001,
+      91.44,
+      91.19
+     ],
+     "spearman": -0.39999999999999997
+    },
+    "c10_d256_gamma0": {
+     "n": 2,
+     "sep": [
+      6.651249051094055,
+      6.751665449142456
+     ],
+     "acc_pct": [
+      91.51,
+      91.22
+     ],
+     "spearman": null
+    }
+   },
+   "per_dataset": {
+    "cifar10": {
+     "n": 9,
+     "spearman": -0.049999999999999996,
+     "perm_p": 0.9107708922910771
+    },
+    "cifar100": {
+     "n": 9,
+     "spearman": 0.4666666666666666,
+     "perm_p": 0.21069789302106978
+    }
+   }
+  },
+  "S1": {
+   "accuracy_protocol": "stage1_test_top1_no_tta",
+   "across_points": {
+    "n": 18,
+    "spearman": -0.2055786220943524,
+    "perm_p_two_sided": 0.4111658883411166,
+    "n_perm": 100000
+   },
+   "within_config": {
+    "statistic": "Pearson r of config-centered sep vs config-centered acc",
+    "r": 0.15722172775174378,
+    "stratified_perm_p_two_sided": 0.6241237587624123,
+    "n_perm": 100000,
+    "n_configs": 7
+   },
+   "across_configs": {
+    "n_configs": 7,
+    "configs": [
+     "c100_d256_cumulative",
+     "c100_d256_gamma0",
+     "c100_d256_gated_k0",
+     "c10_d128_gated_k0_samoff",
+     "c10_d128_gated_k0_samon",
+     "c10_d256_cp_fair",
+     "c10_d256_gamma0"
+    ],
+    "sep_means": [
+     1.0406470795472462,
+     5.08896230061849,
+     1.8493475099404655,
+     2.492461693286896,
+     1.9080458760261534,
+     0.4972120717167854,
+     6.701457250118255
+    ],
+    "acc_means_pct": [
+     66.78333333333335,
+     66.36666666666666,
+     66.35333333333334,
+     85.86,
+     85.71000000000001,
+     90.35499999999999,
+     90.49
+    ],
+    "spearman": 0.1785714285714286,
+    "exact_perm_p_two_sided": 0.7130952380952381
+   },
+   "per_config": {
+    "c100_d256_cumulative": {
+     "n": 3,
+     "sep": [
+      1.0370707154273986,
+      1.0474497973918915,
+      1.0374207258224488
+     ],
+     "acc_pct": [
+      66.7,
+      66.55,
+      67.10000000000001
+     ],
+     "spearman": -0.5
+    },
+    "c100_d256_gamma0": {
+     "n": 3,
+     "sep": [
+      5.106146049499512,
+      5.137266516685486,
+      5.023474335670471
+     ],
+     "acc_pct": [
+      66.17,
+      66.36,
+      66.57
+     ],
+     "spearman": -0.5
+    },
+    "c100_d256_gated_k0": {
+     "n": 3,
+     "sep": [
+      1.8556138634681703,
+      1.8247386336326599,
+      1.8676900327205659
+     ],
+     "acc_pct": [
+      66.07,
+      66.17,
+      66.82000000000001
+     ],
+     "spearman": 0.5
+    },
+    "c10_d128_gated_k0_samoff": {
+     "n": 1,
+     "sep": [
+      2.492461693286896
+     ],
+     "acc_pct": [
+      85.86
+     ],
+     "spearman": null
+    },
+    "c10_d128_gated_k0_samon": {
+     "n": 2,
+     "sep": [
+      2.0526894867420196,
+      1.7634022653102874
+     ],
+     "acc_pct": [
+      85.87,
+      85.55
+     ],
+     "spearman": null
+    },
+    "c10_d256_cp_fair": {
+     "n": 4,
+     "sep": [
+      0.6043432354927063,
+      0.46232366263866426,
+      0.4287034168839455,
+      0.49347797185182574
+     ],
+     "acc_pct": [
+      90.45,
+      90.45,
+      90.42999999999999,
+      90.09
+     ],
+     "spearman": 0.21081851067789195
+    },
+    "c10_d256_gamma0": {
+     "n": 2,
+     "sep": [
+      6.651249051094055,
+      6.751665449142456
+     ],
+     "acc_pct": [
+      90.53999999999999,
+      90.44
+     ],
+     "spearman": null
+    }
+   },
+   "per_dataset": {
+    "cifar10": {
+     "n": 9,
+     "spearman": 0.0,
+     "perm_p": 1.0
+    },
+    "cifar100": {
+     "n": 9,
+     "spearman": -0.4016771562027471,
+     "perm_p": 0.2829471705282947
+    }
+   }
+  }
+ },
+ "code_validation_mgc_d128_seed42": {
+  "raw_train": {
+   "deepest_sep_curr_nl": 5.226487827301026,
+   "se": 0.018673612097099904,
+   "per_block": [
+    1.0614836394786835,
+    4.322115159034729,
+    5.92631585597992,
+    5.226487827301026
+   ],
+   "logged_at_ckpt_epoch": 5.239261857394514,
+   "vs_gradshare": {
+    "gradshare_json": "amir-porjects/ff-wiki/_build/analyses/gradient_share_results.json",
+    "gradshare_block3_margin_curr_nl": 5.234605669975281,
+    "delta": -0.008117842674255193,
+    "se_this_run": 0.018673612097099904,
+    "z_approx": -0.30739535413520025,
+    "criterion": "|delta| <= 3*sqrt(2)*SE (the gradshare run drew an independent GPU RNG stream, so agreement is statistical, not bitwise; its own SE is taken equal to ours)",
+    "pass_": true
+   },
+   "gate": {
+    "anchor_final_test_s1_top1_no_tta": 0.8523,
+    "recomputed_ema_test_top1_no_tta": 0.8524,
+    "delta": 0.00010000000000010001,
+    "gate_pass": true,
+    "gate_strict": true,
+    "gate_source": "recomputed here (268s)",
+    "test_gate": {
+     "recomputed": 0.8524,
+     "anchor": 0.8523,
+     "delta": 0.00010000000000010001,
+     "delta_examples": 1,
+     "strict_pass": true,
+     "numerics_fallback_pass": false,
+     "pass_": true,
+     "stored_comparison": {
+      "path": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516/preds_stage1_test_no_tta.npz",
+      "y_true_equal": true,
+      "argmax_agreement": 0.9997,
+      "n_disagree": 3,
+      "score_absdiff_median": 0.0006809234619140625,
+      "score_absdiff_p999": 0.48844516992569476,
+      "score_absdiff_max": 1.7001872062683105
+     },
+     "rule": "strict |delta|<=0.0001; fallback |delta|<=3/10000 and argmax agreement with stored GPU preds >= 0.999",
+     "source": "recomputed here (268s)"
+    },
+    "ckpt_best_s1": 0.8622,
+    "run_end_best_s1": 0.8622,
+    "best_s1_match": true,
+    "ckpt_epoch_is_best_val_epoch": true,
+    "split_indices_match": true
+   }
+  },
+  "ema_eval": {
+   "deepest_sep_curr_nl": 5.544660639762879,
+   "se": 0.015357080987187452,
+   "per_block": [
+    1.0877726256847382,
+    4.5905375480651855,
+    6.333436369895935,
+    5.544660639762879
+   ],
+   "logged_at_ckpt_epoch": 5.239261857394514,
+   "vs_gradshare": null,
+   "gate": {
+    "anchor_final_test_s1_top1_no_tta": 0.8523,
+    "recomputed_ema_test_top1_no_tta": 0.8524,
+    "delta": 0.00010000000000010001,
+    "gate_pass": true,
+    "gate_strict": true,
+    "gate_source": "E1 earlier output, same sha256 (amir-porjects/neuroips_review/camera_ready/experiments/e1_sep/out/c10_mgc_c1_seed42__raw_train.json)",
+    "test_gate": {
+     "recomputed": 0.8524,
+     "anchor": 0.8523,
+     "delta": 0.00010000000000010001,
+     "delta_examples": 1,
+     "strict_pass": true,
+     "numerics_fallback_pass": false,
+     "pass_": true,
+     "stored_comparison": {
+      "path": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516/preds_stage1_test_no_tta.npz",
+      "y_true_equal": true,
+      "argmax_agreement": 0.9997,
+      "n_disagree": 3,
+      "score_absdiff_median": 0.0006809234619140625,
+      "score_absdiff_p999": 0.48844516992569476,
+      "score_absdiff_max": 1.7001872062683105
+     },
+     "rule": "strict |delta|<=0.0001; fallback |delta|<=3/10000 and argmax agreement with stored GPU preds >= 0.999",
+     "source": "E1 earlier output, same sha256 (amir-porjects/neuroips_review/camera_ready/experiments/e1_sep/out/c10_mgc_c1_seed42__raw_train.json)"
+    },
+    "ckpt_best_s1": 0.8622,
+    "run_end_best_s1": 0.8622,
+    "best_s1_match": true,
+    "ckpt_epoch_is_best_val_epoch": true,
+    "split_indices_match": true
+   }
+  }
+ }
+}

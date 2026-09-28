@@ -59,10 +59,14 @@ The same metadata is in [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repo
 | Tiny ImageNet γ=0 (3 seeds) | Trainer + seed pins |
 | L4/D128 and L8/D128 hardness-gated runs | Trainer + env commands (SAM setting per seed in the manifest) |
 | Missing-gradient compensation (MGC), CIFAR-100 and CIFAR-10 D128 | Opt-in flags in the shipped trainers (`FF_USE_MGC=1`) |
+| MGC control at CIFAR-10 L4/D128 (F1: SAM-matched cumulative arm, auxiliary removed, block-0 auxiliary kept; 3 seeds each; Table 6, App. B.1.1) | Trainer flags + env commands in the manifest; `analysis/camera_ready/f1_analysis.py` (paired statistics, scoring of the registered predictions) and `analysis/experiments/f1_mgc_block0/` (F_d snapshot, registered predictions); results `metric_summaries/camera_ready/f1_block0_control.json` |
+| CIFAR-10 γ=0 seed 42 rerun in the seed-123/456 configuration (F2; Table 22) | Trainer + env command; `analysis/camera_ready/f2_analysis.py`, registered predictions in `analysis/experiments/f2_gamma0_s42/`; results `metric_summaries/camera_ready/f2_gamma0_s42.json` |
 | Squared-hinge barrier replication | Opt-in flag (`FF_BARRIER_TYPE=sq_hinge`) |
 | Frozen-backbone readouts (strict-FF block, CE block) | `analysis/readouts/` |
 | BP/FF calibration rows of Table 2 (n=3) | Original run scripts in `trainers/bp_original/` |
 | Gradient-attenuation snapshot (Fig. 1) and its EMA-weight recomputation | `analysis/snapshot_grad_attenuation.py`, `analysis/experiments/e3_fd/` |
+| Separation vs. accuracy at the selected checkpoints (E1: logged, and recomputed on the checkpoints) | `analysis/experiments/e1_sep/` (CPU; E1 tier 2 and E2 run together with `analysis/experiments/run_cpu_batch.sh`) |
+| Validation-selected early exit (E2; the cumulative runs exit early too, so the saving is not specific to the repairs) | `analysis/experiments/e2_exit/` (CPU); table and figure from `analysis/camera_ready/make_tables.py` / `make_figures.py --fig early_exit` |
 | Paired-bootstrap dissociation statistics | `analysis/paired_dissociation_stats.py` on `preds_cifar100/` (S2-TTA; the other protocols need the full prediction sets, regenerated from the checkpoints, most of them available on request) |
 | Block-locality audit, including the depth-order path | `scripts/reproduce_locality_audit.sh` |
 | Text-domain runs (App. K) | Wrapper trainer + recipe (`analysis/text_domain_README.md`) |
@@ -85,11 +89,14 @@ analysis/
   aggregate_multiseed.py, verify_locality.py, snapshot_grad_attenuation.py, plot_grad_attenuation.py,
   paired_dissociation_stats.py, generate_figures.py, scripts/plot_dynamics.py    (v1 scripts)
   camera_ready/                aggregation, tables, figures, compute budget and number tracing for the
-                               camera-ready paper
+                               camera-ready paper; F1/F2 analysis (f1_analysis.py, f2_analysis.py)
   readouts/                    S2-FF (strict-FF readout block) and S2-FF-CE readouts
   recovered/                   rebuttal-era scripts behind cited results (see analysis/README.md)
-  experiments/                 camera-ready CPU experiments E1 (separation vs accuracy), E3 (F_d on EMA
-                               weights), E6 (L8 κ=0 seed-42 test evaluation)
+  experiments/                 camera-ready CPU experiments E1 (separation vs accuracy), E2 (validation-
+                               selected early exit), E3 (F_d on EMA weights), E6 (L8 κ=0 seed-42 test
+                               evaluation); run_cpu_batch.sh runs E1 tier 2 and E2 (CPU only);
+                               f1_mgc_block0/ (F_d snapshot of the MGC control) and the registered
+                               predictions of the F1/F2 GPU runs
   *_README.md                  recipes for the BP, component-ablation and text-domain rows
 metric_summaries/              v1 summaries (aggregated_gated_l4d128.json corrected) + camera_ready/ results
                                (incl. compute_budget.json)
@@ -109,7 +116,8 @@ release_manifest.json          checkpoint sources, lineage, sizes, SHA-256, avai
 environment variables, the reference run directories and the expected values (mean ± sample SD).
 `tests/check_manifest_commands.py` replays each command's `main()` up to the point where it writes
 `config.json` and checks that the configuration equals the reference run's own `config.json`
-(all 43 command/seed pairs pass; only keys added by the camera-ready trainers may differ).
+(all 53 command/seed pairs pass, including the ten of the F1/F2 rows; only keys added by the
+camera-ready trainers may differ; `tests/manifest_check.json`).
 
 ## Reproducing the headline results
 
@@ -124,7 +132,16 @@ pip install -r requirements.txt
 FF_GAMMA_SCALE=0 FF_BLOCK_CURR_LAMBDA=0 FF_DEPTH_ORDER_LAMBDA=0 FF_SEED=42 python trainers/cp_fair_cifar10.py
 for SEED in 123 456; do FF_GAMMA_SCALE=0 FF_SEED=$SEED python trainers/cp_fair_cifar10.py; done
 python analysis/aggregate_multiseed.py --runs_dir runs --tag gamma0
+# F2: seed 42 rerun in the seed-123/456 configuration (Table 22, next to the published n=3)
+FF_VERSION_TAG=cifar10_gamma0_seed42_matched FF_GAMMA_SCALE=0 FF_USE_SAM=1 FF_SEED=42 python trainers/cp_fair_cifar10.py
 ```
+
+The published n=3 pools two configurations (seed 42 used `block_curr_lambda=0`,
+`depth_order_lambda=0`; erratum D7) and remains the headline. The F2 rerun of seed 42 in the
+seed-123/456 configuration reaches S1-TTA 91.39% and a last-epoch deepest-block separation of 7.72
+(published seed 42: 3.28); the matched n=3 is 91.30 ± 0.17% S1-TTA, next to the published
+91.32 ± 0.19%. Its registered predictions (`analysis/experiments/f2_gamma0_s42/PREDICTIONS.md`) all
+pass; `analysis/camera_ready/f2_analysis.py` writes `f2_gamma0_s42.json` from the raw run files.
 
 ### CIFAR-100 dissociation trio (3 variants × 3 seeds)
 
@@ -145,8 +162,35 @@ FF_USE_MGC=1 FF_MGC_C0=1.0 FF_MGC_RHO=0.0 FF_GAMMA_GATING_MODE=constant FF_GAMMA
 MGC replaces the depth-scaled current-block auxiliary with the compensated local term
 λ_i·softplus(−β m_i), λ_i = [c_d − s(M_i)/(s(m_i)+ε)]₊ (stop-gradient); it is not added on top of
 the auxiliary. With the default c₀ = 1, block 0 loses its 0.25 auxiliary and receives no
-compensation. `FF_MGC_KEEP_L0_AUX=1` (keep block 0's auxiliary under MGC) and `FF_CURR_AUX_OFF=1`
-(cumulative objective without the auxiliary) are the two arms of the planned block-0 control.
+compensation.
+
+### MGC control at CIFAR-10 L4/D128 (F1; Table 6, App. B.1.1)
+
+Three arms next to the MGC-D128 runs, all with constant γ=0.7, SAM on, 180+10 epochs, seeds
+42/123/456:
+
+```bash
+COMMON="FF_GAMMA_GATING_MODE=constant FF_GAMMA_SCALE=0.7 FF_MGC_C0=1.0 FF_MGC_RHO=0.0 FF_USE_SAM=1"
+for s in 42 123 456; do
+  env $COMMON FF_USE_MGC=0 FF_VERSION_TAG=f1a_cum_sam FF_SEED=$s \
+    python trainers/cp_fair_hardness_gated.py                          # (a) SAM-matched cumulative arm
+  env $COMMON FF_USE_MGC=0 FF_CURR_AUX_OFF=1 FF_VERSION_TAG=f1b_cum_noaux FF_SEED=$s \
+    python trainers/cp_fair_hardness_gated.py                          # (b) auxiliary removed, no compensator
+  env $COMMON FF_USE_MGC=1 FF_MGC_KEEP_L0_AUX=1 FF_VERSION_TAG=f1c_mgc_keepl0 FF_SEED=$s \
+    python trainers/cp_fair_hardness_gated.py                          # (c) MGC with block 0's auxiliary kept
+done
+```
+
+Against arm (a), MGC raises the deepest-block separation from 0.75 ± 0.01 to 5.25 ± 0.05. Arm (b),
+without the residual-weighted auxiliary that MGC replaces and without a compensator, reaches
+4.88 ± 0.05, 92% of that gain, so the registered prediction that it would stay below 4.72 failed;
+arm (c) leaves the separation unchanged (5.28 ± 0.03). Every paired 95% CI of the accuracy
+differences lies inside ±1 pp. The registered predictions are in
+`analysis/experiments/f1_mgc_block0/PREDICTIONS.md` (written before the runs; P2 failed, P1/P3/P4
+passed). `analysis/camera_ready/f1_analysis.py` computes `f1_block0_control.json` (per-run values,
+paired bootstraps, the separation decomposition, the prediction scores, and the F_d snapshot of
+`analysis/experiments/f1_mgc_block0/fd_snapshot_f1.py`), and `analysis/camera_ready/make_tables.py`
+generates Table 6 from it.
 
 ### Squared-hinge barrier
 
@@ -210,7 +254,7 @@ the v1 behavior, bit for bit; see `tests/`).
 | `FF_BATCH_SIZE` | batch size | tiny |
 | `FF_USE_MGC`, `FF_MGC_C0`, `FF_MGC_RHO` | missing-gradient compensation (off by default) | cifar100, gated |
 | `FF_BARRIER_TYPE`, `FF_BARRIER_MARGIN` | block-level barrier `softplus` (default) or `sq_hinge`, and its margin | gated |
-| `FF_MGC_KEEP_L0_AUX`, `FF_CURR_AUX_OFF` | F1 block-0 controls (off by default) | gated |
+| `FF_MGC_KEEP_L0_AUX`, `FF_CURR_AUX_OFF` | F1 MGC-control arms: keep block 0's auxiliary under MGC (arm c); remove the current-block auxiliary, without MGC (arm b). Off by default | gated |
 | `FF_VERSION_TAG`, `FF_RUNS_DIR`, `FF_CKPT_DIR` | run name tag, run-log and checkpoint directories | all image trainers |
 
 The full list for each trainer is at the top of its `main()`. Checkpoints now also store the RNG
@@ -218,8 +262,8 @@ state (Python, NumPy, torch CPU/CUDA), which is restored on resume; v1 checkpoin
 
 ## Hardware
 
-The reported runs were trained on NVIDIA A100-SXM4-40GB GPUs (Google Colab) and on an NVIDIA DGX
-Spark (GB10); every run directory's `env.json` records the device and software versions. Reduce
+The reported runs were trained on NVIDIA A100-SXM4-40GB GPUs (Google Colab) and on NVIDIA DGX
+Spark (GB10) machines; every run directory's `env.json` records the device and software versions. Reduce
 `batch_size` or `n_experts` if you run out of memory. The tests, the locality audit and the
 analysis scripts run on CPU.
 

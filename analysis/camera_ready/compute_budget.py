@@ -189,11 +189,51 @@ COMP = CPF / "component_ablation_v2_from_drive" / "extracted" / "ff_component_ab
 TINY = C.PR / "tiny_imagenet_fair"
 
 # ============================================================================ camera-ready additions
+# F1 (MGC block-0 control, CIFAR-10 L4/D128, SAM on, 180+10 epochs): nine single-segment runs, named
+# explicitly (same directories as f1_analysis.py); arm a and c seed 456 ran on Colab A100, the
+# rest on the DGX Spark GB10 (env.json of each run).
+F1_RUNS_DIR = C.F1_DIR / "runs"  # [CR] supplement port: run archive (config.py)
+F1_TS = {
+    "f1a_cum_sam": {42: "20260926_224359", 123: "20260926_142507", 456: "20260926_142503"},
+    "f1b_cum_noaux": {42: "20260925_101141", 123: "20260926_134435", 456: "20260927_161811"},
+    "f1c_mgc_keepl0": {42: "20260926_001337", 123: "20260927_024824", 456: "20260926_224355"},
+}
+# F2 (CIFAR-10 gamma=0 seed-42 rerun in the seed-123/456 configuration, Colab A100): segment 1
+# (..._20260925_080227) logged no epoch (VM lost during the CIFAR-10 download) and is not listed;
+# segments 2-4 carry epochs 1-3 (+ a lost epoch 4), 4-274 and 275-362 + Stage 2 (results/f2_gamma0_s42.json).
+F2_RUNS_DIR = C.F2_DIR / "runs"  # [CR] supplement port: run archive (config.py)
+F2_SEGS = [F2_RUNS_DIR / f"ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_{ts}"
+           for ts in ("20260925_130729", "20260926_105045", "20260927_212339")]
 CR_GPU = {
     "mgc_c100": [ff_run([C.MGC_C100_RUNS[s]]) for s in C.SEEDS],
     "mgc_d128": [ff_run([C.MGC_D128_RUNS[s]]) for s in C.SEEDS],
     "hinge": [ff_run([C.HINGE_RUNS[a][s]]) for a in ("g07", "g0") for s in C.SEEDS],
+    "f1_block0_control": [ff_run([F1_RUNS_DIR / f"ff_cifar10_{tag}_L4_D128_bs512_seed{s}_{ts[s]}"],
+                                 label=f"{tag}_s{s}") for tag, ts in F1_TS.items() for s in C.SEEDS],
+    "f2_gamma0_s42": [ff_run(F2_SEGS, label="f2_gamma0_s42_matched")],
 }
+
+
+def segment_recorded_wall_h(d: Path):
+    """run_start -> run_end, or -> the last epoch row when the segment has no run_end (VM lost)."""
+    ev = jsonl(d / "events.jsonl")
+    rs = [x["ts"] for x in ev if x.get("event") == "run_start"]
+    re_ = [x["ts"] for x in ev if x.get("event") == "run_end"]
+    rows = [x["ts"] for x in jsonl(d / "epoch_metrics.jsonl")]
+    end = max(re_) if re_ else (max(rows) if rows else None)
+    return round((end - min(rs)) / 3600.0, 2) if rs and end is not None else None
+
+
+F2_SEG_WALL = {d.name: segment_recorded_wall_h(d) for d in F2_SEGS}
+assert all(v is not None for v in F2_SEG_WALL.values()), F2_SEG_WALL
+CR_GPU["f2_gamma0_s42"][0]["segments_recorded_wall_h"] = F2_SEG_WALL
+CR_GPU["f2_gamma0_s42"][0]["sum_segments_recorded_wall_h"] = round(sum(F2_SEG_WALL.values()), 2)
+CR_GPU["f2_gamma0_s42"][0]["note"] = (
+    "full-run estimate (median epoch time x configured epochs) excludes the repeated epoch 4 and the setup of "
+    "each segment; segments_recorded_wall_h = run_start -> run_end (segment 4) or -> last epoch row (segments "
+    "2-3, whose VMs were lost/stopped); a first segment (..._20260925_080227) logged no epoch and is excluded")
+assert len(CR_GPU["f1_block0_control"]) == 9 and all(r["has_final_test_eval"] for r in CR_GPU["f1_block0_control"])
+assert CR_GPU["f2_gamma0_s42"][0]["has_final_test_eval"]
 bp_anchor_chain = runner_pairs(
     MR / "bp_runner.log",
     r"=== START (?P<key>\S+ seed \d+) \(attempt \d+\) (?P<ts>\d{4}-\d\d-\d\d \d\d:\d\d:\d\d)",
@@ -425,13 +465,123 @@ e3 = _opt_json("e3_fd_ema.json") or {"ema_accuracy_gate": []}
 eq = _opt_json("supplement_equivalence.json") or {}
 e6_chunks = sorted((C.CR / "experiments/e6_l8/out").glob("*_*_*.json"))
 e6_s = [json.load(open(p)).get("seconds") for p in e6_chunks]
+def _e1_e2_timings():
+    """[CR] supplement port: the E1 tier-2 / E2 CPU timings. They need what analysis/experiments/run_cpu_batch.sh
+    writes under FF_OUT_DIR/experiments (e2_exit/dumps, e1_sep/out, logs/batch.log and the per-step logs) and
+    e2_exit.json (FF_OUT_DIR/results, else this supplement's metric_summaries/camera_ready/); without them every
+    field is null, as for the other optional inputs."""
+    keys = ("e2_exit_dump_s", "e2_exit_dump_c10_minutes_min_max", "e2_exit_dump_c100_hours_min_max",
+            "e2_exit_select_s", "e2_exit_total_h", "e1_tier2_run_s", "e1_tier2_run_minutes_min_max",
+            "e1_tier2_total_h", "e1_e2_cpu_batch")
+    need = [C.CR / "experiments/e2_exit/dumps", C.CR / "experiments/e1_sep/out", C.CR / "experiments/logs/batch.log"]
+    if not all(p.exists() for p in need) or _opt_json("e2_exit.json") is None:
+        return dict.fromkeys(keys)
+    # E2 (validation-selected early exit): per-checkpoint dump time recorded by dump_val_test_block_data.py
+    # ("seconds_dump"; "seconds" of a --regate pass only re-scores an existing dump, so it is not used)
+    e2_side = {p.stem: json.load(open(p)) for p in sorted((C.CR / "experiments/e2_exit/dumps").glob("c1*_seed*.json"))}
+    e2_dump_s = {k: round(v["seconds_dump"], 1) for k, v in e2_side.items()}
+    e2_c10 = [s for k, s in e2_dump_s.items() if k.startswith("c10_")]
+    e2_c100 = [s for k, s in e2_dump_s.items() if k.startswith("c100_")]
+    assert len(e2_c10) == 9 and len(e2_c100) == 9, e2_dump_s
+    assert all(v.get("threads") == 6 for v in e2_side.values())
+    e2_select_s = _opt_json("e2_exit.json")["seconds"]
+    # E1 tier 2 (sep recomputed on the stage1_best EMA checkpoints): per-run wall time recorded by
+    # measure_sep_tier2.py ("seconds" = test gate + 20-batch measurement); 18 points (ema_eval) plus the two
+    # MGC-D128 seed-42 code-validation runs (ema_eval, raw_train)
+    e1_side = {p.stem: json.load(open(p)) for p in sorted((C.CR / "experiments/e1_sep/out").glob("*__*.json"))}
+    assert len(e1_side) == 20 and sum(k.startswith("c10_mgc_c1_seed42__") for k in e1_side) == 2, sorted(e1_side)
+    assert all(v.get("status") == "OK" and v.get("threads") == 6 for v in e1_side.values())
+    e1_run_s = {k: round(v["seconds"], 1) for k, v in e1_side.items()}
+    # E1 tier 2 + E2 ran as ONE sequential CPU batch (experiments/run_cpu_batch.sh: CUDA hidden, 6 torch threads).
+    # Whole-batch wall time from its step log (the "start" and "done" lines of experiments/logs/batch.log) and the
+    # per-kind sums of the logged step durations. Steps whose output already existed (the smoke runs made before
+    # the batch) are skipped by the runner; their per-step logs say "done already", and they are listed, not summed.
+    BATCH_LOGS = C.CR / "experiments/logs"
+    _bl = (BATCH_LOGS / "batch.log").read_text().splitlines()
+    _b0 = [ln for ln in _bl if "===== run_cpu_batch.sh start" in ln]
+    _b1 = [ln for ln in _bl if "===== run_cpu_batch.sh done" in ln]
+    assert len(_b0) == 1 and len(_b1) == 1 and "done: 0 failed" in _b1[0], (_b0, _b1)
+    _bsteps = [(m.group(1), int(m.group(2)), int(m.group(3))) for m in
+               (re.match(r"\[.{19}\] END   (\S+) rc=(-?\d+) \((\d+)s\)$", ln) for ln in _bl) if m]
+    assert _bsteps and all(rc == 0 for _, rc, _ in _bsteps), _bsteps
+    _bskip = [n for n, _, _ in _bsteps if "done already" in (BATCH_LOGS / f"{n}.log").read_text()]
+
+
+    def _bkind(n: str) -> str:
+        if n.startswith("e2_dump_"):
+            return "e2_dumps"
+        if n.startswith(("e2_select_", "e1_aggregate_")):
+            return "aggregation"
+        assert n.startswith("e1_"), n
+        return "e1_points"
+
+
+    _bts = [_dt.datetime.strptime(ln[1:20], "%Y-%m-%d %H:%M:%S") for ln in (_b0[0], _b1[0])]
+    _bwall = (_bts[1] - _bts[0]).total_seconds()
+    assert abs(sum(s for _, _, s in _bsteps) - _bwall) <= len(_bsteps), "steps did not run back to back"
+    _bexec = {}
+    for _k in ("e2_dumps", "e1_points", "aggregation"):
+        _ss = [s for n, _, s in _bsteps if n not in _bskip and _bkind(n) == _k]
+        _bexec[_k] = {"n_steps": len(_ss), "sum_s": sum(_ss), "sum_h": round(sum(_ss) / 3600, 2)}
+    assert _bexec["e2_dumps"]["n_steps"] + sum(n.startswith("e2_dump_") for n in _bskip) == 18
+    assert _bexec["e1_points"]["n_steps"] + sum(_bkind(n) == "e1_points" for n in _bskip) == 20
+    e1e2_batch = {
+        "log": "experiments/logs/batch.log (START/END line per step; per-step logs next to it)",
+        "runner": "experiments/run_cpu_batch.sh",
+        "device": "CPU only (CUDA_VISIBLE_DEVICES=''), 6 torch threads, steps run one after another",
+        "start": _b0[0][1:20],
+        "end": _b1[0][1:20],
+        "wall_s": _bwall,
+        "wall_h": round(_bwall / 3600, 1),
+        "n_steps": len(_bsteps),
+        "n_failed": 0,
+        "executed": _bexec,
+        "skipped_output_present": _bskip,
+        "note": "The skipped steps were run before the batch as smoke tests; their own run times are in "
+                "e2_exit_dump_s / e1_tier2_run_s, so e2_exit_total_h + e1_tier2_total_h exceeds the batch wall time "
+                "by those runs. The E2 selector was re-run once afterwards (FLOP-model fix; e2_exit_select_s).",
+    }
+    return {
+        "e2_exit_dump_s": e2_dump_s,
+        "e2_exit_dump_c10_minutes_min_max": [round(min(e2_c10) / 60, 1), round(max(e2_c10) / 60, 1)],
+        "e2_exit_dump_c100_hours_min_max": [round(min(e2_c100) / 3600, 2), round(max(e2_c100) / 3600, 2)],
+        "e2_exit_select_s": e2_select_s,
+        "e2_exit_total_h": round((sum(e2_dump_s.values()) + e2_select_s) / 3600, 1),
+        "e1_tier2_run_s": e1_run_s,
+        "e1_tier2_run_minutes_min_max": [round(min(e1_run_s.values()) / 60, 1), round(max(e1_run_s.values()) / 60, 1)],
+        "e1_tier2_total_h": round(sum(e1_run_s.values()) / 3600, 1),
+        "e1_e2_cpu_batch": e1e2_batch,
+    }
+
+
+def _f1_fd_timings():
+    """[CR] supplement port: accuracy-gate seconds and thread count of the F1 F_d snapshot
+    (analysis/experiments/f1_mgc_block0/fd_snapshot_f1.py), as recorded in each of its output JSONs under
+    FF_OUT_DIR/experiments/f1_mgc_block0/out/fd (one gate per checkpoint; the *_seed variants re-use it).
+    Without those outputs both fields are null, as for the other optional inputs."""
+    d = C.CR / "experiments/f1_mgc_block0/out/fd"
+    fd = {p.stem: json.load(open(p)) for p in sorted(d.glob("fd_*42_published.json"))} if d.exists() else {}
+    if not fd:
+        return {"f1_fd_ema_accuracy_gates_s": None, "f1_fd_threads": None}
+    assert sorted(fd) == ["fd_a42_published", "fd_b42_published"], sorted(fd)
+    return {"f1_fd_ema_accuracy_gates_s": {k: v["acc_gate"]["seconds"] for k, v in fd.items()},
+            "f1_fd_threads": sorted({v["setup"]["threads"] for v in fd.values()})}
+
+
 cpu = {
     "e3_ema_accuracy_gates_s": [round(g["seconds"], 1) for g in e3["ema_accuracy_gate"]],
+    **_f1_fd_timings(),
     "e6_chunks": {p.name: round(s, 1) for p, s in zip(e6_chunks, e6_s) if s is not None},
     "e6_total_s": round(sum(s for s in e6_s if s is not None), 1),
     "supplement_equivalence_wall_s": eq["per_test_file"] if isinstance(eq.get("per_test_file"), dict) else None,
+    **_e1_e2_timings(),
     "threads": 6,
-    "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads. The E1 tier-2 / E2 CPU batch was still running when this file was written and is not included.",
+    "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads (8 for the F1 F_d snapshot, f1_fd_threads). "
+            "E2 (experiments/e2_exit) is included: one "
+            "score dump per checkpoint (val + test, all depths) plus the selector. E1 tier 2 (experiments/e1_sep) is "
+            "included: one run per checkpoint (test gate + 20-batch sep measurement) for the 18 points, plus the two "
+            "MGC-D128 seed-42 code-validation runs; the aggregation step (<1 min) is not counted. E1 tier 2 and E2 "
+            "ran CPU-only as one sequential batch; e1_e2_cpu_batch gives its wall time from the batch log.",
 }
 
 out = {
@@ -460,10 +610,10 @@ out = {
                               "method": "full-run estimates (median epoch time x configured epochs) + runner-log durations"},
     "camera_ready_totals_wall_h": {"A100": round(cr_a100_wall, 1), "GB10": round(cr_gb10_wall, 1),
                                    "method": "logged run_start->run_end for uninterrupted runs, full-run estimate for resumed runs, + runner-log durations"},
-    "in_progress_not_included": [
-        "F1 MGC block-0 control (experiments/f1_mgc_block0, DGX Spark GB10), started 2026-09-25",
-        "F2 CIFAR-10 gamma=0 seed-42 rerun (experiments/f2_gamma0_s42, DGX Spark GB10), queued after F1",
-    ],
+    "in_progress_not_included": [],
+    "f1_f2_note": "F1 (experiments/f1_mgc_block0; 9 runs, GB10 and Colab A100) and F2 (experiments/f2_gamma0_s42; "
+                  "Colab A100, 3 segments with 2 resumes) finished 2026-09-28 and are included in camera_ready_gpu_runs "
+                  "and the totals.",
     "submitted_paper_runs": SUB,
     "submitted_paper_summary": sub_summary,
     "not_measured_reported_runs": [

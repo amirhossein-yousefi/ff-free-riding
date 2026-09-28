@@ -82,7 +82,7 @@ def t_dissociation_merged():
         cells = ["\\quad $\\Delta$ vs.\\ cum.", ""] + [ci(q) for _, q in pairs] + [pm1(pairs)]
         return " & ".join(cells) + " \\\\"
 
-    rows.append(acc_row("$\\gamma{=}0$ (local)", V["gamma0"]["agg"], V["gamma0"]["agg"]["sep_curr_nl_deepest"]))
+    rows.append(acc_row("$\\gamma{=}0$", V["gamma0"]["agg"], V["gamma0"]["agg"]["sep_curr_nl_deepest"]))
     rows.append(delta_row([(p, tp["pairs"][p]["gamma0_minus_cumulative"]["pooled"]) for p in PROT]))
     rows.append(acc_row("Gated $\\kappa{=}0$", V["gated_k0"]["agg"], V["gated_k0"]["agg"]["sep_curr_nl_deepest"]))
     rows.append(delta_row([(p, tp["pairs"][p]["gated_k0_minus_cumulative"]["pooled"]) for p in PROT]))
@@ -99,12 +99,11 @@ def t_dissociation_merged():
                          + [pm1([(p, {"within_pm1pp": c10p[p]["pooled"]["within_pm1pp"]}) for p in PROT])]) + " \\\\"
     minp = c10["min_mcnemar_p_tta_protocols_floor_2dp"]
     # Phase 6 (B1): this table replaces the submitted main-text Table 3 and absorbs the appendix
-    # duplicates (tab:dissociation, tab:paired_dissociation, tab:dissociation_ci). The caption carries
-    # the adopted rebuttal interpretation. Churn range: trio S2-TTA pair means (min) to MGC-vs-cumulative
-    # per-seed S1 (max), both from results/churn.json.
-    ch = J("churn")
-    churn_lo = min(ch["trio_pairs"]["S2-TTA"][k]["mean"] for k in ch["trio_pairs"]["S2-TTA"])
-    churn_hi = max(ch["mgc_vs_cumulative"]["S1"]["per_seed"].values())
+    # duplicates (tab:dissociation, tab:paired_dissociation, tab:dissociation_ci). Writing pass
+    # (reviewer-audit items): the interpretive caption sentences (heuristic repairs / MGC Stage-1 cost /
+    # accuracy invariance with the 13--26% churn range) are dropped because Sec. 4.5 states them; the
+    # S1 caveat for gamma=0 and gated stays. All three trio arms carry the depth-scaled auxiliary
+    # (block_curr_lambda=0.25, slope 3.0 in every trio config.json); MGC replaces it.
     # Verifier round (F19): the heuristic repairs' S1 CIs vs cumulative exclude 0 (inside +-1 pp);
     # gamma=0's S1-TTA CI does too. Assert so the caption sentence cannot go stale silently.
     heur = {v: tp["pairs"][p][f"{v}_minus_cumulative"]["pooled"] for v in ("gamma0", "gated_k0") for p in ("S1",)}
@@ -122,22 +121,20 @@ def t_dissociation_merged():
            sep: deepest-block $\text{{sep}}^\text{{cur}}_\text{{nl}}$ (L3) at the last Stage-1 epoch.
            Accuracy: test top-1 (\%) of the validation-selected checkpoints (S1: EMA backbone; S2: trained head
            on the frozen EMA backbone), mean $\pm$ sample SD.
-           Gated: hardness-gated $\kappa{{=}}0$; cumulative: $\gamma{{=}}0.7$; MGC: $c_d{{=}}1$ (\S\ref{{sec:method}}).
+           The trio arms differ only in the history rule ($\gamma{{=}}0$; gated: hardness-gated $\kappa{{=}}0$;
+           cumulative: $\gamma{{=}}0.7$) and all carry the depth-scaled auxiliary of Eq.~\ref{{eq:depth_scaled_main}};
+           MGC ($c_d{{=}}1$, \S\ref{{sec:repairs}}) replaces that auxiliary by the compensator.
            $\Delta$ rows: paired difference to the cumulative arm on matched seeds ($n{{=}}30{{,}}000$ test
            predictions) with a 5000-resample bootstrap 95\% CI, conditional on the trained checkpoints;
            per-seed deltas are in App.~\ref{{app:mgc_results}} (MGC) and App.~\ref{{app:churn}} (trio).
-           ``$\pm1$\,pp?'': every CI lies inside $\pm1$\,pp. Range: over the unrounded variant means.
-           The heuristic repairs move no protocol by 1\,pp, although both sit slightly below cumulative at S1
-           ($\gamma{{=}}0$ also at S1-TTA), with CIs that exclude 0 but stay inside $\pm1$\,pp; MGC pays a
-           consistent Stage-1 cost (negative in all 3 seeds under both S1 protocols) that the trained
-           Stage-2 probe recovers. Accuracy invariance is a property of the deployed scoring rule (exact
-           only under redistribution, Prop.~\ref{{prop:redistribution}}) and, empirically, of the structured
-           readouts we test, not of what the network learns: {churn_lo:.0f}--{churn_hi:.0f}\% of test predictions
-           change between variants (App.~\ref{{app:churn}}). MGC seed~456 and {resumed_trio} of the {n_trio} trio runs
+           ``$\pm1$\,pp?'': every CI lies inside $\pm1$\,pp. Range: max/min ratio for sep and max$-$min for
+           accuracy, over the unrounded variant means. $\gamma{{=}}0$ and gated sit slightly below cumulative
+           at S1 ($\gamma{{=}}0$ also at S1-TTA), with CIs that exclude 0 but stay inside $\pm1$\,pp.
+           MGC seed~456 and {resumed_trio} of the {n_trio} trio runs
            were resumed from checkpoints (App.~Tabs.~\ref{{tab:mgc_full}}
            and~\ref{{tab:cifar100_dissociation_multiseed}}). C10 pair: $\Delta$ [95\% CI] of \textsc{{cp-fair}} $-$ $\gamma{{=}}0$ on CIFAR-10
            (L4/D256, 3 seeds $\times$ 10k test images; per-seed exact McNemar $p{{>}}{minp:.2f}$ under TTA;
-           $\gamma{{=}}0$ seed~42 used a different configuration from seeds 123/456).}}
+           $\gamma{{=}}0$ seed-42 note in \S\ref{{sec:setup}}).}}
   \label{{tab:dissociation_merged}}
   \centering
   \footnotesize
@@ -157,7 +154,7 @@ def t_dissociation_merged():
   }}
 \end{{table}}
 """
-    write("t_dissociation_merged", ["c100_trio", "mgc_c100", "c100_trio_paired", "mgc_paired_bootstrap", "c10_paired", "churn"], body)
+    write("t_dissociation_merged", ["c100_trio", "mgc_c100", "c100_trio_paired", "mgc_paired_bootstrap", "c10_paired"], body)
 
 
 # ============================================================================= C1/C2: MGC per-seed table
@@ -212,7 +209,8 @@ def t_mgc():
            {m['mgc']['per_seed']['456']['first_stage1_epoch_logged']} (final evaluation complete).
            $^\ddagger$Local run; seeds 123/456 ran on Colab. The seed-42 L4/D128 SAM-off anchors
            ($\gamma{{=}}0.7$/$\gamma{{=}}0$/$\kappa{{=}}0$) reach S1 {anc3('S1')}, S1-TTA {anc3('S1-TTA')}, and
-           S2-TTA {anc3('S2-TTA')}; these single-seed comparisons cross the SAM setting.}}
+           S2-TTA {anc3('S2-TTA')}; these single-seed comparisons cross the SAM setting (SAM-matched
+           cumulative arm: Table~\ref{{tab:f1_control}}).}}
   \label{{tab:mgc_full}}
   \centering
   \scriptsize
@@ -238,7 +236,7 @@ def t_hinge():
     h = J("hinge")
     A = h["arms"]
     rows = []
-    for key, label in (("gamma0.7", "Cumulative $\\gamma{=}0.7$"), ("gamma0", "Block-local $\\gamma{=}0$")):
+    for key, label in (("gamma0.7", "Cumulative $\\gamma{=}0.7$"), ("gamma0", "History-free $\\gamma{=}0$")):
         a = A[key]["agg"]
         sepb = a["sep_curr_nl_per_block"]
         rows.append(" & ".join([label] + [pm(a[p]) for p in PROT] + [pm(sepb[0]), pm(sepb[-1])]) + " \\\\")
@@ -556,6 +554,422 @@ def t_bp_rows():
     write("t_bp_rows", ["bp_calibration"], "\n".join(lines) + "\n")
 
 
+# ============================================================================= E2: validation-selected early exit (C14)
+def t_early_exit():
+    """Family x selection rule: test delta vs. full depth, #runs with delta >= 0, FLOPs saved, chosen depths.
+    Summaries come from analysis/early_exit.py (asserted equal to the selector's own family aggregates);
+    repaired-vs-cumulative rows: CIFAR-10 descriptive (one seed per arm), CIFAR-100 paired by seed."""
+    import early_exit as E
+    e2 = J("e2_exit")
+    S = E.summarize(e2)
+    RL = E.RULES
+
+    def z(v):  # exact-zero paired differences must not print as "-0.0"
+        return 0.0 if abs(v) < 1e-9 else v
+
+    def pmx(st, nd):
+        return f"${z(st['mean']):+.{nd}f}\\!\\pm\\!{z(st['sd']):.{nd}f}$"
+
+    def pmu(st, nd):
+        return f"${st['mean']:.{nd}f}\\!\\pm\\!{z(st['sd']):.{nd}f}$"
+
+    def group_row(label, g, listed=False):
+        cells = [label]
+        for r in RL:
+            x = g[r]
+            n = x["delta_pp"]["n"]
+            if listed:   # two single-seed arms: print both values instead of a mean +- SD
+                cells += [" / ".join(f"${v:+.2f}$" for v in x["delta_pp"]["values"]), f"{x['n_delta_ge_0']}/{n}",
+                          " / ".join(f"${v:.1f}$" for v in x["saved_pct"]["values"])]
+            else:
+                cells += [pmx(x["delta_pp"], 2), f"{x['n_delta_ge_0']}/{n}", pmu(x["saved_pct"], 1)]
+        return " & ".join(cells) + " \\\\"
+
+    def paired_row(label, p):
+        cells = [label]
+        for r in RL:
+            cells += [pmx(p[r]["delta_pp"], 2), "---", pmx(p[r]["saved_pp"], 1)]
+        return " & ".join(cells) + " \\\\"
+
+    def depth_row(g):
+        cells = ["\\quad runs at $d{=}1/2/3/4$"]
+        for r in RL[:2]:
+            cells.append(f"\\multicolumn{{3}}{{c}}{{{'/'.join(str(k) for k in g[r]['runs_at_depth'])}}}")
+        mb = g["D_dynamic_exit"]["mean_blocks"]
+        cells.append(f"\\multicolumn{{3}}{{c}}{{mean blocks {mb['min']:.2f}--{mb['max']:.2f}}}")
+        return " & ".join(cells) + " \\\\"
+
+    c10cum = [E.C10_ARMS[n][1] for n in S["c10_cumulative"]["members"]]
+    assert c10cum == [r"constant $\gamma{=}0.7$", r"LCFF $\gamma{=}1.0$"], c10cum
+    n_rep = len(S["c10_repaired"]["members"])
+    n_gated = sum(E.family_of(n) == "gated" for n in S["c10_repaired"]["members"])
+    P = S["c100_paired"]
+    rows = [
+        "\\multicolumn{10}{@{}l}{\\emph{CIFAR-10 L4/D128, seed 42, no SAM}} \\\\",
+        group_row(f"All {S['c10_all'][RL[0]]['delta_pp']['n']} arms", S["c10_all"]),
+        group_row(f"\\quad cumulative ({len(c10cum)} arms)", S["c10_cumulative"], listed=True),
+        group_row(f"\\quad repaired ({n_rep} arms)", S["c10_repaired"]),
+        depth_row(S["c10_all"]),
+        "\\midrule",
+        "\\multicolumn{10}{@{}l}{\\emph{CIFAR-100 L4/D256 trio, seeds 42/123/456}} \\\\",
+        group_row(f"All {S['c100_all'][RL[0]]['delta_pp']['n']} runs", S["c100_all"]),
+        group_row("\\quad $\\gamma{=}0$ (history-free)", S["c100_gamma0"]),
+        group_row("\\quad $\\kappa{=}0$ (gated)", S["c100_gated_k0"]),
+        group_row("\\quad cumulative", S["c100_cumulative"]),
+        paired_row("\\quad $\\gamma{=}0$ $-$ cum., paired", P["gamma0_minus_cumulative"]),
+        paired_row("\\quad $\\kappa{=}0$ $-$ cum., paired", P["gated_k0_minus_cumulative"]),
+        depth_row(S["c100_all"]),
+    ]
+    dep = S["flops_saved_pct_by_depth"]
+    g = S["gates"]
+    assert g["n_pass"] + g["n_pass_numerics"] == 18 and 2 <= g["max_test_delta_examples"] <= 3
+    body = rf"""\begin{{table}}[!htb]
+  \caption{{\textbf{{Validation-selected early exit}} (S1 single crop, EMA weights). Every operating point is chosen on the run's own 5k validation split and
+           evaluated once on the 10k test split. \emph{{T}}: the shallowest depth whose validation accuracy is at least
+           the full-depth value; \emph{{T$'$}}: the validation-best depth (ties to the shallower); \emph{{D}}: dynamic exit
+           after block $d{{<}}L$ once the top-1 minus top-2 margin of the running class score exceeds a threshold, set to the
+           value with the fewest mean validation blocks at no loss of validation accuracy. $\Delta$: test accuracy at the
+           operating point minus full-depth test accuracy of the same checkpoint (pp); ${{\geq}}0$: runs with $\Delta{{\geq}}0$;
+           Saved: FLOPs saved vs.\ full depth (\%; stem plus every label hypothesis's blocks; stopping after block~0 saves
+           {dep['c10'][0]:.1f}\% on CIFAR-10 and {dep['c100'][0]:.1f}\% on CIFAR-100). Mean $\pm$ sample SD over runs (on CIFAR-10, over nine
+           configurations at one seed). CIFAR-10 cumulative arms: constant $\gamma{{=}}0.7$ / LCFF $\gamma{{=}}1.0$, listed
+           individually; repaired arms: $\gamma{{=}}0$ and the {dict(enumerate(['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven']))[n_gated]} hardness-gated arms. \emph{{runs at $d{{=}}1/2/3/4$}}: how
+           many runs select each depth (T, T$'$); D: range of mean test blocks. Paired rows: repaired minus cumulative of the same seed, mean
+           $\pm$ SD over the three seeds, of $\Delta$ (pp) and of Saved (percentage points). Each re-scored checkpoint reproduces its logged full-depth S1
+           test accuracy within one test image ({g['n_pass']} runs) or {['two', 'three'][g['max_test_delta_examples'] - 2]} images ({g['n_pass_numerics']} runs; TF32 training-time vs.\ FP32
+           re-scoring numerics).}}
+  \label{{tab:early_exit}}
+  \centering
+  \small
+  \setlength{{\tabcolsep}}{{3pt}}
+  \resizebox{{\textwidth}}{{!}}{{%
+  \begin{{tabular}}{{lccccccccc}}
+    \toprule
+    & \multicolumn{{3}}{{c}}{{T}} & \multicolumn{{3}}{{c}}{{T$'$}} & \multicolumn{{3}}{{c}}{{D (dynamic exit)}} \\
+    \cmidrule(lr){{2-4}} \cmidrule(lr){{5-7}} \cmidrule(lr){{8-10}}
+    Runs & $\Delta$ (pp) & ${{\geq}}0$ & Saved (\%) & $\Delta$ (pp) & ${{\geq}}0$ & Saved (\%) & $\Delta$ (pp) & ${{\geq}}0$ & Saved (\%) \\
+    \midrule
+""" + "\n".join("    " + r for r in rows) + r"""
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+"""
+    write("t_early_exit", ["e2_exit"], body)
+
+
+# ============================================================================= E1: aligned-checkpoint separation (A11)
+def t_e1_aligned():
+    """Per-seed deepest-block sep at the validation-selected checkpoints, two measurements side by side:
+    tier 1 = logged training-time value at the checkpoint epoch (19 points, e1_tier1_sep_acc.json);
+    tier 2 = recomputed on the stage1_best EMA checkpoint in eval mode (18 points, e1_sep_tier2.json; the
+    published C10 gamma=0 seed-42 checkpoint is lost). The two use different weights/mode/negatives, so the
+    caption tells the reader to compare within a column only. The correlations are quoted in the
+    fig:accuracy_vs_ratio caption (hand-typed there, verified against the same JSONs)."""
+    t1, t2 = J("e1_tier1_sep_acc"), J("e1_sep_tier2")
+    assert t1["gates"]["all_passed"] and not t2["_header"]["missing_or_failed"]
+    t1p = {}
+    for p in t1["points"]:
+        t1p.setdefault(p["config"], []).append(p)
+    t2p = {(p["config"], p["seed"]): p for p in t2["points"]}
+    # (label, tier-1 config, {seed: tier-2 config or None}, {seed: run_cfg assertions}, {seed: footnote mark})
+    tri = {s: "c100_d256_%s" for s in (42, 123, 456)}
+    spec = [
+        (r"CIFAR-10 L4/D256 $\gamma{=}0$", "c10_gamma0", {42: None, 123: "c10_d256_gamma0", 456: "c10_d256_gamma0"},
+         {42: dict(block_curr_lambda=0.0, depth_order_lambda=0.0, gamma_scale=0.0),
+          123: dict(block_curr_lambda=0.25, depth_order_lambda=0.2, gamma_scale=0.0),
+          456: dict(block_curr_lambda=0.25, depth_order_lambda=0.2, gamma_scale=0.0)}, {42: "a"}),
+        (r"CIFAR-10 L4/D256 \textsc{cp-fair}", "c10_cp_fair", {s: "c10_d256_cp_fair" for s in (42, 123, 456, 789)},
+         {}, {}),
+        (r"CIFAR-10 L4/D128 gated $\kappa{=}0$", "gated_l4d128_k0",
+         {42: "c10_d128_gated_k0_samoff", 123: "c10_d128_gated_k0_samon", 456: "c10_d128_gated_k0_samon"},
+         {42: dict(use_sam=False), 123: dict(use_sam=True), 456: dict(use_sam=True)}, {42: "b"}),
+        None,
+        (r"CIFAR-100 L4/D256 $\gamma{=}0$", "c100_gamma0", {s: v % "gamma0" for s, v in tri.items()}, {}, {}),
+        (r"CIFAR-100 L4/D256 gated $\kappa{=}0$", "c100_gated_k0", {s: v % "gated_k0" for s, v in tri.items()}, {}, {}),
+        (r"CIFAR-100 L4/D256 cumulative", "c100_cumulative", {s: v % "cumulative" for s, v in tri.items()}, {}, {}),
+    ]
+    assert sorted(x[1] for x in spec if x) == sorted(t1p), sorted(t1p)
+    assert sorted((c, s) for x in spec if x for s, c in x[2].items() if c) == sorted(t2p), sorted(t2p)
+    rows, n_hi, n_t2 = [], 0, 0
+    for x in spec:
+        if x is None:
+            rows.append("\\midrule")
+            continue
+        label, c1, c2s, want, mark = x
+        if rows and rows[-1] != "\\midrule":
+            rows.append("\\addlinespace")
+        a = sorted(t1p[c1], key=lambda p: p["seed"])
+        assert [p["seed"] for p in a] == sorted(c2s), (c1, [p["seed"] for p in a])
+        for i, p in enumerate(a):
+            s = p["seed"]
+            for k, v in want.get(s, {}).items():
+                assert p["run_cfg"][k] == v, (c1, s, k, p["run_cfg"][k])
+            logged = f"{p['sep_deep_at_best_epoch']:.2f}"
+            if c2s[s] is None:
+                rec = "---"
+            else:
+                q = t2p[(c2s[s], s)]   # tier 2 is read at the same checkpoint epoch and quotes the same accuracies
+                assert q["epoch_stage1"] == p["stage1_best_epoch"]
+                assert abs(q["sep_tier1_logged_at_ckpt_epoch"] - p["sep_deep_at_best_epoch"]) < 1e-9
+                for prot in ("S2-TTA", "S1"):
+                    assert abs(100 * q["acc"][prot] - p["acc_test_pct"][prot]) < 1e-6
+                n_hi += q["sep_tier2"] > q["sep_tier1_logged_at_ckpt_epoch"]
+                n_t2 += 1
+                rec = f"{q['sep_tier2']:.2f}"
+            seed = f"{s}$^{{\\mathrm{{{mark[s]}}}}}$" if s in mark else str(s)
+            rows.append(" & ".join([label if i == 0 else "", seed, logged, rec,
+                                    f"{p['acc_test_pct']['S2-TTA']:.2f}", f"{p['acc_test_pct']['S1']:.2f}"]) + " \\\\")
+    assert n_t2 == t2["_header"]["n_points"] == 18 and len(t1["points"]) == 19
+    # measurement details, all read from the tier-2 JSON
+    P2 = t2["points"]
+    assert len({p["n_batches"] for p in P2}) == 1 and len({p["data_seed"] for p in P2}) == 1
+    n_batches = P2[0]["n_batches"]
+    ex = {ds: sorted({p["n_batches"] * p["batch_size"] for p in P2 if p["dataset"] == ds}) for ds in ("cifar10", "cifar100")}
+    assert all(len(v) == 1 for v in ex.values()), ex
+    se_max = max(p["sep_tier2_se"] for p in P2)
+    d_img = [round(abs(p["gate"]["recomputed"] - p["gate"]["anchor"]) * 10000) for p in P2]
+    assert all((d <= 1) == p["gate"]["strict"] for d, p in zip(d_img, P2)) and max(d_img) == 2
+    n_strict, n_fb = sum(d <= 1 for d in d_img), sum(d == 2 for d in d_img)
+    cv = t2["code_validation_mgc_d128_seed42"]["raw_train"]
+    assert cv["vs_gradshare"]["pass_"]
+    words = dict(enumerate(["zero", "one", "two", "three", "four", "five"]))
+    body = rf"""\begin{{table}}[!htb]
+  \caption{{\textbf{{Deepest-block separation at the validation-selected checkpoints}} (exploratory; per-seed
+           analysis of Fig.~\ref{{fig:accuracy_vs_ratio}}).
+           \emph{{Logged}}: $\text{{sep}}^\text{{cur}}_\text{{nl}}$ of the deepest block as logged during training in the
+           epoch of the selected Stage-1 checkpoint (training mode, raw weights, epoch mean).
+           \emph{{Recomputed}}: the same quantity recomputed on that checkpoint's EMA weights in eval mode through the
+           trainer's own diagnostic code (hard negatives mined by the EMA teacher; {n_batches} consecutive training batches
+           drawn with a fixed seed, i.e.\ {ex['cifar10'][0]:,} images on CIFAR-10 and {ex['cifar100'][0]:,} on CIFAR-100; standard
+           error over batches ${{\leq}}{se_max:.2f}$). The two measurements differ in weights, mode, and negatives (the recomputed value
+           is higher at {n_hi} of {n_t2} points), so compare values within a column only. Accuracies are test top-1 of the
+           same checkpoints (S2~TTA: trained head on the frozen EMA backbone, flip TTA; S1: EMA backbone, single crop).
+           $^\mathrm{{a}}$Trained with $\lambda_\text{{curr}}{{=}}\lambda_\text{{depth}}{{=}}0$ (seeds 123/456: $0.25$/$0.2$); its
+           published checkpoint is no longer available, so the recomputation covers {n_t2} of the {len(t1['points'])} points.
+           $^\mathrm{{b}}$Trained without SAM (seeds 123/456 with SAM); a separate configuration in the recomputed analysis.
+           Each recomputed checkpoint reproduces its logged S1 test accuracy within one test image ({n_strict} points)
+           or {words[max(d_img)]} images ({n_fb} points; TF32 training-time vs.\ FP32 recomputation numerics). As a code check, on the
+           CIFAR-10 L4/D128 MGC seed-42 checkpoint in training mode the code gives {cv['deepest_sep_curr_nl']:.2f}, against
+           {cv['vs_gradshare']['gradshare_block3_margin_curr_nl']:.2f} from the independent gradient-share measurement
+           (App.~\ref{{app:gradshare}}).}}
+  \label{{tab:e1_aligned}}
+  \centering
+  \footnotesize
+  \begin{{tabular}}{{llcccc}}
+    \toprule
+    & & \multicolumn{{2}}{{c}}{{Deepest-block $\text{{sep}}^\text{{cur}}_\text{{nl}}$}} & \multicolumn{{2}}{{c}}{{Test top-1 (\%)}} \\
+    \cmidrule(lr){{3-4}} \cmidrule(lr){{5-6}}
+    Configuration & Seed & Logged & Recomputed & S2~TTA & S1 \\
+    \midrule
+""" + "\n".join("    " + r for r in rows) + r"""
+    \bottomrule
+  \end{tabular}
+\end{table}
+"""
+    write("t_e1_aligned", ["e1_tier1_sep_acc", "e1_sep_tier2"], body)
+
+
+# ============================================================================= F1: MGC block-0 / auxiliary control
+def t_f1_control():
+    """F1 (experiments/f1_mgc_block0): arms a/b/c + the MGC-D128 runs, CIFAR-10 L4/D128, SAM on, n = 3 each.
+    Accuracy deltas = pooled example-level paired bootstrap (results/f1_block0_control.json contrasts.*);
+    sep deltas = mean +- sample SD of the seed-paired differences. Registered predictions are scored in the
+    JSON (P2 fails); the caption states every verdict from the JSON, never hand-typed."""
+    f = J("f1_block0_control")
+    assert f["all_gates_pass"]
+    A_, K, P = f["arms"], f["contrasts"], f["predictions"]
+    hw_code = {"GB10": "G", "A100": "A"}
+
+    def gpu(arm):
+        return "/".join(hw_code[A_[arm]["hardware_by_seed"][str(s)]] for s in SEEDS)
+
+    def arm_row(label, arm):
+        a = A_[arm]["agg"]
+        return " & ".join([label, pm(a["sep_curr_nl_deepest"])] + [pm(a[p]) for p in PROT]) + " \\\\"
+
+    def d_row(label, key):
+        k = K[key]
+        sd = k["seed_paired_differences"]["sep_deepest"]
+        sep = f"${sd['mean']:+.2f}\\!\\pm\\!{sd['sd']:.2f}$"
+        return " & ".join([f"\\quad $\\Delta$ vs.\\ {label}", sep]
+                          + [ci(k["example_level_paired_bootstrap"][p]["pooled"]) for p in PROT]) + " \\\\"
+
+    rows = [
+        arm_row("(a) Cumulative + aux.", "a"),
+        arm_row("(b) Cumulative, no aux.", "b"),
+        d_row("(a)", "b_minus_a"),
+        d_row("MGC", "b_minus_mgc"),
+        arm_row("(c) MGC + block-0 aux.", "c"),
+        d_row("(a)", "c_minus_a"),
+        d_row("MGC", "c_minus_mgc"),
+        arm_row("MGC", "mgc"),
+        d_row("(a)", "mgc_minus_a"),
+    ]
+    # every accuracy CI of every contrast lies inside +-1 pp (asserted: the caption says so)
+    allin = all(K[k]["example_level_paired_bootstrap"][p]["pooled"]["within_pm1pp"] for k in K for p in PROT)
+    assert allin
+    dec = f["deepest_sep_decomposition"]
+    m = dec["mean"]
+    p1, p2, p3, p4 = (P[k] for k in ("P1", "P2", "P3", "P4"))
+    assert (p1["verdict"], p2["verdict"], p3["verdict"], p4["verdict"]) == ("PASS", "FAIL", "PASS", "PASS"), \
+        "caption wording assumes P1/P3/P4 pass and P2 fails"
+    assert p2["clause_mean_below_4.72"] == "FAIL" and p2["clause_every_seed_below_lowest_mgc_seed"] == "PASS"
+    b1, b2 = p1["band_registered"]
+    # registered thresholds, as printed in the statements scored by analysis/f1_analysis.py
+    assert "< 4.72" in p2["statement"] and "(5.21)" in p2["statement"] and "< 4.72" in p4["statement"]
+    assert "[86.27, 88.27] (87.27 +/- 1 pp)" in p3["statement"]
+    sd_s2tta = [K[k]["seed_paired_differences"]["S2-TTA"]["sd"] for k in ("c_minus_mgc", "b_minus_mgc")]
+    decomp = (f"MGC's deepest-block gain over (a), ${m['gain_mgc_minus_a']:.2f}$, splits into "
+              f"${m['aux_removal_b_minus_a']:.2f}$ from removing the auxiliary ((b)$-$(a), "
+              f"{100 * m['aux_removal_share_of_mean_gain']:.0f}\\%) and ${m['compensation_mgc_minus_b']:.2f}$ "
+              f"from the compensator (MGC$-$(b), {100 * m['compensation_share_of_mean_gain']:.0f}\\%)")
+    gpus = "; ".join(f"{lab} {gpu(arm)}" for lab, arm in (("(a)", "a"), ("(b)", "b"), ("(c)", "c"), ("MGC", "mgc")))
+    body = rf"""\begin{{table}}[!htb]
+  \caption{{\textbf{{MGC control at CIFAR-10 L4/D128}} (constant $\gamma{{=}}0.7$, SAM on, 180+10 epochs, seeds
+           42/123/456 per arm; mean $\pm$ sample SD, $n{{=}}3$). Aux.: the depth-scaled current-block auxiliary
+           ($0.25$ at block~0, $0.50$/$0.75$/$1.00$ at blocks 1--3; residual-weighted at blocks 1--3 only). (a) keeps it at
+           every block; (b) removes it at every block, with no compensator; MGC (Tab.~\ref{{tab:mgc_full}})
+           replaces it by the compensator at blocks 1--3 and has none at block~0; (c) is MGC with block~0's
+           auxiliary kept. sep: $\text{{sep}}^\text{{cur}}_\text{{nl}}$ at block~3, last Stage-1 epoch. $\Delta$
+           rows: for sep, mean $\pm$ SD of the seed-paired differences; for accuracy, the paired difference
+           pooled over the three seeds ($n{{=}}30{{,}}000$ test predictions) with a 5000-resample bootstrap 95\%
+           CI that resamples test images only, so it omits seed-to-seed variation (SD of the per-seed S2-TTA
+           differences of (c) and (b) vs.\ MGC: {sd_s2tta[0]:.2f} and {sd_s2tta[1]:.2f}\,pp). Every CI lies inside
+           $\pm1$\,pp. {decomp}. GPU per seed (G, NVIDIA GB10 on a DGX Spark; A, Colab A100): {gpus}; the
+           arms thus mix hardware and software stacks, and (b)$-$(a) is fully confounded with them. No run
+           was resumed. Registered before the runs: P1, (c) in $[{b1:.2f}, {b2:.2f}]$: passes; P2, (b) below
+           $4.72$ with every (b) seed below the lowest MGC seed ($5.21$): \textbf{{fails}} ((b) is
+           ${p2['b_mean']:.2f}$; the second clause holds); P3, every arm's S2-TTA within 1\,pp of MGC's $87.27$:
+           passes; P4, (a) below $4.72$: passes.}}
+  \label{{tab:f1_control}}
+  \centering
+  \footnotesize
+  \setlength{{\tabcolsep}}{{3pt}}
+  \resizebox{{\textwidth}}{{!}}{{%
+  \begin{{tabular}}{{lccccc}}
+    \toprule
+    Arm & sep (L3) & S1 & S1-TTA & S2 & S2-TTA \\
+    \midrule
+""" + "\n".join("    " + r for r in rows) + r"""
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+"""
+    write("t_f1_control", ["f1_block0_control"], body)
+
+
+# ============================================================================= F2: gamma=0 multi-seed table
+def t_gamma0_multiseed():
+    """CIFAR-10 L4/D256 gamma = 0 per seed (App. B multi-seed tables), from results/f2_gamma0_s42.json:
+    published seed 42 (lambda_curr = lambda_depth = 0), the F2 matched-config rerun of seed 42, seeds 123/456,
+    the published n = 3 (kept as the headline) and the matched n = 3 next to it. sep = deepest-block
+    sep_curr_nl at the last Stage-1 epoch (362; F2's registered P2 metric) and at the validation-selected
+    epoch (the convention of tab:e1_aligned)."""
+    f = J("f2_gamma0_s42")
+    assert f["gates"]["all_passed"]
+    R, F2 = f["references"], f["f2_run"]
+    ag = f["aggregates"]
+    pr = f["predictions"]
+    assert all(pr[k]["result"] == "PASS" for k in ("P1", "P1b", "P2")), "note wording assumes P1/P1b/P2 pass"
+    cmp_pub = f["comparison_vs_published_seed42"]
+    gpu = {"A100": "A100", "GB10": "GB10"}
+
+    def dev(r):
+        d = r["env"]["device0"]
+        return "A100" if "A100" in d else ("GB10" if "GB10" in d else d)
+
+    def seed_row(label, r, lam):
+        acc = [f"{r['acc_pct'][p]:.2f}\\%" for p in PROT]
+        return " & ".join([label, lam, gpu[dev(r)]] + acc
+                          + [num(r["sep_deep_last"]), f"{r['sep_deep_selected']:.2f} ({r['stage1_selected_epoch']})"]) + " \\\\"
+
+    def agg_row(label, a, lam, sep=True):
+        cells = [label, lam, "mixed"] + [f"${a[p]['mean']:.2f} \\pm {a[p]['sd_sample']:.2f}$" for p in PROT]
+        if sep:
+            cells += [f"${a['sep_last_epoch_362']['mean']:.2f} \\pm {a['sep_last_epoch_362']['sd_sample']:.2f}$",
+                      f"${a['sep_selected_epoch']['mean']:.2f} \\pm {a['sep_selected_epoch']['sd_sample']:.2f}$"]
+        else:
+            cells += ["---", "---"]
+        return " & ".join(cells) + " \\\\"
+
+    # the published seed 42 ran on an A100, seeds 123/456 on the GB10 (asserted: the note says so)
+    assert dev(R["pub42"]) == "A100" and dev(F2) == "A100" and dev(R["s123"]) == dev(R["s456"]) == "GB10"
+    rows = [
+        seed_row("42 (published)", R["pub42"], "0 / 0"),
+        seed_row("42 (rerun)$^\\ast$", F2, "0.25 / 0.2"),
+        seed_row("123", R["s123"], "0.25 / 0.2"),
+        seed_row("456", R["s456"], "0.25 / 0.2"),
+        "\\midrule",
+        agg_row("Published $n{=}3$ (42, 123, 456)", ag["published_n3"], "mixed", sep=False),
+        agg_row("Matched $n{=}3$ (42 rerun, 123, 456)", ag["matched_config_n3"], "0.25 / 0.2"),
+    ]
+    dl = [cmp_pub["protocols_pp"][p]["delta_new_minus_published"] for p in PROT]
+    pmin = min(cmp_pub["paired_test_predictions"][p]["exact_mcnemar_p_two_sided"] for p in PROT)
+    ts = f["sep_trajectory_summary"]
+    lo, hi = ts["new42_minus_s123_456_mean_range"]
+    segr = F2["segment_stage1_epoch_ranges"]
+    assert R["s123"]["stage1_selected_epoch"] == R["s456"]["stage1_selected_epoch"]
+    sel_other = R["s123"]["stage1_selected_epoch"]
+    assert [list(x) for x in segr] == [[1, 3], [4, 274], [275, 362]], segr
+    # registered qualifiers the note must carry (f2_gamma0_s42.json predictions.registered_outcome_branch)
+    rob = pr["registered_outcome_branch"]
+    assert any("one re-run of one seed" in q and "does not separate block_curr_lambda from depth_order_lambda" in q
+               for q in rob["required_qualifiers"])
+    assert "trainer code identity is verified only through config.json" in rob["scope_note"]
+    torch_pub, torch_new = (".".join(r["env"]["torch"].split("+")[0].split(".")[:2]) for r in (R["pub42"], F2))
+    assert (torch_pub, torch_new) == ("2.10", "2.11"), (torch_pub, torch_new)
+    body = rf"""\begin{{table}}[h]
+  \caption{{Multi-seed stability of $\gamma{{=}}0$ (history-free). All runs share the architecture, optimizer
+           (SAM + AdamW) and schedule (L4, D256, 32 experts top-4, bs512, 362+20 epochs), but the published
+           seed~42 used $\lambda_\text{{curr}}{{=}}\lambda_\text{{depth}}{{=}}0$, whereas seeds 123 and 456 used
+           $\lambda_\text{{curr}}{{=}}0.25$ and $\lambda_\text{{depth}}{{=}}0.2$ (all other settings are identical),
+           so the published $n{{=}}3$ pools two configurations; it remains the headline.
+           $^\ast$Seed~42 rerun in the seed-123/456 configuration; the matched $n{{=}}3$ is reported next to
+           the published one. All accuracies come from each run's final official-test evaluation. sep:
+           deepest-block $\text{{sep}}^\text{{cur}}_\text{{nl}}$ at the last Stage-1 epoch and at the
+           validation-selected epoch (in parentheses; as in App.~Tab.~\ref{{tab:e1_aligned}}). GPU: Colab A100 or DGX Spark GB10, so both $n{{=}}3$
+           SDs mix seed and hardware variation.}}
+  \label{{tab:gamma0_multiseed}}
+  \centering
+  \small
+  \setlength{{\tabcolsep}}{{3pt}}
+  \resizebox{{\textwidth}}{{!}}{{%
+  \begin{{tabular}}{{lcccccccc}}
+    \toprule
+    Seed & $\lambda_\text{{curr}}$ / $\lambda_\text{{depth}}$ & GPU & S1 (no-TTA) & S1 (TTA) & S2 (no-TTA) & S2 (TTA) & sep (last) & sep (sel.) \\
+    \midrule
+""" + "\n".join("    " + r for r in rows) + rf"""
+    \bottomrule
+  \end{{tabular}}%
+  }}
+
+  \vspace{{1ex}}
+  \begin{{flushleft}}\footnotesize
+  Because the configurations differ, the separation gap between the published seed~42 and seeds 123/456
+  should not be read as seed-to-seed variance. The rerun (one seed) supports this: in the seed-123/456
+  configuration, seed~42 reaches ${F2['sep_deep_last']:.2f}$ at the last epoch (published:
+  ${R['pub42']['sep_deep_last']:.2f}$), while its accuracy moves by ${min(dl):+.2f}$ to ${max(dl):+.2f}$\,pp
+  (paired exact McNemar $p{{\ge}}{pmin:.2f}$). It does not separate $\lambda_\text{{curr}}$ from
+  $\lambda_\text{{depth}}$, and the published run used an older software stack (PyTorch {torch_pub} vs.\
+  {torch_new}) and trainer, checked only through its configuration file. Registered before the rerun,
+  S1~TTA within the seed-123/456 range $[91.10, 91.40]$ (by one test image), S1~TTA within $\pm0.30$\,pp
+  of their mean, and a last-epoch separation in $[6.9, 8.9]$ all pass. At its validation-selected epoch
+  ({F2['stage1_selected_epoch']}, vs.\ {sel_other} for seeds 123/456; separation was still rising) the rerun's separation is
+  ${F2['sep_deep_selected']:.2f}$, close to the published run's ${R['pub42']['sep_deep_selected']:.2f}$; at the common
+  evaluation epochs from {F2['stage1_selected_epoch']} on it lies ${lo:.2f}$ to ${hi:+.2f}$ from the seed-123/456 mean.
+  The rerun trained on a Colab A100 in three segments (Stage-1 epochs {segr[0][0]}--{segr[0][1]}, {segr[1][0]}--{segr[1][1]},
+  and {segr[2][0]}--{segr[2][1]} plus Stage~2; an earlier attempt ended before its first epoch) with two resumes
+  that restored the random-number state but re-seeded the data-loader workers, so it is not bitwise
+  equal to an uninterrupted run; epoch~4 was trained twice (the second segment resumed from the epoch-3 checkpoint).
+  Seed~42's Stage-2 values come from its run log (correction: App.~\ref{{app:changes}}, item B4).
+  \end{{flushleft}}
+\end{{table}}
+"""
+    write("t_gamma0_multiseed", ["f2_gamma0_s42"], body)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     t_dissociation_merged()
@@ -567,6 +981,10 @@ def main():
     t_ladder()
     t_trio_perseed()
     t_bp_rows()
+    t_early_exit()
+    t_e1_aligned()
+    t_f1_control()
+    t_gamma0_multiseed()
 
 
 if __name__ == "__main__":

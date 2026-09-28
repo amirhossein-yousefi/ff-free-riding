@@ -1,0 +1,5040 @@
+{
+ "_meta": {
+  "description": "F1 MGC block-0 auxiliary control on CIFAR-10 L4/D128 (constant gamma = 0.7, SAM on, 180 + 10 epochs, seeds 42/123/456): arms a (cumulative + depth-scaled residual-weighted current-block auxiliary), b (auxiliary removed everywhere, no compensator), c (MGC with block 0's auxiliary kept), and the existing MGC-D128 runs.",
+  "generated_by": "analysis/f1_analysis.py",
+  "generated": "2026-09-28",
+  "sd_convention": "sample SD (ddof=1) over seeds",
+  "protocols": {
+   "S1": "Stage-1 goodness-sum readout, single crop (val-selected EMA stage1_best)",
+   "S1-TTA": "Stage-1 goodness-sum readout, flip TTA (val-selected EMA stage1_best)",
+   "S2": "Stage-2 attentive probe, single crop (val-selected stage2_best)",
+   "S2-TTA": "Stage-2 attentive probe, flip TTA (val-selected stage2_best)"
+  },
+  "accuracy_source": "events.jsonl::final_test_eval top-1 x 100 (cross-checked against preds_*.npz)",
+  "sep_source": "layer_metrics.jsonl sep_curr_nl at the last Stage-1 epoch (180)",
+  "bootstrap": {
+   "n_boot": 5000,
+   "rng": "numpy default_rng(0), fresh per contrast x protocol",
+   "procedure": "analysis/aggregate.py paired_stats + boot_means + ci_block (as for results/mgc_paired_bootstrap.json)",
+   "pooling": "per-example correctness deltas pooled over seeds 42/123/456 (n = 30,000)",
+   "ci": "percentile 95%",
+   "conditioning": "CIs are conditional on the trained checkpoints (test-set resampling only); seed variation is the sample SD of the paired seed differences"
+  },
+  "churn": "percent of the 10,000 CIFAR-10 test images whose predicted label differs between two runs of the same seed",
+  "hardware_per_run": {
+   "mgc42": "GB10",
+   "mgc123": "A100",
+   "mgc456": "A100",
+   "a42": "A100",
+   "a123": "A100",
+   "a456": "A100",
+   "b42": "GB10",
+   "b123": "GB10",
+   "b456": "GB10",
+   "c42": "GB10",
+   "c123": "GB10",
+   "c456": "A100"
+  },
+  "hardware_note": "Runs are mixed across NVIDIA GB10 (DGX Spark; F1 runs torch 2.14.0+cu130, MGC-D128 seed 42 torch 2.9.1+cu130) and Colab A100-SXM4-40GB (torch 2.11.0+cu128). GPU kernels are not bitwise deterministic across stacks, so arm differences include hardware/software run-to-run noise; per-contrast hardware pairing is listed. By arm: mgc: s42 GB10, s123 A100, s456 A100; a: s42 A100, s123 A100, s456 A100; b: s42 GB10, s123 GB10, s456 GB10; c: s42 GB10, s123 GB10, s456 A100. The F1 GB10 runs ran on the DGX Spark host named in their job logs (<DGX Spark host>).",
+  "resume_note": "No F1 run and no MGC-D128 run was resumed: one START segment and a from-scratch start in every job log, no resume events, Stage-1 layer logs contiguous from epoch 1 to 180 (MGC-D128 seeds 123/456: no job log here; their single run directories log epochs 1-180). The Colab poller lost its connection three times during the arm-a seed 42/123 session (experiments/logs/colab_supervisor_ffcr2.log, EXEC-FAIL rc=124); training continued in one segment.",
+  "trainer_sha256": "83fa1519b4a5793e1e1fd0db5beebbc7180fbb5f2939ae71cc6f30e4daf1082d",
+  "run_dirs": {
+   "mgc": {
+    "42": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516",
+    "123": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed123_20260723_205123",
+    "456": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed456_20260724_053002"
+   },
+   "a": {
+    "42": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed42_20260926_224359",
+    "123": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed123_20260926_142507",
+    "456": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed456_20260926_142503"
+   },
+   "b": {
+    "42": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed42_20260925_101141",
+    "123": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed123_20260926_134435",
+    "456": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed456_20260927_161811"
+   },
+   "c": {
+    "42": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed42_20260926_001337",
+    "123": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed123_20260927_024824",
+    "456": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed456_20260926_224355"
+   }
+  }
+ },
+ "summary": [
+  "Deepest-block separation (block 3 sep_curr_nl, epoch 180; mean +/- sample SD, n = 3): MGC 5.251 +/- 0.050, (c) 5.282 +/- 0.031, (b) 4.879 +/- 0.054, (a) 0.746 +/- 0.012.",
+  "P1 PASS: keeping block 0's auxiliary under MGC moves the deepest-block separation by +0.031 +/- 0.022 (c - MGC; 0.6% of the MGC mean), well inside the registered +/-10% band.",
+  "P2 FAIL (registered outcome that changes a claim): removing the current-block auxiliary without compensation gives (b) 4.879 +/- 0.054, above the 4.72 threshold. Of the MGC - a gain of 4.504 +/- 0.045, auxiliary removal (b - a) accounts for 4.133 +/- 0.046 (91.7%) and the compensator (MGC - b) for 0.372 +/- 0.013 (8.3%). The compensator's increment is small but has the same sign in every seed (per seed -0.358, -0.374, -0.384 for b - MGC); P2's second clause (every (b) seed below the lowest MGC seed) holds, its first clause does not.",
+  "P4 PASS: the SAM-matched cumulative anchor stays low ((a) 0.746 +/- 0.012; SAM-off seed-42 reference 0.7421), so SAM does not drive the D128 separation contrast.",
+  "P3 PASS: S2-TTA (a) 87.04 +/- 0.51, (b) 86.90 +/- 0.22, (c) 86.93 +/- 0.09, MGC 87.27 +/- 0.29; every arm lies within 1 pp of 87.27.",
+  "Accuracy contrasts (pooled example-level paired bootstrap, 95% CI, conditional on the checkpoints): S2-TTA c - MGC -0.35 pp [-0.62, -0.08], b - MGC -0.38 pp [-0.64, -0.11], MGC - a +0.24 pp [-0.02, +0.50]; S1 MGC - a -0.29 pp [-0.59, +0.02], b - a -0.43 pp [-0.74, -0.12], c - a -0.42 pp [-0.74, -0.12]. The CIs resample test examples only; the seed-level SD of the paired differences (e.g. S2-TTA c - MGC 0.26, b - MGC 0.26 pp, n = 3) and the hardware mixing are not in them. Arm a ran entirely on Colab A100, arm b entirely on the GB10, so b - a is fully confounded with hardware/software stack.",
+  "Prediction churn between two arms at the same seed is 6.69-6.96% of test images at S2-TTA (3-seed means per contrast), below the churn between two seeds of the same arm (8.64-8.83%)."
+ ],
+ "per_run": {
+  "mgc": {
+   "42": {
+    "arm": "mgc",
+    "tag": "mgc_c1 (MGC-D128)",
+    "seed": 42,
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/runs/ff_cifar10_mgc_c1_L4_D128_bs512_seed42_20260723_223516",
+    "S1": 85.23,
+    "S1-TTA": 86.64,
+    "S2": 86.0,
+    "S2-TTA": 87.05,
+    "top5": {
+     "S1": 99.37,
+     "S1-TTA": 99.45,
+     "S2": 99.41,
+     "S2-TTA": 99.53
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.06014966,
+     4.31381706,
+     5.94505791,
+     5.23926186
+    ],
+    "sep_curr_ni": [
+     1.37879161,
+     3.52777617,
+     4.48392034,
+     3.62492573
+    ],
+    "gpos_cur": [
+     1.5599097,
+     2.06492817,
+     2.2638459,
+     1.93226517
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.9.1+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-6.17.0-1026-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 42,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": null,
+     "mgc_keep_l0_aux": null,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.23,
+     "S1-TTA": 86.64,
+     "S2": 86.0,
+     "S2-TTA": 87.05
+    },
+    "job_log": {
+     "log": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/log_mgc_c1_seed42.txt",
+     "n_start_segments": 0,
+     "segment_host_or_device": [],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [],
+     "env": {},
+     "segment_headers": []
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; job log: 1 from-scratch start, 0 checkpoint resume load(s); Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+   },
+   "123": {
+    "arm": "mgc",
+    "tag": "mgc_c1 (MGC-D128)",
+    "seed": 123,
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed123_20260723_205123",
+    "S1": 85.88,
+    "S1-TTA": 87.09,
+    "S2": 86.48,
+    "S2-TTA": 87.6,
+    "top5": {
+     "S1": 99.26,
+     "S1-TTA": 99.43,
+     "S2": 99.43,
+     "S2-TTA": 99.51
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.10789227,
+     4.53960718,
+     6.16784351,
+     5.30618157
+    ],
+    "sep_curr_ni": [
+     1.42235883,
+     3.74754424,
+     4.70197028,
+     3.72647432
+    ],
+    "gpos_cur": [
+     1.5802931,
+     2.160736,
+     2.34853067,
+     1.97438832
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.12.13",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 123,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": null,
+     "mgc_keep_l0_aux": null,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.88,
+     "S1-TTA": 87.09,
+     "S2": 86.48,
+     "S2-TTA": 87.6
+    },
+    "job_log": null,
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+   },
+   "456": {
+    "arm": "mgc",
+    "tag": "mgc_c1 (MGC-D128)",
+    "seed": 456,
+    "run_dir": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/from_colab/runs_from_colab/ff_cifar10_mgc_c1_L4_D128_bs512_seed456_20260724_053002",
+    "S1": 85.25,
+    "S1-TTA": 86.89,
+    "S2": 85.73,
+    "S2-TTA": 87.17,
+    "top5": {
+     "S1": 99.49,
+     "S1-TTA": 99.51,
+     "S2": 99.5,
+     "S2-TTA": 99.56
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.07251014,
+     4.37667989,
+     5.98285291,
+     5.20722385
+    ],
+    "sep_curr_ni": [
+     1.38494904,
+     3.55466242,
+     4.50875575,
+     3.61195807
+    ],
+    "gpos_cur": [
+     1.55456271,
+     2.08578374,
+     2.28760579,
+     1.93900904
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.12.13",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 456,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": null,
+     "mgc_keep_l0_aux": null,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.25,
+     "S1-TTA": 86.89,
+     "S2": 85.73,
+     "S2-TTA": 87.17
+    },
+    "job_log": null,
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+   }
+  },
+  "a": {
+   "42": {
+    "arm": "a",
+    "tag": "f1a_cum_sam",
+    "seed": 42,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed42_20260926_224359",
+    "S1": 85.53,
+    "S1-TTA": 86.43,
+    "S2": 85.73,
+    "S2-TTA": 86.75,
+    "top5": {
+     "S1": 99.4,
+     "S1-TTA": 99.42,
+     "S2": 99.49,
+     "S2-TTA": 99.54
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.06446998,
+     1.86838058,
+     1.19148534,
+     0.75579799
+    ],
+    "sep_curr_ni": [
+     1.38018743,
+     1.44394526,
+     0.80254434,
+     0.4757832
+    ],
+    "gpos_cur": [
+     1.58565464,
+     1.01637454,
+     0.53562081,
+     0.36553376
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.13.15",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 42,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.53,
+     "S1-TTA": 86.43,
+     "S2": 85.73,
+     "S2-TTA": 86.75
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/colab/f1a_cum_sam_seed42.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "NVIDIA A100-SXM4-40GB"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "MyDrive/ffcr/f1_mgc_block0/checkpoints",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "MyDrive/ffcr/f1_mgc_block0/runs",
+      "FF_SEED": "42",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1a_cum_sam"
+     },
+     "segment_headers": [
+      "2026-09-26 22:43:56 START segment f1a_cum_sam seed 42 on NVIDIA A100-SXM4-40GB; trainer sha256 83fa1519b4a5793e"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+   },
+   "123": {
+    "arm": "a",
+    "tag": "f1a_cum_sam",
+    "seed": 123,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed123_20260926_142507",
+    "S1": 86.17,
+    "S1-TTA": 87.1,
+    "S2": 86.57,
+    "S2-TTA": 87.62,
+    "top5": {
+     "S1": 99.35,
+     "S1-TTA": 99.52,
+     "S2": 99.46,
+     "S2-TTA": 99.6
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.11630806,
+     1.92878709,
+     1.19416635,
+     0.75028429
+    ],
+    "sep_curr_ni": [
+     1.43464099,
+     1.52962445,
+     0.82637031,
+     0.48839198
+    ],
+    "gpos_cur": [
+     1.61528114,
+     1.04168418,
+     0.53983022,
+     0.36338654
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.13.15",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 123,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 86.17,
+     "S1-TTA": 87.1,
+     "S2": 86.57,
+     "S2-TTA": 87.62
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/colab/f1a_cum_sam_seed123.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "NVIDIA A100-SXM4-40GB"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "MyDrive/ffcr/f1_mgc_block0/checkpoints",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "MyDrive/ffcr/f1_mgc_block0/runs",
+      "FF_SEED": "123",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1a_cum_sam"
+     },
+     "segment_headers": [
+      "2026-09-26 14:24:58 START segment f1a_cum_sam seed 123 on NVIDIA A100-SXM4-40GB; trainer sha256 83fa1519b4a5793e"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+   },
+   "456": {
+    "arm": "a",
+    "tag": "f1a_cum_sam",
+    "seed": 456,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed456_20260926_142503",
+    "S1": 85.52,
+    "S1-TTA": 86.71,
+    "S2": 85.63,
+    "S2-TTA": 86.74,
+    "top5": {
+     "S1": 99.35,
+     "S1-TTA": 99.45,
+     "S2": 99.37,
+     "S2-TTA": 99.5
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.07376459,
+     1.89353487,
+     1.18548201,
+     0.73309016
+    ],
+    "sep_curr_ni": [
+     1.38847974,
+     1.46223411,
+     0.8059487,
+     0.47579507
+    ],
+    "gpos_cur": [
+     1.57679479,
+     1.02437741,
+     0.53695933,
+     0.37712053
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.13.15",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 456,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.52,
+     "S1-TTA": 86.71,
+     "S2": 85.63,
+     "S2-TTA": 86.74
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/colab/f1a_cum_sam_seed456.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "NVIDIA A100-SXM4-40GB"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "MyDrive/ffcr/f1_mgc_block0/checkpoints",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "MyDrive/ffcr/f1_mgc_block0/runs",
+      "FF_SEED": "456",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1a_cum_sam"
+     },
+     "segment_headers": [
+      "2026-09-26 14:24:54 START segment f1a_cum_sam seed 456 on NVIDIA A100-SXM4-40GB; trainer sha256 83fa1519b4a5793e"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+   }
+  },
+  "b": {
+   "42": {
+    "arm": "b",
+    "tag": "f1b_cum_noaux",
+    "seed": 42,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed42_20260925_101141",
+    "S1": 85.24,
+    "S1-TTA": 86.44,
+    "S2": 85.99,
+    "S2-TTA": 86.97,
+    "top5": {
+     "S1": 99.28,
+     "S1-TTA": 99.43,
+     "S2": 99.37,
+     "S2-TTA": 99.5
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.07244748,
+     4.11613854,
+     5.70198681,
+     4.88123308
+    ],
+    "sep_curr_ni": [
+     1.39266514,
+     3.37248923,
+     4.30801748,
+     3.38834371
+    ],
+    "gpos_cur": [
+     1.56979753,
+     2.00736403,
+     2.20200897,
+     1.8172482
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.14.0+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 42,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": true,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.24,
+     "S1-TTA": 86.44,
+     "S2": 85.99,
+     "S2-TTA": 86.97
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/f1b_cum_noaux_seed42.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "<DGX Spark host>"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/ckpts/f1_mgc_block0",
+      "FF_CURR_AUX_OFF": "1",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs",
+      "FF_SEED": "42",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1b_cum_noaux"
+     },
+     "segment_headers": [
+      "2026-09-25T10:11:39+02:00 START segment: f1b_cum_noaux seed 42 on <DGX Spark host>"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.0
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   },
+   "123": {
+    "arm": "b",
+    "tag": "f1b_cum_noaux",
+    "seed": 123,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed123_20260926_134435",
+    "S1": 85.43,
+    "S1-TTA": 86.45,
+    "S2": 86.15,
+    "S2-TTA": 87.07,
+    "top5": {
+     "S1": 99.16,
+     "S1-TTA": 99.37,
+     "S2": 99.4,
+     "S2-TTA": 99.47
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.10096187,
+     4.276957,
+     5.86666013,
+     4.93216932
+    ],
+    "sep_curr_ni": [
+     1.42120041,
+     3.55826995,
+     4.4955356,
+     3.4877353
+    ],
+    "gpos_cur": [
+     1.5790856,
+     2.07575061,
+     2.26763571,
+     1.85040414
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.14.0+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 123,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": true,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.43,
+     "S1-TTA": 86.45,
+     "S2": 86.15,
+     "S2-TTA": 87.07
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/f1b_cum_noaux_seed123.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "<DGX Spark host>"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/ckpts/f1_mgc_block0",
+      "FF_CURR_AUX_OFF": "1",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs",
+      "FF_SEED": "123",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1b_cum_noaux"
+     },
+     "segment_headers": [
+      "2026-09-26T13:44:34+02:00 START segment: f1b_cum_noaux seed 123 on <DGX Spark host>"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.0
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   },
+   "456": {
+    "arm": "b",
+    "tag": "f1b_cum_noaux",
+    "seed": 456,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed456_20260927_161811",
+    "S1": 85.26,
+    "S1-TTA": 86.52,
+    "S2": 85.49,
+    "S2-TTA": 86.65,
+    "top5": {
+     "S1": 99.31,
+     "S1-TTA": 99.44,
+     "S2": 99.36,
+     "S2-TTA": 99.46
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.05999842,
+     4.10289246,
+     5.68582592,
+     4.82353852
+    ],
+    "sep_curr_ni": [
+     1.37750391,
+     3.35378745,
+     4.28658504,
+     3.35480719
+    ],
+    "gpos_cur": [
+     1.54491325,
+     1.99685735,
+     2.18945582,
+     1.79799882
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.14.0+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 456,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": true,
+     "mgc_keep_l0_aux": false,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.26,
+     "S1-TTA": 86.52,
+     "S2": 85.49,
+     "S2-TTA": 86.65
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/f1b_cum_noaux_seed456.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "<DGX Spark host>"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/ckpts/f1_mgc_block0",
+      "FF_CURR_AUX_OFF": "1",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs",
+      "FF_SEED": "456",
+      "FF_USE_MGC": "0",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1b_cum_noaux"
+     },
+     "segment_headers": [
+      "2026-09-27T16:18:10+02:00 START segment: f1b_cum_noaux seed 456 on <DGX Spark host>"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.0
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   }
+  },
+  "c": {
+   "42": {
+    "arm": "c",
+    "tag": "f1c_mgc_keepl0",
+    "seed": 42,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed42_20260926_001337",
+    "S1": 85.47,
+    "S1-TTA": 86.36,
+    "S2": 85.68,
+    "S2-TTA": 86.96,
+    "top5": {
+     "S1": 99.28,
+     "S1-TTA": 99.39,
+     "S2": 99.42,
+     "S2-TTA": 99.42
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.06510736,
+     4.33100872,
+     5.96906351,
+     5.26683542
+    ],
+    "sep_curr_ni": [
+     1.38172381,
+     3.53412507,
+     4.49381016,
+     3.64773344
+    ],
+    "gpos_cur": [
+     1.58219311,
+     2.07892088,
+     2.26560294,
+     1.93824123
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.14.0+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 42,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": true,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.47,
+     "S1-TTA": 86.36,
+     "S2": 85.68,
+     "S2-TTA": 86.96
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/f1c_mgc_keepl0_seed42.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "<DGX Spark host>"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/ckpts/f1_mgc_block0",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_KEEP_L0_AUX": "1",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs",
+      "FF_SEED": "42",
+      "FF_USE_MGC": "1",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1c_mgc_keepl0"
+     },
+     "segment_headers": [
+      "2026-09-26T00:13:35+02:00 START segment: f1c_mgc_keepl0 seed 42 on <DGX Spark host>"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.25
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   },
+   "123": {
+    "arm": "c",
+    "tag": "f1c_mgc_keepl0",
+    "seed": 123,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed123_20260927_024824",
+    "S1": 85.37,
+    "S1-TTA": 86.74,
+    "S2": 85.9,
+    "S2-TTA": 87.0,
+    "top5": {
+     "S1": 99.35,
+     "S1-TTA": 99.49,
+     "S2": 99.38,
+     "S2-TTA": 99.57
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.11315866,
+     4.48403437,
+     6.14282977,
+     5.31726208
+    ],
+    "sep_curr_ni": [
+     1.41894645,
+     3.70444377,
+     4.67878703,
+     3.73359415
+    ],
+    "gpos_cur": [
+     1.60923552,
+     2.13970299,
+     2.33756472,
+     1.97174792
+    ],
+    "hardware": {
+     "device0": "NVIDIA GB10",
+     "torch": "2.14.0+cu130",
+     "cuda": "13.0",
+     "python": "3.12.3",
+     "platform": "Linux-7.0.0-1019-nvidia-aarch64-with-glibc2.39",
+     "short": "GB10"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 123,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": true,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.37,
+     "S1-TTA": 86.74,
+     "S2": 85.9,
+     "S2-TTA": 87.0
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/f1c_mgc_keepl0_seed123.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "<DGX Spark host>"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/ckpts/f1_mgc_block0",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_KEEP_L0_AUX": "1",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs",
+      "FF_SEED": "123",
+      "FF_USE_MGC": "1",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1c_mgc_keepl0"
+     },
+     "segment_headers": [
+      "2026-09-27T02:48:22+02:00 START segment: f1c_mgc_keepl0 seed 123 on <DGX Spark host>"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.25
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   },
+   "456": {
+    "arm": "c",
+    "tag": "f1c_mgc_keepl0",
+    "seed": 456,
+    "run_dir": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed456_20260926_224355",
+    "S1": 85.11,
+    "S1-TTA": 86.48,
+    "S2": 85.4,
+    "S2-TTA": 86.82,
+    "top5": {
+     "S1": 99.42,
+     "S1-TTA": 99.5,
+     "S2": 99.34,
+     "S2-TTA": 99.5
+    },
+    "final_stage1_epoch": 180,
+    "first_stage1_epoch_logged": 1,
+    "stage1_layer_log_contiguous_1_to_last": true,
+    "sep_curr_nl": [
+     1.06985265,
+     4.42307349,
+     6.03717051,
+     5.26101935
+    ],
+    "sep_curr_ni": [
+     1.39217043,
+     3.60617985,
+     4.57856346,
+     3.67900789
+    ],
+    "gpos_cur": [
+     1.57269388,
+     2.09838813,
+     2.3048884,
+     1.95569384
+    ],
+    "hardware": {
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "torch": "2.11.0+cu128",
+     "cuda": "12.8",
+     "python": "3.13.15",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "short": "A100"
+    },
+    "resume_events": [],
+    "config": {
+     "seed": 456,
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": true,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": true,
+     "mgc_c0": 1.0,
+     "mgc_rho": 0.0,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "epochs_stage1": 180,
+     "epochs_stage2": 10,
+     "num_blocks": 4,
+     "d_model": 128,
+     "batch_size": 512
+    },
+    "acc_from_preds_npz": {
+     "S1": 85.11,
+     "S1-TTA": 86.48,
+     "S2": 85.4,
+     "S2-TTA": 86.82
+    },
+    "job_log": {
+     "log": "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/logs/colab/f1c_mgc_keepl0_seed456.log",
+     "n_start_segments": 1,
+     "segment_host_or_device": [
+      "NVIDIA A100-SXM4-40GB"
+     ],
+     "n_from_scratch": 1,
+     "n_checkpoint_resume_loads": 0,
+     "trainer_sha256_prefix": [
+      "83fa1519b4a5793e"
+     ],
+     "env": {
+      "FF_CKPT_DIR": "MyDrive/ffcr/f1_mgc_block0/checkpoints",
+      "FF_GAMMA_GATING_MODE": "constant",
+      "FF_GAMMA_SCALE": "0.7",
+      "FF_MGC_C0": "1.0",
+      "FF_MGC_KEEP_L0_AUX": "1",
+      "FF_MGC_RHO": "0.0",
+      "FF_RUNS_DIR": "MyDrive/ffcr/f1_mgc_block0/runs",
+      "FF_SEED": "456",
+      "FF_USE_MGC": "1",
+      "FF_USE_SAM": "1",
+      "FF_VERSION_TAG": "f1c_mgc_keepl0"
+     },
+     "segment_headers": [
+      "2026-09-26 22:43:52 START segment f1c_mgc_keepl0 seed 456 on NVIDIA A100-SXM4-40GB; trainer sha256 83fa1519b4a5793e"
+     ]
+    },
+    "resumed": false,
+    "resume_evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True",
+    "block_curr_lambda_eff_logged_values": {
+     "0": [
+      0.25
+     ],
+     "1": [
+      0.0
+     ],
+     "2": [
+      0.0
+     ],
+     "3": [
+      0.0
+     ]
+    }
+   }
+  }
+ },
+ "arms": {
+  "mgc": {
+   "tag": "mgc_c1 (MGC-D128)",
+   "n": 3,
+   "hardware_by_seed": {
+    "42": "GB10",
+    "123": "A100",
+    "456": "A100"
+   },
+   "resumed_by_seed": {
+    "42": false,
+    "123": false,
+    "456": false
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.23,
+      85.88,
+      85.25
+     ],
+     "mean": 85.45333333,
+     "sd": 0.36963946,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.64,
+      87.09,
+      86.89
+     ],
+     "mean": 86.87333333,
+     "sd": 0.22546249,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      86.0,
+      86.48,
+      85.73
+     ],
+     "mean": 86.07,
+     "sd": 0.3798684,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      87.05,
+      87.6,
+      87.17
+     ],
+     "mean": 87.27333333,
+     "sd": 0.28919428,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       1.06014966,
+       1.10789227,
+       1.07251014
+      ],
+      "mean": 1.08018402,
+      "sd": 0.02477914,
+      "n": 3
+     },
+     {
+      "values": [
+       4.31381706,
+       4.53960718,
+       4.37667989
+      ],
+      "mean": 4.41003471,
+      "sd": 0.11653198,
+      "n": 3
+     },
+     {
+      "values": [
+       5.94505791,
+       6.16784351,
+       5.98285291
+      ],
+      "mean": 6.03191811,
+      "sd": 0.11922207,
+      "n": 3
+     },
+     {
+      "values": [
+       5.23926186,
+       5.30618157,
+       5.20722385
+      ],
+      "mean": 5.25088909,
+      "sd": 0.05049309,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      5.23926186,
+      5.30618157,
+      5.20722385
+     ],
+     "mean": 5.25088909,
+     "sd": 0.05049309,
+     "n": 3
+    }
+   }
+  },
+  "a": {
+   "tag": "f1a_cum_sam",
+   "n": 3,
+   "hardware_by_seed": {
+    "42": "A100",
+    "123": "A100",
+    "456": "A100"
+   },
+   "resumed_by_seed": {
+    "42": false,
+    "123": false,
+    "456": false
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.53,
+      86.17,
+      85.52
+     ],
+     "mean": 85.74,
+     "sd": 0.37242449,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.43,
+      87.1,
+      86.71
+     ],
+     "mean": 86.74666667,
+     "sd": 0.33650161,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      85.73,
+      86.57,
+      85.63
+     ],
+     "mean": 85.97666667,
+     "sd": 0.51626866,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      86.75,
+      87.62,
+      86.74
+     ],
+     "mean": 87.03666667,
+     "sd": 0.50520623,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       1.06446998,
+       1.11630806,
+       1.07376459
+      ],
+      "mean": 1.08484754,
+      "sd": 0.02763911,
+      "n": 3
+     },
+     {
+      "values": [
+       1.86838058,
+       1.92878709,
+       1.89353487
+      ],
+      "mean": 1.89690085,
+      "sd": 0.0303436,
+      "n": 3
+     },
+     {
+      "values": [
+       1.19148534,
+       1.19416635,
+       1.18548201
+      ],
+      "mean": 1.1903779,
+      "sd": 0.00444683,
+      "n": 3
+     },
+     {
+      "values": [
+       0.75579799,
+       0.75028429,
+       0.73309016
+      ],
+      "mean": 0.74639081,
+      "sd": 0.01184402,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      0.75579799,
+      0.75028429,
+      0.73309016
+     ],
+     "mean": 0.74639081,
+     "sd": 0.01184402,
+     "n": 3
+    }
+   }
+  },
+  "b": {
+   "tag": "f1b_cum_noaux",
+   "n": 3,
+   "hardware_by_seed": {
+    "42": "GB10",
+    "123": "GB10",
+    "456": "GB10"
+   },
+   "resumed_by_seed": {
+    "42": false,
+    "123": false,
+    "456": false
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.24,
+      85.43,
+      85.26
+     ],
+     "mean": 85.31,
+     "sd": 0.10440307,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.44,
+      86.45,
+      86.52
+     ],
+     "mean": 86.47,
+     "sd": 0.04358899,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      85.99,
+      86.15,
+      85.49
+     ],
+     "mean": 85.87666667,
+     "sd": 0.3442867,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      86.97,
+      87.07,
+      86.65
+     ],
+     "mean": 86.89666667,
+     "sd": 0.2193931,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       1.07244748,
+       1.10096187,
+       1.05999842
+      ],
+      "mean": 1.07780259,
+      "sd": 0.02100021,
+      "n": 3
+     },
+     {
+      "values": [
+       4.11613854,
+       4.276957,
+       4.10289246
+      ],
+      "mean": 4.16532933,
+      "sd": 0.096899,
+      "n": 3
+     },
+     {
+      "values": [
+       5.70198681,
+       5.86666013,
+       5.68582592
+      ],
+      "mean": 5.75149095,
+      "sd": 0.10006622,
+      "n": 3
+     },
+     {
+      "values": [
+       4.88123308,
+       4.93216932,
+       4.82353852
+      ],
+      "mean": 4.87898031,
+      "sd": 0.05435043,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      4.88123308,
+      4.93216932,
+      4.82353852
+     ],
+     "mean": 4.87898031,
+     "sd": 0.05435043,
+     "n": 3
+    }
+   }
+  },
+  "c": {
+   "tag": "f1c_mgc_keepl0",
+   "n": 3,
+   "hardware_by_seed": {
+    "42": "GB10",
+    "123": "GB10",
+    "456": "A100"
+   },
+   "resumed_by_seed": {
+    "42": false,
+    "123": false,
+    "456": false
+   },
+   "agg": {
+    "S1": {
+     "values": [
+      85.47,
+      85.37,
+      85.11
+     ],
+     "mean": 85.31666667,
+     "sd": 0.18583146,
+     "n": 3
+    },
+    "S1-TTA": {
+     "values": [
+      86.36,
+      86.74,
+      86.48
+     ],
+     "mean": 86.52666667,
+     "sd": 0.1942507,
+     "n": 3
+    },
+    "S2": {
+     "values": [
+      85.68,
+      85.9,
+      85.4
+     ],
+     "mean": 85.66,
+     "sd": 0.25059928,
+     "n": 3
+    },
+    "S2-TTA": {
+     "values": [
+      86.96,
+      87.0,
+      86.82
+     ],
+     "mean": 86.92666667,
+     "sd": 0.09451631,
+     "n": 3
+    },
+    "sep_curr_nl_per_block": [
+     {
+      "values": [
+       1.06510736,
+       1.11315866,
+       1.06985265
+      ],
+      "mean": 1.08270622,
+      "sd": 0.0264791,
+      "n": 3
+     },
+     {
+      "values": [
+       4.33100872,
+       4.48403437,
+       4.42307349
+      ],
+      "mean": 4.41270553,
+      "sd": 0.07703787,
+      "n": 3
+     },
+     {
+      "values": [
+       5.96906351,
+       6.14282977,
+       6.03717051
+      ],
+      "mean": 6.04968793,
+      "sd": 0.0875568,
+      "n": 3
+     },
+     {
+      "values": [
+       5.26683542,
+       5.31726208,
+       5.26101935
+      ],
+      "mean": 5.28170562,
+      "sd": 0.03092981,
+      "n": 3
+     }
+    ],
+    "sep_curr_nl_deepest": {
+     "values": [
+      5.26683542,
+      5.31726208,
+      5.26101935
+     ],
+     "mean": 5.28170562,
+     "sd": 0.03092981,
+     "n": 3
+    }
+   }
+  }
+ },
+ "contrasts": {
+  "mgc_minus_a": {
+   "hardware_by_seed": {
+    "42": "GB10 vs A100",
+    "123": "A100 vs A100",
+    "456": "A100 vs A100"
+   },
+   "same_hardware_seeds": [
+    123,
+    456
+   ],
+   "same_software_stack_seeds": [
+    123,
+    456
+   ],
+   "seed_paired_differences": {
+    "S1": {
+     "per_seed": {
+      "42": -0.3,
+      "123": -0.29,
+      "456": -0.27
+     },
+     "mean": -0.28666667,
+     "sd": 0.01527525,
+     "n": 3
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": 0.21,
+      "123": -0.01,
+      "456": 0.18
+     },
+     "mean": 0.12666667,
+     "sd": 0.11930353,
+     "n": 3
+    },
+    "S2": {
+     "per_seed": {
+      "42": 0.27,
+      "123": -0.09,
+      "456": 0.1
+     },
+     "mean": 0.09333333,
+     "sd": 0.18009257,
+     "n": 3
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": 0.3,
+      "123": -0.02,
+      "456": 0.43
+     },
+     "mean": 0.23666667,
+     "sd": 0.23158872,
+     "n": 3
+    },
+    "sep_deepest": {
+     "per_seed": {
+      "42": 4.48346387,
+      "123": 4.55589728,
+      "456": 4.47413369
+     },
+     "mean": 4.50449828,
+     "sd": 0.04475663,
+     "n": 3
+    },
+    "sep_per_block": [
+     {
+      "per_seed": {
+       "42": -0.00432032,
+       "123": -0.00841579,
+       "456": -0.00125445
+      },
+      "mean": -0.00466352,
+      "sd": 0.00359298,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 2.44543648,
+       "123": 2.61082009,
+       "456": 2.48314502
+      },
+      "mean": 2.51313386,
+      "sd": 0.08667429,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.75357257,
+       "123": 4.97367716,
+       "456": 4.7973709
+      },
+      "mean": 4.84154021,
+      "sd": 0.11651053,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.48346387,
+       "123": 4.55589728,
+       "456": 4.47413369
+      },
+      "mean": 4.50449828,
+      "sd": 0.04475663,
+      "n": 3
+     }
+    ]
+   },
+   "example_level_paired_bootstrap": {
+    "S1": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.23,
+       "acc_b": 85.53,
+       "delta_pp": -0.3,
+       "disagreement_pct": 9.23,
+       "a_right_b_wrong": 363,
+       "a_wrong_b_right": 393,
+       "mcnemar_exact_p": 0.2915476
+      },
+      "123": {
+       "acc_a": 85.88,
+       "acc_b": 86.17,
+       "delta_pp": -0.29,
+       "disagreement_pct": 8.69,
+       "a_right_b_wrong": 335,
+       "a_wrong_b_right": 364,
+       "mcnemar_exact_p": 0.28956681
+      },
+      "456": {
+       "acc_a": 85.25,
+       "acc_b": 85.52,
+       "delta_pp": -0.27,
+       "disagreement_pct": 9.02,
+       "a_right_b_wrong": 348,
+       "a_wrong_b_right": 375,
+       "mcnemar_exact_p": 0.33357255
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.28666667,
+      "ci95_pp": [
+       -0.58666667,
+       0.02333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.23,
+       "123": 8.69,
+       "456": 9.02
+      },
+      "mean": 8.98,
+      "sd": 0.27221315,
+      "n": 3
+     }
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.64,
+       "acc_b": 86.43,
+       "delta_pp": 0.21,
+       "disagreement_pct": 7.03,
+       "a_right_b_wrong": 290,
+       "a_wrong_b_right": 269,
+       "mcnemar_exact_p": 0.39762322
+      },
+      "123": {
+       "acc_a": 87.09,
+       "acc_b": 87.1,
+       "delta_pp": -0.01,
+       "disagreement_pct": 6.71,
+       "a_right_b_wrong": 270,
+       "a_wrong_b_right": 271,
+       "mcnemar_exact_p": 1.0
+      },
+      "456": {
+       "acc_a": 86.89,
+       "acc_b": 86.71,
+       "delta_pp": 0.18,
+       "disagreement_pct": 6.6,
+       "a_right_b_wrong": 273,
+       "a_wrong_b_right": 255,
+       "mcnemar_exact_p": 0.4594354
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": 0.12666667,
+      "ci95_pp": [
+       -0.14,
+       0.39666667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 7.03,
+       "123": 6.71,
+       "456": 6.6
+      },
+      "mean": 6.78,
+      "sd": 0.22338308,
+      "n": 3
+     }
+    },
+    "S2": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.0,
+       "acc_b": 85.73,
+       "delta_pp": 0.27,
+       "disagreement_pct": 9.43,
+       "a_right_b_wrong": 396,
+       "a_wrong_b_right": 369,
+       "mcnemar_exact_p": 0.34720736
+      },
+      "123": {
+       "acc_a": 86.48,
+       "acc_b": 86.57,
+       "delta_pp": -0.09,
+       "disagreement_pct": 8.77,
+       "a_right_b_wrong": 341,
+       "a_wrong_b_right": 350,
+       "mcnemar_exact_p": 0.76089861
+      },
+      "456": {
+       "acc_a": 85.73,
+       "acc_b": 85.63,
+       "delta_pp": 0.1,
+       "disagreement_pct": 8.87,
+       "a_right_b_wrong": 371,
+       "a_wrong_b_right": 361,
+       "mcnemar_exact_p": 0.7394243
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": 0.09333333,
+      "ci95_pp": [
+       -0.20666667,
+       0.4
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.43,
+       "123": 8.77,
+       "456": 8.87
+      },
+      "mean": 9.02333333,
+      "sd": 0.35571524,
+      "n": 3
+     }
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 87.05,
+       "acc_b": 86.75,
+       "delta_pp": 0.3,
+       "disagreement_pct": 7.27,
+       "a_right_b_wrong": 306,
+       "a_wrong_b_right": 276,
+       "mcnemar_exact_p": 0.22929962
+      },
+      "123": {
+       "acc_a": 87.6,
+       "acc_b": 87.62,
+       "delta_pp": -0.02,
+       "disagreement_pct": 6.92,
+       "a_right_b_wrong": 278,
+       "a_wrong_b_right": 280,
+       "mcnemar_exact_p": 0.96623798
+      },
+      "456": {
+       "acc_a": 87.17,
+       "acc_b": 86.74,
+       "delta_pp": 0.43,
+       "disagreement_pct": 6.69,
+       "a_right_b_wrong": 287,
+       "a_wrong_b_right": 244,
+       "mcnemar_exact_p": 0.06825647
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": 0.23666667,
+      "ci95_pp": [
+       -0.02341667,
+       0.50333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 7.27,
+       "123": 6.92,
+       "456": 6.69
+      },
+      "mean": 6.96,
+      "sd": 0.29206164,
+      "n": 3
+     }
+    }
+   },
+   "same_hardware_seed_mean": {
+    "seeds": [
+     123,
+     456
+    ],
+    "note": "mean of the seed-paired differences over the seeds whose two runs used the same GPU model (the MGC-D128 seed-42 run used torch 2.9.1 on the GB10, the F1 GB10 runs torch 2.14.0)",
+    "S1": -0.28,
+    "S1-TTA": 0.085,
+    "S2": 0.005,
+    "S2-TTA": 0.205,
+    "sep_deepest": 4.51501549
+   }
+  },
+  "b_minus_a": {
+   "hardware_by_seed": {
+    "42": "GB10 vs A100",
+    "123": "GB10 vs A100",
+    "456": "GB10 vs A100"
+   },
+   "same_hardware_seeds": [],
+   "same_software_stack_seeds": [],
+   "seed_paired_differences": {
+    "S1": {
+     "per_seed": {
+      "42": -0.29,
+      "123": -0.74,
+      "456": -0.26
+     },
+     "mean": -0.43,
+     "sd": 0.26888659,
+     "n": 3
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": 0.01,
+      "123": -0.65,
+      "456": -0.19
+     },
+     "mean": -0.27666667,
+     "sd": 0.33842774,
+     "n": 3
+    },
+    "S2": {
+     "per_seed": {
+      "42": 0.26,
+      "123": -0.42,
+      "456": -0.14
+     },
+     "mean": -0.1,
+     "sd": 0.34176015,
+     "n": 3
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": 0.22,
+      "123": -0.55,
+      "456": -0.09
+     },
+     "mean": -0.14,
+     "sd": 0.38742741,
+     "n": 3
+    },
+    "sep_deepest": {
+     "per_seed": {
+      "42": 4.12543509,
+      "123": 4.18188503,
+      "456": 4.09044836
+     },
+     "mean": 4.13258949,
+     "sd": 0.04613627,
+     "n": 3
+    },
+    "sep_per_block": [
+     {
+      "per_seed": {
+       "42": 0.0079775,
+       "123": -0.01534619,
+       "456": -0.01376617
+      },
+      "mean": -0.00704495,
+      "sd": 0.01303379,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 2.24775796,
+       "123": 2.34816991,
+       "456": 2.20935759
+      },
+      "mean": 2.26842849,
+      "sd": 0.07167753,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.51050147,
+       "123": 4.67249378,
+       "456": 4.50034391
+      },
+      "mean": 4.56111305,
+      "sd": 0.09659215,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.12543509,
+       "123": 4.18188503,
+       "456": 4.09044836
+      },
+      "mean": 4.13258949,
+      "sd": 0.04613627,
+      "n": 3
+     }
+    ]
+   },
+   "example_level_paired_bootstrap": {
+    "S1": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.24,
+       "acc_b": 85.53,
+       "delta_pp": -0.29,
+       "disagreement_pct": 9.61,
+       "a_right_b_wrong": 367,
+       "a_wrong_b_right": 396,
+       "mcnemar_exact_p": 0.3107398
+      },
+      "123": {
+       "acc_a": 85.43,
+       "acc_b": 86.17,
+       "delta_pp": -0.74,
+       "disagreement_pct": 9.0,
+       "a_right_b_wrong": 320,
+       "a_wrong_b_right": 394,
+       "mcnemar_exact_p": 0.00625653
+      },
+      "456": {
+       "acc_a": 85.26,
+       "acc_b": 85.52,
+       "delta_pp": -0.26,
+       "disagreement_pct": 9.02,
+       "a_right_b_wrong": 346,
+       "a_wrong_b_right": 372,
+       "mcnemar_exact_p": 0.35083159
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.43,
+      "ci95_pp": [
+       -0.74333333,
+       -0.12333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.61,
+       "123": 9.0,
+       "456": 9.02
+      },
+      "mean": 9.21,
+      "sd": 0.34655447,
+      "n": 3
+     }
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.44,
+       "acc_b": 86.43,
+       "delta_pp": 0.01,
+       "disagreement_pct": 7.3,
+       "a_right_b_wrong": 295,
+       "a_wrong_b_right": 294,
+       "mcnemar_exact_p": 1.0
+      },
+      "123": {
+       "acc_a": 86.45,
+       "acc_b": 87.1,
+       "delta_pp": -0.65,
+       "disagreement_pct": 6.98,
+       "a_right_b_wrong": 245,
+       "a_wrong_b_right": 310,
+       "mcnemar_exact_p": 0.00654275
+      },
+      "456": {
+       "acc_a": 86.52,
+       "acc_b": 86.71,
+       "delta_pp": -0.19,
+       "disagreement_pct": 7.08,
+       "a_right_b_wrong": 275,
+       "a_wrong_b_right": 294,
+       "mcnemar_exact_p": 0.4505182
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.27666667,
+      "ci95_pp": [
+       -0.54333333,
+       -0.00991667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 7.3,
+       "123": 6.98,
+       "456": 7.08
+      },
+      "mean": 7.12,
+      "sd": 0.16370706,
+      "n": 3
+     }
+    },
+    "S2": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.99,
+       "acc_b": 85.73,
+       "delta_pp": 0.26,
+       "disagreement_pct": 9.22,
+       "a_right_b_wrong": 380,
+       "a_wrong_b_right": 354,
+       "mcnemar_exact_p": 0.35613694
+      },
+      "123": {
+       "acc_a": 86.15,
+       "acc_b": 86.57,
+       "delta_pp": -0.42,
+       "disagreement_pct": 8.5,
+       "a_right_b_wrong": 315,
+       "a_wrong_b_right": 357,
+       "mcnemar_exact_p": 0.11367151
+      },
+      "456": {
+       "acc_a": 85.49,
+       "acc_b": 85.63,
+       "delta_pp": -0.14,
+       "disagreement_pct": 8.97,
+       "a_right_b_wrong": 353,
+       "a_wrong_b_right": 367,
+       "mcnemar_exact_p": 0.62807479
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.1,
+      "ci95_pp": [
+       -0.40341667,
+       0.20666667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.22,
+       "123": 8.5,
+       "456": 8.97
+      },
+      "mean": 8.89666667,
+      "sd": 0.36555893,
+      "n": 3
+     }
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.97,
+       "acc_b": 86.75,
+       "delta_pp": 0.22,
+       "disagreement_pct": 7.36,
+       "a_right_b_wrong": 302,
+       "a_wrong_b_right": 280,
+       "mcnemar_exact_p": 0.38405589
+      },
+      "123": {
+       "acc_a": 87.07,
+       "acc_b": 87.62,
+       "delta_pp": -0.55,
+       "disagreement_pct": 6.7,
+       "a_right_b_wrong": 235,
+       "a_wrong_b_right": 290,
+       "mcnemar_exact_p": 0.01835079
+      },
+      "456": {
+       "acc_a": 86.65,
+       "acc_b": 86.74,
+       "delta_pp": -0.09,
+       "disagreement_pct": 6.76,
+       "a_right_b_wrong": 264,
+       "a_wrong_b_right": 273,
+       "mcnemar_exact_p": 0.72996044
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.14,
+      "ci95_pp": [
+       -0.39666667,
+       0.11333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 7.36,
+       "123": 6.7,
+       "456": 6.76
+      },
+      "mean": 6.94,
+      "sd": 0.36496575,
+      "n": 3
+     }
+    }
+   },
+   "same_hardware_seed_mean": {
+    "seeds": [],
+    "note": "mean of the seed-paired differences over the seeds whose two runs used the same GPU model (the MGC-D128 seed-42 run used torch 2.9.1 on the GB10, the F1 GB10 runs torch 2.14.0)",
+    "S1": null,
+    "S1-TTA": null,
+    "S2": null,
+    "S2-TTA": null,
+    "sep_deepest": null
+   }
+  },
+  "c_minus_a": {
+   "hardware_by_seed": {
+    "42": "GB10 vs A100",
+    "123": "GB10 vs A100",
+    "456": "A100 vs A100"
+   },
+   "same_hardware_seeds": [
+    456
+   ],
+   "same_software_stack_seeds": [
+    456
+   ],
+   "seed_paired_differences": {
+    "S1": {
+     "per_seed": {
+      "42": -0.06,
+      "123": -0.8,
+      "456": -0.41
+     },
+     "mean": -0.42333333,
+     "sd": 0.37018014,
+     "n": 3
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": -0.07,
+      "123": -0.36,
+      "456": -0.23
+     },
+     "mean": -0.22,
+     "sd": 0.14525839,
+     "n": 3
+    },
+    "S2": {
+     "per_seed": {
+      "42": -0.05,
+      "123": -0.67,
+      "456": -0.23
+     },
+     "mean": -0.31666667,
+     "sd": 0.31895663,
+     "n": 3
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": 0.21,
+      "123": -0.62,
+      "456": 0.08
+     },
+     "mean": -0.11,
+     "sd": 0.44643029,
+     "n": 3
+    },
+    "sep_deepest": {
+     "per_seed": {
+      "42": 4.51103743,
+      "123": 4.56697779,
+      "456": 4.52792919
+     },
+     "mean": 4.5353148,
+     "sd": 0.02869218,
+     "n": 3
+    },
+    "sep_per_block": [
+     {
+      "per_seed": {
+       "42": 0.00063738,
+       "123": -0.0031494,
+       "456": -0.00391194
+      },
+      "mean": -0.00214132,
+      "sd": 0.00243644,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 2.46262814,
+       "123": 2.55524728,
+       "456": 2.52953862
+      },
+      "mean": 2.51580468,
+      "sd": 0.04781257,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.77757817,
+       "123": 4.94866342,
+       "456": 4.8516885
+      },
+      "mean": 4.85931003,
+      "sd": 0.08579689,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 4.51103743,
+       "123": 4.56697779,
+       "456": 4.52792919
+      },
+      "mean": 4.5353148,
+      "sd": 0.02869218,
+      "n": 3
+     }
+    ]
+   },
+   "example_level_paired_bootstrap": {
+    "S1": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.47,
+       "acc_b": 85.53,
+       "delta_pp": -0.06,
+       "disagreement_pct": 8.65,
+       "a_right_b_wrong": 354,
+       "a_wrong_b_right": 360,
+       "mcnemar_exact_p": 0.85158287
+      },
+      "123": {
+       "acc_a": 85.37,
+       "acc_b": 86.17,
+       "delta_pp": -0.8,
+       "disagreement_pct": 9.39,
+       "a_right_b_wrong": 341,
+       "a_wrong_b_right": 421,
+       "mcnemar_exact_p": 0.0041816
+      },
+      "456": {
+       "acc_a": 85.11,
+       "acc_b": 85.52,
+       "delta_pp": -0.41,
+       "disagreement_pct": 8.72,
+       "a_right_b_wrong": 322,
+       "a_wrong_b_right": 363,
+       "mcnemar_exact_p": 0.12637113
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.42333333,
+      "ci95_pp": [
+       -0.73666667,
+       -0.11666667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 8.65,
+       "123": 9.39,
+       "456": 8.72
+      },
+      "mean": 8.92,
+      "sd": 0.40853396,
+      "n": 3
+     }
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.36,
+       "acc_b": 86.43,
+       "delta_pp": -0.07,
+       "disagreement_pct": 6.98,
+       "a_right_b_wrong": 278,
+       "a_wrong_b_right": 285,
+       "mcnemar_exact_p": 0.80039594
+      },
+      "123": {
+       "acc_a": 86.74,
+       "acc_b": 87.1,
+       "delta_pp": -0.36,
+       "disagreement_pct": 7.41,
+       "a_right_b_wrong": 281,
+       "a_wrong_b_right": 317,
+       "mcnemar_exact_p": 0.15229687
+      },
+      "456": {
+       "acc_a": 86.48,
+       "acc_b": 86.71,
+       "delta_pp": -0.23,
+       "disagreement_pct": 6.67,
+       "a_right_b_wrong": 249,
+       "a_wrong_b_right": 272,
+       "mcnemar_exact_p": 0.33513309
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.22,
+      "ci95_pp": [
+       -0.49,
+       0.05675
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 6.98,
+       "123": 7.41,
+       "456": 6.67
+      },
+      "mean": 7.02,
+      "sd": 0.37161808,
+      "n": 3
+     }
+    },
+    "S2": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.68,
+       "acc_b": 85.73,
+       "delta_pp": -0.05,
+       "disagreement_pct": 8.53,
+       "a_right_b_wrong": 344,
+       "a_wrong_b_right": 349,
+       "mcnemar_exact_p": 0.8792425
+      },
+      "123": {
+       "acc_a": 85.9,
+       "acc_b": 86.57,
+       "delta_pp": -0.67,
+       "disagreement_pct": 8.93,
+       "a_right_b_wrong": 322,
+       "a_wrong_b_right": 389,
+       "mcnemar_exact_p": 0.01326089
+      },
+      "456": {
+       "acc_a": 85.4,
+       "acc_b": 85.63,
+       "delta_pp": -0.23,
+       "disagreement_pct": 8.73,
+       "a_right_b_wrong": 344,
+       "a_wrong_b_right": 367,
+       "mcnemar_exact_p": 0.40935263
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.31666667,
+      "ci95_pp": [
+       -0.61666667,
+       -0.02333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 8.53,
+       "123": 8.93,
+       "456": 8.73
+      },
+      "mean": 8.73,
+      "sd": 0.2,
+      "n": 3
+     }
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.96,
+       "acc_b": 86.75,
+       "delta_pp": 0.21,
+       "disagreement_pct": 6.94,
+       "a_right_b_wrong": 289,
+       "a_wrong_b_right": 268,
+       "mcnemar_exact_p": 0.39677714
+      },
+      "123": {
+       "acc_a": 87.0,
+       "acc_b": 87.62,
+       "delta_pp": -0.62,
+       "disagreement_pct": 7.07,
+       "a_right_b_wrong": 252,
+       "a_wrong_b_right": 314,
+       "mcnemar_exact_p": 0.01028391
+      },
+      "456": {
+       "acc_a": 86.82,
+       "acc_b": 86.74,
+       "delta_pp": 0.08,
+       "disagreement_pct": 6.6,
+       "a_right_b_wrong": 264,
+       "a_wrong_b_right": 256,
+       "mcnemar_exact_p": 0.75889999
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.11,
+      "ci95_pp": [
+       -0.37333333,
+       0.16008333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 6.94,
+       "123": 7.07,
+       "456": 6.6
+      },
+      "mean": 6.87,
+      "sd": 0.24269322,
+      "n": 3
+     }
+    }
+   },
+   "same_hardware_seed_mean": {
+    "seeds": [
+     456
+    ],
+    "note": "mean of the seed-paired differences over the seeds whose two runs used the same GPU model (the MGC-D128 seed-42 run used torch 2.9.1 on the GB10, the F1 GB10 runs torch 2.14.0)",
+    "S1": -0.41,
+    "S1-TTA": -0.23,
+    "S2": -0.23,
+    "S2-TTA": 0.08,
+    "sep_deepest": 4.52792919
+   }
+  },
+  "c_minus_mgc": {
+   "hardware_by_seed": {
+    "42": "GB10 vs GB10",
+    "123": "GB10 vs A100",
+    "456": "A100 vs A100"
+   },
+   "same_hardware_seeds": [
+    42,
+    456
+   ],
+   "same_software_stack_seeds": [
+    456
+   ],
+   "seed_paired_differences": {
+    "S1": {
+     "per_seed": {
+      "42": 0.24,
+      "123": -0.51,
+      "456": -0.14
+     },
+     "mean": -0.13666667,
+     "sd": 0.37501111,
+     "n": 3
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": -0.28,
+      "123": -0.35,
+      "456": -0.41
+     },
+     "mean": -0.34666667,
+     "sd": 0.06506407,
+     "n": 3
+    },
+    "S2": {
+     "per_seed": {
+      "42": -0.32,
+      "123": -0.58,
+      "456": -0.33
+     },
+     "mean": -0.41,
+     "sd": 0.1473092,
+     "n": 3
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": -0.09,
+      "123": -0.6,
+      "456": -0.35
+     },
+     "mean": -0.34666667,
+     "sd": 0.25501634,
+     "n": 3
+    },
+    "sep_deepest": {
+     "per_seed": {
+      "42": 0.02757356,
+      "123": 0.01108051,
+      "456": 0.0537955
+     },
+     "mean": 0.03081652,
+     "sd": 0.02154136,
+     "n": 3
+    },
+    "sep_per_block": [
+     {
+      "per_seed": {
+       "42": 0.0049577,
+       "123": 0.00526639,
+       "456": -0.00265749
+      },
+      "mean": 0.0025222,
+      "sd": 0.0044884,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 0.01719166,
+       "123": -0.05557281,
+       "456": 0.0463936
+      },
+      "mean": 0.00267082,
+      "sd": 0.05251122,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 0.0240056,
+       "123": -0.02501374,
+       "456": 0.0543176
+      },
+      "mean": 0.01776982,
+      "sd": 0.0400316,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": 0.02757356,
+       "123": 0.01108051,
+       "456": 0.0537955
+      },
+      "mean": 0.03081652,
+      "sd": 0.02154136,
+      "n": 3
+     }
+    ]
+   },
+   "example_level_paired_bootstrap": {
+    "S1": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.47,
+       "acc_b": 85.23,
+       "delta_pp": 0.24,
+       "disagreement_pct": 9.46,
+       "a_right_b_wrong": 400,
+       "a_wrong_b_right": 376,
+       "mcnemar_exact_p": 0.4090177
+      },
+      "123": {
+       "acc_a": 85.37,
+       "acc_b": 85.88,
+       "delta_pp": -0.51,
+       "disagreement_pct": 9.24,
+       "a_right_b_wrong": 358,
+       "a_wrong_b_right": 409,
+       "mcnemar_exact_p": 0.0709435
+      },
+      "456": {
+       "acc_a": 85.11,
+       "acc_b": 85.25,
+       "delta_pp": -0.14,
+       "disagreement_pct": 8.96,
+       "a_right_b_wrong": 343,
+       "a_wrong_b_right": 357,
+       "mcnemar_exact_p": 0.62320769
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.13666667,
+      "ci95_pp": [
+       -0.44,
+       0.17
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.46,
+       "123": 9.24,
+       "456": 8.96
+      },
+      "mean": 9.22,
+      "sd": 0.25059928,
+      "n": 3
+     }
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.36,
+       "acc_b": 86.64,
+       "delta_pp": -0.28,
+       "disagreement_pct": 6.9,
+       "a_right_b_wrong": 269,
+       "a_wrong_b_right": 297,
+       "mcnemar_exact_p": 0.25639944
+      },
+      "123": {
+       "acc_a": 86.74,
+       "acc_b": 87.09,
+       "delta_pp": -0.35,
+       "disagreement_pct": 7.2,
+       "a_right_b_wrong": 272,
+       "a_wrong_b_right": 307,
+       "mcnemar_exact_p": 0.15759861
+      },
+      "456": {
+       "acc_a": 86.48,
+       "acc_b": 86.89,
+       "delta_pp": -0.41,
+       "disagreement_pct": 6.9,
+       "a_right_b_wrong": 254,
+       "a_wrong_b_right": 295,
+       "mcnemar_exact_p": 0.08770039
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.34666667,
+      "ci95_pp": [
+       -0.61666667,
+       -0.06666667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 6.9,
+       "123": 7.2,
+       "456": 6.9
+      },
+      "mean": 7.0,
+      "sd": 0.17320508,
+      "n": 3
+     }
+    },
+    "S2": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.68,
+       "acc_b": 86.0,
+       "delta_pp": -0.32,
+       "disagreement_pct": 9.14,
+       "a_right_b_wrong": 359,
+       "a_wrong_b_right": 391,
+       "mcnemar_exact_p": 0.25763648
+      },
+      "123": {
+       "acc_a": 85.9,
+       "acc_b": 86.48,
+       "delta_pp": -0.58,
+       "disagreement_pct": 8.97,
+       "a_right_b_wrong": 330,
+       "a_wrong_b_right": 388,
+       "mcnemar_exact_p": 0.03332937
+      },
+      "456": {
+       "acc_a": 85.4,
+       "acc_b": 85.73,
+       "delta_pp": -0.33,
+       "disagreement_pct": 8.94,
+       "a_right_b_wrong": 347,
+       "a_wrong_b_right": 380,
+       "mcnemar_exact_p": 0.23527903
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.41,
+      "ci95_pp": [
+       -0.72,
+       -0.11
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.14,
+       "123": 8.97,
+       "456": 8.94
+      },
+      "mean": 9.01666667,
+      "sd": 0.10785793,
+      "n": 3
+     }
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.96,
+       "acc_b": 87.05,
+       "delta_pp": -0.09,
+       "disagreement_pct": 6.84,
+       "a_right_b_wrong": 279,
+       "a_wrong_b_right": 288,
+       "mcnemar_exact_p": 0.73692781
+      },
+      "123": {
+       "acc_a": 87.0,
+       "acc_b": 87.6,
+       "delta_pp": -0.6,
+       "disagreement_pct": 6.76,
+       "a_right_b_wrong": 244,
+       "a_wrong_b_right": 304,
+       "mcnemar_exact_p": 0.01165523
+      },
+      "456": {
+       "acc_a": 86.82,
+       "acc_b": 87.17,
+       "delta_pp": -0.35,
+       "disagreement_pct": 6.46,
+       "a_right_b_wrong": 239,
+       "a_wrong_b_right": 274,
+       "mcnemar_exact_p": 0.13324121
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.34666667,
+      "ci95_pp": [
+       -0.62,
+       -0.08333333
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 6.84,
+       "123": 6.76,
+       "456": 6.46
+      },
+      "mean": 6.68666667,
+      "sd": 0.20033306,
+      "n": 3
+     }
+    }
+   },
+   "same_hardware_seed_mean": {
+    "seeds": [
+     42,
+     456
+    ],
+    "note": "mean of the seed-paired differences over the seeds whose two runs used the same GPU model (the MGC-D128 seed-42 run used torch 2.9.1 on the GB10, the F1 GB10 runs torch 2.14.0)",
+    "S1": 0.05,
+    "S1-TTA": -0.345,
+    "S2": -0.325,
+    "S2-TTA": -0.22,
+    "sep_deepest": 0.04068453
+   }
+  },
+  "b_minus_mgc": {
+   "hardware_by_seed": {
+    "42": "GB10 vs GB10",
+    "123": "GB10 vs A100",
+    "456": "GB10 vs A100"
+   },
+   "same_hardware_seeds": [
+    42
+   ],
+   "same_software_stack_seeds": [],
+   "seed_paired_differences": {
+    "S1": {
+     "per_seed": {
+      "42": 0.01,
+      "123": -0.45,
+      "456": 0.01
+     },
+     "mean": -0.14333333,
+     "sd": 0.26558112,
+     "n": 3
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": -0.2,
+      "123": -0.64,
+      "456": -0.37
+     },
+     "mean": -0.40333333,
+     "sd": 0.22188586,
+     "n": 3
+    },
+    "S2": {
+     "per_seed": {
+      "42": -0.01,
+      "123": -0.33,
+      "456": -0.24
+     },
+     "mean": -0.19333333,
+     "sd": 0.16502525,
+     "n": 3
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": -0.08,
+      "123": -0.53,
+      "456": -0.52
+     },
+     "mean": -0.37666667,
+     "sd": 0.25696952,
+     "n": 3
+    },
+    "sep_deepest": {
+     "per_seed": {
+      "42": -0.35802878,
+      "123": -0.37401225,
+      "456": -0.38368533
+     },
+     "mean": -0.37190879,
+     "sd": 0.01295697,
+     "n": 3
+    },
+    "sep_per_block": [
+     {
+      "per_seed": {
+       "42": 0.01229782,
+       "123": -0.0069304,
+       "456": -0.01251172
+      },
+      "mean": -0.00238143,
+      "sd": 0.0130153,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": -0.19767852,
+       "123": -0.26265018,
+       "456": -0.27378743
+      },
+      "mean": -0.24470538,
+      "sd": 0.0411054,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": -0.2430711,
+       "123": -0.30118338,
+       "456": -0.29702699
+      },
+      "mean": -0.28042716,
+      "sd": 0.03241798,
+      "n": 3
+     },
+     {
+      "per_seed": {
+       "42": -0.35802878,
+       "123": -0.37401225,
+       "456": -0.38368533
+      },
+      "mean": -0.37190879,
+      "sd": 0.01295697,
+      "n": 3
+     }
+    ]
+   },
+   "example_level_paired_bootstrap": {
+    "S1": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.24,
+       "acc_b": 85.23,
+       "delta_pp": 0.01,
+       "disagreement_pct": 9.24,
+       "a_right_b_wrong": 380,
+       "a_wrong_b_right": 379,
+       "mcnemar_exact_p": 1.0
+      },
+      "123": {
+       "acc_a": 85.43,
+       "acc_b": 85.88,
+       "delta_pp": -0.45,
+       "disagreement_pct": 9.0,
+       "a_right_b_wrong": 337,
+       "a_wrong_b_right": 382,
+       "mcnemar_exact_p": 0.10074653
+      },
+      "456": {
+       "acc_a": 85.26,
+       "acc_b": 85.25,
+       "delta_pp": 0.01,
+       "disagreement_pct": 9.57,
+       "a_right_b_wrong": 383,
+       "a_wrong_b_right": 382,
+       "mcnemar_exact_p": 1.0
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.14333333,
+      "ci95_pp": [
+       -0.45666667,
+       0.16
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 9.24,
+       "123": 9.0,
+       "456": 9.57
+      },
+      "mean": 9.27,
+      "sd": 0.28618176,
+      "n": 3
+     }
+    },
+    "S1-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.44,
+       "acc_b": 86.64,
+       "delta_pp": -0.2,
+       "disagreement_pct": 7.05,
+       "a_right_b_wrong": 283,
+       "a_wrong_b_right": 303,
+       "mcnemar_exact_p": 0.4325476
+      },
+      "123": {
+       "acc_a": 86.45,
+       "acc_b": 87.09,
+       "delta_pp": -0.64,
+       "disagreement_pct": 6.91,
+       "a_right_b_wrong": 245,
+       "a_wrong_b_right": 309,
+       "mcnemar_exact_p": 0.00738189
+      },
+      "456": {
+       "acc_a": 86.52,
+       "acc_b": 86.89,
+       "delta_pp": -0.37,
+       "disagreement_pct": 7.35,
+       "a_right_b_wrong": 284,
+       "a_wrong_b_right": 321,
+       "mcnemar_exact_p": 0.14323814
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.40333333,
+      "ci95_pp": [
+       -0.68,
+       -0.13
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 7.05,
+       "123": 6.91,
+       "456": 7.35
+      },
+      "mean": 7.10333333,
+      "sd": 0.2247962,
+      "n": 3
+     }
+    },
+    "S2": {
+     "per_seed": {
+      "42": {
+       "acc_a": 85.99,
+       "acc_b": 86.0,
+       "delta_pp": -0.01,
+       "disagreement_pct": 8.97,
+       "a_right_b_wrong": 366,
+       "a_wrong_b_right": 367,
+       "mcnemar_exact_p": 1.0
+      },
+      "123": {
+       "acc_a": 86.15,
+       "acc_b": 86.48,
+       "delta_pp": -0.33,
+       "disagreement_pct": 8.64,
+       "a_right_b_wrong": 333,
+       "a_wrong_b_right": 366,
+       "mcnemar_exact_p": 0.22611852
+      },
+      "456": {
+       "acc_a": 85.49,
+       "acc_b": 85.73,
+       "delta_pp": -0.24,
+       "disagreement_pct": 9.35,
+       "a_right_b_wrong": 371,
+       "a_wrong_b_right": 395,
+       "mcnemar_exact_p": 0.40597609
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.19333333,
+      "ci95_pp": [
+       -0.5,
+       0.11
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": false
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 8.97,
+       "123": 8.64,
+       "456": 9.35
+      },
+      "mean": 8.98666667,
+      "sd": 0.35529331,
+      "n": 3
+     }
+    },
+    "S2-TTA": {
+     "per_seed": {
+      "42": {
+       "acc_a": 86.97,
+       "acc_b": 87.05,
+       "delta_pp": -0.08,
+       "disagreement_pct": 6.44,
+       "a_right_b_wrong": 263,
+       "a_wrong_b_right": 271,
+       "mcnemar_exact_p": 0.76198393
+      },
+      "123": {
+       "acc_a": 87.07,
+       "acc_b": 87.6,
+       "delta_pp": -0.53,
+       "disagreement_pct": 6.81,
+       "a_right_b_wrong": 254,
+       "a_wrong_b_right": 307,
+       "mcnemar_exact_p": 0.02804253
+      },
+      "456": {
+       "acc_a": 86.65,
+       "acc_b": 87.17,
+       "delta_pp": -0.52,
+       "disagreement_pct": 7.05,
+       "a_right_b_wrong": 257,
+       "a_wrong_b_right": 309,
+       "mcnemar_exact_p": 0.03196664
+      }
+     },
+     "pooled": {
+      "n_examples": 30000,
+      "delta_pp": -0.37666667,
+      "ci95_pp": [
+       -0.64,
+       -0.10666667
+      ],
+      "within_pm1pp": true,
+      "ci_excludes_zero": true
+     },
+     "churn_pct": {
+      "per_seed": {
+       "42": 6.44,
+       "123": 6.81,
+       "456": 7.05
+      },
+      "mean": 6.76666667,
+      "sd": 0.30730007,
+      "n": 3
+     }
+    }
+   },
+   "same_hardware_seed_mean": {
+    "seeds": [
+     42
+    ],
+    "note": "mean of the seed-paired differences over the seeds whose two runs used the same GPU model (the MGC-D128 seed-42 run used torch 2.9.1 on the GB10, the F1 GB10 runs torch 2.14.0)",
+    "S1": 0.01,
+    "S1-TTA": -0.2,
+    "S2": -0.01,
+    "S2-TTA": -0.08,
+    "sep_deepest": -0.35802878
+   }
+  }
+ },
+ "within_arm_cross_seed_churn_pct": {
+  "mgc": {
+   "S1": {
+    "pairs": {
+     "42_vs_123": 11.47,
+     "42_vs_456": 11.12,
+     "123_vs_456": 11.33
+    },
+    "mean": 11.30666667,
+    "sd": 0.1761628,
+    "n": 3
+   },
+   "S1-TTA": {
+    "pairs": {
+     "42_vs_123": 8.85,
+     "42_vs_456": 8.6,
+     "123_vs_456": 8.76
+    },
+    "mean": 8.73666667,
+    "sd": 0.1266228,
+    "n": 3
+   },
+   "S2": {
+    "pairs": {
+     "42_vs_123": 11.22,
+     "42_vs_456": 11.01,
+     "123_vs_456": 11.03
+    },
+    "mean": 11.08666667,
+    "sd": 0.11590226,
+    "n": 3
+   },
+   "S2-TTA": {
+    "pairs": {
+     "42_vs_123": 9.14,
+     "42_vs_456": 8.74,
+     "123_vs_456": 8.6
+    },
+    "mean": 8.82666667,
+    "sd": 0.28023799,
+    "n": 3
+   }
+  },
+  "a": {
+   "S1": {
+    "pairs": {
+     "42_vs_123": 10.9,
+     "42_vs_456": 10.49,
+     "123_vs_456": 10.37
+    },
+    "mean": 10.58666667,
+    "sd": 0.27790886,
+    "n": 3
+   },
+   "S1-TTA": {
+    "pairs": {
+     "42_vs_123": 8.85,
+     "42_vs_456": 8.69,
+     "123_vs_456": 8.49
+    },
+    "mean": 8.67666667,
+    "sd": 0.18036999,
+    "n": 3
+   },
+   "S2": {
+    "pairs": {
+     "42_vs_123": 10.99,
+     "42_vs_456": 10.95,
+     "123_vs_456": 10.41
+    },
+    "mean": 10.78333333,
+    "sd": 0.32393415,
+    "n": 3
+   },
+   "S2-TTA": {
+    "pairs": {
+     "42_vs_123": 8.69,
+     "42_vs_456": 8.92,
+     "123_vs_456": 8.4
+    },
+    "mean": 8.67,
+    "sd": 0.26057628,
+    "n": 3
+   }
+  },
+  "b": {
+   "S1": {
+    "pairs": {
+     "42_vs_123": 11.86,
+     "42_vs_456": 11.22,
+     "123_vs_456": 11.23
+    },
+    "mean": 11.43666667,
+    "sd": 0.36665151,
+    "n": 3
+   },
+   "S1-TTA": {
+    "pairs": {
+     "42_vs_123": 9.34,
+     "42_vs_456": 8.89,
+     "123_vs_456": 9.08
+    },
+    "mean": 9.10333333,
+    "sd": 0.22590558,
+    "n": 3
+   },
+   "S2": {
+    "pairs": {
+     "42_vs_123": 10.52,
+     "42_vs_456": 10.86,
+     "123_vs_456": 11.08
+    },
+    "mean": 10.82,
+    "sd": 0.28213472,
+    "n": 3
+   },
+   "S2-TTA": {
+    "pairs": {
+     "42_vs_123": 8.88,
+     "42_vs_456": 8.4,
+     "123_vs_456": 8.65
+    },
+    "mean": 8.64333333,
+    "sd": 0.24006943,
+    "n": 3
+   }
+  },
+  "c": {
+   "S1": {
+    "pairs": {
+     "42_vs_123": 11.56,
+     "42_vs_456": 11.19,
+     "123_vs_456": 11.7
+    },
+    "mean": 11.48333333,
+    "sd": 0.26350206,
+    "n": 3
+   },
+   "S1-TTA": {
+    "pairs": {
+     "42_vs_123": 9.34,
+     "42_vs_456": 8.84,
+     "123_vs_456": 9.21
+    },
+    "mean": 9.13,
+    "sd": 0.25942244,
+    "n": 3
+   },
+   "S2": {
+    "pairs": {
+     "42_vs_123": 11.12,
+     "42_vs_456": 10.66,
+     "123_vs_456": 11.62
+    },
+    "mean": 11.13333333,
+    "sd": 0.48013887,
+    "n": 3
+   },
+   "S2-TTA": {
+    "pairs": {
+     "42_vs_123": 8.84,
+     "42_vs_456": 8.12,
+     "123_vs_456": 9.08
+    },
+    "mean": 8.68,
+    "sd": 0.49959984,
+    "n": 3
+   }
+  }
+ },
+ "deepest_sep_decomposition": {
+  "metric": "deepest-block (block 3) sep_curr_nl at the last Stage-1 epoch (180)",
+  "identity": "(MGC - a) = (b - a) [auxiliary removal] + (MGC - b) [compensation]; exact per seed",
+  "per_seed": {
+   "42": {
+    "gain_mgc_minus_a": 4.48346387,
+    "aux_removal_b_minus_a": 4.12543509,
+    "compensation_mgc_minus_b": 0.35802878,
+    "aux_removal_share": 0.9201446,
+    "compensation_share": 0.0798554,
+    "block0_effect_c_minus_mgc": 0.02757356
+   },
+   "123": {
+    "gain_mgc_minus_a": 4.55589728,
+    "aux_removal_b_minus_a": 4.18188503,
+    "compensation_mgc_minus_b": 0.37401225,
+    "aux_removal_share": 0.91790591,
+    "compensation_share": 0.08209409,
+    "block0_effect_c_minus_mgc": 0.01108051
+   },
+   "456": {
+    "gain_mgc_minus_a": 4.47413369,
+    "aux_removal_b_minus_a": 4.09044836,
+    "compensation_mgc_minus_b": 0.38368533,
+    "aux_removal_share": 0.91424366,
+    "compensation_share": 0.08575634,
+    "block0_effect_c_minus_mgc": 0.0537955
+   }
+  },
+  "mean": {
+   "gain_mgc_minus_a": 4.50449828,
+   "aux_removal_b_minus_a": 4.13258949,
+   "compensation_mgc_minus_b": 0.37190879,
+   "aux_removal_share_of_mean_gain": 0.91743614,
+   "compensation_share_of_mean_gain": 0.08256386,
+   "block0_effect_c_minus_mgc": 0.03081652
+  },
+  "sd_of_seed_values": {
+   "gain_mgc_minus_a": 0.04475663,
+   "aux_removal_b_minus_a": 0.04613627,
+   "compensation_mgc_minus_b": 0.01295697,
+   "aux_removal_share": 0.00297895,
+   "compensation_share": 0.00297895,
+   "block0_effect_c_minus_mgc": 0.02154136
+  },
+  "per_block_means": [
+   {
+    "block": 0,
+    "a": 1.08484754,
+    "b": 1.07780259,
+    "mgc": 1.08018402,
+    "c": 1.08270622,
+    "gain_mgc_minus_a": -0.00466352,
+    "aux_removal_b_minus_a": -0.00704495,
+    "compensation_mgc_minus_b": 0.00238143,
+    "block0_effect_c_minus_mgc": 0.0025222
+   },
+   {
+    "block": 1,
+    "a": 1.89690085,
+    "b": 4.16532933,
+    "mgc": 4.41003471,
+    "c": 4.41270553,
+    "gain_mgc_minus_a": 2.51313386,
+    "aux_removal_b_minus_a": 2.26842849,
+    "compensation_mgc_minus_b": 0.24470538,
+    "block0_effect_c_minus_mgc": 0.00267082
+   },
+   {
+    "block": 2,
+    "a": 1.1903779,
+    "b": 5.75149095,
+    "mgc": 6.03191811,
+    "c": 6.04968793,
+    "gain_mgc_minus_a": 4.84154021,
+    "aux_removal_b_minus_a": 4.56111305,
+    "compensation_mgc_minus_b": 0.28042716,
+    "block0_effect_c_minus_mgc": 0.01776982
+   },
+   {
+    "block": 3,
+    "a": 0.74639081,
+    "b": 4.87898031,
+    "mgc": 5.25088909,
+    "c": 5.28170562,
+    "gain_mgc_minus_a": 4.50449828,
+    "aux_removal_b_minus_a": 4.13258949,
+    "compensation_mgc_minus_b": 0.37190879,
+    "block0_effect_c_minus_mgc": 0.03081652
+   }
+  ]
+ },
+ "predictions": {
+  "source": "experiments/f1_mgc_block0/PREDICTIONS.md (registered 2026-09-25, before any F1 run); scored at n = 3",
+  "P1": {
+   "statement": "(c) ~ MGC in deepest-block sep: (c) 3-seed mean in [4.72, 5.78] (5.25 +/- 10%)",
+   "c_mean": 5.28170562,
+   "c_sd": 0.03092981,
+   "c_values": [
+    5.26683542,
+    5.31726208,
+    5.26101935
+   ],
+   "band_registered": [
+    4.72,
+    5.78
+   ],
+   "band_from_exact_mgc_mean": [
+    4.72580018,
+    5.775978
+   ],
+   "verdict": "PASS",
+   "verdict_exact_band": "PASS"
+  },
+  "P2": {
+   "statement": "(b) < MGC in deepest-block sep: (b) 3-seed mean < 4.72 AND every (b) seed below the lowest MGC seed (5.21)",
+   "b_mean": 4.87898031,
+   "b_sd": 0.05435043,
+   "b_values": [
+    4.88123308,
+    4.93216932,
+    4.82353852
+   ],
+   "clause_mean_below_4.72": "FAIL",
+   "clause_every_seed_below_lowest_mgc_seed": "PASS",
+   "lowest_mgc_seed_exact": 5.20722385,
+   "verdict": "FAIL",
+   "unscored_expectation": "(b) lands near the cumulative regime (order of 1 or below)",
+   "unscored_expectation_criterion": "(b) mean closer to the (a) mean than to the MGC mean",
+   "unscored_expectation_met": false,
+   "b_over_mgc_ratio": 0.92917223,
+   "b_over_a_ratio": 6.53676364
+  },
+  "P3": {
+   "statement": "for every arm run, the 3-seed mean S2-TTA lies in [86.27, 88.27] (87.27 +/- 1 pp)",
+   "per_arm": {
+    "a": {
+     "s2tta_mean": 87.03666667,
+     "s2tta_sd": 0.50520623,
+     "in_band": "PASS"
+    },
+    "b": {
+     "s2tta_mean": 86.89666667,
+     "s2tta_sd": 0.2193931,
+     "in_band": "PASS"
+    },
+    "c": {
+     "s2tta_mean": 86.92666667,
+     "s2tta_sd": 0.09451631,
+     "in_band": "PASS"
+    }
+   },
+   "verdict": "PASS"
+  },
+  "P4": {
+   "statement": "(secondary, arm a run) the (a) deepest-block sep mean is < 4.72",
+   "a_mean": 0.74639081,
+   "a_sd": 0.01184402,
+   "a_values": [
+    0.75579799,
+    0.75028429,
+    0.73309016
+   ],
+   "sam_off_cumulative_seed42_reference": 0.7421,
+   "verdict": "PASS"
+  },
+  "no_registered_direction_S1_S1TTA": {
+   "mgc_minus_a": {
+    "S1": {
+     "seed_mean": -0.28666667,
+     "seed_sd": 0.01527525,
+     "pooled_ci95_pp": [
+      -0.58666667,
+      0.02333333
+     ]
+    },
+    "S1-TTA": {
+     "seed_mean": 0.12666667,
+     "seed_sd": 0.11930353,
+     "pooled_ci95_pp": [
+      -0.14,
+      0.39666667
+     ]
+    }
+   },
+   "b_minus_a": {
+    "S1": {
+     "seed_mean": -0.43,
+     "seed_sd": 0.26888659,
+     "pooled_ci95_pp": [
+      -0.74333333,
+      -0.12333333
+     ]
+    },
+    "S1-TTA": {
+     "seed_mean": -0.27666667,
+     "seed_sd": 0.33842774,
+     "pooled_ci95_pp": [
+      -0.54333333,
+      -0.00991667
+     ]
+    }
+   },
+   "c_minus_a": {
+    "S1": {
+     "seed_mean": -0.42333333,
+     "seed_sd": 0.37018014,
+     "pooled_ci95_pp": [
+      -0.73666667,
+      -0.11666667
+     ]
+    },
+    "S1-TTA": {
+     "seed_mean": -0.22,
+     "seed_sd": 0.14525839,
+     "pooled_ci95_pp": [
+      -0.49,
+      0.05675
+     ]
+    }
+   },
+   "c_minus_mgc": {
+    "S1": {
+     "seed_mean": -0.13666667,
+     "seed_sd": 0.37501111,
+     "pooled_ci95_pp": [
+      -0.44,
+      0.17
+     ]
+    },
+    "S1-TTA": {
+     "seed_mean": -0.34666667,
+     "seed_sd": 0.06506407,
+     "pooled_ci95_pp": [
+      -0.61666667,
+      -0.06666667
+     ]
+    }
+   },
+   "b_minus_mgc": {
+    "S1": {
+     "seed_mean": -0.14333333,
+     "seed_sd": 0.26558112,
+     "pooled_ci95_pp": [
+      -0.45666667,
+      0.16
+     ]
+    },
+    "S1-TTA": {
+     "seed_mean": -0.40333333,
+     "seed_sd": 0.22188586,
+     "pooled_ci95_pp": [
+      -0.68,
+      -0.13
+     ]
+    }
+   }
+  },
+  "registered_consequences_triggered": [
+   "P2 fails ((b) >= 4.72): removing the current-block auxiliary alone reproduces most of MGC's separation. The MGC paragraph must then stop attributing the separation rise to missing-gradient compensation, and the 'approximately compensates' reading of App. A.1 is not supported at D128. This is the outcome that changes a claim, and it is reported as such. (PREDICTIONS.md, 'What each outcome means')"
+  ]
+ },
+ "fd_gradient_attenuation": {
+  "status": "measured",
+  "script": "experiments/f1_mgc_block0/fd_snapshot_f1.py",
+  "definition": "F_d = mean over examples of 1 - min(1, R), R = (1 + e^{beta m}) / (1 + e^{beta (m + gamma P_prev)}), beta = 4, gamma = 0.7; m = current-block goodness margin (true minus wrong label), P_prev = sum of earlier blocks' margins; CI95 = 1.96 sd(ddof=0)/sqrt(N) (published convention; experiments/e3_fd/fd_stats.py)",
+  "scope": "seed 42 only; first 1024 CIFAR-10 test images; EMA stage1_best weights; CPU. F_d measures the attenuation of the gradient that the cumulative SYMBA term sends to block d's own margin; arm a additionally carries an unattenuated residual-weighted current-block auxiliary, arm b does not.",
+  "variants": {
+   "fd_a42_published": {
+    "arm": "a",
+    "seed": 42,
+    "neg_labels": "published",
+    "F_d": [
+     0.0,
+     0.92746986,
+     0.95393631,
+     0.95762758
+    ],
+    "F_d_ci95": [
+     0.0,
+     0.01222548,
+     0.01129535,
+     0.01111288
+    ],
+    "median_R": [
+     1.0,
+     0.0070696283368541155,
+     1.616615275971843e-05,
+     5.312541940162943e-07
+    ],
+    "coverage_pct": [
+     97.4609375,
+     96.6796875,
+     96.77734375,
+     96.875
+    ],
+    "m_mean": [
+     1.63373052,
+     1.97963086,
+     1.13910551,
+     0.66382506
+    ],
+    "P_prev_mean": [
+     0.0,
+     1.63373052,
+     3.61336137,
+     4.75246689
+    ],
+    "frac_R_le_1e-2_pct": [
+     0.0,
+     56.15234375,
+     86.328125,
+     88.96484375
+    ],
+    "grad_mean": [
+     0.14969648,
+     0.1221885,
+     0.1191846,
+     0.11712071
+    ],
+    "grad_local_mean": [
+     0.14969648,
+     0.1730525,
+     0.29030213,
+     0.48373231
+    ],
+    "ckpt": "Colab A100 run; local copy of gdrive:ffcr/f1_mgc_block0/checkpoints/ff_cifar10_f1a_cum_sam_L4_D128_P2_seed42_stage1_best.pt (MD5 matched Drive)",
+    "ckpt_md5": "4dcfc5ae328a25cbd6c9e32520f358da",
+    "ckpt_epoch_stage1": 180,
+    "ckpt_cfg": {
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": false,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "symba_alpha": 4.0,
+     "seed": 42
+    },
+    "strict_load_missing_unexpected": [
+     0,
+     0
+    ],
+    "acc_gate": {
+     "acc_s1_no_tta_cpu": 0.8554,
+     "n": 10000,
+     "logged_stage1_test_top1_no_tta": 0.8553,
+     "abs_diff_vs_logged": 0.00010000000000010001,
+     "n_disagree_with_logged_preds_npz": 3,
+     "tolerance": 0.0002,
+     "passed": false,
+     "seconds": 288.1
+    },
+    "acc_gate_e3_criteria_pass": true,
+    "acc_gate_strict_le2_disagreements_pass": false,
+    "grad_mean_over_grad_local_mean": [
+     1.0,
+     0.70607765,
+     0.41055366,
+     0.24211885
+    ],
+    "ckpt_md5_equals_drive_md5_2026-09-28": true
+   },
+   "fd_a42_seed": {
+    "arm": "a",
+    "seed": 42,
+    "neg_labels": "seed",
+    "F_d": [
+     0.0,
+     0.92879753,
+     0.95518888,
+     0.95920363
+    ],
+    "F_d_ci95": [
+     0.0,
+     0.01181436,
+     0.01088223,
+     0.01066998
+    ],
+    "median_R": [
+     1.0,
+     0.006619357836199968,
+     1.4476631672169746e-05,
+     3.3237343720257537e-07
+    ],
+    "coverage_pct": [
+     97.55859375,
+     97.16796875,
+     97.16796875,
+     97.16796875
+    ],
+    "m_mean": [
+     1.64488506,
+     2.01413772,
+     1.16659711,
+     0.67920277
+    ],
+    "P_prev_mean": [
+     0.0,
+     1.64488506,
+     3.65902278,
+     4.82561989
+    ],
+    "frac_R_le_1e-2_pct": [
+     0.0,
+     58.7890625,
+     84.66796875,
+     87.59765625
+    ],
+    "grad_mean": [
+     0.14708386,
+     0.1178754,
+     0.11483897,
+     0.11255487
+    ],
+    "grad_local_mean": [
+     0.14708386,
+     0.17209642,
+     0.28611602,
+     0.46770925
+    ],
+    "ckpt": "Colab A100 run; local copy of gdrive:ffcr/f1_mgc_block0/checkpoints/ff_cifar10_f1a_cum_sam_L4_D128_P2_seed42_stage1_best.pt (MD5 matched Drive)",
+    "ckpt_md5": "4dcfc5ae328a25cbd6c9e32520f358da",
+    "ckpt_epoch_stage1": 180,
+    "ckpt_cfg": {
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": false,
+     "mgc_keep_l0_aux": false,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "symba_alpha": 4.0,
+     "seed": 42
+    },
+    "strict_load_missing_unexpected": [
+     0,
+     0
+    ],
+    "acc_gate": {
+     "acc_s1_no_tta_cpu": 0.8554,
+     "n": 10000,
+     "logged_stage1_test_top1_no_tta": 0.8553,
+     "abs_diff_vs_logged": 0.00010000000000010001,
+     "n_disagree_with_logged_preds_npz": 3,
+     "tolerance": 0.0002,
+     "passed": false,
+     "seconds": 288.1
+    },
+    "acc_gate_e3_criteria_pass": true,
+    "acc_gate_strict_le2_disagreements_pass": false,
+    "grad_mean_over_grad_local_mean": [
+     1.0,
+     0.6849381,
+     0.40137204,
+     0.24065138
+    ],
+    "ckpt_md5_equals_drive_md5_2026-09-28": true
+   },
+   "fd_b42_published": {
+    "arm": "b",
+    "seed": 42,
+    "neg_labels": "published",
+    "F_d": [
+     0.0,
+     0.92884434,
+     0.96648424,
+     0.9714376
+    ],
+    "F_d_ci95": [
+     0.0,
+     0.01178633,
+     0.01012607,
+     0.00974386
+    ],
+    "median_R": [
+     1.0,
+     0.006013483313087574,
+     3.571602688633613e-09,
+     1.9451043065861866e-17
+    ],
+    "coverage_pct": [
+     97.75390625,
+     97.36328125,
+     97.4609375,
+     97.36328125
+    ],
+    "m_mean": [
+     1.64772218,
+     4.56035764,
+     5.87826259,
+     4.61478685
+    ],
+    "P_prev_mean": [
+     0.0,
+     1.64772218,
+     6.20807983,
+     12.08634241
+    ],
+    "frac_R_le_1e-2_pct": [
+     0.0,
+     58.49609375,
+     92.3828125,
+     94.82421875
+    ],
+    "grad_mean": [
+     0.15362811,
+     0.10266485,
+     0.09816397,
+     0.09824533
+    ],
+    "grad_local_mean": [
+     0.15362811,
+     0.11311935,
+     0.10938124,
+     0.11558895
+    ],
+    "ckpt": "local DGX GB10 run (CR/experiments/ckpts/f1_mgc_block0)",
+    "ckpt_md5": "32eed7c5fac2771ba6b530f76f6db9a8",
+    "ckpt_epoch_stage1": 180,
+    "ckpt_cfg": {
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": true,
+     "mgc_keep_l0_aux": false,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "symba_alpha": 4.0,
+     "seed": 42
+    },
+    "strict_load_missing_unexpected": [
+     0,
+     0
+    ],
+    "acc_gate": {
+     "acc_s1_no_tta_cpu": 0.8525,
+     "n": 10000,
+     "logged_stage1_test_top1_no_tta": 0.8524,
+     "abs_diff_vs_logged": 9.999999999998899e-05,
+     "n_disagree_with_logged_preds_npz": 6,
+     "tolerance": 0.0002,
+     "passed": false,
+     "seconds": 188.6
+    },
+    "acc_gate_e3_criteria_pass": true,
+    "acc_gate_strict_le2_disagreements_pass": false,
+    "grad_mean_over_grad_local_mean": [
+     1.0,
+     0.90757994,
+     0.89744796,
+     0.84995432
+    ]
+   },
+   "fd_b42_seed": {
+    "arm": "b",
+    "seed": 42,
+    "neg_labels": "seed",
+    "F_d": [
+     0.0,
+     0.92829169,
+     0.96422573,
+     0.96887486
+    ],
+    "F_d_ci95": [
+     0.0,
+     0.01215064,
+     0.01049931,
+     0.01015087
+    ],
+    "median_R": [
+     1.0,
+     0.006095718269714096,
+     3.038026249479656e-09,
+     1.6916521771870698e-17
+    ],
+    "coverage_pct": [
+     96.97265625,
+     96.875,
+     97.265625,
+     97.265625
+    ],
+    "m_mean": [
+     1.66119024,
+     4.59294672,
+     5.92323132,
+     4.66146674
+    ],
+    "P_prev_mean": [
+     0.0,
+     1.66119024,
+     6.25413696,
+     12.17736828
+    ],
+    "frac_R_le_1e-2_pct": [
+     0.0,
+     59.5703125,
+     91.30859375,
+     94.53125
+    ],
+    "grad_mean": [
+     0.16062598,
+     0.11171938,
+     0.10790797,
+     0.10573051
+    ],
+    "grad_local_mean": [
+     0.16062598,
+     0.12034527,
+     0.11833733,
+     0.12366455
+    ],
+    "ckpt": "local DGX GB10 run (CR/experiments/ckpts/f1_mgc_block0)",
+    "ckpt_md5": "32eed7c5fac2771ba6b530f76f6db9a8",
+    "ckpt_epoch_stage1": 180,
+    "ckpt_cfg": {
+     "use_sam": true,
+     "gamma_scale": 0.7,
+     "gamma_gating_mode": "constant",
+     "use_mgc": false,
+     "curr_aux_off": true,
+     "mgc_keep_l0_aux": false,
+     "block_curr_lambda": 0.25,
+     "block_curr_depth_slope": 3.0,
+     "symba_alpha": 4.0,
+     "seed": 42
+    },
+    "strict_load_missing_unexpected": [
+     0,
+     0
+    ],
+    "acc_gate": {
+     "acc_s1_no_tta_cpu": 0.8525,
+     "n": 10000,
+     "logged_stage1_test_top1_no_tta": 0.8524,
+     "abs_diff_vs_logged": 9.999999999998899e-05,
+     "n_disagree_with_logged_preds_npz": 6,
+     "tolerance": 0.0002,
+     "passed": false,
+     "seconds": 188.6
+    },
+    "acc_gate_e3_criteria_pass": true,
+    "acc_gate_strict_le2_disagreements_pass": false,
+    "grad_mean_over_grad_local_mean": [
+     1.0,
+     0.92832387,
+     0.91186752,
+     0.85497831
+    ]
+   }
+  },
+  "e3_reference_same_images_and_labels": {
+   "source": "results/e3_fd_ema.json headline_ema_vs_published (EMA, fixed std, published wrong labels)",
+   "gamma0.7_cumulative_sam_off_seed42_F_d": [
+    0.0,
+    0.92857222,
+    0.94971696,
+    0.95202527
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_coverage_pct": [
+    97.0703125,
+    95.60546875,
+    96.09375,
+    95.99609375
+   ],
+   "gamma0_F_d": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_F_d_recomputed_from_arrays": [
+    0.0,
+    0.92857222,
+    0.94971696,
+    0.95202527
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_m_mean": [
+    1.73568907,
+    2.3648896,
+    1.30118988,
+    0.681481
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_P_prev_mean": [
+    0.0,
+    1.73568907,
+    4.10057867,
+    5.40176855
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_grad_mean": [
+    0.15444232,
+    0.14027644,
+    0.14001117,
+    0.1398644
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_grad_local_mean": [
+    0.15444232,
+    0.1842673,
+    0.27394392,
+    0.46660771
+   ],
+   "gamma0.7_cumulative_sam_off_seed42_grad_mean_over_grad_local_mean": [
+    1.0,
+    0.76126608,
+    0.51109426,
+    0.29974729
+   ],
+   "arrays": "amir-porjects/neuroips_review/camera_ready/experiments/e3_fd/out/ema_fixed_published/grad_attenuation_arrays_v1.npz"
+  },
+  "gradient_fields": "grad_mean = mean over examples of beta * sigmoid(-beta (m + gamma P_prev)), the magnitude of the cumulative SYMBA term's gradient w.r.t. block d's own margin; grad_local_mean = the same with gamma = 0 at the same margins (a counterfactual, not a trained gamma = 0 model); their ratio is a mean-level attenuation that weights hard examples (small or negative m) most. Snapshot at the stage1_best EMA weights (Stage-1 epoch 180); it does not describe the training trajectory.",
+  "test_batch_md5_f1_vs_e3_data_dir": {
+   "files": [
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix/data_c10/cifar-10-batches-py/test_batch",
+    "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/revised_training/data_c10/cifar-10-batches-py/test_batch"
+   ],
+   "md5": [
+    "40351d587109b95175f43aff81a1287e",
+    "40351d587109b95175f43aff81a1287e"
+   ]
+  },
+  "paired_per_example": {
+   "b42_minus_a42_published_labels": {
+    "delta_F_d": [
+     0.0,
+     0.00137448,
+     0.01254792,
+     0.01381002
+    ],
+    "delta_F_d_ci95_paired": [
+     0.0,
+     0.00673807,
+     0.00714357,
+     0.00748426
+    ]
+   },
+   "b42_minus_e3_gamma0.7_samoff": {
+    "delta_F_d": [
+     0.0,
+     0.00027212,
+     0.01676727,
+     0.01941233
+    ],
+    "delta_F_d_ci95_paired": [
+     0.0,
+     0.00808229,
+     0.00909749,
+     0.00954873
+    ]
+   },
+   "a42_minus_e3_gamma0.7_samoff": {
+    "delta_F_d": [
+     0.0,
+     -0.00110236,
+     0.00421935,
+     0.00560231
+    ],
+    "delta_F_d_ci95_paired": [
+     0.0,
+     0.00808114,
+     0.00840864,
+     0.00860972
+    ]
+   }
+  },
+  "answer": "Attenuation is still present in arm b. Seed 42, published wrong labels: F_d(blocks 1-3) = 0.929/0.966/0.971 in arm b (no auxiliary), 0.927/0.954/0.958 in arm a (SAM-matched cumulative with the auxiliary), 0.929/0.950/0.952 in the E3 SAM-off gamma = 0.7 reference; paired b - a at block 3: +0.0138 +/- 0.0075. Arm b's larger F_d follows its larger earlier-block margins (P_prev mean at block 3 12.09 vs 4.75). Its own block-3 margins are also larger (m mean 4.61 vs 0.66), so the gamma = 0 counterfactual gradient is already small: the mean cumulative-term gradient is 0.85 of the counterfactual in arm b vs 0.24 in arm a. The per-example index F_d therefore does not separate the high-separation arm b from the low-separation arm a at this snapshot (n = 1 seed per arm, one checkpoint each)."
+ },
+ "gates": [
+  {
+   "check": "mgc s42: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "mgc s42: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; job log: 1 from-scratch start, 0 checkpoint resume load(s); Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+  },
+  {
+   "check": "mgc s42: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc s42: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "mgc s123: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "mgc s123: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+  },
+  {
+   "check": "mgc s123: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc s123: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "mgc s456: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "mgc s456: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; no job log on this host; Stage-1 layer log epochs 1-180, contiguous=True; the MGC-D128 trainer did not log resume events, so a resume is detectable only through a new run directory / a layer log that starts after epoch 1"
+  },
+  {
+   "check": "mgc s456: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc s456: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "a s42: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "a s42: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "a s42: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "a s42: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "a s42: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "a s42: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "a s42: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "a s123: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "a s123: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "a s123: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "a s123: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "a s123: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "a s123: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "a s123: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "a s456: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "a s456: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "a s456: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "a s456: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "a s456: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "a s456: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "a s456: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "b s42: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "b s42: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "b s42: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b s42: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "b s42: logged block_curr_lambda_eff = [0.0, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "b s42: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "b s42: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "b s42: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "b s123: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "b s123: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "b s123: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b s123: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "b s123: logged block_curr_lambda_eff = [0.0, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "b s123: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "b s123: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "b s123: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "b s456: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "b s456: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "b s456: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b s456: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "b s456: logged block_curr_lambda_eff = [0.0, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "b s456: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "b s456: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "b s456: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     true
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     false
+    ],
+    "use_mgc": [
+     true,
+     false
+    ]
+   }
+  },
+  {
+   "check": "c s42: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "c s42: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "c s42: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c s42: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "c s42: logged block_curr_lambda_eff = [0.25, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "c s42: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "c s42: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "c s42: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   }
+  },
+  {
+   "check": "c s123: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "c s123: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "c s123: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c s123: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "c s123: logged block_curr_lambda_eff = [0.25, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "c s123: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "c s123: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "c s123: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   }
+  },
+  {
+   "check": "c s456: one final_test_eval, final Stage-1 epoch 180",
+   "pass": true
+  },
+  {
+   "check": "c s456: no resume",
+   "pass": true,
+   "evidence": "0 resume events in events.jsonl; 1 START segment(s), 1 from-scratch start(s) and 0 checkpoint resume load(s) in the job log; Stage-1 layer log epochs 1-180, contiguous=True"
+  },
+  {
+   "check": "c s456: final_test_eval equals preds_*.npz accuracy (all 4 protocols, 0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c s456: config flags as registered",
+   "pass": true
+  },
+  {
+   "check": "c s456: logged block_curr_lambda_eff = [0.25, 0.0, 0.0, 0.0] at every Stage-1 step log",
+   "pass": true
+  },
+  {
+   "check": "c s456: job log trainer sha256 prefix = local trainer.py",
+   "pass": true
+  },
+  {
+   "check": "c s456: job-log env = arms.json env",
+   "pass": true
+  },
+  {
+   "check": "c s456: config diff vs seed-matched MGC-D128 = planned diff",
+   "pass": true,
+   "got": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   },
+   "planned": {
+    "curr_aux_off": [
+     "<MISSING>",
+     false
+    ],
+    "mgc_keep_l0_aux": [
+     "<MISSING>",
+     true
+    ]
+   }
+  },
+  {
+   "check": "MGC-D128 s42 S1 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s42 S1-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s42 S2 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s42 S2-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s42 sep_curr_nl equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s123 S1 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s123 S1-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s123 S2 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s123 S2-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s123 sep_curr_nl equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s456 S1 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s456 S1-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s456 S2 equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s456 S2-TTA equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "MGC-D128 s456 sep_curr_nl equals results/mgc_d128.json",
+   "pass": true
+  },
+  {
+   "check": "mgc_minus_a S1: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc_minus_a S1-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc_minus_a S2: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "mgc_minus_a S2-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_a S1: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_a S1-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_a S2: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_a S2-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_a S1: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_a S1-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_a S2: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_a S2-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_mgc S1: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_mgc S1-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_mgc S2: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "c_minus_mgc S2-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_mgc S1: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_mgc S1-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_mgc S2: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "b_minus_mgc S2-TTA: pooled preds delta equals mean of seed deltas (0.005 pp)",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_a42_published: EMA S1 no-TTA CPU accuracy within 2 examples of the log, per-example agreement >= 99.9% (E3 criteria), strict net_ema load",
+   "pass": true,
+   "cpu": 0.8554,
+   "logged": 0.8553,
+   "n_disagree": 3,
+   "agreement": 0.9997
+  },
+  {
+   "check": "F_d fd_b42_published: EMA S1 no-TTA CPU accuracy within 2 examples of the log, per-example agreement >= 99.9% (E3 criteria), strict net_ema load",
+   "pass": true,
+   "cpu": 0.8525,
+   "logged": 0.8524,
+   "n_disagree": 6,
+   "agreement": 0.9994
+  },
+  {
+   "check": "F_d fd_a42_published: grad_mean / grad_local_mean recomputed from the npz arrays (1e-9)",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_a42_seed: grad_mean / grad_local_mean recomputed from the npz arrays (1e-9)",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_b42_published: grad_mean / grad_local_mean recomputed from the npz arrays (1e-9)",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_b42_seed: grad_mean / grad_local_mean recomputed from the npz arrays (1e-9)",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_a42_published: local arm-a seed-42 checkpoint MD5 equals the Drive MD5",
+   "pass": true
+  },
+  {
+   "check": "F_d fd_a42_seed: local arm-a seed-42 checkpoint MD5 equals the Drive MD5",
+   "pass": true
+  },
+  {
+   "check": "F_d: the F1 snapshot and E3 read the identical CIFAR-10 test_batch (MD5)",
+   "pass": true
+  },
+  {
+   "check": "F_d E3 reference: F_d recomputed from the E3 arrays equals results/e3_fd_ema.json (1e-8)",
+   "pass": true
+  }
+ ],
+ "all_gates_pass": true
+}

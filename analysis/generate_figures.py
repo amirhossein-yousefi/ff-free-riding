@@ -1241,7 +1241,7 @@ L8D128_RUNS_DIR = os.path.join(BASE_DIR, "basic_fair_revised_valfix_cp_fair", "s
 L8D128_REGISTRY = {
     "gamma0": (
         "ff_cifar10_scale_noall_G0_L8D128_L8_D128_bs512_seed42_20260314_015458",
-        r"$\gamma$=0 (purely local)",
+        r"$\gamma$=0 (history-free)",
     ),
     "cpfair": (
         "ff_cifar10_scale_cpfair_G07_L8D128_L8_D128_bs512_seed42_20260315_190153",

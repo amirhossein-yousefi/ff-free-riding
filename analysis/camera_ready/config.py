@@ -38,6 +38,12 @@ RESULTS = CR / "results"
 TABLES = CR / "tables"
 PAPER = Path(_ffp_os.environ.get("FF_PAPER_DIR", str(CR / "paper")))
 BASELINE_COMMIT = "389b1fa"                              # commit 0 = submitted version
+# [CR] Experiment folders of the camera-ready GPU runs F1 (MGC block-0 control) and F2 (gamma=0 seed-42
+# rerun) inside the run archive: runs/ (run directories), logs/ (job logs), the launch specification and
+# the fork trainer. Read-only; used by f1_analysis.py, f2_analysis.py and compute_budget.py.
+CR_ARCHIVE = PR / "neuroips_review" / "camera_ready"     # the camera-ready repository inside the archive
+F1_DIR = Path(_ffp_os.environ.get("FF_F1_DIR", str(CR_ARCHIVE / "experiments" / "f1_mgc_block0")))
+F2_DIR = Path(_ffp_os.environ.get("FF_F2_DIR", str(CR_ARCHIVE / "experiments" / "f2_gamma0_s42")))
 
 SEEDS = (42, 123, 456)
 # final_test_eval keys (fractions in events.jsonl) and short protocol labels

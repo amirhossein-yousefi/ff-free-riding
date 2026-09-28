@@ -1,0 +1,6954 @@
+{
+ "title": "F2: CIFAR-10 gamma=0 seed 42 re-run in the seed-123/456 configuration (matched-config n = 3)",
+ "generated": "2026-09-28",
+ "script": "analysis/f2_analysis.py",
+ "definitions": {
+  "protocols": {
+   "S1": "stage1_best EMA backbone, goodness-sum readout, single crop",
+   "S1-TTA": "same, flip TTA",
+   "S2": "stage2_best attentive head on the frozen stage1_best EMA backbone",
+   "S2-TTA": "same, flip TTA",
+   "source": "final_test_eval in the last segment's events.jsonl, cross-checked against preds_*.npz (correct / 10000)"
+  },
+  "sep": "deepest block (layer 3) sep_curr_nl from layer_metrics.jsonl: Stage-1 training-time running mean over the epoch; last = epoch 362 (registered P2 metric); selected = the validation-selected Stage-1 epoch",
+  "selected_epoch": "first Stage-1 val-eval epoch whose eval_top1 equals run_end.best_s1 (strict '>' update)",
+  "stitching": "segments ordered by time; a segment's resume event (checkpoint epoch k) supersedes every earlier row with epoch > k; the remaining rows must cover epochs 1-362 exactly once with 4 layers each",
+  "sd": "sample SD (ddof = 1)"
+ },
+ "gates": {
+  "all_passed": true,
+  "n": 71,
+  "checks": [
+   {
+    "check": "F2: config.json identical in all 4 segments",
+    "ok": true,
+    "got": [
+     "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a"
+    ]
+   },
+   {
+    "check": "F2: split_indices.json identical in segments 2-4 (segment 1 never saved one)",
+    "ok": true,
+    "got": [
+     "03abcb2ff382ad0f48a772b00998409de5c6baaa983e08081dbba1b1c828bbce"
+    ]
+   },
+   {
+    "check": "F2: env.json identical in all 4 segments (A100-SXM4-40GB, same software)",
+    "ok": true
+   },
+   {
+    "check": "F2 seg1: no Stage-1 rows (lost before epoch 1 finished)",
+    "ok": true
+   },
+   {
+    "check": "F2 seg2: fresh start (no resume event; 'No checkpoint found' in console log)",
+    "ok": true
+   },
+   {
+    "check": "F2 seg2: first logged Stage-1 epoch == checkpoint epoch + 1",
+    "ok": true,
+    "got": 1,
+    "want": 1
+   },
+   {
+    "check": "F2 seg3: first logged Stage-1 epoch == checkpoint epoch + 1",
+    "ok": true,
+    "got": 4,
+    "want": 4
+   },
+   {
+    "check": "F2 seg3: resume event rng_restored == true",
+    "ok": true,
+    "got": true
+   },
+   {
+    "check": "F2 seg3: resumed from a Stage-1 checkpoint",
+    "ok": true
+   },
+   {
+    "check": "F2 seg3: resumed best_s1 == max val eval of epochs <= 3",
+    "ok": true,
+    "got": 0.0,
+    "want": 0.0
+   },
+   {
+    "check": "F2 seg3: first row best_s1 == resumed best_s1",
+    "ok": true
+   },
+   {
+    "check": "F2 seg4: first logged Stage-1 epoch == checkpoint epoch + 1",
+    "ok": true,
+    "got": 275,
+    "want": 275
+   },
+   {
+    "check": "F2 seg4: resume event rng_restored == true",
+    "ok": true,
+    "got": true
+   },
+   {
+    "check": "F2 seg4: resumed from a Stage-1 checkpoint",
+    "ok": true
+   },
+   {
+    "check": "F2 seg4: resumed best_s1 == max val eval of epochs <= 274",
+    "ok": true,
+    "got": 0.9128,
+    "want": 0.9128
+   },
+   {
+    "check": "F2 seg4: first row best_s1 == resumed best_s1",
+    "ok": true
+   },
+   {
+    "check": "F2 new seed 42 S1: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9058,
+    "want": 0.9058
+   },
+   {
+    "check": "F2 new seed 42 S1-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9139,
+    "want": 0.9139
+   },
+   {
+    "check": "F2 new seed 42 S2: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9062,
+    "want": 0.9062
+   },
+   {
+    "check": "F2 new seed 42 S2-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9131,
+    "want": 0.9131
+   },
+   {
+    "check": "F2: fixed-key and raw layer logs agree on the deepest-block sep at epoch 362",
+    "ok": true
+   },
+   {
+    "check": "F2 seg4 console: stage1_best backbone loaded for Stage 2 and for the final test eval",
+    "ok": true,
+    "got": 2
+   },
+   {
+    "check": "F2 seg4 console: printed final test top-1 == final_test_eval (x100)",
+    "ok": true,
+    "got": {
+     "S1": 90.58,
+     "S1-TTA": 91.39,
+     "S2": 90.62,
+     "S2-TTA": 91.31
+    }
+   },
+   {
+    "check": "published seed 42 S1: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9052,
+    "want": 0.9052
+   },
+   {
+    "check": "published seed 42 S1-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9145,
+    "want": 0.9145
+   },
+   {
+    "check": "published seed 42 S2: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9037,
+    "want": 0.9037
+   },
+   {
+    "check": "published seed 42 S2-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9139,
+    "want": 0.9139
+   },
+   {
+    "check": "seed 123 S1: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9054,
+    "want": 0.9054
+   },
+   {
+    "check": "seed 123 S1-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.914,
+    "want": 0.914
+   },
+   {
+    "check": "seed 123 S2: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9051,
+    "want": 0.9051
+   },
+   {
+    "check": "seed 123 S2-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9151,
+    "want": 0.9151
+   },
+   {
+    "check": "seed 456 S1: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9044,
+    "want": 0.9044
+   },
+   {
+    "check": "seed 456 S1-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.911,
+    "want": 0.911
+   },
+   {
+    "check": "seed 456 S2: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9044,
+    "want": 0.9044
+   },
+   {
+    "check": "seed 456 S2-TTA: preds npz correct/10000 == final_test_eval",
+    "ok": true,
+    "got": 0.9122,
+    "want": 0.9122
+   },
+   {
+    "check": "published seed 42 S1 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.52,
+    "want": 90.52
+   },
+   {
+    "check": "published seed 42 S1-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.45,
+    "want": 91.45
+   },
+   {
+    "check": "published seed 42 S2 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.37,
+    "want": 90.37
+   },
+   {
+    "check": "published seed 42 S2-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.39,
+    "want": 91.39
+   },
+   {
+    "check": "published seed 42 last-epoch deepest sep == PREDICTIONS.md reference (4 dp)",
+    "ok": true,
+    "got": 3.27559844104723,
+    "want": 3.2756
+   },
+   {
+    "check": "published seed 42 selected epoch, selected/last-epoch sep and sep trajectory == results/e1_tier1_sep_acc.json (exact)",
+    "ok": true,
+    "got": [
+     320,
+     3.223847307007888
+    ],
+    "want": [
+     320,
+     3.223847307007888
+    ]
+   },
+   {
+    "check": "published seed 42 selected epoch / sep (2 dp) == tab:gamma0_multiseed note",
+    "ok": true,
+    "got": [
+     320,
+     3.22
+    ],
+    "want": [
+     320,
+     3.22
+    ]
+   },
+   {
+    "check": "seed 123 S1 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.54,
+    "want": 90.54
+   },
+   {
+    "check": "seed 123 S1-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.4,
+    "want": 91.4
+   },
+   {
+    "check": "seed 123 S2 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.51,
+    "want": 90.51
+   },
+   {
+    "check": "seed 123 S2-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.51,
+    "want": 91.51
+   },
+   {
+    "check": "seed 123 last-epoch deepest sep == PREDICTIONS.md reference (4 dp)",
+    "ok": true,
+    "got": 7.852139505846747,
+    "want": 7.8521
+   },
+   {
+    "check": "seed 123 selected epoch, selected/last-epoch sep and sep trajectory == results/e1_tier1_sep_acc.json (exact)",
+    "ok": true,
+    "got": [
+     260,
+     5.6495516163179245
+    ],
+    "want": [
+     260,
+     5.6495516163179245
+    ]
+   },
+   {
+    "check": "seed 123 selected epoch / sep (2 dp) == tab:gamma0_multiseed note",
+    "ok": true,
+    "got": [
+     260,
+     5.65
+    ],
+    "want": [
+     260,
+     5.65
+    ]
+   },
+   {
+    "check": "seed 456 S1 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.44,
+    "want": 90.44
+   },
+   {
+    "check": "seed 456 S1-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.1,
+    "want": 91.1
+   },
+   {
+    "check": "seed 456 S2 == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 90.44,
+    "want": 90.44
+   },
+   {
+    "check": "seed 456 S2-TTA == PREDICTIONS.md reference",
+    "ok": true,
+    "got": 91.22,
+    "want": 91.22
+   },
+   {
+    "check": "seed 456 last-epoch deepest sep == PREDICTIONS.md reference (4 dp)",
+    "ok": true,
+    "got": 7.97326458459613,
+    "want": 7.9733
+   },
+   {
+    "check": "seed 456 selected epoch, selected/last-epoch sep and sep trajectory == results/e1_tier1_sep_acc.json (exact)",
+    "ok": true,
+    "got": [
+     260,
+     6.414208719100075
+    ],
+    "want": [
+     260,
+     6.414208719100075
+    ]
+   },
+   {
+    "check": "seed 456 selected epoch / sep (2 dp) == tab:gamma0_multiseed note",
+    "ok": true,
+    "got": [
+     260,
+     6.41
+    ],
+    "want": [
+     260,
+     6.41
+    ]
+   },
+   {
+    "check": "F2 config differs from seed 123 only in seed",
+    "ok": true,
+    "got": {
+     "seed": [
+      42,
+      123
+     ]
+    }
+   },
+   {
+    "check": "F2 config differs from seed 456 only in seed",
+    "ok": true,
+    "got": {
+     "seed": [
+      42,
+      456
+     ]
+    }
+   },
+   {
+    "check": "F2 config differs from the published seed 42 only in block_curr_lambda / depth_order_lambda",
+    "ok": true,
+    "got": {
+     "block_curr_lambda": [
+      0.25,
+      0.0
+     ],
+     "depth_order_lambda": [
+      0.2,
+      0.0
+     ]
+    }
+   },
+   {
+    "check": "F2 config.json == planned config (config_diffs/planned_seed42_matched.json)",
+    "ok": true,
+    "got": {}
+   },
+   {
+    "check": "F2 train/val split == the published seed-42 split (split_indices.json sha256)",
+    "ok": true
+   },
+   {
+    "check": "F2 per-epoch lr and router tau == seed 123's at every Stage-1 epoch (scheduler restored across resumes)",
+    "ok": true,
+    "got": []
+   },
+   {
+    "check": "fork equivalence tests: 18/18 passed for this trainer sha256",
+    "ok": true,
+    "got": [
+     18,
+     0
+    ]
+   },
+   {
+    "check": "published n=3 S1-TTA mean +/- SD == 91.32 +/- 0.19 (PREDICTIONS.md; headline)",
+    "ok": true,
+    "got": [
+     91.31666666666668,
+     0.1892969448600146
+    ]
+   },
+   {
+    "check": "no printed 2-dp aggregate lies on a rounding boundary",
+    "ok": true,
+    "got": []
+   },
+   {
+    "check": "P1 bounds from raw files == registered [91.10, 91.40]",
+    "ok": true,
+    "got": [
+     91.1,
+     91.4
+    ]
+   },
+   {
+    "check": "P1b band from raw files == registered [90.95, 91.55]",
+    "ok": true,
+    "got": [
+     90.95,
+     91.55
+    ]
+   },
+   {
+    "check": "published seed 42: env.json identical across its segments",
+    "ok": true,
+    "got": 1
+   },
+   {
+    "check": "seed 123: env.json identical across its segments",
+    "ok": true,
+    "got": 1
+   },
+   {
+    "check": "seed 456: env.json identical across its segments",
+    "ok": true,
+    "got": 1
+   },
+   {
+    "check": "seeds 123/456 on GB10, new and published seed 42 on A100 (env.json)",
+    "ok": true
+   }
+  ]
+ },
+ "f2_run": {
+  "label": "F2 new seed 42",
+  "segments": [
+   "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_130729",
+   "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045",
+   "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339"
+  ],
+  "segment_stage1_epoch_ranges": [
+   [
+    1,
+    3
+   ],
+   [
+    4,
+    274
+   ],
+   [
+    275,
+    362
+   ]
+  ],
+  "config_json_sha256": "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a",
+  "env": {
+   "cuda_available": true,
+   "cuda_version": "12.8",
+   "cudnn_version": 91900,
+   "device0": "NVIDIA A100-SXM4-40GB",
+   "device_count": 1,
+   "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+   "python": "3.13.15",
+   "torch": "2.11.0+cu128"
+  },
+  "env_per_segment": [
+   {
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "device_count": 1,
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128"
+   },
+   {
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "device_count": 1,
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128"
+   },
+   {
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "device_count": 1,
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "python": "3.13.15",
+    "torch": "2.11.0+cu128"
+   }
+  ],
+  "best_s1_val": 0.9128,
+  "best_s2_val": 0.915,
+  "stage1_selected_epoch": 200,
+  "stage1_selected_epoch_segment": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045",
+  "stage1_last_epoch": 362,
+  "sep_deep_last": 7.722306361143616,
+  "sep_deep_selected": 3.685287116587847,
+  "sep_blocks_last": [
+   2.2564176307327446,
+   4.772394421456874,
+   6.659683359080348,
+   7.722306361143616
+  ],
+  "sep_blocks_selected": [
+   1.6005077677211543,
+   3.120971515260894,
+   3.5681798649930405,
+   3.685287116587847
+  ],
+  "sep_deep_at_eval_epochs": {
+   "20": 0.5921615005909712,
+   "40": 0.7452587670293348,
+   "60": 0.8885814252941088,
+   "80": 1.0052119692166646,
+   "100": 1.5582843306420864,
+   "120": 1.9641992059247246,
+   "140": 2.6058582752600485,
+   "160": 2.4780917797965567,
+   "180": 2.5991746557169946,
+   "200": 3.685287116587847,
+   "220": 4.357290763964598,
+   "240": 4.365570635631166,
+   "260": 5.231874306996663,
+   "280": 6.402041676400722,
+   "300": 6.662627527083473,
+   "320": 7.372462946793129,
+   "340": 7.614600504951915,
+   "360": 7.725900469155147,
+   "362": 7.722306361143616
+  },
+  "acc_frac": {
+   "S1": 0.9058,
+   "S1-TTA": 0.9139,
+   "S2": 0.9062,
+   "S2-TTA": 0.9131
+  },
+  "acc_pct": {
+   "S1": 90.58,
+   "S1-TTA": 91.39,
+   "S2": 90.62,
+   "S2-TTA": 91.31
+  },
+  "test_correct_of_10000": {
+   "S1": 9058,
+   "S1-TTA": 9139,
+   "S2": 9062,
+   "S2-TTA": 9131
+  },
+  "top5_frac": {
+   "S1": 0.9961,
+   "S1-TTA": 0.9962,
+   "S2": 0.9961,
+   "S2-TTA": 0.9965
+  },
+  "preds_npz": {
+   "S1": {
+    "file": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339/preds_stage1_test_no_tta.npz",
+    "sha256": "dfc4220b80b69aaac76949d395336008794d697928964f70963c15391c51380c",
+    "n": 10000,
+    "correct": 9058
+   },
+   "S1-TTA": {
+    "file": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339/preds_stage1_test_tta.npz",
+    "sha256": "9ded1bf950d002e63ec3d1fdceac590dad05475d3d873b52cf6759112a868328",
+    "n": 10000,
+    "correct": 9139
+   },
+   "S2": {
+    "file": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339/preds_stage2_test_no_tta.npz",
+    "sha256": "6f7f1ed317f1c21aa766db934a67bcb3b5712b92afc10143492d5046f5ef6361",
+    "n": 10000,
+    "correct": 9062
+   },
+   "S2-TTA": {
+    "file": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339/preds_stage2_test_tta.npz",
+    "sha256": "3190987001ed9a8ee03de1a55060d7a4ce1a80cc06b6290c48702e0013aa30c6",
+    "n": 10000,
+    "correct": 9131
+   }
+  },
+  "final_test_eval_ts_utc": "2026-09-28T05:30:12Z",
+  "events_sha256": "2a290baccd2789386eee88b95d53fb14ffa68c65806dddf37d182d0a7d6da3cc",
+  "layer_metrics_sha256": [
+   "3fd926e25775e07e8bb2f4fed17e2ef726ed3da43f99345b5858495f08c2fb97",
+   "5c4ab2102681b525d7caaa4884be0616a743da04251a399a38c1da2fe38b6cb1",
+   "c8f51cb04844fb2bcf1f64973c29ae77c73c37408df3a93226fc568e65a416bf"
+  ],
+  "stage2": {
+   "epochs_logged": [
+    1,
+    20
+   ],
+   "segment": "seg4",
+   "val_evals": {
+    "20": 0.915
+   },
+   "backbone": "frozen stage1_best EMA backbone (console log: 'Loaded backbone weights from ..._stage1_best.pt' before Stage 2 and before final_test_eval)"
+  },
+  "config_vs_seed123": {
+   "seed": [
+    42,
+    123
+   ]
+  },
+  "config_vs_seed456": {
+   "seed": [
+    42,
+    456
+   ]
+  },
+  "config_vs_published_seed42": {
+   "block_curr_lambda": [
+    0.25,
+    0.0
+   ],
+   "depth_order_lambda": [
+    0.2,
+    0.0
+   ]
+  },
+  "trainer": {
+   "path": "CR/experiments/f2_gamma0_s42/trainer.py",
+   "sha256": "c78d850bd965a7bfaf0f6cfc7752820d0e4d3aa9518fc0348b1a31461ceb7e06",
+   "equivalence_tests": "18/18 passed (2026-09-25 05:45:47)"
+  }
+ },
+ "provenance": {
+  "segments": [
+   {
+    "id": "seg1",
+    "dir": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_080227",
+    "launch_note": "Colab CLI VM (A100); VM reclaimed about 25 min after start, during the CIFAR-10 download, before any Stage-1 epoch finished",
+    "run_start_utc": "2026-09-25T08:02:27Z",
+    "env": {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91900,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "python": "3.13.15",
+     "torch": "2.11.0+cu128"
+    },
+    "config_json_sha256": "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a",
+    "split_indices_sha256": null,
+    "stage1_epochs_logged": null,
+    "n_stage1_epoch_rows": 0,
+    "n_stage1_layer_rows": 0,
+    "n_stage2_epoch_rows": 0,
+    "resume_event": null,
+    "events": [
+     "run_start"
+    ],
+    "first_row_utc": null,
+    "last_stage1_row_utc": null,
+    "last_row_utc": null,
+    "wall_h_run_start_to_last_row": null,
+    "median_s_per_stage1_epoch": null,
+    "console_log": {
+     "present_in_drive_log": false,
+     "note": "no START header of this segment in the Drive trainer log (the runner.log lists it)"
+    },
+    "runner_log_lines": [
+     "[ffcr-runner 2026-09-25 08:02:17] runner start: f2_gamma0_s42 on NVIDIA A100-SXM4-40GB; data: trainer will download CIFAR-10",
+     "[ffcr-runner 2026-09-25 08:02:17] RUN  cifar10_gamma0_seed42_matched seed 42; trainer output -> MyDrive/ffcr/f2_gamma0_s42/logs/cifar10_gamma0_seed42_matched_seed42.log"
+    ],
+    "file_sha256": {
+     "events.jsonl": "23670df3d6bba9692ecaa692179d32ff9a0dcc8063cbd25580b0653a09ddab6a",
+     "epoch_metrics.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+     "layer_metrics.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "has_final_test_eval": false,
+    "rng_restore_status": {
+     "status": "not applicable: no checkpoint loaded and no epoch finished"
+    },
+    "stage1_epochs_used": null
+   },
+   {
+    "id": "seg2",
+    "dir": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_130729",
+    "launch_note": "Colab CLI VM (A100); fresh start; VM lost during epoch 5",
+    "run_start_utc": "2026-09-25T13:07:29Z",
+    "env": {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91900,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "python": "3.13.15",
+     "torch": "2.11.0+cu128"
+    },
+    "config_json_sha256": "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a",
+    "split_indices_sha256": "03abcb2ff382ad0f48a772b00998409de5c6baaa983e08081dbba1b1c828bbce",
+    "stage1_epochs_logged": [
+     1,
+     4
+    ],
+    "n_stage1_epoch_rows": 4,
+    "n_stage1_layer_rows": 16,
+    "n_stage2_epoch_rows": 0,
+    "resume_event": null,
+    "events": [
+     "run_start",
+     "split_indices_saved"
+    ],
+    "first_row_utc": "2026-09-25T13:12:54Z",
+    "last_stage1_row_utc": "2026-09-25T13:29:16Z",
+    "last_row_utc": "2026-09-25T13:29:16Z",
+    "wall_h_run_start_to_last_row": 0.36,
+    "median_s_per_stage1_epoch": 327.3948812484741,
+    "console_log": {
+     "present_in_drive_log": true,
+     "header_utc": "2026-09-25T13:07:20Z",
+     "trainer_sha256_prefix": "c78d850bd965a7bf",
+     "trainer_sha256_prefix_matches_fork": true,
+     "n_trainer_output_lines": 727,
+     "rng_restore_line": null,
+     "no_checkpoint_found_line": true,
+     "checkpoint_saved_s1_epochs": [
+      1,
+      2,
+      3,
+      4
+     ],
+     "end_line": null,
+     "checkpoint_saved_s1_epoch_range": [
+      1,
+      4
+     ]
+    },
+    "runner_log_lines": [
+     "[ffcr-runner 2026-09-25 13:07:15] runner start: f2_gamma0_s42 on NVIDIA A100-SXM4-40GB; data: local copy present",
+     "[ffcr-runner 2026-09-25 13:07:20] RUN  cifar10_gamma0_seed42_matched seed 42; trainer output -> MyDrive/ffcr/f2_gamma0_s42/logs/cifar10_gamma0_seed42_matched_seed42.log"
+    ],
+    "file_sha256": {
+     "events.jsonl": "0b77ec126d8243658d176e957f4c764f55829e0eea6d375ec36e9d25b49333e6",
+     "epoch_metrics.jsonl": "9469ec0073e6b6296c4d2173db6685ccc1d3e35061371dff367c40a36e190624",
+     "layer_metrics.jsonl": "3fd926e25775e07e8bb2f4fed17e2ef726ed3da43f99345b5858495f08c2fb97"
+    },
+    "has_final_test_eval": false,
+    "rng_restore_status": {
+     "status": "not applicable: fresh start ('No checkpoint found'); RNGs seeded from seed 42"
+    },
+    "stage1_epochs_used": [
+     1,
+     3
+    ]
+   },
+   {
+    "id": "seg3",
+    "dir": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045",
+    "launch_note": "browser Colab (A100); resumed from the Drive checkpoint",
+    "run_start_utc": "2026-09-26T10:50:45Z",
+    "env": {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91900,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "python": "3.13.15",
+     "torch": "2.11.0+cu128"
+    },
+    "config_json_sha256": "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a",
+    "split_indices_sha256": "03abcb2ff382ad0f48a772b00998409de5c6baaa983e08081dbba1b1c828bbce",
+    "stage1_epochs_logged": [
+     4,
+     274
+    ],
+    "n_stage1_epoch_rows": 271,
+    "n_stage1_layer_rows": 1084,
+    "n_stage2_epoch_rows": 0,
+    "resume_event": {
+     "event": "resume",
+     "ckpt_stage": 1,
+     "epoch_stage1": 3,
+     "epoch_stage2": 0,
+     "best_s1": 0.0,
+     "rng_restored": true,
+     "ts_utc": "2026-09-26T11:04:22Z"
+    },
+    "events": [
+     "run_start",
+     "split_indices_saved",
+     "resume"
+    ],
+    "first_row_utc": "2026-09-26T11:09:46Z",
+    "last_stage1_row_utc": "2026-09-27T10:46:24Z",
+    "last_row_utc": "2026-09-27T10:46:24Z",
+    "wall_h_run_start_to_last_row": 23.93,
+    "median_s_per_stage1_epoch": 313.5797213315964,
+    "console_log": {
+     "present_in_drive_log": true,
+     "header_utc": "2026-09-26T10:50:35Z",
+     "trainer_sha256_prefix": "c78d850bd965a7bf",
+     "trainer_sha256_prefix_matches_fork": true,
+     "n_trainer_output_lines": 0,
+     "rng_restore_line": null,
+     "no_checkpoint_found_line": false,
+     "checkpoint_saved_s1_epochs": [],
+     "end_line": null,
+     "note": "the Drive trainer log holds this segment's START header and env lines but no trainer output; the segment's evidence is its run directory (jsonl files)"
+    },
+    "runner_log_lines": [
+     "[ffcr-runner 2026-09-26 10:50:34] runner start: f2_gamma0_s42 on NVIDIA A100-SXM4-40GB; data: trainer will download CIFAR-10",
+     "[ffcr-runner 2026-09-26 10:50:35] RUN  cifar10_gamma0_seed42_matched seed 42; trainer output -> MyDrive/ffcr/f2_gamma0_s42/logs/cifar10_gamma0_seed42_matched_seed42.log"
+    ],
+    "file_sha256": {
+     "events.jsonl": "da196bab19c2c6004420bf2bfe44199b3e91d04550044cda69c0ed630688daee",
+     "epoch_metrics.jsonl": "82e6efada88fec6e5b45a9f3ef11fd11860c95934dd389399f768cc7eed575bb",
+     "layer_metrics.jsonl": "5c4ab2102681b525d7caaa4884be0616a743da04251a399a38c1da2fe38b6cb1"
+    },
+    "has_final_test_eval": false,
+    "rng_restore_status": {
+     "status": "restored",
+     "from_checkpoint_stage1_epoch": 3,
+     "events_jsonl_rng_restored": true,
+     "console_line": null,
+     "torch_cuda_restore_confirmed": false,
+     "dataloader_workers": "persistent workers re-created and re-seeded from the restored main-process torch RNG"
+    },
+    "stage1_epochs_used": [
+     4,
+     274
+    ]
+   },
+   {
+    "id": "seg4",
+    "dir": "CR/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339",
+    "launch_note": "browser Colab (A100); resumed from the Drive checkpoint; finished Stage 1, Stage 2 and final_test_eval",
+    "run_start_utc": "2026-09-27T21:23:39Z",
+    "env": {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91900,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+     "python": "3.13.15",
+     "torch": "2.11.0+cu128"
+    },
+    "config_json_sha256": "f2ea4317e66fac27c762c37fb8ab2b703102f6cebd4b1454e2ad83852a12e46a",
+    "split_indices_sha256": "03abcb2ff382ad0f48a772b00998409de5c6baaa983e08081dbba1b1c828bbce",
+    "stage1_epochs_logged": [
+     275,
+     362
+    ],
+    "n_stage1_epoch_rows": 88,
+    "n_stage1_layer_rows": 352,
+    "n_stage2_epoch_rows": 20,
+    "resume_event": {
+     "event": "resume",
+     "ckpt_stage": 1,
+     "epoch_stage1": 274,
+     "epoch_stage2": 0,
+     "best_s1": 0.9128,
+     "rng_restored": true,
+     "ts_utc": "2026-09-27T21:24:01Z"
+    },
+    "events": [
+     "run_start",
+     "split_indices_saved",
+     "resume",
+     "final_test_eval",
+     "run_end"
+    ],
+    "first_row_utc": "2026-09-27T21:29:05Z",
+    "last_stage1_row_utc": "2026-09-28T05:00:50Z",
+    "last_row_utc": "2026-09-28T05:23:22Z",
+    "wall_h_run_start_to_last_row": 8.0,
+    "median_s_per_stage1_epoch": 309.4775185585022,
+    "console_log": {
+     "present_in_drive_log": true,
+     "header_utc": "2026-09-27T21:23:29Z",
+     "trainer_sha256_prefix": "c78d850bd965a7bf",
+     "trainer_sha256_prefix_matches_fork": true,
+     "n_trainer_output_lines": 17550,
+     "rng_restore_line": "[Checkpoint] Stage-1 resume (ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_P2_seed42_stage1_last.pt): RNG state restored (python, numpy, torch CPU, torch CUDA).",
+     "no_checkpoint_found_line": false,
+     "checkpoint_saved_s1_epochs": "88 epochs (275-362)",
+     "end_line": "=== 2026-09-28 05:30:16 END segment rc=0",
+     "checkpoint_saved_s1_epoch_range": [
+      275,
+      362
+     ]
+    },
+    "runner_log_lines": [
+     "[ffcr-runner 2026-09-27 21:23:28] runner start: f2_gamma0_s42 on NVIDIA A100-SXM4-40GB; data: copied from the Drive cache",
+     "[ffcr-runner 2026-09-27 21:23:29] RUN  cifar10_gamma0_seed42_matched seed 42; trainer output -> MyDrive/ffcr/f2_gamma0_s42/logs/cifar10_gamma0_seed42_matched_seed42.log",
+     "[ffcr-runner 2026-09-28 05:30:16] END  cifar10_gamma0_seed42_matched seed 42 rc=0 after 8.11 h; complete=True",
+     "[ffcr-runner 2026-09-28 05:30:16] all selected jobs complete"
+    ],
+    "file_sha256": {
+     "events.jsonl": "2a290baccd2789386eee88b95d53fb14ffa68c65806dddf37d182d0a7d6da3cc",
+     "epoch_metrics.jsonl": "24d3399ff7d2f2b55a31189e451f3609078b581fff48d751248ad7e990663a3c",
+     "layer_metrics.jsonl": "c8f51cb04844fb2bcf1f64973c29ae77c73c37408df3a93226fc568e65a416bf"
+    },
+    "wall_h_run_start_to_run_end": 8.11,
+    "has_final_test_eval": true,
+    "rng_restore_status": {
+     "status": "restored",
+     "from_checkpoint_stage1_epoch": 274,
+     "events_jsonl_rng_restored": true,
+     "console_line": "[Checkpoint] Stage-1 resume (ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_P2_seed42_stage1_last.pt): RNG state restored (python, numpy, torch CPU, torch CUDA).",
+     "torch_cuda_restore_confirmed": true,
+     "dataloader_workers": "persistent workers re-created and re-seeded from the restored main-process torch RNG"
+    },
+    "stage1_epochs_used": [
+     275,
+     362
+    ]
+   }
+  ],
+  "launch_note_source": "launch mode (CLI VM vs browser) and the seg1 loss timing are not recorded in the run files; they are taken from PROGRESS.md (2026-09-25 to 2026-09-28 entries) and the F2 task notes. 'VM lost during epoch 5' (seg2) is from the Drive console log, whose seg2 part ends at the epoch-5 progress bar",
+  "segment_boundaries_in_stitched_stage1_log": [
+   {
+    "after_epoch": 3,
+    "from": "seg2",
+    "to": "seg3",
+    "gap_h_between_rows": 21.77
+   },
+   {
+    "after_epoch": 274,
+    "from": "seg3",
+    "to": "seg4",
+    "gap_h_between_rows": 10.71
+   }
+  ],
+  "hardware_per_segment": [
+   {
+    "run": "F2 new seed 42",
+    "segment": "seg1",
+    "dir": "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_080227",
+    "stage1_epochs_used": null,
+    "stage2_and_final_test_eval": false,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "python": "3.13.15",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+   },
+   {
+    "run": "F2 new seed 42",
+    "segment": "seg2",
+    "dir": "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_130729",
+    "stage1_epochs_used": [
+     1,
+     3
+    ],
+    "stage2_and_final_test_eval": false,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "python": "3.13.15",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+   },
+   {
+    "run": "F2 new seed 42",
+    "segment": "seg3",
+    "dir": "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045",
+    "stage1_epochs_used": [
+     4,
+     274
+    ],
+    "stage2_and_final_test_eval": false,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "python": "3.13.15",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+   },
+   {
+    "run": "F2 new seed 42",
+    "segment": "seg4",
+    "dir": "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339",
+    "stage1_epochs_used": [
+     275,
+     362
+    ],
+    "stage2_and_final_test_eval": true,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.11.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91900,
+    "python": "3.13.15",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+   },
+   {
+    "run": "published seed 42",
+    "segment": "segment 1",
+    "dir": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260311_120026",
+    "stage1_epochs_used": [
+     1,
+     273
+    ],
+    "stage2_and_final_test_eval": false,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.10.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91002,
+    "python": "3.12.12",
+    "platform": "Linux-6.6.113+-x86_64-with-glibc2.35"
+   },
+   {
+    "run": "published seed 42",
+    "segment": "segment 2",
+    "dir": "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+    "stage1_epochs_used": [
+     274,
+     362
+    ],
+    "stage2_and_final_test_eval": true,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "torch": "2.10.0+cu128",
+    "cuda_version": "12.8",
+    "cudnn_version": 91002,
+    "python": "3.12.12",
+    "platform": "Linux-6.6.113+-x86_64-with-glibc2.35"
+   },
+   {
+    "run": "seed 123",
+    "segment": "segment 1",
+    "dir": "ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110",
+    "stage1_epochs_used": [
+     1,
+     362
+    ],
+    "stage2_and_final_test_eval": true,
+    "device0": "NVIDIA GB10",
+    "torch": "2.9.1+cu130",
+    "cuda_version": "13.0",
+    "cudnn_version": 91300,
+    "python": "3.12.3",
+    "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39"
+   },
+   {
+    "run": "seed 456",
+    "segment": "segment 1",
+    "dir": "ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437",
+    "stage1_epochs_used": [
+     1,
+     362
+    ],
+    "stage2_and_final_test_eval": true,
+    "device0": "NVIDIA GB10",
+    "torch": "2.9.1+cu130",
+    "cuda_version": "13.0",
+    "cudnn_version": 91300,
+    "python": "3.12.3",
+    "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39"
+   }
+  ],
+  "epochs_trained_twice": [
+   {
+    "epoch": 4,
+    "logged_in": "seg2",
+    "superseded_by": "seg3",
+    "reason": "seg3 resumed from the epoch-3 checkpoint",
+    "sep_curr_nl_per_block_superseded": [
+     0.12998599242204908,
+     0.48011137185425595,
+     0.7428644073420557,
+     0.6466453507028777
+    ],
+    "sep_curr_nl_per_block_used": [
+     0.12919164106421088,
+     0.47706276315382157,
+     0.7269017504549574,
+     0.6359121840575646
+    ],
+    "loss_total_per_block_superseded": [
+     7.216117343683353,
+     6.602743516023132,
+     6.8152771927844515,
+     7.220513075247578
+    ],
+    "loss_total_per_block_used": [
+     7.220420459221149,
+     6.587225097349321,
+     6.814806866919858,
+     7.2122447079625625
+    ],
+    "max_abs_diff_sep_curr_nl": 0.015962656887098303,
+    "max_abs_diff_loss_total": 0.015518418673811318,
+    "bitwise_equal": false,
+    "note": "both copies start from the same epoch-3 state, but the used copy started from the saved epoch-3 checkpoint with the main-process RNG restored, on a different VM, with re-created (re-seeded) persistent DataLoader workers; the fork documents that a resumed run is not bitwise equal to an uninterrupted one"
+   }
+  ],
+  "stage1_per_epoch": {
+   "columns": [
+    "epoch",
+    "segment",
+    "ts_utc",
+    "lr",
+    "tau",
+    "val_eval_top1",
+    "best_s1",
+    "sep_curr_nl_b0",
+    "sep_curr_nl_b1",
+    "sep_curr_nl_b2",
+    "sep_curr_nl_b3"
+   ],
+   "rows": [
+    [
+     1,
+     "seg2",
+     "2026-09-25T13:12:54Z",
+     0.00013333333333333334,
+     2.0,
+     null,
+     0.0,
+     0.046160421700848414,
+     0.42210964780386495,
+     0.8120240925372332,
+     0.680277007150239
+    ],
+    [
+     2,
+     "seg2",
+     "2026-09-25T13:18:21Z",
+     0.0002,
+     1.9958448753462603,
+     null,
+     0.0,
+     0.12283649355515666,
+     0.6702658492943336,
+     1.6313085898585704,
+     1.7597195786991338
+    ],
+    [
+     3,
+     "seg2",
+     "2026-09-25T13:23:50Z",
+     0.0002666666666666667,
+     1.9916897506925209,
+     null,
+     0.0,
+     0.10488389175513695,
+     0.5894368647158831,
+     1.1872976271585487,
+     1.2560433067124466
+    ],
+    [
+     4,
+     "seg3",
+     "2026-09-26T11:09:46Z",
+     0.0003333333333333333,
+     1.9875346260387812,
+     null,
+     0.0,
+     0.12919164106421088,
+     0.47706276315382157,
+     0.7269017504549574,
+     0.6359121840575646
+    ],
+    [
+     5,
+     "seg3",
+     "2026-09-26T11:15:10Z",
+     0.0004,
+     1.9833795013850415,
+     null,
+     0.0,
+     0.17395508032420587,
+     0.4504479111611158,
+     0.6013257380189567,
+     0.49946892124482956
+    ],
+    [
+     6,
+     "seg3",
+     "2026-09-26T11:20:37Z",
+     0.00046666666666666666,
+     1.979224376731302,
+     null,
+     0.0,
+     0.2157611050482454,
+     0.5353207218235937,
+     0.6044968356346262,
+     0.48242650497918843
+    ],
+    [
+     7,
+     "seg3",
+     "2026-09-26T11:26:04Z",
+     0.0005333333333333334,
+     1.9750692520775623,
+     null,
+     0.0,
+     0.23613664387971506,
+     0.6184238955892366,
+     0.6422681342596295,
+     0.508835367772771
+    ],
+    [
+     8,
+     "seg3",
+     "2026-09-26T11:31:28Z",
+     0.0006,
+     1.9709141274238227,
+     null,
+     0.0,
+     0.25225709704146987,
+     0.6444608219738664,
+     0.6890675165187353,
+     0.5689174615103623
+    ],
+    [
+     9,
+     "seg3",
+     "2026-09-26T11:36:53Z",
+     0.0006666666666666666,
+     1.9667590027700832,
+     null,
+     0.0,
+     0.25853789520674736,
+     0.6120719464345911,
+     0.6607781025184982,
+     0.5469498346591818
+    ],
+    [
+     10,
+     "seg3",
+     "2026-09-26T11:42:17Z",
+     0.0007333333333333333,
+     1.9626038781163435,
+     null,
+     0.0,
+     0.26591931968584825,
+     0.5531116518481024,
+     0.5995287836968214,
+     0.49432912537421303
+    ],
+    [
+     11,
+     "seg3",
+     "2026-09-26T11:47:41Z",
+     0.0008,
+     1.9584487534626038,
+     null,
+     0.0,
+     0.2807928940345501,
+     0.5790261581711386,
+     0.6210585955915779,
+     0.528216190036686
+    ],
+    [
+     12,
+     "seg3",
+     "2026-09-26T11:53:04Z",
+     0.0008666666666666667,
+     1.9542936288088644,
+     null,
+     0.0,
+     0.2902202917926613,
+     0.5770212881181432,
+     0.6212278631911881,
+     0.5315097416269368
+    ],
+    [
+     13,
+     "seg3",
+     "2026-09-26T11:58:27Z",
+     0.0009333333333333333,
+     1.9501385041551247,
+     null,
+     0.0,
+     0.3020774585077132,
+     0.5934105707311083,
+     0.6097655035983557,
+     0.5284423903487194
+    ],
+    [
+     14,
+     "seg3",
+     "2026-09-26T12:03:51Z",
+     0.001,
+     1.945983379501385,
+     null,
+     0.0,
+     0.305017257216333,
+     0.6235659341702516,
+     0.6339076839644333,
+     0.5371855973512277
+    ],
+    [
+     15,
+     "seg3",
+     "2026-09-26T12:09:15Z",
+     0.001,
+     1.9418282548476453,
+     null,
+     0.0,
+     0.31851286226990577,
+     0.6310267188083166,
+     0.6286994253081837,
+     0.5450773345327925
+    ],
+    [
+     16,
+     "seg3",
+     "2026-09-26T12:14:44Z",
+     0.0009999795083071327,
+     1.9376731301939059,
+     null,
+     0.0,
+     0.3333339776800967,
+     0.6591399866959144,
+     0.6618326073405386,
+     0.5640660236621725
+    ],
+    [
+     17,
+     "seg3",
+     "2026-09-26T12:20:07Z",
+     0.0009999180349081686,
+     1.9335180055401662,
+     null,
+     0.0,
+     0.33938410706903743,
+     0.6559683427043345,
+     0.6502231092288576,
+     0.5641298465345098
+    ],
+    [
+     18,
+     "seg3",
+     "2026-09-26T12:25:29Z",
+     0.000999815584841884,
+     1.9293628808864265,
+     null,
+     0.0,
+     0.34138167315515977,
+     0.6699842844886341,
+     0.6847834703566014,
+     0.6008149714305483
+    ],
+    [
+     19,
+     "seg3",
+     "2026-09-26T12:30:51Z",
+     0.0009996721665057795,
+     1.925207756232687,
+     null,
+     0.0,
+     0.35358879381212693,
+     0.7192188569869118,
+     0.7044185598691305,
+     0.6251522340308661
+    ],
+    [
+     20,
+     "seg3",
+     "2026-09-26T12:36:45Z",
+     0.0009994877916553937,
+     1.9210526315789473,
+     0.6394,
+     0.6394,
+     0.36269638695936096,
+     0.6604288905516438,
+     0.6659472817662119,
+     0.5921615005909712
+    ],
+    [
+     21,
+     "seg3",
+     "2026-09-26T12:42:13Z",
+     0.0009992624754033377,
+     1.9168975069252077,
+     null,
+     0.6394,
+     0.3643457812481913,
+     0.6690794763893917,
+     0.6948783603207819,
+     0.6345146736879458
+    ],
+    [
+     22,
+     "seg3",
+     "2026-09-26T12:47:35Z",
+     0.0009989962362180569,
+     1.9127423822714682,
+     null,
+     0.6394,
+     0.37111283376299103,
+     0.6690492609451557,
+     0.6830719935482946,
+     0.6413956866867241
+    ],
+    [
+     23,
+     "seg3",
+     "2026-09-26T12:52:58Z",
+     0.0009986890959223181,
+     1.9085872576177285,
+     null,
+     0.6394,
+     0.3844166052067417,
+     0.7130314056900726,
+     0.7415714380384861,
+     0.6884041956101341
+    ],
+    [
+     24,
+     "seg3",
+     "2026-09-26T12:58:22Z",
+     0.0009983410796914197,
+     1.9044321329639888,
+     null,
+     0.6394,
+     0.38925609848965176,
+     0.7159800371904482,
+     0.7381314347530233,
+     0.7151426494806662
+    ],
+    [
+     25,
+     "seg3",
+     "2026-09-26T13:03:43Z",
+     0.0009979522160511282,
+     1.9002770083102494,
+     null,
+     0.6394,
+     0.39897361980087453,
+     0.7328528419308279,
+     0.7513706643005897,
+     0.7345506610541508
+    ],
+    [
+     26,
+     "seg3",
+     "2026-09-26T13:09:04Z",
+     0.000997522536875341,
+     1.8961218836565097,
+     null,
+     0.6394,
+     0.4106713153164962,
+     0.7279247456583483,
+     0.7139885973656315,
+     0.7011479502436758
+    ],
+    [
+     27,
+     "seg3",
+     "2026-09-26T13:14:25Z",
+     0.0009970520773834733,
+     1.89196675900277,
+     null,
+     0.6394,
+     0.41060167619551735,
+     0.7274855046436705,
+     0.7379523399232448,
+     0.7445924316329517
+    ],
+    [
+     28,
+     "seg3",
+     "2026-09-26T13:19:45Z",
+     0.00099654087613757,
+     1.8878116343490305,
+     null,
+     0.6394,
+     0.426965457954626,
+     0.7213640452801496,
+     0.7037657252673445,
+     0.7037981241598896
+    ],
+    [
+     29,
+     "seg3",
+     "2026-09-26T13:25:06Z",
+     0.0009959889750391472,
+     1.8836565096952909,
+     null,
+     0.6394,
+     0.4306298364167926,
+     0.7215427859076138,
+     0.7049011478478882,
+     0.6988723435621153
+    ],
+    [
+     30,
+     "seg3",
+     "2026-09-26T13:30:26Z",
+     0.0009953964193257564,
+     1.8795013850415512,
+     null,
+     0.6394,
+     0.44252544675750294,
+     0.757937939687707,
+     0.723033372698159,
+     0.7194174240375387
+    ],
+    [
+     31,
+     "seg3",
+     "2026-09-26T13:35:45Z",
+     0.0009947632575672757,
+     1.8753462603878117,
+     null,
+     0.6394,
+     0.4465207063603675,
+     0.7565146369495611,
+     0.7391587797252611,
+     0.7371426485050684
+    ],
+    [
+     32,
+     "seg3",
+     "2026-09-26T13:41:09Z",
+     0.0009940895416619307,
+     1.871191135734072,
+     null,
+     0.6394,
+     0.45707303422620926,
+     0.7622747969353336,
+     0.7224142140355604,
+     0.7341124107097757
+    ],
+    [
+     33,
+     "seg3",
+     "2026-09-26T13:46:34Z",
+     0.000993375326832039,
+     1.8670360110803323,
+     null,
+     0.6394,
+     0.4713642367686348,
+     0.7914187962981476,
+     0.735229897088018,
+     0.7274531249342293
+    ],
+    [
+     34,
+     "seg3",
+     "2026-09-26T13:51:57Z",
+     0.0009926206716194842,
+     1.8628808864265929,
+     null,
+     0.6394,
+     0.4837697631326215,
+     0.7953824257028514,
+     0.7439303103534655,
+     0.7107739410866266
+    ],
+    [
+     35,
+     "seg3",
+     "2026-09-26T13:57:18Z",
+     0.0009918256378809178,
+     1.8587257617728532,
+     null,
+     0.6394,
+     0.4941481756067824,
+     0.7971175861084598,
+     0.7503731072634116,
+     0.7179360444518341
+    ],
+    [
+     36,
+     "seg3",
+     "2026-09-26T14:02:39Z",
+     0.0009909902907826883,
+     1.8545706371191135,
+     null,
+     0.6394,
+     0.5003865635258028,
+     0.8127150186176958,
+     0.763139024548147,
+     0.7262750206322506
+    ],
+    [
+     37,
+     "seg3",
+     "2026-09-26T14:08:04Z",
+     0.0009901146987955007,
+     1.850415512465374,
+     null,
+     0.6394,
+     0.5101327902969273,
+     0.8300252255352064,
+     0.7632762159424267,
+     0.7041657745153055
+    ],
+    [
+     38,
+     "seg3",
+     "2026-09-26T14:13:25Z",
+     0.0009891989336888033,
+     1.8462603878116344,
+     null,
+     0.6394,
+     0.5043923162865913,
+     0.8234227484670179,
+     0.7824192602058937,
+     0.7022944928585798
+    ],
+    [
+     39,
+     "seg3",
+     "2026-09-26T14:18:44Z",
+     0.000988243070524905,
+     1.8421052631578947,
+     null,
+     0.6394,
+     0.5144466785178787,
+     0.8370565785758797,
+     0.7779928843180338,
+     0.6940935555545763
+    ],
+    [
+     40,
+     "seg3",
+     "2026-09-26T14:24:31Z",
+     0.0009872471876528235,
+     1.837950138504155,
+     0.7856,
+     0.7856,
+     0.5310494488683241,
+     0.8766096802963608,
+     0.8435029305260757,
+     0.7452587670293348
+    ],
+    [
+     41,
+     "seg3",
+     "2026-09-26T14:29:59Z",
+     0.0009862113667018627,
+     1.8337950138504155,
+     null,
+     0.7856,
+     0.5352853906565699,
+     0.8492063345580265,
+     0.7625843814049644,
+     0.6842971094723406
+    ],
+    [
+     42,
+     "seg3",
+     "2026-09-26T14:35:24Z",
+     0.0009851356925749217,
+     1.8296398891966759,
+     null,
+     0.7856,
+     0.5461930214673624,
+     0.8399423422484562,
+     0.7861194651702355,
+     0.6933691686597364
+    ],
+    [
+     43,
+     "seg3",
+     "2026-09-26T14:40:44Z",
+     0.0009840202534415357,
+     1.8254847645429364,
+     null,
+     0.7856,
+     0.5509476644554357,
+     0.866329911796526,
+     0.8108502277012529,
+     0.7176424025119036
+    ],
+    [
+     44,
+     "seg3",
+     "2026-09-26T14:46:09Z",
+     0.0009828651407306494,
+     1.8213296398891967,
+     null,
+     0.7856,
+     0.555374586719206,
+     0.8639570803477846,
+     0.8091338982527283,
+     0.6928440757181452
+    ],
+    [
+     45,
+     "seg3",
+     "2026-09-26T14:51:29Z",
+     0.0009816704491231226,
+     1.817174515235457,
+     null,
+     0.7856,
+     0.5794678412634751,
+     0.927557749309759,
+     0.8723281752104046,
+     0.7493710531585518
+    ],
+    [
+     46,
+     "seg3",
+     "2026-09-26T14:56:47Z",
+     0.0009804362765439688,
+     1.8130193905817173,
+     null,
+     0.7856,
+     0.5729983606557737,
+     0.920688324961169,
+     0.8373396883065674,
+     0.7193602864769684
+    ],
+    [
+     47,
+     "seg3",
+     "2026-09-26T15:02:06Z",
+     0.00097916272415433,
+     1.8088642659279779,
+     null,
+     0.7856,
+     0.5931286058206667,
+     0.9564064508196951,
+     0.8985374467126255,
+     0.7714754486906117
+    ],
+    [
+     48,
+     "seg3",
+     "2026-09-26T15:07:27Z",
+     0.0009778498963431837,
+     1.8047091412742382,
+     null,
+     0.7856,
+     0.5835170978787302,
+     0.9728497074938368,
+     0.9199413081695293,
+     0.7225237988877571
+    ],
+    [
+     49,
+     "seg3",
+     "2026-09-26T15:12:46Z",
+     0.0009764979007187873,
+     1.8005540166204985,
+     null,
+     0.7856,
+     0.6131195816500433,
+     1.0119095355614849,
+     0.9294885828577238,
+     0.7421007067307659
+    ],
+    [
+     50,
+     "seg3",
+     "2026-09-26T15:18:06Z",
+     0.000975106848099857,
+     1.796398891966759,
+     null,
+     0.7856,
+     0.6125269778843584,
+     0.9951670238341408,
+     0.890402488324834,
+     0.770514292278509
+    ],
+    [
+     51,
+     "seg3",
+     "2026-09-26T15:23:25Z",
+     0.0009736768525064851,
+     1.7922437673130194,
+     null,
+     0.7856,
+     0.6288925916299053,
+     1.0124577407179207,
+     0.9485959301049682,
+     0.7850300477839064
+    ],
+    [
+     52,
+     "seg3",
+     "2026-09-26T15:28:41Z",
+     0.0009722080311507937,
+     1.7880886426592797,
+     null,
+     0.7856,
+     0.6338264483144913,
+     1.0113387875173283,
+     0.9042816655389194,
+     0.7191236779607576
+    ],
+    [
+     53,
+     "seg3",
+     "2026-09-26T15:33:57Z",
+     0.0009707005044273267,
+     1.7839335180055402,
+     null,
+     0.7856,
+     0.6500357999198738,
+     1.087509913691159,
+     1.0199138124783833,
+     0.76494601677204
+    ],
+    [
+     54,
+     "seg3",
+     "2026-09-26T15:39:17Z",
+     0.000969154395903183,
+     1.7797783933518005,
+     null,
+     0.7856,
+     0.6618250046653309,
+     1.0900913627668358,
+     0.9688858698154318,
+     0.7747515337220554
+    ],
+    [
+     55,
+     "seg3",
+     "2026-09-26T15:44:36Z",
+     0.0009675698323078864,
+     1.775623268698061,
+     null,
+     0.7856,
+     0.6551227048895825,
+     1.0682025531242634,
+     0.9750258655383669,
+     0.8127876095388128
+    ],
+    [
+     56,
+     "seg3",
+     "2026-09-26T15:49:57Z",
+     0.0009659469435229992,
+     1.7714681440443214,
+     null,
+     0.7856,
+     0.6675602505946981,
+     1.0803301334381104,
+     0.9528712596016369,
+     0.7553542468739652
+    ],
+    [
+     57,
+     "seg3",
+     "2026-09-26T15:55:15Z",
+     0.0009642858625714753,
+     1.7673130193905817,
+     null,
+     0.7856,
+     0.6723348354471141,
+     1.105349757205481,
+     1.0393922274140106,
+     0.7707857407372574
+    ],
+    [
+     58,
+     "seg3",
+     "2026-09-26T16:00:30Z",
+     0.0009625867256067577,
+     1.763157894736842,
+     null,
+     0.7856,
+     0.6824184265629999,
+     1.1306933082383255,
+     1.0431074787830483,
+     0.7843640467216229
+    ],
+    [
+     59,
+     "seg3",
+     "2026-09-26T16:05:42Z",
+     0.0009608496719016175,
+     1.7590027700831026,
+     null,
+     0.7856,
+     0.6980371173770948,
+     1.1376418115078717,
+     1.0331178382895458,
+     0.795089050956156
+    ],
+    [
+     60,
+     "seg3",
+     "2026-09-26T16:11:26Z",
+     0.0009590748438367388,
+     1.754847645429363,
+     0.842,
+     0.842,
+     0.6996521449637139,
+     1.1545822914989514,
+     1.075702218488715,
+     0.8885814252941088
+    ],
+    [
+     61,
+     "seg3",
+     "2026-09-26T16:16:45Z",
+     0.0009572623868890481,
+     1.7506925207756232,
+     null,
+     0.842,
+     0.7026139107243768,
+     1.2033426131325207,
+     1.1495214310185662,
+     0.9982329332965544
+    ],
+    [
+     62,
+     "seg3",
+     "2026-09-26T16:21:58Z",
+     0.0009554124496197897,
+     1.7465373961218837,
+     null,
+     0.842,
+     0.7127603203400799,
+     1.1722621150400447,
+     1.0237792600160358,
+     0.8806780398577109
+    ],
+    [
+     63,
+     "seg3",
+     "2026-09-26T16:27:10Z",
+     0.0009535251836623491,
+     1.742382271468144,
+     null,
+     0.842,
+     0.7251680424843712,
+     1.1581157288332096,
+     1.0652320049274926,
+     0.7827397214955297
+    ],
+    [
+     64,
+     "seg3",
+     "2026-09-26T16:32:24Z",
+     0.0009516007437098238,
+     1.7382271468144044,
+     null,
+     0.842,
+     0.7358232469394289,
+     1.225334034568962,
+     1.1092109796644627,
+     0.8296499300277096
+    ],
+    [
+     65,
+     "seg3",
+     "2026-09-26T16:37:36Z",
+     0.0009496392875023432,
+     1.7340720221606647,
+     null,
+     0.842,
+     0.7326677489554745,
+     1.2223493162242847,
+     1.1417083822447678,
+     0.844866049015659
+    ],
+    [
+     66,
+     "seg3",
+     "2026-09-26T16:42:48Z",
+     0.0009476409758141405,
+     1.7299168975069252,
+     null,
+     0.842,
+     0.7472953357915769,
+     1.2082216534121284,
+     1.1378636497190628,
+     0.8225359964644772
+    ],
+    [
+     67,
+     "seg3",
+     "2026-09-26T16:47:57Z",
+     0.000945605972440373,
+     1.7257617728531855,
+     null,
+     0.842,
+     0.7637501283623707,
+     1.261933709013051,
+     1.0825661228991104,
+     0.8403700227024912
+    ],
+    [
+     68,
+     "seg3",
+     "2026-09-26T16:53:10Z",
+     0.0009435344441836969,
+     1.721606648199446,
+     null,
+     0.842,
+     0.761707516237237,
+     1.2992223309374404,
+     1.1875268631968006,
+     0.874984490460363
+    ],
+    [
+     69,
+     "seg3",
+     "2026-09-26T16:58:25Z",
+     0.0009414265608405956,
+     1.7174515235457064,
+     null,
+     0.842,
+     0.7673626055662659,
+     1.3414500718829276,
+     1.2800415809127106,
+     0.9120792095688568
+    ],
+    [
+     70,
+     "seg3",
+     "2026-09-26T17:03:33Z",
+     0.0009392824951874617,
+     1.7132963988919667,
+     null,
+     0.842,
+     0.7764560504891407,
+     1.3374642421459328,
+     1.2554922775290478,
+     0.9346682360802574
+    ],
+    [
+     71,
+     "seg3",
+     "2026-09-26T17:08:45Z",
+     0.0009371024229664341,
+     1.709141274238227,
+     null,
+     0.842,
+     0.7914999463092321,
+     1.3510441122383907,
+     1.3426146945734134,
+     1.2179426735845105
+    ],
+    [
+     72,
+     "seg3",
+     "2026-09-26T17:13:59Z",
+     0.0009348865228709947,
+     1.7049861495844876,
+     null,
+     0.842,
+     0.7960622338042862,
+     1.3775687094392448,
+     1.224192392552036,
+     0.9591745939748041
+    ],
+    [
+     73,
+     "seg3",
+     "2026-09-26T17:19:09Z",
+     0.0009326349765313199,
+     1.700831024930748,
+     null,
+     0.842,
+     0.8039200812920757,
+     1.3514571395413628,
+     1.3512320162236005,
+     1.0519092761237046
+    ],
+    [
+     74,
+     "seg3",
+     "2026-09-26T17:24:19Z",
+     0.0009303479684993942,
+     1.6966759002770084,
+     null,
+     0.842,
+     0.8123917093222168,
+     1.379127435300542,
+     1.2441697846884014,
+     1.0506603861677235
+    ],
+    [
+     75,
+     "seg3",
+     "2026-09-26T17:29:30Z",
+     0.0009280256862338822,
+     1.6925207756232687,
+     null,
+     0.842,
+     0.8125653157289001,
+     1.3742375168307075,
+     1.2313253701418296,
+     0.9220393772782951
+    ],
+    [
+     76,
+     "seg3",
+     "2026-09-26T17:34:39Z",
+     0.0009256683200847637,
+     1.688365650969529,
+     null,
+     0.842,
+     0.8131144259167814,
+     1.3988393010764286,
+     1.264444644423737,
+     0.931502166835741
+    ],
+    [
+     77,
+     "seg3",
+     "2026-09-26T17:39:51Z",
+     0.000923276063277731,
+     1.6842105263157894,
+     null,
+     0.842,
+     0.8208015122632871,
+     1.4048464325652725,
+     1.2976064353153622,
+     1.0027298440878418
+    ],
+    [
+     78,
+     "seg3",
+     "2026-09-26T17:45:06Z",
+     0.0009208491118983514,
+     1.68005540166205,
+     null,
+     0.842,
+     0.8249737901249151,
+     1.401249553965426,
+     1.3591891993051288,
+     1.0917763812788601
+    ],
+    [
+     79,
+     "seg3",
+     "2026-09-26T17:50:14Z",
+     0.0009183876648759937,
+     1.6759002770083102,
+     null,
+     0.842,
+     0.8352558503205749,
+     1.4724488422788422,
+     1.4332627934971074,
+     0.9769778868247723
+    ],
+    [
+     80,
+     "seg3",
+     "2026-09-26T17:55:52Z",
+     0.0009158919239675235,
+     1.6717451523545708,
+     0.8736,
+     0.8736,
+     0.8438405654896265,
+     1.4569320240239987,
+     1.3743012513237438,
+     1.0052119692166646
+    ],
+    [
+     81,
+     "seg3",
+     "2026-09-26T18:01:13Z",
+     0.0009133620937407656,
+     1.667590027700831,
+     null,
+     0.8736,
+     0.8517566617878004,
+     1.4678032425628311,
+     1.340025982637515,
+     1.0162616426917328
+    ],
+    [
+     82,
+     "seg3",
+     "2026-09-26T18:06:21Z",
+     0.0009107983815577359,
+     1.6634349030470914,
+     null,
+     0.8736,
+     0.8620992686556673,
+     1.4693137283982902,
+     1.3137622126217545,
+     1.0534358175321556
+    ],
+    [
+     83,
+     "seg3",
+     "2026-09-26T18:11:32Z",
+     0.0009082009975576451,
+     1.6592797783933517,
+     null,
+     0.8736,
+     0.8667409467971188,
+     1.4955496979855942,
+     1.4533273461221279,
+     1.2169390265969025
+    ],
+    [
+     84,
+     "seg3",
+     "2026-09-26T18:16:46Z",
+     0.000905570154639674,
+     1.6551246537396123,
+     null,
+     0.8736,
+     0.8647504352975166,
+     1.53129191234194,
+     1.473394137689437,
+     1.3468095858891804
+    ],
+    [
+     85,
+     "seg3",
+     "2026-09-26T18:21:59Z",
+     0.0009029060684455228,
+     1.6509695290858726,
+     null,
+     0.8736,
+     0.8863971192261269,
+     1.5523144979586547,
+     1.4605328379006222,
+     1.2568305943204068
+    ],
+    [
+     86,
+     "seg3",
+     "2026-09-26T18:27:08Z",
+     0.0009002089573417356,
+     1.646814404432133,
+     null,
+     0.8736,
+     0.8981544964614956,
+     1.5998265798064484,
+     1.5877511775356599,
+     1.4426451599460908
+    ],
+    [
+     87,
+     "seg3",
+     "2026-09-26T18:32:21Z",
+     0.0008974790424018022,
+     1.6426592797783934,
+     null,
+     0.8736,
+     0.9036233500502575,
+     1.6359481003092624,
+     1.61986745911083,
+     1.6514551913601228
+    ],
+    [
+     88,
+     "seg3",
+     "2026-09-26T18:37:28Z",
+     0.0008947165473880363,
+     1.6385041551246537,
+     null,
+     0.8736,
+     0.9044784513013117,
+     1.6327271941064418,
+     1.5367319953852687,
+     1.2126966982052243
+    ],
+    [
+     89,
+     "seg3",
+     "2026-09-26T18:42:36Z",
+     0.0008919216987332356,
+     1.634349030470914,
+     null,
+     0.8736,
+     0.9113152301174471,
+     1.5902107323723278,
+     1.5476074424283257,
+     1.352401131871103
+    ],
+    [
+     90,
+     "seg3",
+     "2026-09-26T18:47:46Z",
+     0.0008890947255221209,
+     1.6301939058171744,
+     null,
+     0.8736,
+     0.9218858494155708,
+     1.6234785359481285,
+     1.5657213309715534,
+     1.2501023206217536
+    ],
+    [
+     91,
+     "seg3",
+     "2026-09-26T18:53:01Z",
+     0.0008862358594725595,
+     1.626038781163435,
+     null,
+     0.8736,
+     0.9072185932904825,
+     1.6190948787776904,
+     1.5271670599093383,
+     1.208041182194633
+    ],
+    [
+     92,
+     "seg3",
+     "2026-09-26T18:58:18Z",
+     0.0008833453349165714,
+     1.6218836565096955,
+     null,
+     0.8736,
+     0.9298055637841938,
+     1.673715406450732,
+     1.586122492264057,
+     1.2334975463220443
+    ],
+    [
+     93,
+     "seg3",
+     "2026-09-26T19:03:33Z",
+     0.0008804233887811223,
+     1.6177285318559558,
+     null,
+     0.8736,
+     0.9413046466893163,
+     1.702937730427446,
+     1.7307007778650043,
+     1.3569982010742714
+    ],
+    [
+     94,
+     "seg3",
+     "2026-09-26T19:08:45Z",
+     0.0008774702605687035,
+     1.613573407202216,
+     null,
+     0.8736,
+     0.9561908512279905,
+     1.773805938918015,
+     1.796097062099939,
+     1.489252034275011
+    ],
+    [
+     95,
+     "seg3",
+     "2026-09-26T19:14:03Z",
+     0.0008744861923377001,
+     1.6094182825484764,
+     null,
+     0.8736,
+     0.9526647404692639,
+     1.6979602808239815,
+     1.6458670517493939,
+     1.3557956143357288
+    ],
+    [
+     96,
+     "seg3",
+     "2026-09-26T19:19:17Z",
+     0.0008714714286825511,
+     1.6052631578947367,
+     null,
+     0.8736,
+     0.9626383089471138,
+     1.7256762885499275,
+     1.73353639416311,
+     1.538220206896464
+    ],
+    [
+     97,
+     "seg3",
+     "2026-09-26T19:24:25Z",
+     0.0008684262167136998,
+     1.6011080332409973,
+     null,
+     0.8736,
+     0.9701081589720715,
+     1.7177337723216792,
+     1.50994991022965,
+     1.1219580098130237
+    ],
+    [
+     98,
+     "seg3",
+     "2026-09-26T19:29:34Z",
+     0.0008653508060373399,
+     1.5969529085872576,
+     null,
+     0.8736,
+     0.9712213531307791,
+     1.8431053161621094,
+     2.008803148379271,
+     1.9473486371424007
+    ],
+    [
+     99,
+     "seg3",
+     "2026-09-26T19:34:42Z",
+     0.0008622454487349554,
+     1.5927977839335181,
+     null,
+     0.8736,
+     0.9761966439499252,
+     1.8017018649769925,
+     1.8228546271378967,
+     1.7032220418425812
+    ],
+    [
+     100,
+     "seg3",
+     "2026-09-26T19:40:23Z",
+     0.0008591103993426588,
+     1.5886426592797784,
+     0.8904,
+     0.8904,
+     0.9774427139896086,
+     1.7656440145667942,
+     1.7847101866513833,
+     1.5582843306420864
+    ],
+    [
+     101,
+     "seg3",
+     "2026-09-26T19:45:43Z",
+     0.0008559459148303268,
+     1.5844875346260388,
+     null,
+     0.8904,
+     0.9881871746874403,
+     1.834456887738458,
+     1.9035928194550262,
+     1.718856379903596
+    ],
+    [
+     102,
+     "seg3",
+     "2026-09-26T19:50:52Z",
+     0.0008527522545805385,
+     1.580332409972299,
+     null,
+     0.8904,
+     0.9919310486179659,
+     1.7997606567952824,
+     1.7056566257586425,
+     1.476062063513131
+    ],
+    [
+     103,
+     "seg3",
+     "2026-09-26T19:56:00Z",
+     0.0008495296803673138,
+     1.5761772853185594,
+     null,
+     0.8904,
+     1.0003199159413918,
+     1.8543490486583492,
+     1.7668114489522473,
+     1.4681623557518269
+    ],
+    [
+     104,
+     "seg3",
+     "2026-09-26T20:01:08Z",
+     0.0008462784563346567,
+     1.57202216066482,
+     null,
+     0.8904,
+     1.0097250643817859,
+     1.8864186536306622,
+     1.9648315687289184,
+     1.765348327570948
+    ],
+    [
+     105,
+     "seg3",
+     "2026-09-26T20:06:18Z",
+     0.0008429988489749046,
+     1.5678670360110802,
+     null,
+     0.8904,
+     1.0145632494455097,
+     1.9270739185399022,
+     2.0198407433498864,
+     1.9880192649775539
+    ],
+    [
+     106,
+     "seg3",
+     "2026-09-26T20:11:26Z",
+     0.0008396911271068841,
+     1.5637119113573408,
+     null,
+     0.8904,
+     1.0208271652802654,
+     1.8514085103725564,
+     1.7888568996012897,
+     1.6617694092893052
+    ],
+    [
+     107,
+     "seg3",
+     "2026-09-26T20:16:32Z",
+     0.000836355561853878,
+     1.559556786703601,
+     null,
+     0.8904,
+     1.0245975762948223,
+     1.8306018949925214,
+     1.7961879900132103,
+     1.6255440410526318
+    ],
+    [
+     108,
+     "seg3",
+     "2026-09-26T20:21:39Z",
+     0.000832992426621401,
+     1.5554016620498614,
+     null,
+     0.8904,
+     1.032705994173028,
+     1.940160919880045,
+     2.07949602329868,
+     2.0183023885748854
+    ],
+    [
+     109,
+     "seg3",
+     "2026-09-26T20:26:45Z",
+     0.0008296019970747902,
+     1.551246537396122,
+     null,
+     0.8904,
+     1.0471982921677074,
+     1.9291303034486442,
+     1.9965642032952144,
+     1.961090312606987
+    ],
+    [
+     110,
+     "seg3",
+     "2026-09-26T20:31:53Z",
+     0.0008261845511166092,
+     1.5470914127423823,
+     null,
+     0.8904,
+     1.0521545917138286,
+     1.9573037610656914,
+     1.971190251153091,
+     1.789022040093082
+    ],
+    [
+     111,
+     "seg3",
+     "2026-09-26T20:37:00Z",
+     0.00082274036886387,
+     1.5429362880886428,
+     null,
+     0.8904,
+     1.0625609118362953,
+     1.9422393941331184,
+     1.8933757433946106,
+     1.6266331686370674
+    ],
+    [
+     112,
+     "seg3",
+     "2026-09-26T20:42:11Z",
+     0.0008192697326250722,
+     1.5387811634349031,
+     null,
+     0.8904,
+     1.0552789103025677,
+     1.9570630679185363,
+     2.012090552812335,
+     1.8782820578279167
+    ],
+    [
+     113,
+     "seg3",
+     "2026-09-26T20:47:17Z",
+     0.0008157729268770635,
+     1.5346260387811634,
+     null,
+     0.8904,
+     1.0697271892394142,
+     1.9242584801268303,
+     1.968597002413081,
+     1.7937185517672836
+    ],
+    [
+     114,
+     "seg3",
+     "2026-09-26T20:52:25Z",
+     0.0008122502382417211,
+     1.5304709141274238,
+     null,
+     0.8904,
+     1.071238608195864,
+     1.994902409356216,
+     2.0179263901436464,
+     1.8636805846773346
+    ],
+    [
+     115,
+     "seg3",
+     "2026-09-26T20:57:35Z",
+     0.0008087019554624595,
+     1.5263157894736843,
+     null,
+     0.8904,
+     1.080523836201635,
+     2.0306097036120536,
+     2.0156162360618852,
+     1.6907184452846133
+    ],
+    [
+     116,
+     "seg3",
+     "2026-09-26T21:02:41Z",
+     0.0008051283693805625,
+     1.5221606648199446,
+     null,
+     0.8904,
+     1.0865807546966377,
+     2.0605584670757424,
+     2.162487961780066,
+     2.06233116265001
+    ],
+    [
+     117,
+     "seg3",
+     "2026-09-26T21:07:49Z",
+     0.0008015297729113436,
+     1.5180055401662051,
+     null,
+     0.8904,
+     1.0871540006549878,
+     2.0146717805972045,
+     2.0701717891912352,
+     1.975355692293452
+    ],
+    [
+     118,
+     "seg3",
+     "2026-09-26T21:12:57Z",
+     0.0007979064610201372,
+     1.5138504155124655,
+     null,
+     0.8904,
+     1.1052662956303563,
+     2.1403690042166876,
+     2.24886815164281,
+     2.1687291860580444
+    ],
+    [
+     119,
+     "seg3",
+     "2026-09-26T21:18:03Z",
+     0.0007942587306981213,
+     1.5096952908587258,
+     null,
+     0.8904,
+     1.0977295650832954,
+     2.1136178627781486,
+     2.2523551014648087,
+     2.2455310218635645
+    ],
+    [
+     120,
+     "seg3",
+     "2026-09-26T21:23:39Z",
+     0.0007905868809379734,
+     1.505540166204986,
+     0.905,
+     0.905,
+     1.1149252981975162,
+     2.0613812756264345,
+     2.0623328329502852,
+     1.9641992059247246
+    ],
+    [
+     121,
+     "seg3",
+     "2026-09-26T21:28:55Z",
+     0.0007868912127093638,
+     1.5013850415512464,
+     null,
+     0.905,
+     1.1104187499517681,
+     2.1080594638298296,
+     2.033416054714685,
+     1.6762173902029278
+    ],
+    [
+     122,
+     "seg3",
+     "2026-09-26T21:34:03Z",
+     0.0007831720289342851,
+     1.497229916897507,
+     null,
+     0.905,
+     1.1248572105648873,
+     2.0990651462269927,
+     2.198017499912744,
+     1.9555138061786521
+    ],
+    [
+     123,
+     "seg3",
+     "2026-09-26T21:39:11Z",
+     0.0007794296344622245,
+     1.4930747922437673,
+     null,
+     0.905,
+     1.120763854048718,
+     2.1472043429297965,
+     2.251332816036268,
+     2.0745869135034494
+    ],
+    [
+     124,
+     "seg3",
+     "2026-09-26T21:44:19Z",
+     0.0007756643360451742,
+     1.4889196675900278,
+     null,
+     0.905,
+     1.1361640719161636,
+     2.1827665416673683,
+     2.313172445900139,
+     2.2950180166069116
+    ],
+    [
+     125,
+     "seg3",
+     "2026-09-26T21:49:31Z",
+     0.000771876442312489,
+     1.4847645429362881,
+     null,
+     0.905,
+     1.1405966268188652,
+     2.132316383822211,
+     2.396931807200114,
+     2.4499677145618133
+    ],
+    [
+     126,
+     "seg3",
+     "2026-09-26T21:54:37Z",
+     0.0007680662637455889,
+     1.4806094182825484,
+     null,
+     0.905,
+     1.1575730079892037,
+     2.102277393998771,
+     2.0590932656978738,
+     1.7742110340074562
+    ],
+    [
+     127,
+     "seg3",
+     "2026-09-26T21:59:43Z",
+     0.0007642341126525099,
+     1.4764542936288088,
+     null,
+     0.905,
+     1.151641089340736,
+     2.206104336113765,
+     2.3568498992371834,
+     2.2881912869968635
+    ],
+    [
+     128,
+     "seg3",
+     "2026-09-26T22:04:48Z",
+     0.0007603803031423045,
+     1.472299168975069,
+     null,
+     0.905,
+     1.1507945567712017,
+     2.1774664473259584,
+     2.2802780291129805,
+     2.2941936062670303
+    ],
+    [
+     129,
+     "seg3",
+     "2026-09-26T22:09:56Z",
+     0.0007565051510992964,
+     1.4681440443213296,
+     null,
+     0.905,
+     1.1571414963952427,
+     2.192145551758251,
+     2.4409500620831017,
+     2.5309165812086785
+    ],
+    [
+     130,
+     "seg3",
+     "2026-09-26T22:15:02Z",
+     0.0007526089741571875,
+     1.4639889196675901,
+     null,
+     0.905,
+     1.1612050848445674,
+     2.2060171173906875,
+     2.4281913672370474,
+     2.305960437347149
+    ],
+    [
+     131,
+     "seg3",
+     "2026-09-26T22:20:11Z",
+     0.0007486920916730228,
+     1.4598337950138505,
+     null,
+     0.905,
+     1.1726909505909886,
+     2.164847998783506,
+     2.2504344808644263,
+     2.12198404882146
+    ],
+    [
+     132,
+     "seg3",
+     "2026-09-26T22:25:28Z",
+     0.0007447548247010137,
+     1.4556786703601108,
+     null,
+     0.905,
+     1.1918487850276904,
+     2.2627490662980354,
+     2.2810403793707663,
+     2.128360770214563
+    ],
+    [
+     133,
+     "seg3",
+     "2026-09-26T22:30:44Z",
+     0.0007407974959662222,
+     1.451523545706371,
+     null,
+     0.905,
+     1.1994092395935936,
+     2.3660903634696173,
+     2.490262443991913,
+     2.3719798586834435
+    ],
+    [
+     134,
+     "seg3",
+     "2026-09-26T22:36:01Z",
+     0.0007368204298381085,
+     1.4473684210526316,
+     null,
+     0.905,
+     1.2023200769534057,
+     2.288602857754148,
+     2.4718708498724578,
+     2.285234307420665
+    ],
+    [
+     135,
+     "seg3",
+     "2026-09-26T22:41:07Z",
+     0.000732823952303943,
+     1.443213296398892,
+     null,
+     0.905,
+     1.2126248321313968,
+     2.2466367798290032,
+     2.3405870884314353,
+     2.183341593577944
+    ],
+    [
+     136,
+     "seg3",
+     "2026-09-26T22:46:13Z",
+     0.0007288083909420865,
+     1.4390581717451525,
+     null,
+     0.905,
+     1.213520494000665,
+     2.3039989964715364,
+     2.44209007970218,
+     2.3015716322537125
+    ],
+    [
+     137,
+     "seg3",
+     "2026-09-26T22:51:17Z",
+     0.0007247740748951393,
+     1.4349030470914128,
+     null,
+     0.905,
+     1.212400266493874,
+     2.29144749422183,
+     2.3729411130663993,
+     2.331368290144822
+    ],
+    [
+     138,
+     "seg3",
+     "2026-09-26T22:56:23Z",
+     0.0007207213348429629,
+     1.4307479224376731,
+     null,
+     0.905,
+     1.216323845687954,
+     2.330146425071804,
+     2.542647221992756,
+     2.448898209922615
+    ],
+    [
+     139,
+     "seg3",
+     "2026-09-26T23:01:29Z",
+     0.0007166505029755752,
+     1.4265927977839334,
+     null,
+     0.905,
+     1.2135881856940258,
+     2.257978104996955,
+     2.4803207222072556,
+     2.433457345798098
+    ],
+    [
+     140,
+     "seg3",
+     "2026-09-26T23:07:03Z",
+     0.0007125619129659214,
+     1.422437673130194,
+     0.9052,
+     0.9052,
+     1.2222537131145084,
+     2.4044364814100594,
+     2.6324613094329834,
+     2.6058582752600485
+    ],
+    [
+     141,
+     "seg3",
+     "2026-09-26T23:12:17Z",
+     0.0007084558999425245,
+     1.4182825484764543,
+     null,
+     0.9052,
+     1.2397561539178608,
+     2.2669014286720888,
+     2.26404008646121,
+     2.1391420638424226
+    ],
+    [
+     142,
+     "seg3",
+     "2026-09-26T23:17:25Z",
+     0.0007043328004620154,
+     1.4141274238227148,
+     null,
+     0.9052,
+     1.250758571186285,
+     2.3584733858875846,
+     2.5364909035035934,
+     2.3356766138953726
+    ],
+    [
+     143,
+     "seg3",
+     "2026-09-26T23:22:29Z",
+     0.0007001929524815472,
+     1.4099722991689752,
+     null,
+     0.9052,
+     1.249740782825426,
+     2.385512894597547,
+     2.4336056394138557,
+     2.337064700565119
+    ],
+    [
+     144,
+     "seg3",
+     "2026-09-26T23:27:36Z",
+     0.0006960366953310931,
+     1.4058171745152355,
+     null,
+     0.9052,
+     1.2455589675355232,
+     2.35593284683666,
+     2.51061645869551,
+     2.435633312696698
+    ],
+    [
+     145,
+     "seg3",
+     "2026-09-26T23:32:46Z",
+     0.0006918643696856333,
+     1.4016620498614958,
+     null,
+     0.9052,
+     1.271156005475713,
+     2.399038109286078,
+     2.479104664133883,
+     2.43800294810328
+    ],
+    [
+     146,
+     "seg3",
+     "2026-09-26T23:37:54Z",
+     0.0006876763175372305,
+     1.397506925207756,
+     null,
+     0.9052,
+     1.2770625791330448,
+     2.3716567494403358,
+     2.6605282350518236,
+     2.7093785357201234
+    ],
+    [
+     147,
+     "seg3",
+     "2026-09-26T23:42:58Z",
+     0.0006834728821669977,
+     1.3933518005540166,
+     null,
+     0.9052,
+     1.2725404363939132,
+     2.4062723181713586,
+     2.4841132986134498,
+     2.2988751482689516
+    ],
+    [
+     148,
+     "seg3",
+     "2026-09-26T23:48:09Z",
+     0.0006792544081169616,
+     1.389196675900277,
+     null,
+     0.9052,
+     1.2903921151983326,
+     2.5170322341480476,
+     2.7786055255210265,
+     2.710710483035822
+    ],
+    [
+     149,
+     "seg3",
+     "2026-09-26T23:53:16Z",
+     0.0006750212411618206,
+     1.3850415512465375,
+     null,
+     0.9052,
+     1.3042066357601647,
+     2.5227232691885413,
+     2.8219724139948,
+     2.9196989371858795
+    ],
+    [
+     150,
+     "seg3",
+     "2026-09-26T23:58:21Z",
+     0.0006707737282806029,
+     1.3808864265927978,
+     null,
+     0.9052,
+     1.3065751544360458,
+     2.499789057106807,
+     2.595277858876634,
+     2.4872701209166954
+    ],
+    [
+     151,
+     "seg3",
+     "2026-09-27T00:03:32Z",
+     0.0006665122176282264,
+     1.3767313019390581,
+     null,
+     0.9052,
+     1.2933223590083507,
+     2.4953469133925164,
+     2.7211841769602105,
+     2.672518721942244
+    ],
+    [
+     152,
+     "seg3",
+     "2026-09-27T00:08:41Z",
+     0.0006622370585069604,
+     1.3725761772853184,
+     null,
+     0.9052,
+     1.3210231380901118,
+     2.5679371822839494,
+     2.7079659275624945,
+     2.579680567500235
+    ],
+    [
+     153,
+     "seg3",
+     "2026-09-27T00:13:53Z",
+     0.0006579486013377963,
+     1.368421052631579,
+     null,
+     0.9052,
+     1.32080261460666,
+     2.561842548436132,
+     2.9787005035356544,
+     3.0782729099536765
+    ],
+    [
+     154,
+     "seg3",
+     "2026-09-27T00:19:04Z",
+     0.0006536471976317223,
+     1.3642659279778393,
+     null,
+     0.9052,
+     1.3119717069055843,
+     2.628383546039976,
+     2.9804088795322112,
+     3.1852535214917412
+    ],
+    [
+     155,
+     "seg3",
+     "2026-09-27T00:24:13Z",
+     0.0006493331999609132,
+     1.3601108033240998,
+     null,
+     0.9052,
+     1.3194351182586845,
+     2.581224241475949,
+     2.814647392294873,
+     2.7729840306029923
+    ],
+    [
+     156,
+     "seg3",
+     "2026-09-27T00:29:20Z",
+     0.0006450069619298299,
+     1.3559556786703602,
+     null,
+     0.9052,
+     1.3483940225908126,
+     2.6387547460095635,
+     2.865615940642083,
+     2.678814002837258
+    ],
+    [
+     157,
+     "seg3",
+     "2026-09-27T00:34:30Z",
+     0.0006406688381462367,
+     1.3518005540166205,
+     null,
+     0.9052,
+     1.3448794984269417,
+     2.521460138518235,
+     2.7812967738885988,
+     2.6893855538861504
+    ],
+    [
+     158,
+     "seg3",
+     "2026-09-27T00:39:40Z",
+     0.0006363191841921344,
+     1.3476454293628808,
+     null,
+     0.9052,
+     1.365488745700354,
+     2.66058942641335,
+     3.27581856442594,
+     3.4827056890246513
+    ],
+    [
+     159,
+     "seg3",
+     "2026-09-27T00:44:55Z",
+     0.0006319583565946147,
+     1.3434903047091413,
+     null,
+     0.9052,
+     1.3636258443196614,
+     2.580254497199223,
+     2.741426725497191,
+     2.410266540516382
+    ],
+    [
+     160,
+     "seg3",
+     "2026-09-27T00:50:40Z",
+     0.0006275867127966363,
+     1.3393351800554016,
+     0.9108,
+     0.9108,
+     1.353911343662218,
+     2.692522109239951,
+     2.7769473763718002,
+     2.4780917797965567
+    ],
+    [
+     161,
+     "seg3",
+     "2026-09-27T00:56:05Z",
+     0.0006232046111277277,
+     1.3351800554016622,
+     null,
+     0.9108,
+     1.3573657479779473,
+     2.610998208495392,
+     2.893742355807074,
+     2.4297852228427756
+    ],
+    [
+     162,
+     "seg3",
+     "2026-09-27T01:01:21Z",
+     0.0006188124107746148,
+     1.3310249307479225,
+     null,
+     0.9108,
+     1.3699388928797054,
+     2.6855144089665908,
+     3.170869427165766,
+     3.042440584336204
+    ],
+    [
+     163,
+     "seg3",
+     "2026-09-27T01:06:39Z",
+     0.0006144104717517802,
+     1.3268698060941828,
+     null,
+     0.9108,
+     1.3858116618518173,
+     2.6923813299201003,
+     2.9231397146466134,
+     2.899570650067823
+    ],
+    [
+     164,
+     "seg3",
+     "2026-09-27T01:11:59Z",
+     0.0006099991548719539,
+     1.3227146814404431,
+     null,
+     0.9108,
+     1.391665982103896,
+     2.6829273043007684,
+     2.97457313811642,
+     2.7856219184809716
+    ],
+    [
+     165,
+     "seg3",
+     "2026-09-27T01:17:19Z",
+     0.0006055788217165383,
+     1.3185595567867037,
+     null,
+     0.9108,
+     1.3909211720543346,
+     2.7210517505119585,
+     3.0214551235067435,
+     3.0105707371371917
+    ],
+    [
+     166,
+     "seg3",
+     "2026-09-27T01:22:38Z",
+     0.0006011498346059712,
+     1.314404432132964,
+     null,
+     0.9108,
+     1.379362536572862,
+     2.762369569690748,
+     3.029834626734942,
+     2.8862428117072447
+    ],
+    [
+     167,
+     "seg3",
+     "2026-09-27T01:27:51Z",
+     0.0005967125565700265,
+     1.3102493074792245,
+     null,
+     0.9108,
+     1.3984850891705216,
+     2.596726562785006,
+     2.8194216695325127,
+     2.707564797894708
+    ],
+    [
+     168,
+     "seg3",
+     "2026-09-27T01:33:05Z",
+     0.0005922673513180596,
+     1.3060941828254848,
+     null,
+     0.9108,
+     1.388286034266154,
+     2.683268023633409,
+     2.9287235298375975,
+     2.828339911055291
+    ],
+    [
+     169,
+     "seg3",
+     "2026-09-27T01:38:24Z",
+     0.0005878145832091929,
+     1.3019390581717452,
+     null,
+     0.9108,
+     1.4066280866491383,
+     2.764697609276607,
+     3.1682464692784453,
+     3.1235036466313506
+    ],
+    [
+     170,
+     "seg3",
+     "2026-09-27T01:43:42Z",
+     0.0005833546172224526,
+     1.2977839335180055,
+     null,
+     0.9108,
+     1.4093003958121113,
+     2.676833654272145,
+     2.8234302011029473,
+     2.6612141022737
+    ],
+    [
+     171,
+     "seg3",
+     "2026-09-27T01:49:03Z",
+     0.0005788878189268516,
+     1.2936288088642658,
+     null,
+     0.9108,
+     1.4243685884037236,
+     2.66696931027818,
+     2.9500708744443696,
+     2.7112979505253936
+    ],
+    [
+     172,
+     "seg3",
+     "2026-09-27T01:54:21Z",
+     0.000574414554451425,
+     1.2894736842105263,
+     null,
+     0.9108,
+     1.4101658374413677,
+     2.7476905652846413,
+     3.0269393729067398,
+     3.0945767863043425
+    ],
+    [
+     173,
+     "seg3",
+     "2026-09-27T01:59:35Z",
+     0.0005699351904552196,
+     1.2853185595567866,
+     null,
+     0.9108,
+     1.4328650976049488,
+     2.8015570448732925,
+     3.176862645423275,
+     3.274529298146566
+    ],
+    [
+     174,
+     "seg3",
+     "2026-09-27T02:04:47Z",
+     0.0005654500940972404,
+     1.2811634349030472,
+     null,
+     0.9108,
+     1.4528307983244972,
+     2.7081569885385446,
+     3.096209232834564,
+     3.185409271854094
+    ],
+    [
+     175,
+     "seg3",
+     "2026-09-27T02:10:08Z",
+     0.0005609596330063558,
+     1.2770083102493075,
+     null,
+     0.9108,
+     1.451115710981961,
+     2.7848864314199866,
+     3.0363949030295188,
+     2.717193944700833
+    ],
+    [
+     176,
+     "seg3",
+     "2026-09-27T02:15:22Z",
+     0.0005564641752511636,
+     1.2728531855955678,
+     null,
+     0.9108,
+     1.460976252610656,
+     2.642035648740571,
+     2.818668554569113,
+     2.6595233802137703
+    ],
+    [
+     177,
+     "seg3",
+     "2026-09-27T02:20:37Z",
+     0.0005519640893098227,
+     1.2686980609418281,
+     null,
+     0.9108,
+     1.4726552935852402,
+     2.7086796979794556,
+     3.222863115113357,
+     3.289898521598728
+    ],
+    [
+     178,
+     "seg3",
+     "2026-09-27T02:25:55Z",
+     0.0005474597440398483,
+     1.2645429362880887,
+     null,
+     0.9108,
+     1.4799795876974347,
+     2.713778876710212,
+     3.094939557985328,
+     3.284796846324
+    ],
+    [
+     179,
+     "seg3",
+     "2026-09-27T02:31:12Z",
+     0.0005429515086478805,
+     1.260387811634349,
+     null,
+     0.9108,
+     1.479360809271363,
+     2.89795368293236,
+     3.1069052137177566,
+     3.068789912366319
+    ],
+    [
+     180,
+     "seg3",
+     "2026-09-27T02:37:03Z",
+     0.0005384397526594189,
+     1.2562326869806095,
+     0.9122,
+     0.9122,
+     1.4765067045716034,
+     2.847655562148697,
+     3.1770639227724624,
+     2.5991746557169946
+    ],
+    [
+     181,
+     "seg3",
+     "2026-09-27T02:42:26Z",
+     0.0005339248458885359,
+     1.2520775623268698,
+     null,
+     0.9122,
+     1.4751761987291534,
+     2.8661929437483864,
+     3.2102818105412627,
+     3.176138411993268
+    ],
+    [
+     182,
+     "seg3",
+     "2026-09-27T02:47:46Z",
+     0.0005294071584075629,
+     1.2479224376731302,
+     null,
+     0.9122,
+     1.4814094085802978,
+     2.7734071358867074,
+     3.0572980601212074,
+     2.988897816888217
+    ],
+    [
+     183,
+     "seg3",
+     "2026-09-27T02:53:04Z",
+     0.0005248870605167569,
+     1.2437673130193907,
+     null,
+     0.9122,
+     1.5062561884693715,
+     2.922320856445137,
+     3.3902927075309317,
+     3.66169784808981
+    ],
+    [
+     184,
+     "seg3",
+     "2026-09-27T02:58:17Z",
+     0.0005203649227139491,
+     1.2396121883656508,
+     null,
+     0.9122,
+     1.4865285185561783,
+     2.809859900638975,
+     3.1593669365192283,
+     3.203374884594446
+    ],
+    [
+     185,
+     "seg3",
+     "2026-09-27T03:03:36Z",
+     0.0005158411156641751,
+     1.2354570637119113,
+     null,
+     0.9122,
+     1.5060048021119217,
+     2.889553985376468,
+     3.3298466013765884,
+     3.3581162622605247
+    ],
+    [
+     186,
+     "seg3",
+     "2026-09-27T03:08:51Z",
+     0.0005113160101692938,
+     1.2313019390581719,
+     null,
+     0.9122,
+     1.5246094300829132,
+     3.030233465392014,
+     3.5993120752531906,
+     3.721871702150367
+    ],
+    [
+     187,
+     "seg3",
+     "2026-09-27T03:14:07Z",
+     0.000506789977137593,
+     1.2271468144044322,
+     null,
+     0.9122,
+     1.5122735733273385,
+     2.848873955079879,
+     3.1502955782002418,
+     3.121361274828856
+    ],
+    [
+     188,
+     "seg3",
+     "2026-09-27T03:19:25Z",
+     0.0005022633875533879,
+     1.2229916897506925,
+     null,
+     0.9122,
+     1.523000288283688,
+     2.8919566362753684,
+     3.53148855286083,
+     3.847734292348226
+    ],
+    [
+     189,
+     "seg3",
+     "2026-09-27T03:24:45Z",
+     0.0004977366124466121,
+     1.2188365650969528,
+     null,
+     0.9122,
+     1.515065156180283,
+     2.956875151601331,
+     3.3879612177267844,
+     3.677656414865077
+    ],
+    [
+     190,
+     "seg3",
+     "2026-09-27T03:30:00Z",
+     0.0004932100228624072,
+     1.2146814404432134,
+     null,
+     0.9122,
+     1.535919277147315,
+     2.9830964077478166,
+     3.2849182671514052,
+     3.271422413573868
+    ],
+    [
+     191,
+     "seg3",
+     "2026-09-27T03:35:12Z",
+     0.0004886839898307062,
+     1.2105263157894737,
+     null,
+     0.9122,
+     1.5563631797658986,
+     3.006430431344043,
+     3.3767550512291917,
+     3.316659880780626
+    ],
+    [
+     192,
+     "seg3",
+     "2026-09-27T03:40:28Z",
+     0.000484158884335825,
+     1.206371191135734,
+     null,
+     0.9122,
+     1.572814722170775,
+     2.9970918907516304,
+     3.5756592476504974,
+     3.730626311795465
+    ],
+    [
+     193,
+     "seg3",
+     "2026-09-27T03:45:45Z",
+     0.00047963507728605105,
+     1.2022160664819945,
+     null,
+     0.9122,
+     1.565903532093969,
+     3.0874732938306084,
+     3.547139244518061,
+     3.5910331983675903
+    ],
+    [
+     194,
+     "seg3",
+     "2026-09-27T03:51:05Z",
+     0.00047511293948324324,
+     1.1980609418282548,
+     null,
+     0.9122,
+     1.5699954718008808,
+     3.0094061692555747,
+     3.5042811673263023,
+     3.427038770982589
+    ],
+    [
+     195,
+     "seg3",
+     "2026-09-27T03:56:21Z",
+     0.00047059284159243727,
+     1.1939058171745152,
+     null,
+     0.9122,
+     1.5819580472748855,
+     3.0929755917910873,
+     3.546440502692913,
+     3.525860909757943
+    ],
+    [
+     196,
+     "seg3",
+     "2026-09-27T04:01:35Z",
+     0.0004660751541114641,
+     1.1897506925207757,
+     null,
+     0.9122,
+     1.5822780899617863,
+     3.093015788615435,
+     3.5733322850589095,
+     3.5709794609025978
+    ],
+    [
+     197,
+     "seg3",
+     "2026-09-27T04:06:55Z",
+     0.00046156024734058114,
+     1.185595567867036,
+     null,
+     0.9122,
+     1.603940681479443,
+     3.051090824192968,
+     3.1188671506684402,
+     2.95091097108249
+    ],
+    [
+     198,
+     "seg3",
+     "2026-09-27T04:12:11Z",
+     0.0004570484913521196,
+     1.1814404432132963,
+     null,
+     0.9122,
+     1.5963871972314243,
+     3.0789521891495277,
+     3.420698782493328,
+     3.5257919985672523
+    ],
+    [
+     199,
+     "seg3",
+     "2026-09-27T04:17:26Z",
+     0.0004525402559601517,
+     1.1772853185595569,
+     null,
+     0.9122,
+     1.604944812840429,
+     3.0982101511681215,
+     3.604628667064097,
+     3.7029906634626717
+    ],
+    [
+     200,
+     "seg3",
+     "2026-09-27T04:23:02Z",
+     0.00044803591069017746,
+     1.1731301939058172,
+     0.9128,
+     0.9128,
+     1.6005077677211543,
+     3.120971515260894,
+     3.5681798649930405,
+     3.685287116587847
+    ],
+    [
+     201,
+     "seg3",
+     "2026-09-27T04:28:20Z",
+     0.00044353582474883645,
+     1.1689750692520775,
+     null,
+     0.9128,
+     1.6079393255299534,
+     3.1424524647065963,
+     3.684114390406115,
+     3.7933084279641336
+    ],
+    [
+     202,
+     "seg3",
+     "2026-09-27T04:33:35Z",
+     0.0004390403669936443,
+     1.1648199445983378,
+     null,
+     0.9128,
+     1.6197891865653553,
+     3.101325835304699,
+     3.4797400551280755,
+     3.3761009923343
+    ],
+    [
+     203,
+     "seg3",
+     "2026-09-27T04:38:48Z",
+     0.00043454990590275966,
+     1.1606648199445984,
+     null,
+     0.9128,
+     1.6075214805274174,
+     3.210226119249717,
+     3.7591702883270965,
+     4.124984332884865
+    ],
+    [
+     204,
+     "seg3",
+     "2026-09-27T04:44:03Z",
+     0.0004300648095447805,
+     1.156509695290859,
+     null,
+     0.9128,
+     1.6217154113725685,
+     3.1808604426767633,
+     3.667979004739345,
+     3.77228953372473
+    ],
+    [
+     205,
+     "seg3",
+     "2026-09-27T04:49:20Z",
+     0.0004255854455485753,
+     1.152354570637119,
+     null,
+     0.9128,
+     1.618096513309698,
+     3.096629490797547,
+     3.5891817821853462,
+     3.615897334855178
+    ],
+    [
+     206,
+     "seg3",
+     "2026-09-27T04:54:40Z",
+     0.00042111218107314846,
+     1.1481994459833795,
+     null,
+     0.9128,
+     1.6310805000107864,
+     3.289623293383368,
+     3.6559857253370613,
+     3.552054928637099
+    ],
+    [
+     207,
+     "seg3",
+     "2026-09-27T04:59:57Z",
+     0.0004166453827775474,
+     1.1440443213296398,
+     null,
+     0.9128,
+     1.6508466293071877,
+     3.191814904925467,
+     3.692291690015245,
+     3.671833348000187
+    ],
+    [
+     208,
+     "seg3",
+     "2026-09-27T05:05:14Z",
+     0.00041218541679080724,
+     1.1398891966759004,
+     null,
+     0.9128,
+     1.6455415446182777,
+     3.2789316780265723,
+     3.9581982294718423,
+     4.0039780386563
+    ],
+    [
+     209,
+     "seg3",
+     "2026-09-27T05:10:30Z",
+     0.00040773264868194047,
+     1.1357340720221605,
+     null,
+     0.9128,
+     1.6496091985154426,
+     3.122624674062619,
+     3.5857070780348503,
+     3.7539386283392195
+    ],
+    [
+     210,
+     "seg3",
+     "2026-09-27T05:15:48Z",
+     0.0004032874434299735,
+     1.131578947368421,
+     null,
+     0.9128,
+     1.6700821087278168,
+     3.225108749565037,
+     3.9851062297821045,
+     4.206833683211228
+    ],
+    [
+     211,
+     "seg3",
+     "2026-09-27T05:21:03Z",
+     0.00039885016539402895,
+     1.1274238227146816,
+     null,
+     0.9128,
+     1.671290431899586,
+     3.146256386548623,
+     3.7855625426632233,
+     3.6631149012466957
+    ],
+    [
+     212,
+     "seg3",
+     "2026-09-27T05:26:17Z",
+     0.0003944211782834618,
+     1.1232686980609419,
+     null,
+     0.9128,
+     1.6757340746364375,
+     3.177166341365069,
+     3.5041382340179092,
+     3.483693232481507
+    ],
+    [
+     213,
+     "seg3",
+     "2026-09-27T05:31:34Z",
+     0.00039000084512804615,
+     1.1191135734072022,
+     null,
+     0.9128,
+     1.6920749469735157,
+     3.297006826291139,
+     3.6767962061125656,
+     3.6814701310519515
+    ],
+    [
+     214,
+     "seg3",
+     "2026-09-27T05:36:49Z",
+     0.00038558952824821994,
+     1.1149584487534625,
+     null,
+     0.9128,
+     1.7093388554693638,
+     3.3028903829640357,
+     3.709536530505652,
+     3.7450487065589293
+    ],
+    [
+     215,
+     "seg3",
+     "2026-09-27T05:41:56Z",
+     0.00038118758922538534,
+     1.110803324099723,
+     null,
+     0.9128,
+     1.7094582552197335,
+     3.309991759815435,
+     3.8686049642234015,
+     4.1037572690810284
+    ],
+    [
+     216,
+     "seg3",
+     "2026-09-27T05:47:02Z",
+     0.00037679538887227246,
+     1.1066481994459834,
+     null,
+     0.9128,
+     1.704869031906128,
+     3.4348498815777657,
+     4.251423093094223,
+     4.563002926179732
+    ],
+    [
+     217,
+     "seg3",
+     "2026-09-27T05:52:14Z",
+     0.0003724132872033638,
+     1.102493074792244,
+     null,
+     0.9128,
+     1.7090215655578964,
+     3.280846006568821,
+     3.9795938168448965,
+     4.196994096383281
+    ],
+    [
+     218,
+     "seg3",
+     "2026-09-27T05:57:30Z",
+     0.0003680416434053854,
+     1.0983379501385042,
+     null,
+     0.9128,
+     1.7189690806399818,
+     3.4002189088141783,
+     4.141469621110237,
+     4.497566894553174
+    ],
+    [
+     219,
+     "seg3",
+     "2026-09-27T06:02:46Z",
+     0.0003636808158078656,
+     1.0941828254847645,
+     null,
+     0.9128,
+     1.7216064491491208,
+     3.3403543357191414,
+     4.1124751430818405,
+     4.283730410981453
+    ],
+    [
+     220,
+     "seg3",
+     "2026-09-27T06:08:33Z",
+     0.00035933116185376325,
+     1.0900277008310248,
+     0.9094,
+     0.9128,
+     1.7408424821393242,
+     3.4942461430341347,
+     4.2827785234341675,
+     4.357290763964598
+    ],
+    [
+     221,
+     "seg3",
+     "2026-09-27T06:13:48Z",
+     0.0003549930380701701,
+     1.0858725761772854,
+     null,
+     0.9128,
+     1.7444690164478345,
+     3.512532779540139,
+     4.232118214683971,
+     4.6950331666003695
+    ],
+    [
+     222,
+     "seg3",
+     "2026-09-27T06:18:58Z",
+     0.0003506668000390869,
+     1.0817174515235457,
+     null,
+     0.9128,
+     1.761182345193008,
+     3.3519752190030854,
+     3.9677674194862105,
+     4.0757547466234225
+    ],
+    [
+     223,
+     "seg3",
+     "2026-09-27T06:24:07Z",
+     0.00034635280236827785,
+     1.077562326869806,
+     null,
+     0.9128,
+     1.7561433438597054,
+     3.4245228109688592,
+     4.040881282981785,
+     4.263037188299771
+    ],
+    [
+     224,
+     "seg3",
+     "2026-09-27T06:29:20Z",
+     0.0003420513986622038,
+     1.0734072022160666,
+     null,
+     0.9128,
+     1.7584717986227452,
+     3.3995511202976623,
+     4.317737414919097,
+     4.615836088684784
+    ],
+    [
+     225,
+     "seg3",
+     "2026-09-27T06:34:30Z",
+     0.00033776294149303953,
+     1.0692520775623269,
+     null,
+     0.9128,
+     1.7673441719734806,
+     3.5160496207489365,
+     4.491914283270123,
+     4.99721236612605
+    ],
+    [
+     226,
+     "seg3",
+     "2026-09-27T06:39:37Z",
+     0.0003334877823717737,
+     1.0650969529085872,
+     null,
+     0.9128,
+     1.770753887878067,
+     3.520427355821105,
+     4.196095677627914,
+     4.3326914584499665
+    ],
+    [
+     227,
+     "seg3",
+     "2026-09-27T06:44:45Z",
+     0.0003292262717193972,
+     1.0609418282548475,
+     null,
+     0.9128,
+     1.75843617148783,
+     3.5380827558451684,
+     4.413622535508255,
+     4.512303788086464
+    ],
+    [
+     228,
+     "seg3",
+     "2026-09-27T06:49:53Z",
+     0.0003249787588381795,
+     1.056786703601108,
+     null,
+     0.9128,
+     1.7690079582148586,
+     3.3892798643002564,
+     4.191907192098683,
+     4.375634637372247
+    ],
+    [
+     229,
+     "seg3",
+     "2026-09-27T06:55:06Z",
+     0.00032074559188303834,
+     1.0526315789473686,
+     null,
+     0.9128,
+     1.765891954816621,
+     3.4488337862080543,
+     4.2426135348177505,
+     4.367814971112657
+    ],
+    [
+     230,
+     "seg3",
+     "2026-09-27T07:00:15Z",
+     0.0003165271178330023,
+     1.0484764542936287,
+     null,
+     0.9128,
+     1.771747238334568,
+     3.4014854157108,
+     3.9471242290803756,
+     4.122476462660165
+    ],
+    [
+     231,
+     "seg3",
+     "2026-09-27T07:05:23Z",
+     0.00031232368246276955,
+     1.0443213296398892,
+     null,
+     0.9128,
+     1.7799500528423267,
+     3.499828873009517,
+     4.078347293809912,
+     3.992785072874749
+    ],
+    [
+     232,
+     "seg3",
+     "2026-09-27T07:10:31Z",
+     0.00030813563031436674,
+     1.0401662049861495,
+     null,
+     0.9128,
+     1.8000562656884906,
+     3.5786444784580977,
+     4.214846005384949,
+     4.253983771663973
+    ],
+    [
+     233,
+     "seg3",
+     "2026-09-27T07:15:42Z",
+     0.0003039633046689069,
+     1.03601108033241,
+     null,
+     0.9128,
+     1.8231545796339539,
+     3.5650255351231017,
+     4.359888164476416,
+     4.701259708952629
+    ],
+    [
+     234,
+     "seg3",
+     "2026-09-27T07:20:52Z",
+     0.000299807047518453,
+     1.0318559556786702,
+     null,
+     0.9128,
+     1.8213728748518845,
+     3.5459016739637,
+     4.388375715277661,
+     4.626850229570235
+    ],
+    [
+     235,
+     "seg3",
+     "2026-09-27T07:25:59Z",
+     0.0002956671995379847,
+     1.0277008310249307,
+     null,
+     0.9128,
+     1.83553588116306,
+     3.7076049782763953,
+     4.332364257724806,
+     4.4000817578414395
+    ],
+    [
+     236,
+     "seg3",
+     "2026-09-27T07:31:07Z",
+     0.00029154410005747584,
+     1.0235457063711912,
+     null,
+     0.9128,
+     1.8374319665733425,
+     3.6454755931065,
+     4.555511474609375,
+     4.6939288336655185
+    ],
+    [
+     237,
+     "seg3",
+     "2026-09-27T07:36:16Z",
+     0.00028743808703407867,
+     1.0193905817174516,
+     null,
+     0.9128,
+     1.8430782488022728,
+     3.6309440218169113,
+     4.3989748927368515,
+     4.74082078056774
+    ],
+    [
+     238,
+     "seg3",
+     "2026-09-27T07:41:27Z",
+     0.00028334949702442483,
+     1.0152354570637119,
+     null,
+     0.9128,
+     1.8569916870402194,
+     3.5802681555693177,
+     4.408202763261466,
+     4.717796479148427
+    ],
+    [
+     239,
+     "seg3",
+     "2026-09-27T07:46:32Z",
+     0.000279278665157037,
+     1.0110803324099722,
+     null,
+     0.9128,
+     1.8831699812549285,
+     3.6095499992370605,
+     4.300178377107642,
+     4.4604000113476285
+    ],
+    [
+     240,
+     "seg3",
+     "2026-09-27T07:52:12Z",
+     0.0002752259251048606,
+     1.0069252077562327,
+     0.911,
+     0.9128,
+     1.8761160387389961,
+     3.5304777265965255,
+     4.472083001301207,
+     4.365570635631166
+    ],
+    [
+     241,
+     "seg3",
+     "2026-09-27T07:57:24Z",
+     0.0002711916090579137,
+     1.002770083102493,
+     null,
+     0.9128,
+     1.8684598111558235,
+     3.646911133294818,
+     4.496536781047952,
+     4.897743044228389
+    ],
+    [
+     242,
+     "seg3",
+     "2026-09-27T08:02:29Z",
+     0.00026717604769605695,
+     0.9986149584487536,
+     null,
+     0.9128,
+     1.8692071520048996,
+     3.497968092732046,
+     4.510013646092908,
+     4.992813924263263
+    ],
+    [
+     243,
+     "seg3",
+     "2026-09-27T08:07:35Z",
+     0.00026317957016189155,
+     0.9944598337950139,
+     null,
+     0.9128,
+     1.8698159661786309,
+     3.4732396849270524,
+     4.3645124627255845,
+     4.803229740296287
+    ],
+    [
+     244,
+     "seg3",
+     "2026-09-27T08:12:38Z",
+     0.00025920250403377787,
+     0.9903047091412742,
+     null,
+     0.9128,
+     1.8747541657809554,
+     3.7628917885922837,
+     4.9056047516307615,
+     5.535211908406224
+    ],
+    [
+     245,
+     "seg3",
+     "2026-09-27T08:17:48Z",
+     0.0002552451752989865,
+     0.9861495844875345,
+     null,
+     0.9128,
+     1.887441717345139,
+     3.6984460901940004,
+     4.716921562435983,
+     5.06239128112793
+    ],
+    [
+     246,
+     "seg3",
+     "2026-09-27T08:22:55Z",
+     0.00025130790832697737,
+     0.9819944598337951,
+     null,
+     0.9128,
+     1.8848707936275964,
+     3.673391262690226,
+     4.480929678884046,
+     4.680690710571991
+    ],
+    [
+     247,
+     "seg3",
+     "2026-09-27T08:28:01Z",
+     0.00024739102584281266,
+     0.9778393351800554,
+     null,
+     0.9128,
+     1.8874324012076718,
+     3.771348739492482,
+     4.652585194028657,
+     5.020149992800307
+    ],
+    [
+     248,
+     "seg3",
+     "2026-09-27T08:33:05Z",
+     0.00024349484890070355,
+     0.9736842105263157,
+     null,
+     0.9128,
+     1.902783010197782,
+     3.729087813147183,
+     4.388461439088843,
+     4.73230399756596
+    ],
+    [
+     249,
+     "seg3",
+     "2026-09-27T08:38:09Z",
+     0.00023961969685769568,
+     0.9695290858725762,
+     null,
+     0.9128,
+     1.9155633641385483,
+     3.818316730959662,
+     4.662867222709218,
+     4.767863714831999
+    ],
+    [
+     250,
+     "seg3",
+     "2026-09-27T08:43:14Z",
+     0.00023576588734749022,
+     0.9653739612188366,
+     null,
+     0.9128,
+     1.9177404614700668,
+     3.7832416501538506,
+     4.452203761572125,
+     4.623112779924239
+    ],
+    [
+     251,
+     "seg3",
+     "2026-09-27T08:48:21Z",
+     0.00023193373625441112,
+     0.9612188365650969,
+     null,
+     0.9128,
+     1.9210194869973194,
+     3.751253804941287,
+     4.669314653023906,
+     5.086168387840534
+    ],
+    [
+     252,
+     "seg3",
+     "2026-09-27T08:53:25Z",
+     0.00022812355768751102,
+     0.9570637119113572,
+     null,
+     0.9128,
+     1.9137580518064827,
+     3.732569595863079,
+     4.57504966341216,
+     4.734222592978642
+    ],
+    [
+     253,
+     "seg3",
+     "2026-09-27T08:58:29Z",
+     0.00022433566395482573,
+     0.9529085872576177,
+     null,
+     0.9128,
+     1.9290320393682896,
+     3.852388938268026,
+     4.882257330006566,
+     5.553452491760254
+    ],
+    [
+     254,
+     "seg3",
+     "2026-09-27T09:03:37Z",
+     0.00022057036553777565,
+     0.9487534626038783,
+     null,
+     0.9128,
+     1.9434831019105583,
+     3.8794162108980377,
+     5.061517633240799,
+     5.6652652038925
+    ],
+    [
+     255,
+     "seg3",
+     "2026-09-27T09:08:43Z",
+     0.0002168279710657149,
+     0.9445983379501384,
+     null,
+     0.9128,
+     1.9404019528421863,
+     3.9081205170730065,
+     5.145966069451694,
+     5.86982178414005
+    ],
+    [
+     256,
+     "seg3",
+     "2026-09-27T09:13:48Z",
+     0.00021310878729063643,
+     0.9404432132963989,
+     null,
+     0.9128,
+     1.9402455228498612,
+     3.820884011257654,
+     4.876269022623698,
+     5.437770563980629
+    ],
+    [
+     257,
+     "seg3",
+     "2026-09-27T09:18:55Z",
+     0.0002094131190620267,
+     0.9362880886426592,
+     null,
+     0.9128,
+     1.9545524038117508,
+     3.8235151164833154,
+     4.788508256276448,
+     5.193470056029572
+    ],
+    [
+     258,
+     "seg3",
+     "2026-09-27T09:24:02Z",
+     0.00020574126930187882,
+     0.9321329639889198,
+     null,
+     0.9128,
+     1.9440122801682045,
+     3.6158475163339197,
+     4.239058519231862,
+     4.3174013104932065
+    ],
+    [
+     259,
+     "seg3",
+     "2026-09-27T09:29:08Z",
+     0.0002020935389798629,
+     0.9279778393351801,
+     null,
+     0.9128,
+     1.9565268330190373,
+     3.8803774625405496,
+     4.67894390259666,
+     4.59650216979542
+    ],
+    [
+     260,
+     "seg3",
+     "2026-09-27T09:34:47Z",
+     0.0001984702270886566,
+     0.9238227146814404,
+     0.9102,
+     0.9128,
+     1.9685302630238148,
+     3.9117909546556144,
+     4.816935084331995,
+     5.231874306996663
+    ],
+    [
+     261,
+     "seg3",
+     "2026-09-27T09:39:53Z",
+     0.00019487163061943758,
+     0.9196675900277009,
+     null,
+     0.9128,
+     1.9821348313627571,
+     3.965392208647454,
+     4.956973382796364,
+     5.348172713970316
+    ],
+    [
+     262,
+     "seg3",
+     "2026-09-27T09:45:02Z",
+     0.00019129804453754052,
+     0.9155124653739612,
+     null,
+     0.9128,
+     1.9793548734708764,
+     4.02928527744337,
+     4.998898347218831,
+     5.3651168319000595
+    ],
+    [
+     263,
+     "seg3",
+     "2026-09-27T09:50:09Z",
+     0.00018774976175827895,
+     0.9113573407202216,
+     null,
+     0.9128,
+     1.9839010937460537,
+     3.9599789367325005,
+     5.117536128252402,
+     5.590726265962097
+    ],
+    [
+     264,
+     "seg3",
+     "2026-09-27T09:55:15Z",
+     0.00018422707312293663,
+     0.9072022160664819,
+     null,
+     0.9128,
+     1.990671933382407,
+     4.195412167187395,
+     5.448213210051087,
+     6.217888547086168
+    ],
+    [
+     265,
+     "seg3",
+     "2026-09-27T10:00:20Z",
+     0.00018073026737492782,
+     0.9030470914127424,
+     null,
+     0.9128,
+     1.9968347467225174,
+     4.104978909437683,
+     5.480236859157167,
+     6.165152763498241
+    ],
+    [
+     266,
+     "seg3",
+     "2026-09-27T10:05:27Z",
+     0.00017725963113612996,
+     0.8988919667590027,
+     null,
+     0.9128,
+     2.007773714504023,
+     4.120602002089051,
+     5.226555818798898,
+     5.633510474500985
+    ],
+    [
+     267,
+     "seg3",
+     "2026-09-27T10:10:31Z",
+     0.000173815448883391,
+     0.8947368421052633,
+     null,
+     0.9128,
+     2.020051356019645,
+     4.063287734985352,
+     5.130709697460306,
+     5.37650135193748
+    ],
+    [
+     268,
+     "seg3",
+     "2026-09-27T10:15:40Z",
+     0.00017039800292520995,
+     0.8905817174515236,
+     null,
+     0.9128,
+     2.026707972603283,
+     4.210515463489226,
+     5.329333436900172,
+     5.851516493435564
+    ],
+    [
+     269,
+     "seg3",
+     "2026-09-27T10:20:43Z",
+     0.00016700757337859907,
+     0.8864265927977839,
+     null,
+     0.9128,
+     2.039165229632937,
+     4.214819149039258,
+     5.325552956811313,
+     5.843109695390723
+    ],
+    [
+     270,
+     "seg3",
+     "2026-09-27T10:25:54Z",
+     0.00016364443814612207,
+     0.8822714681440442,
+     null,
+     0.9128,
+     2.042062460691079,
+     4.216088377196213,
+     5.59259471674075,
+     6.154549395901033
+    ],
+    [
+     271,
+     "seg3",
+     "2026-09-27T10:31:04Z",
+     0.000160308872893116,
+     0.8781163434903048,
+     null,
+     0.9128,
+     2.0304907354815254,
+     3.918410945212704,
+     4.973858285224301,
+     5.335164903224199
+    ],
+    [
+     272,
+     "seg3",
+     "2026-09-27T10:36:13Z",
+     0.0001570011510250956,
+     0.8739612188365651,
+     null,
+     0.9128,
+     2.043853862532254,
+     4.0533602676172364,
+     5.311056745463405,
+     5.9873874598536
+    ],
+    [
+     273,
+     "seg3",
+     "2026-09-27T10:41:19Z",
+     0.00015372154366534324,
+     0.8698060941828254,
+     null,
+     0.9128,
+     2.0323109366427894,
+     4.049335534545197,
+     5.313499127311268,
+     5.657067255042065
+    ],
+    [
+     274,
+     "seg3",
+     "2026-09-27T10:46:24Z",
+     0.00015047031963268614,
+     0.8656509695290859,
+     null,
+     0.9128,
+     2.042000511596943,
+     4.003798747884816,
+     4.962150442189183,
+     5.08409141946113
+    ],
+    [
+     275,
+     "seg4",
+     "2026-09-27T21:29:05Z",
+     0.00014724774541946146,
+     0.8614958448753463,
+     null,
+     0.9128,
+     2.051662521800776,
+     4.040319837372879,
+     5.1799138112999925,
+     5.502582402064882
+    ],
+    [
+     276,
+     "seg4",
+     "2026-09-27T21:34:12Z",
+     0.00014405408516967328,
+     0.8573407202216066,
+     null,
+     0.9128,
+     2.063108270195709,
+     4.075244815870263,
+     5.246322489332878,
+     5.812556749102713
+    ],
+    [
+     277,
+     "seg4",
+     "2026-09-27T21:39:24Z",
+     0.00014088960065734136,
+     0.8531855955678669,
+     null,
+     0.9128,
+     2.054107141220707,
+     4.212299193458995,
+     5.51286041873625,
+     5.997508257284932
+    ],
+    [
+     278,
+     "seg4",
+     "2026-09-27T21:44:30Z",
+     0.00013775455126504465,
+     0.8490304709141274,
+     null,
+     0.9128,
+     2.0777886366022043,
+     4.3349750946308,
+     5.709652802039837,
+     6.3463767314779345
+    ],
+    [
+     279,
+     "seg4",
+     "2026-09-27T21:49:36Z",
+     0.00013464919396266017,
+     0.844875346260388,
+     null,
+     0.9128,
+     2.075269038649811,
+     4.19045699601886,
+     5.450485799504422,
+     6.161464976168227
+    ],
+    [
+     280,
+     "seg4",
+     "2026-09-27T21:55:11Z",
+     0.00013157378328630025,
+     0.8407202216066483,
+     0.9088,
+     0.9128,
+     2.0764825083743568,
+     4.290434500266766,
+     5.593764480503126,
+     6.402041676400722
+    ],
+    [
+     281,
+     "seg4",
+     "2026-09-27T22:00:17Z",
+     0.00012852857131744888,
+     0.8365650969529086,
+     null,
+     0.9128,
+     2.0611518045951582,
+     4.203289971954521,
+     5.508716884700731,
+     6.299220490729672
+    ],
+    [
+     282,
+     "seg4",
+     "2026-09-27T22:05:23Z",
+     0.00012551380766230003,
+     0.8324099722991689,
+     null,
+     0.9128,
+     2.0818248987197876,
+     4.21166248431151,
+     5.20411875604213,
+     5.320454504298068
+    ],
+    [
+     283,
+     "seg4",
+     "2026-09-27T22:10:34Z",
+     0.0001225297394312966,
+     0.8282548476454294,
+     null,
+     0.9128,
+     2.0850939860289124,
+     4.197814478271309,
+     5.4913183793254285,
+     5.877807995368695
+    ],
+    [
+     284,
+     "seg4",
+     "2026-09-27T22:15:42Z",
+     0.0001195766112188778,
+     0.8240997229916898,
+     null,
+     0.9128,
+     2.080249904216021,
+     4.275614998806482,
+     5.51232306710605,
+     6.090878102971219
+    ],
+    [
+     285,
+     "seg4",
+     "2026-09-27T22:20:48Z",
+     0.00011665466508342876,
+     0.8199445983379501,
+     null,
+     0.9128,
+     2.0843305724790726,
+     4.216032285799925,
+     5.760454276512409,
+     6.649655468162449
+    ],
+    [
+     286,
+     "seg4",
+     "2026-09-27T22:25:55Z",
+     0.00011376414052744055,
+     0.8157894736842106,
+     null,
+     0.9128,
+     2.0895432768196893,
+     4.3231620569338745,
+     5.940439421555092,
+     6.780455161785257
+    ],
+    [
+     287,
+     "seg4",
+     "2026-09-27T22:31:06Z",
+     0.00011090527447787924,
+     0.8116343490304709,
+     null,
+     0.9128,
+     2.084067755732043,
+     4.319858592132042,
+     5.511279829617204,
+     6.233776607732663
+    ],
+    [
+     288,
+     "seg4",
+     "2026-09-27T22:36:15Z",
+     0.00010807830126676443,
+     0.8074792243767313,
+     null,
+     0.9128,
+     2.109200518706749,
+     4.558259596769837,
+     5.972502620740869,
+     6.934348665434738
+    ],
+    [
+     289,
+     "seg4",
+     "2026-09-27T22:41:25Z",
+     0.0001052834526119637,
+     0.8033240997229916,
+     null,
+     0.9128,
+     2.1205022800927873,
+     4.45247926383183,
+     5.671208529636778,
+     6.237125692696407
+    ],
+    [
+     290,
+     "seg4",
+     "2026-09-27T22:46:37Z",
+     0.00010252095759819785,
+     0.7991689750692521,
+     null,
+     0.9128,
+     2.1202177042248604,
+     4.492622671456172,
+     5.831334903322417,
+     6.405443712212573
+    ],
+    [
+     291,
+     "seg4",
+     "2026-09-27T22:51:45Z",
+     9.979104265826438e-05,
+     0.7950138504155124,
+     null,
+     0.9128,
+     2.1341418726690886,
+     4.463885573135025,
+     5.743609565427934,
+     6.487078995540224
+    ],
+    [
+     292,
+     "seg4",
+     "2026-09-27T22:56:51Z",
+     9.709393155447732e-05,
+     0.790858725761773,
+     null,
+     0.9128,
+     2.1245826112812964,
+     4.430077826839754,
+     5.8824714956612425,
+     6.611007038204149
+    ],
+    [
+     293,
+     "seg4",
+     "2026-09-27T23:02:00Z",
+     9.442984536032612e-05,
+     0.7867036011080333,
+     null,
+     0.9128,
+     2.134825846244549,
+     4.300484717577353,
+     6.055924826654895,
+     6.892554453049583
+    ],
+    [
+     294,
+     "seg4",
+     "2026-09-27T23:07:09Z",
+     9.179900244235489e-05,
+     0.7825484764542936,
+     null,
+     0.9128,
+     2.1375592851090706,
+     4.339388378735246,
+     6.2463261724888595,
+     7.181358030472679
+    ],
+    [
+     295,
+     "seg4",
+     "2026-09-27T23:12:18Z",
+     8.920161844226416e-05,
+     0.7783933518005539,
+     null,
+     0.9128,
+     2.13896648911224,
+     4.401941313140694,
+     6.310689822010611,
+     6.9957739457316785
+    ],
+    [
+     296,
+     "seg4",
+     "2026-09-27T23:17:28Z",
+     8.663790625923452e-05,
+     0.7742382271468145,
+     null,
+     0.9128,
+     2.1479343545847924,
+     4.442913422639343,
+     6.081968159511171,
+     6.867691374373162
+    ],
+    [
+     297,
+     "seg4",
+     "2026-09-27T23:22:36Z",
+     8.410807603247655e-05,
+     0.7700831024930748,
+     null,
+     0.9128,
+     2.150637056635714,
+     4.54658964858658,
+     6.1224523029108155,
+     6.959055741628011
+    ],
+    [
+     298,
+     "seg4",
+     "2026-09-27T23:27:45Z",
+     8.16123351240064e-05,
+     0.7659279778393351,
+     null,
+     0.9128,
+     2.1569258399393365,
+     4.485693706863228,
+     5.893973964384233,
+     6.707536308244727
+    ],
+    [
+     299,
+     "seg4",
+     "2026-09-27T23:32:54Z",
+     7.915088810164855e-05,
+     0.7617728531855956,
+     null,
+     0.9128,
+     2.1598155854762284,
+     4.3580171924897995,
+     5.741054628087186,
+     6.548645364827123
+    ],
+    [
+     300,
+     "seg4",
+     "2026-09-27T23:38:36Z",
+     7.672393672226901e-05,
+     0.7576177285318559,
+     0.9076,
+     0.9128,
+     2.1626998062791496,
+     4.465992894665948,
+     5.77772220523878,
+     6.662627527083473
+    ],
+    [
+     301,
+     "seg4",
+     "2026-09-27T23:43:47Z",
+     7.433167991523631e-05,
+     0.7534626038781165,
+     null,
+     0.9128,
+     2.171521501979609,
+     4.3687010633534396,
+     6.033945681034834,
+     7.040141703068525
+    ],
+    [
+     302,
+     "seg4",
+     "2026-09-27T23:48:55Z",
+     7.197431376611785e-05,
+     0.7493074792243766,
+     null,
+     0.9128,
+     2.1782839380461594,
+     4.497081181098675,
+     6.059237386988498,
+     6.943451327839117
+    ],
+    [
+     303,
+     "seg4",
+     "2026-09-27T23:54:07Z",
+     6.965203150060589e-05,
+     0.7451523545706371,
+     null,
+     0.9128,
+     2.1854018233288293,
+     4.5323931047286115,
+     6.0910368623404665,
+     6.800636812188159
+    ],
+    [
+     304,
+     "seg4",
+     "2026-09-27T23:59:15Z",
+     6.736502346868018e-05,
+     0.7409972299168976,
+     null,
+     0.9128,
+     2.183997011732781,
+     4.566101348263094,
+     6.30773611726432,
+     7.255554807597194
+    ],
+    [
+     305,
+     "seg4",
+     "2026-09-28T00:04:24Z",
+     6.511347712900545e-05,
+     0.736842105263158,
+     null,
+     0.9128,
+     2.175950083239325,
+     4.643014754372081,
+     6.330664656628137,
+     7.393888522838724
+    ],
+    [
+     306,
+     "seg4",
+     "2026-09-28T00:09:34Z",
+     6.289757703356597e-05,
+     0.7326869806094183,
+     null,
+     0.9128,
+     2.176866114824668,
+     4.573448910110298,
+     6.23811517912766,
+     7.168281412672722
+    ],
+    [
+     307,
+     "seg4",
+     "2026-09-28T00:14:43Z",
+     6.071750481253835e-05,
+     0.7285318559556786,
+     null,
+     0.9128,
+     2.189309791586865,
+     4.6939740674249055,
+     6.276954579627377,
+     7.109911661038454
+    ],
+    [
+     308,
+     "seg4",
+     "2026-09-28T00:19:53Z",
+     5.857343915940433e-05,
+     0.7243767313019391,
+     null,
+     0.9128,
+     2.193430489507215,
+     4.805806050355407,
+     6.284804130422658,
+     6.958025565092591
+    ],
+    [
+     309,
+     "seg4",
+     "2026-09-28T00:25:00Z",
+     5.6465555816303196e-05,
+     0.7202216066481995,
+     null,
+     0.9128,
+     2.1999629448200095,
+     4.7412639431569765,
+     6.179574977392438,
+     6.966465774623827
+    ],
+    [
+     310,
+     "seg4",
+     "2026-09-28T00:30:08Z",
+     5.439402755962719e-05,
+     0.7160664819944598,
+     null,
+     0.9128,
+     2.196523622534741,
+     4.463355908448669,
+     5.954034301056259,
+     6.736219066312944
+    ],
+    [
+     311,
+     "seg4",
+     "2026-09-28T00:35:18Z",
+     5.2359024185859585e-05,
+     0.7119113573407203,
+     null,
+     0.9128,
+     2.2036738066837707,
+     4.584751085303296,
+     6.297795394371295,
+     7.169249216715495
+    ],
+    [
+     312,
+     "seg4",
+     "2026-09-28T00:40:30Z",
+     5.0360712497656725e-05,
+     0.7077562326869806,
+     null,
+     0.9128,
+     2.2078067132796364,
+     4.57566868025681,
+     6.1987869383274825,
+     7.004109360705847
+    ],
+    [
+     313,
+     "seg4",
+     "2026-09-28T00:45:38Z",
+     4.839925629017639e-05,
+     0.7036011080332409,
+     null,
+     0.9128,
+     2.210226722147273,
+     4.625475505302692,
+     6.398873964945476,
+     7.301261326362347
+    ],
+    [
+     314,
+     "seg4",
+     "2026-09-28T00:50:48Z",
+     4.647481633765088e-05,
+     0.6994459833795013,
+     null,
+     0.9128,
+     2.2136941339777803,
+     4.71338660689606,
+     6.645804991667298,
+     7.718653043111165
+    ],
+    [
+     315,
+     "seg4",
+     "2026-09-28T00:55:56Z",
+     4.4587550380210284e-05,
+     0.6952908587257618,
+     null,
+     0.9128,
+     2.21404566984067,
+     4.677247398201076,
+     6.645156948045752,
+     7.813942673562587
+    ],
+    [
+     316,
+     "seg4",
+     "2026-09-28T01:01:04Z",
+     4.273761311095192e-05,
+     0.6911357340720221,
+     null,
+     0.9128,
+     2.2189399099898064,
+     4.581928225769394,
+     6.3737258417852996,
+     7.313631359188036
+    ],
+    [
+     317,
+     "seg4",
+     "2026-09-28T01:06:14Z",
+     4.0925156163261256e-05,
+     0.6869806094182827,
+     null,
+     0.9128,
+     2.2153583203239005,
+     4.628634798115697,
+     6.342009681394731,
+     7.2263426725891815
+    ],
+    [
+     318,
+     "seg4",
+     "2026-09-28T01:11:24Z",
+     3.915032809838259e-05,
+     0.682825484764543,
+     null,
+     0.9128,
+     2.2290303597505066,
+     4.640568102913341,
+     6.332405386299922,
+     7.0723318560370085
+    ],
+    [
+     319,
+     "seg4",
+     "2026-09-28T01:16:33Z",
+     3.741327439324232e-05,
+     0.6786703601108033,
+     null,
+     0.9128,
+     2.2293843976382552,
+     4.613739035595422,
+     6.221220619377049,
+     7.110188133415135
+    ],
+    [
+     320,
+     "seg4",
+     "2026-09-28T01:22:15Z",
+     3.5714137428524754e-05,
+     0.6745152354570636,
+     0.9074,
+     0.9128,
+     2.227569640367881,
+     4.632398177837503,
+     6.335655689239502,
+     7.372462946793129
+    ],
+    [
+     321,
+     "seg4",
+     "2026-09-28T01:27:23Z",
+     3.405305647700085e-05,
+     0.6703601108033241,
+     null,
+     0.9128,
+     2.230338351479892,
+     4.534675603625418,
+     6.246727165134474,
+     7.255114089483502
+    ],
+    [
+     322,
+     "seg4",
+     "2026-09-28T01:32:34Z",
+     3.24301676921136e-05,
+     0.6662049861495847,
+     null,
+     0.9128,
+     2.2224656000904655,
+     4.633725171801688,
+     6.456166683942422,
+     7.490748076603331
+    ],
+    [
+     323,
+     "seg4",
+     "2026-09-28T01:37:44Z",
+     3.0845604096817024e-05,
+     0.6620498614958448,
+     null,
+     0.9128,
+     2.228839079538981,
+     4.688980716398393,
+     6.510586541274498,
+     7.515794019589479
+    ],
+    [
+     324,
+     "seg4",
+     "2026-09-28T01:42:53Z",
+     2.9299495572673307e-05,
+     0.6578947368421053,
+     null,
+     0.9128,
+     2.2391021607936112,
+     4.589910638743434,
+     6.436599512209837,
+     7.399227591766708
+    ],
+    [
+     325,
+     "seg4",
+     "2026-09-28T01:48:03Z",
+     2.7791968849206427e-05,
+     0.6537396121883656,
+     null,
+     0.9128,
+     2.2283965801370553,
+     4.6031945217614885,
+     6.479963565694875,
+     7.47671897383942
+    ],
+    [
+     326,
+     "seg4",
+     "2026-09-28T01:53:16Z",
+     2.6323147493514833e-05,
+     0.6495844875346262,
+     null,
+     0.9128,
+     2.2402699158109467,
+     4.614337301802361,
+     6.52436490442561,
+     7.543821915812876
+    ],
+    [
+     327,
+     "seg4",
+     "2026-09-28T01:58:25Z",
+     2.4893151900142906e-05,
+     0.6454293628808863,
+     null,
+     0.9128,
+     2.2397862713912438,
+     4.603571497160813,
+     6.469627764033175,
+     7.456928253173828
+    ],
+    [
+     328,
+     "seg4",
+     "2026-09-28T02:03:34Z",
+     2.3502099281212774e-05,
+     0.6412742382271468,
+     null,
+     0.9128,
+     2.237203943318334,
+     4.719246809509979,
+     6.612459177258371,
+     7.623248412691313
+    ],
+    [
+     329,
+     "seg4",
+     "2026-09-28T02:08:44Z",
+     2.2150103656816356e-05,
+     0.6371191135734073,
+     null,
+     0.9128,
+     2.2352376313045106,
+     4.71355746806353,
+     6.61862143154802,
+     7.656070873655122
+    ],
+    [
+     330,
+     "seg4",
+     "2026-09-28T02:13:53Z",
+     2.0837275845670135e-05,
+     0.6329639889196677,
+     null,
+     0.9128,
+     2.2458884332371856,
+     4.703442387197209,
+     6.635285158266966,
+     7.719988833898785
+    ],
+    [
+     331,
+     "seg4",
+     "2026-09-28T02:19:06Z",
+     1.95637234560313e-05,
+     0.628808864265928,
+     null,
+     0.9128,
+     2.2461314283568283,
+     4.7354309092993025,
+     6.655499957073694,
+     7.795760132800574
+    ],
+    [
+     332,
+     "seg4",
+     "2026-09-28T02:24:16Z",
+     1.8329550876877487e-05,
+     0.6246537396121883,
+     null,
+     0.9128,
+     2.2460053241115876,
+     4.650565717412137,
+     6.4131573863413145,
+     7.434611249244076
+    ],
+    [
+     333,
+     "seg4",
+     "2026-09-28T02:29:29Z",
+     1.7134859269350543e-05,
+     0.6204986149584488,
+     null,
+     0.9128,
+     2.243784375574397,
+     4.691375546071721,
+     6.504848217142039,
+     7.534126210486752
+    ],
+    [
+     334,
+     "seg4",
+     "2026-09-28T02:34:39Z",
+     1.5979746558464236e-05,
+     0.6163434903047091,
+     null,
+     0.9128,
+     2.249728002767453,
+     4.742184923983168,
+     6.651244141589636,
+     7.732674746677794
+    ],
+    [
+     335,
+     "seg4",
+     "2026-09-28T02:39:50Z",
+     1.4864307425078328e-05,
+     0.6121883656509695,
+     null,
+     0.9128,
+     2.2517521902062425,
+     4.76358019072434,
+     6.698530082044931,
+     7.817489755564723
+    ],
+    [
+     336,
+     "seg4",
+     "2026-09-28T02:45:01Z",
+     1.3788633298137287e-05,
+     0.60803324099723,
+     null,
+     0.9128,
+     2.255765325721653,
+     4.745853456957587,
+     6.668343757760936,
+     7.7698104354156845
+    ],
+    [
+     337,
+     "seg4",
+     "2026-09-28T02:50:15Z",
+     1.2752812347176512e-05,
+     0.6038781163434903,
+     null,
+     0.9128,
+     2.2522368787348954,
+     4.761432718956607,
+     6.685331141811678,
+     7.763415303723566
+    ],
+    [
+     338,
+     "seg4",
+     "2026-09-28T02:55:24Z",
+     1.1756929475095102e-05,
+     0.5997229916897506,
+     null,
+     0.9128,
+     2.2479272902696983,
+     4.652333889884511,
+     6.49255815045587,
+     7.495055072609035
+    ],
+    [
+     339,
+     "seg4",
+     "2026-09-28T03:00:32Z",
+     1.0801066311196872e-05,
+     0.595567867036011,
+     null,
+     0.9128,
+     2.251804540897238,
+     4.686109937470535,
+     6.565197363667105,
+     7.6073086179535965
+    ],
+    [
+     340,
+     "seg4",
+     "2026-09-28T03:06:09Z",
+     9.88530120449932e-06,
+     0.5914127423822715,
+     0.9086,
+     0.9128,
+     2.2477752230633263,
+     4.680824663447238,
+     6.563206568531607,
+     7.614600504951915
+    ],
+    [
+     341,
+     "seg4",
+     "2026-09-28T03:11:19Z",
+     9.0097092173117e-06,
+     0.5872576177285318,
+     null,
+     0.9128,
+     2.252849066394499,
+     4.693095448373378,
+     6.579477463645497,
+     7.633414794658792
+    ],
+    [
+     342,
+     "seg4",
+     "2026-09-28T03:16:29Z",
+     8.17436211908229e-06,
+     0.5831024930747923,
+     null,
+     0.9128,
+     2.2546980901696214,
+     4.748542177266088,
+     6.667347294160689,
+     7.774010055366603
+    ],
+    [
+     343,
+     "seg4",
+     "2026-09-28T03:21:39Z",
+     7.379328380515804e-06,
+     0.5789473684210527,
+     null,
+     0.9128,
+     2.252902222775865,
+     4.770471402968483,
+     6.679356712034379,
+     7.743903598566165
+    ],
+    [
+     344,
+     "seg4",
+     "2026-09-28T03:26:48Z",
+     6.624673167961004e-06,
+     0.574792243767313,
+     null,
+     0.9128,
+     2.2510488882832145,
+     4.750241827690738,
+     6.6507704943075945,
+     7.733277326342703
+    ],
+    [
+     345,
+     "seg4",
+     "2026-09-28T03:31:57Z",
+     5.9104583380691914e-06,
+     0.5706371191135733,
+     null,
+     0.9128,
+     2.2584896827566214,
+     4.774289854641618,
+     6.680531786776137,
+     7.788314342498779
+    ],
+    [
+     346,
+     "seg4",
+     "2026-09-28T03:37:07Z",
+     5.236742432724262e-06,
+     0.5664819944598338,
+     null,
+     0.9128,
+     2.260082951907454,
+     4.790221110157583,
+     6.699564029430521,
+     7.825119413178543
+    ],
+    [
+     347,
+     "seg4",
+     "2026-09-28T03:42:19Z",
+     4.603580674243657e-06,
+     0.5623268698060944,
+     null,
+     0.9128,
+     2.253708658547237,
+     4.74756950619577,
+     6.592202109852057,
+     7.642080367296591
+    ],
+    [
+     348,
+     "seg4",
+     "2026-09-28T03:47:28Z",
+     4.01102496085265e-06,
+     0.5581717451523545,
+     null,
+     0.9128,
+     2.2543314188376242,
+     4.712817657953021,
+     6.543410931510487,
+     7.571536743777922
+    ],
+    [
+     349,
+     "seg4",
+     "2026-09-28T03:52:40Z",
+     3.459123862429969e-06,
+     0.554016620498615,
+     null,
+     0.9128,
+     2.2524404087285887,
+     4.727933856262558,
+     6.572673825011856,
+     7.594891959223254
+    ],
+    [
+     350,
+     "seg4",
+     "2026-09-28T03:57:49Z",
+     2.9479226165268215e-06,
+     0.5498614958448753,
+     null,
+     0.9128,
+     2.2580632286510247,
+     4.772427405434093,
+     6.631003007121469,
+     7.659274693193106
+    ],
+    [
+     351,
+     "seg4",
+     "2026-09-28T04:02:57Z",
+     2.4774631246589074e-06,
+     0.5457063711911359,
+     null,
+     0.9128,
+     2.259121196023349,
+     4.770158849913498,
+     6.6395979694936464,
+     7.673284793722218
+    ],
+    [
+     352,
+     "seg4",
+     "2026-09-28T04:08:08Z",
+     2.04778394887184e-06,
+     0.541551246537396,
+     null,
+     0.9128,
+     2.2589007410509834,
+     4.780615861388458,
+     6.662281929761514,
+     7.718170741508747
+    ],
+    [
+     353,
+     "seg4",
+     "2026-09-28T04:13:19Z",
+     1.6589203085804472e-06,
+     0.5373961218836565,
+     null,
+     0.9128,
+     2.2598814032543664,
+     4.78351930092121,
+     6.653951754515198,
+     7.6848552747704515
+    ],
+    [
+     354,
+     "seg4",
+     "2026-09-28T04:18:28Z",
+     1.3109040776819182e-06,
+     0.533240997229917,
+     null,
+     0.9128,
+     2.2577300482782823,
+     4.769196186942616,
+     6.653268583889665,
+     7.700254369056088
+    ],
+    [
+     355,
+     "seg4",
+     "2026-09-28T04:23:38Z",
+     1.0037637819431121e-06,
+     0.5290858725761773,
+     null,
+     0.9128,
+     2.253619122779232,
+     4.735902577981181,
+     6.606537002256547,
+     7.642765176707301
+    ],
+    [
+     356,
+     "seg4",
+     "2026-09-28T04:28:49Z",
+     7.375245966623756e-07,
+     0.5249307479224377,
+     null,
+     0.9128,
+     2.256382881909951,
+     4.7526281455467485,
+     6.626502201474946,
+     7.672851250089448
+    ],
+    [
+     357,
+     "seg4",
+     "2026-09-28T04:33:58Z",
+     5.122083446062464e-07,
+     0.520775623268698,
+     null,
+     0.9128,
+     2.2523952544420616,
+     4.765510328884782,
+     6.634144618593413,
+     7.672990130281996
+    ],
+    [
+     358,
+     "seg4",
+     "2026-09-28T04:39:08Z",
+     3.278334942204419e-07,
+     0.5166204986149585,
+     null,
+     0.9128,
+     2.2551238591643585,
+     4.773197793412483,
+     6.649330084351288,
+     7.6991878761642285
+    ],
+    [
+     359,
+     "seg4",
+     "2026-09-28T04:44:19Z",
+     1.8441515811612464e-07,
+     0.5124653739612188,
+     null,
+     0.9128,
+     2.251190593872947,
+     4.767552759455539,
+     6.636762635461215,
+     7.677563700182684
+    ],
+    [
+     360,
+     "seg4",
+     "2026-09-28T04:50:00Z",
+     8.1965091831393e-08,
+     0.5083102493074791,
+     0.91,
+     0.9128,
+     2.2556643787471726,
+     4.790444889287839,
+     6.6712072087430405,
+     7.725900469155147
+    ],
+    [
+     361,
+     "seg4",
+     "2026-09-28T04:55:12Z",
+     2.0491692867330434e-08,
+     0.5041551246537397,
+     null,
+     0.9128,
+     2.255094026697093,
+     4.761693844850036,
+     6.631425457439203,
+     7.6754333507055525
+    ],
+    [
+     362,
+     "seg4",
+     "2026-09-28T05:00:50Z",
+     0.0,
+     0.5,
+     0.9088,
+     0.9128,
+     2.2564176307327446,
+     4.772394421456874,
+     6.659683359080348,
+     7.722306361143616
+    ]
+   ]
+  },
+  "compute": {
+   "segments_wall_h": {
+    "seg1": null,
+    "seg2": 0.36,
+    "seg3": 23.93,
+    "seg4": 8.11
+   },
+   "sum_recorded_wall_h": 32.4,
+   "sum_note": "A100 hours recorded in the run files; excludes seg1 (no rows) and the time between each lost segment's last row and the VM loss",
+   "note": "seg1 has no rows (end time not in the run files); seg2 is run_start to its last epoch row (the VM was lost later, during epoch 5); seg3 is run_start to its last epoch row (no run_end); seg4 is run_start to run_end",
+   "median_s_per_stage1_epoch": {
+    "seg2": 327.3948812484741,
+    "seg3": 313.5797213315964,
+    "seg4": 309.4775185585022
+   }
+  }
+ },
+ "references": {
+  "pub42": {
+   "label": "published seed 42",
+   "segments": [
+    "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260311_120026",
+    "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043"
+   ],
+   "segment_stage1_epoch_ranges": [
+    [
+     1,
+     273
+    ],
+    [
+     274,
+     362
+    ]
+   ],
+   "config_json_sha256": "b006d44a828e4e2ebcf562042cb2636bfd5e9058612afcede28e756a26a4882e",
+   "env": {
+    "cuda_available": true,
+    "cuda_version": "12.8",
+    "cudnn_version": 91002,
+    "device0": "NVIDIA A100-SXM4-40GB",
+    "device_count": 1,
+    "platform": "Linux-6.6.113+-x86_64-with-glibc2.35",
+    "python": "3.12.12",
+    "torch": "2.10.0+cu128"
+   },
+   "env_per_segment": [
+    {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91002,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.113+-x86_64-with-glibc2.35",
+     "python": "3.12.12",
+     "torch": "2.10.0+cu128"
+    },
+    {
+     "cuda_available": true,
+     "cuda_version": "12.8",
+     "cudnn_version": 91002,
+     "device0": "NVIDIA A100-SXM4-40GB",
+     "device_count": 1,
+     "platform": "Linux-6.6.113+-x86_64-with-glibc2.35",
+     "python": "3.12.12",
+     "torch": "2.10.0+cu128"
+    }
+   ],
+   "best_s1_val": 0.9198,
+   "best_s2_val": 0.9206,
+   "stage1_selected_epoch": 320,
+   "stage1_selected_epoch_segment": "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043",
+   "stage1_last_epoch": 362,
+   "sep_deep_last": 3.27559844104723,
+   "sep_deep_selected": 3.223847307007888,
+   "sep_blocks_last": [
+    2.302155346705996,
+    2.885904443675074,
+    3.174740794061244,
+    3.27559844104723
+   ],
+   "sep_blocks_selected": [
+    2.2630588241007135,
+    2.8249598289358206,
+    3.106536125314647,
+    3.223847307007888
+   ],
+   "sep_deep_at_eval_epochs": {
+    "20": 0.9345724473054382,
+    "40": 1.1472385758641122,
+    "60": 1.352304892978449,
+    "80": 1.5200418192764809,
+    "100": 1.7038333457091759,
+    "120": 1.8170377331218501,
+    "140": 2.0088392989388826,
+    "160": 2.105604429354613,
+    "180": 2.2992812052540397,
+    "200": 2.475404087154345,
+    "220": 2.6010853613930185,
+    "240": 2.7339641143535744,
+    "260": 2.914890785326903,
+    "280": 3.0499959046813263,
+    "300": 3.1432734357899634,
+    "320": 3.223847307007888,
+    "340": 3.257482325893709,
+    "360": 3.2791354299961837,
+    "362": 3.27559844104723
+   },
+   "acc_frac": {
+    "S1": 0.9052,
+    "S1-TTA": 0.9145,
+    "S2": 0.9037,
+    "S2-TTA": 0.9139
+   },
+   "acc_pct": {
+    "S1": 90.52,
+    "S1-TTA": 91.45,
+    "S2": 90.37,
+    "S2-TTA": 91.39
+   },
+   "test_correct_of_10000": {
+    "S1": 9052,
+    "S1-TTA": 9145,
+    "S2": 9037,
+    "S2-TTA": 9139
+   },
+   "top5_frac": {
+    "S1": 0.9947,
+    "S1-TTA": 0.9963,
+    "S2": 0.9936,
+    "S2-TTA": 0.995
+   },
+   "preds_npz": {
+    "S1": {
+     "file": "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/preds_stage1_test_no_tta.npz",
+     "sha256": "d8961de60431a06d05edb491480872792010c58cb5f2ac1808e646133c733883",
+     "n": 10000,
+     "correct": 9052
+    },
+    "S1-TTA": {
+     "file": "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/preds_stage1_test_tta.npz",
+     "sha256": "240a8c1a1c65b2dce0efb0e066271afcbc62ddd63812d60b55460506fbabf7ba",
+     "n": 10000,
+     "correct": 9145
+    },
+    "S2": {
+     "file": "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/preds_stage2_test_no_tta.npz",
+     "sha256": "5f0edfefc266814a7b454a26b720bc6c4d2b75ea3635f916a310e57a12a1031c",
+     "n": 10000,
+     "correct": 9037
+    },
+    "S2-TTA": {
+     "file": "CF/ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/preds_stage2_test_tta.npz",
+     "sha256": "41a8613ccb75219f35e4d1d1dc109b15395603e22d1cabda45cb5f4b5a4e301b",
+     "n": 10000,
+     "correct": 9139
+    }
+   },
+   "final_test_eval_ts_utc": "2026-03-12T21:20:08Z",
+   "events_sha256": "57c21905d9301339cc0521d802f40903dba0d13bacc9d8668533929feb091fca",
+   "layer_metrics_sha256": [
+    "ac2ac2f104a0b70f8b85e2387469fac3ad070e607f39f53d69a8770857981f28",
+    "4a303fd5264a71e92692b4c517ba16f4085a5bb8c809f1f8d90bdc3083e17302"
+   ],
+   "config_vs_f2": {
+    "block_curr_lambda": [
+     0.0,
+     0.25
+    ],
+    "depth_order_lambda": [
+     0.0,
+     0.2
+    ]
+   }
+  },
+  "s123": {
+   "label": "seed 123",
+   "segments": [
+    "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110"
+   ],
+   "segment_stage1_epoch_ranges": [
+    [
+     1,
+     362
+    ]
+   ],
+   "config_json_sha256": "26992a40fdef6403f437dc99c1b57472b728ac9053fb588988fc1e1e833e33f6",
+   "env": {
+    "cuda_available": true,
+    "cuda_version": "13.0",
+    "cudnn_version": 91300,
+    "device0": "NVIDIA GB10",
+    "device_count": 1,
+    "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39",
+    "python": "3.12.3",
+    "torch": "2.9.1+cu130"
+   },
+   "env_per_segment": [
+    {
+     "cuda_available": true,
+     "cuda_version": "13.0",
+     "cudnn_version": 91300,
+     "device0": "NVIDIA GB10",
+     "device_count": 1,
+     "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39",
+     "python": "3.12.3",
+     "torch": "2.9.1+cu130"
+    }
+   ],
+   "best_s1_val": 0.9178,
+   "best_s2_val": 0.9164,
+   "stage1_selected_epoch": 260,
+   "stage1_selected_epoch_segment": "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110",
+   "stage1_last_epoch": 362,
+   "sep_deep_last": 7.852139505846747,
+   "sep_deep_selected": 5.6495516163179245,
+   "sep_blocks_last": [
+    2.2905349539614273,
+    4.7892731962532835,
+    6.6344601696935195,
+    7.852139505846747
+   ],
+   "sep_blocks_selected": [
+    2.0058632143612565,
+    4.0516803620875566,
+    5.085313347564346,
+    5.6495516163179245
+   ],
+   "sep_deep_at_eval_epochs": {
+    "20": 0.6117602559341782,
+    "40": 0.6916662694393904,
+    "60": 0.8779835714690987,
+    "80": 1.436215999482692,
+    "100": 1.5701057801301452,
+    "120": 2.0534687247769585,
+    "140": 2.409465545895456,
+    "160": 2.6124335568526695,
+    "180": 2.981044377403698,
+    "200": 3.5057593405931846,
+    "220": 4.7628878286515155,
+    "240": 5.082269695983536,
+    "260": 5.6495516163179245,
+    "280": 6.867253665266366,
+    "300": 6.459389280998844,
+    "320": 7.7282276098755585,
+    "340": 8.034989422765271,
+    "360": 7.872746917023056,
+    "362": 7.852139505846747
+   },
+   "acc_frac": {
+    "S1": 0.9054,
+    "S1-TTA": 0.914,
+    "S2": 0.9051,
+    "S2-TTA": 0.9151
+   },
+   "acc_pct": {
+    "S1": 90.54,
+    "S1-TTA": 91.4,
+    "S2": 90.51,
+    "S2-TTA": 91.51
+   },
+   "test_correct_of_10000": {
+    "S1": 9054,
+    "S1-TTA": 9140,
+    "S2": 9051,
+    "S2-TTA": 9151
+   },
+   "top5_frac": {
+    "S1": 0.9962,
+    "S1-TTA": 0.9968,
+    "S2": 0.9934,
+    "S2-TTA": 0.9953
+   },
+   "preds_npz": {
+    "S1": {
+     "file": "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110/preds_stage1_test_no_tta.npz",
+     "sha256": "4dbcdc36ecc11d42310f1a3f6d31b1556f26d5d206210a96290f8e6f3b3629ef",
+     "n": 10000,
+     "correct": 9054
+    },
+    "S1-TTA": {
+     "file": "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110/preds_stage1_test_tta.npz",
+     "sha256": "60474760e23de025f7a7b1e8cd5159809fa3ebe4e9fa93e61b8eb247278a23be",
+     "n": 10000,
+     "correct": 9140
+    },
+    "S2": {
+     "file": "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110/preds_stage2_test_no_tta.npz",
+     "sha256": "9687a3f1e522037b85a1373a24041b57587e1ae8fc9c4b5502dec576d462b0ec",
+     "n": 10000,
+     "correct": 9051
+    },
+    "S2-TTA": {
+     "file": "CF/revised_training/out/gamma0_seed123/runs/ff_cifar10_cifar10_gamma0_seed123_L4_D256_bs512_seed123_20260417_235110/preds_stage2_test_tta.npz",
+     "sha256": "1776d04e82c7ca7d2de80ba897ed6e11e1fa94c77d29f63add32552f27c5a623",
+     "n": 10000,
+     "correct": 9151
+    }
+   },
+   "final_test_eval_ts_utc": "2026-04-22T11:54:35Z",
+   "events_sha256": "236b60909b316c8690a0226fc9c2158bcfb4a3ab05f084323539dcab1cbd9af9",
+   "layer_metrics_sha256": [
+    "eca9d284f2747f2c795716f8a284822904f61997537f31d2d883c41dc0c21640"
+   ],
+   "config_vs_f2": {
+    "seed": [
+     123,
+     42
+    ]
+   }
+  },
+  "s456": {
+   "label": "seed 456",
+   "segments": [
+    "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437"
+   ],
+   "segment_stage1_epoch_ranges": [
+    [
+     1,
+     362
+    ]
+   ],
+   "config_json_sha256": "692fca5e2796f033eb9bdf710e365f3b71015090ce0b5d23edf5a39888384504",
+   "env": {
+    "cuda_available": true,
+    "cuda_version": "13.0",
+    "cudnn_version": 91300,
+    "device0": "NVIDIA GB10",
+    "device_count": 1,
+    "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39",
+    "python": "3.12.3",
+    "torch": "2.9.1+cu130"
+   },
+   "env_per_segment": [
+    {
+     "cuda_available": true,
+     "cuda_version": "13.0",
+     "cudnn_version": 91300,
+     "device0": "NVIDIA GB10",
+     "device_count": 1,
+     "platform": "Linux-6.14.0-1015-nvidia-aarch64-with-glibc2.39",
+     "python": "3.12.3",
+     "torch": "2.9.1+cu130"
+    }
+   ],
+   "best_s1_val": 0.914,
+   "best_s2_val": 0.9158,
+   "stage1_selected_epoch": 260,
+   "stage1_selected_epoch_segment": "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437",
+   "stage1_last_epoch": 362,
+   "sep_deep_last": 7.97326458459613,
+   "sep_deep_selected": 6.414208719100075,
+   "sep_blocks_last": [
+    2.2955319854034775,
+    4.889574807265709,
+    6.875286365377492,
+    7.97326458459613
+   ],
+   "sep_blocks_selected": [
+    2.0177905216984366,
+    3.9753907439352454,
+    5.3478321042554136,
+    6.414208719100075
+   ],
+   "sep_deep_at_eval_epochs": {
+    "20": 0.6205717828767053,
+    "40": 0.7409699346827364,
+    "60": 0.8703362791017554,
+    "80": 1.3082501162057636,
+    "100": 1.8526062348793293,
+    "120": 2.0550866017396423,
+    "140": 2.436140804455198,
+    "160": 3.0699526249677285,
+    "180": 3.9061782414885773,
+    "200": 3.6701785778177194,
+    "220": 4.585042942529437,
+    "240": 4.966867731905531,
+    "260": 6.414208719100075,
+    "280": 5.867474172307157,
+    "300": 6.990678721460803,
+    "320": 7.5898092642597765,
+    "340": 8.205878794878378,
+    "360": 7.95628809106761,
+    "362": 7.97326458459613
+   },
+   "acc_frac": {
+    "S1": 0.9044,
+    "S1-TTA": 0.911,
+    "S2": 0.9044,
+    "S2-TTA": 0.9122
+   },
+   "acc_pct": {
+    "S1": 90.44,
+    "S1-TTA": 91.1,
+    "S2": 90.44,
+    "S2-TTA": 91.22
+   },
+   "test_correct_of_10000": {
+    "S1": 9044,
+    "S1-TTA": 9110,
+    "S2": 9044,
+    "S2-TTA": 9122
+   },
+   "top5_frac": {
+    "S1": 0.9963,
+    "S1-TTA": 0.9967,
+    "S2": 0.9941,
+    "S2-TTA": 0.9957
+   },
+   "preds_npz": {
+    "S1": {
+     "file": "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437/preds_stage1_test_no_tta.npz",
+     "sha256": "c4ed047e24d1a44dfaf8885c8a0502a75913b730416479c8692d489b48876d1c",
+     "n": 10000,
+     "correct": 9044
+    },
+    "S1-TTA": {
+     "file": "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437/preds_stage1_test_tta.npz",
+     "sha256": "491db1a9b02d91d68c085e3123ffd474812d325b47acbdec38982246c8aef934",
+     "n": 10000,
+     "correct": 9110
+    },
+    "S2": {
+     "file": "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437/preds_stage2_test_no_tta.npz",
+     "sha256": "f295c6909e2e3ece846ff7ea58028ccfad457ae5e6e9ff7110551a6584f2094f",
+     "n": 10000,
+     "correct": 9044
+    },
+    "S2-TTA": {
+     "file": "CF/revised_training/out/gamma0_seed456/runs/ff_cifar10_cifar10_gamma0_seed456_L4_D256_bs512_seed456_20260422_135437/preds_stage2_test_tta.npz",
+     "sha256": "441327dc0547c0b33cecdca81b0d3189dfa98e5692f2bdac0d7d57749c1ca6d0",
+     "n": 10000,
+     "correct": 9122
+    }
+   },
+   "final_test_eval_ts_utc": "2026-04-27T02:03:49Z",
+   "events_sha256": "4dd5216ebcb8c072c490c522fce75e595169b860ab88605a4be8b6229aba1803",
+   "layer_metrics_sha256": [
+    "8ae31c2d486142d462178407a9e0cdde6a84c061d4055c1fe6a3263682271f54"
+   ],
+   "config_vs_f2": {
+    "seed": [
+     456,
+     42
+    ]
+   }
+  }
+ },
+ "comparison_vs_published_seed42": {
+  "protocols_pp": {
+   "S1": {
+    "new": 90.58,
+    "published": 90.52,
+    "delta_new_minus_published": 0.06
+   },
+   "S1-TTA": {
+    "new": 91.39,
+    "published": 91.45,
+    "delta_new_minus_published": -0.06
+   },
+   "S2": {
+    "new": 90.62,
+    "published": 90.37,
+    "delta_new_minus_published": 0.25
+   },
+   "S2-TTA": {
+    "new": 91.31,
+    "published": 91.39,
+    "delta_new_minus_published": -0.08
+   }
+  },
+  "paired_test_predictions": {
+   "S1": {
+    "new_right_published_wrong": 338,
+    "new_wrong_published_right": 332,
+    "prediction_agreement": 0.919,
+    "exact_mcnemar_p_two_sided": 0.8468464514370835
+   },
+   "S1-TTA": {
+    "new_right_published_wrong": 236,
+    "new_wrong_published_right": 242,
+    "prediction_agreement": 0.9415,
+    "exact_mcnemar_p_two_sided": 0.8191356953071667
+   },
+   "S2": {
+    "new_right_published_wrong": 347,
+    "new_wrong_published_right": 322,
+    "prediction_agreement": 0.9187,
+    "exact_mcnemar_p_two_sided": 0.3534712180951363
+   },
+   "S2-TTA": {
+    "new_right_published_wrong": 245,
+    "new_wrong_published_right": 253,
+    "prediction_agreement": 0.9384,
+    "exact_mcnemar_p_two_sided": 0.753802053869947
+   }
+  },
+  "sep_last_epoch_362": {
+   "new": 7.722306361143616,
+   "published": 3.27559844104723,
+   "delta": 4.446707920096387,
+   "ratio": 2.357525349986046
+  },
+  "sep_selected_epoch": {
+   "new": 3.685287116587847,
+   "new_epoch": 200,
+   "published": 3.223847307007888,
+   "published_epoch": 320
+  },
+  "best_val": {
+   "new_best_s1": 0.9128,
+   "published_best_s1": 0.9198,
+   "new_best_s2": 0.915,
+   "published_best_s2": 0.9206
+  },
+  "what_differs": {
+   "config": {
+    "block_curr_lambda": [
+     0.25,
+     0.0
+    ],
+    "depth_order_lambda": [
+     0.2,
+     0.0
+    ]
+   },
+   "same_seed_and_split": true,
+   "hardware": "both Colab A100-SXM4-40GB (env.json of every segment)",
+   "software": {
+    "new": {
+     "torch": "2.11.0+cu128",
+     "cuda_version": "12.8",
+     "cudnn_version": 91900,
+     "python": "3.13.15",
+     "platform": "Linux-6.6.122+-x86_64-with-glibc2.39"
+    },
+    "published": {
+     "torch": "2.10.0+cu128",
+     "cuda_version": "12.8",
+     "cudnn_version": 91002,
+     "python": "3.12.12",
+     "platform": "Linux-6.6.113+-x86_64-with-glibc2.35"
+    }
+   },
+   "trainer": "new: the [F2] fork of basic_fair_revised_valfix_cp_fair_fixed.py (the seed-123/456 trainer; RNG restored on resume). published: a pre-fork trainer that re-seeds instead of restoring the RNG on resume (PREDICTIONS.md provenance note); no trainer copy is stored with the published run, so code identity beyond identical config.json keys (values differ only in block_curr_lambda / depth_order_lambda) is not verified here",
+   "resumes": "new: 2 resumes (after epochs 3 and 274); published: 1 resume (after epoch 273)"
+  }
+ },
+ "comparison_vs_seeds_123_456": {
+  "protocols_pp": {
+   "S1": {
+    "new": 90.58,
+    "s123": 90.54,
+    "s456": 90.44,
+    "s123_456_mean": 90.49,
+    "delta_new_minus_s123_456_mean": 0.09,
+    "position": "above seeds 123/456"
+   },
+   "S1-TTA": {
+    "new": 91.39,
+    "s123": 91.4,
+    "s456": 91.1,
+    "s123_456_mean": 91.25,
+    "delta_new_minus_s123_456_mean": 0.14,
+    "position": "inside [min, max] of seeds 123/456"
+   },
+   "S2": {
+    "new": 90.62,
+    "s123": 90.51,
+    "s456": 90.44,
+    "s123_456_mean": 90.475,
+    "delta_new_minus_s123_456_mean": 0.145,
+    "position": "above seeds 123/456"
+   },
+   "S2-TTA": {
+    "new": 91.31,
+    "s123": 91.51,
+    "s456": 91.22,
+    "s123_456_mean": 91.365,
+    "delta_new_minus_s123_456_mean": -0.055,
+    "position": "inside [min, max] of seeds 123/456"
+   }
+  },
+  "sep_last_epoch_362": {
+   "new": 7.722306361143616,
+   "s123": 7.852139505846747,
+   "s456": 7.97326458459613
+  },
+  "sep_selected_epoch": {
+   "new": [
+    200,
+    3.685287116587847
+   ],
+   "s123": [
+    260,
+    5.6495516163179245
+   ],
+   "s456": [
+    260,
+    6.414208719100075
+   ]
+  },
+  "best_val": {
+   "new": [
+    0.9128,
+    0.915
+   ],
+   "s123": [
+    0.9178,
+    0.9164
+   ],
+   "s456": [
+    0.914,
+    0.9158
+   ],
+   "fields": [
+    "best_s1",
+    "best_s2"
+   ]
+  },
+  "hardware": {
+   "new": "NVIDIA A100-SXM4-40GB (Colab), torch 2.11.0+cu128",
+   "s123": "NVIDIA GB10 (DGX Spark), torch 2.9.1+cu130",
+   "s456": "NVIDIA GB10 (DGX Spark), torch 2.9.1+cu130"
+  }
+ },
+ "sep_trajectory_at_common_eval_epochs": {
+  "20": {
+   "new42": 0.5921615005909712,
+   "s123": 0.6117602559341782,
+   "s456": 0.6205717828767053,
+   "pub42": 0.9345724473054382
+  },
+  "40": {
+   "new42": 0.7452587670293348,
+   "s123": 0.6916662694393904,
+   "s456": 0.7409699346827364,
+   "pub42": 1.1472385758641122
+  },
+  "60": {
+   "new42": 0.8885814252941088,
+   "s123": 0.8779835714690987,
+   "s456": 0.8703362791017554,
+   "pub42": 1.352304892978449
+  },
+  "80": {
+   "new42": 1.0052119692166646,
+   "s123": 1.436215999482692,
+   "s456": 1.3082501162057636,
+   "pub42": 1.5200418192764809
+  },
+  "100": {
+   "new42": 1.5582843306420864,
+   "s123": 1.5701057801301452,
+   "s456": 1.8526062348793293,
+   "pub42": 1.7038333457091759
+  },
+  "120": {
+   "new42": 1.9641992059247246,
+   "s123": 2.0534687247769585,
+   "s456": 2.0550866017396423,
+   "pub42": 1.8170377331218501
+  },
+  "140": {
+   "new42": 2.6058582752600485,
+   "s123": 2.409465545895456,
+   "s456": 2.436140804455198,
+   "pub42": 2.0088392989388826
+  },
+  "160": {
+   "new42": 2.4780917797965567,
+   "s123": 2.6124335568526695,
+   "s456": 3.0699526249677285,
+   "pub42": 2.105604429354613
+  },
+  "180": {
+   "new42": 2.5991746557169946,
+   "s123": 2.981044377403698,
+   "s456": 3.9061782414885773,
+   "pub42": 2.2992812052540397
+  },
+  "200": {
+   "new42": 3.685287116587847,
+   "s123": 3.5057593405931846,
+   "s456": 3.6701785778177194,
+   "pub42": 2.475404087154345
+  },
+  "220": {
+   "new42": 4.357290763964598,
+   "s123": 4.7628878286515155,
+   "s456": 4.585042942529437,
+   "pub42": 2.6010853613930185
+  },
+  "240": {
+   "new42": 4.365570635631166,
+   "s123": 5.082269695983536,
+   "s456": 4.966867731905531,
+   "pub42": 2.7339641143535744
+  },
+  "260": {
+   "new42": 5.231874306996663,
+   "s123": 5.6495516163179245,
+   "s456": 6.414208719100075,
+   "pub42": 2.914890785326903
+  },
+  "280": {
+   "new42": 6.402041676400722,
+   "s123": 6.867253665266366,
+   "s456": 5.867474172307157,
+   "pub42": 3.0499959046813263
+  },
+  "300": {
+   "new42": 6.662627527083473,
+   "s123": 6.459389280998844,
+   "s456": 6.990678721460803,
+   "pub42": 3.1432734357899634
+  },
+  "320": {
+   "new42": 7.372462946793129,
+   "s123": 7.7282276098755585,
+   "s456": 7.5898092642597765,
+   "pub42": 3.223847307007888
+  },
+  "340": {
+   "new42": 7.614600504951915,
+   "s123": 8.034989422765271,
+   "s456": 8.205878794878378,
+   "pub42": 3.257482325893709
+  },
+  "360": {
+   "new42": 7.725900469155147,
+   "s123": 7.872746917023056,
+   "s456": 7.95628809106761,
+   "pub42": 3.2791354299961837
+  },
+  "362": {
+   "new42": 7.722306361143616,
+   "s123": 7.852139505846747,
+   "s456": 7.97326458459613,
+   "pub42": 3.27559844104723
+  }
+ },
+ "sep_trajectory_summary": {
+  "epochs_considered": "common val-eval epochs >= 200 (the new run's selected epoch): [200, 220, 240, 260, 280, 300, 320, 340, 360, 362]",
+  "new42_inside_s123_s456_range_at": [
+   280,
+   300
+  ],
+  "new42_below_s123_s456_min_at": [
+   220,
+   240,
+   260,
+   320,
+   340,
+   360,
+   362
+  ],
+  "new42_above_s123_s456_max_at": [
+   200
+  ],
+  "n_inside": 2,
+  "n_below": 7,
+  "n_above": 1,
+  "n": 10,
+  "pub42_below_s123_s456_min_at": [
+   200,
+   220,
+   240,
+   260,
+   280,
+   300,
+   320,
+   340,
+   360,
+   362
+  ],
+  "new42_minus_s123_456_mean_range": [
+   -0.8000058607123366,
+   0.09731815738239513
+  ],
+  "pub42_minus_s123_456_mean_range": [
+   -4.862951782928117,
+   -1.1125648720511072
+  ],
+  "at_epoch": {
+   "200": {
+    "new42": 3.685287116587847,
+    "s123": 3.5057593405931846,
+    "s456": 3.6701785778177194,
+    "pub42": 2.475404087154345
+   },
+   "260": {
+    "new42": 5.231874306996663,
+    "s123": 5.6495516163179245,
+    "s456": 6.414208719100075,
+    "pub42": 2.914890785326903
+   },
+   "320": {
+    "new42": 7.372462946793129,
+    "s123": 7.7282276098755585,
+    "s456": 7.5898092642597765,
+    "pub42": 3.223847307007888
+   },
+   "362": {
+    "new42": 7.722306361143616,
+    "s123": 7.852139505846747,
+    "s456": 7.97326458459613,
+    "pub42": 3.27559844104723
+   }
+  }
+ },
+ "aggregates": {
+  "matched_config_n3": {
+   "runs": [
+    "F2 new seed 42 (Colab A100)",
+    "seed 123 (GB10)",
+    "seed 456 (GB10)"
+   ],
+   "S1": {
+    "values": [
+     90.58,
+     90.54,
+     90.44
+    ],
+    "mean": 90.52,
+    "sd_sample": 0.07211102550928121,
+    "n": 3,
+    "min": 90.44,
+    "max": 90.58
+   },
+   "S1-TTA": {
+    "values": [
+     91.39,
+     91.4,
+     91.1
+    ],
+    "mean": 91.29666666666667,
+    "sd_sample": 0.17039170558843258,
+    "n": 3,
+    "min": 91.1,
+    "max": 91.4
+   },
+   "S2": {
+    "values": [
+     90.62,
+     90.51,
+     90.44
+    ],
+    "mean": 90.52333333333333,
+    "sd_sample": 0.09073771725877776,
+    "n": 3,
+    "min": 90.44,
+    "max": 90.62
+   },
+   "S2-TTA": {
+    "values": [
+     91.31,
+     91.51,
+     91.22
+    ],
+    "mean": 91.34666666666665,
+    "sd_sample": 0.14843629385475182,
+    "n": 3,
+    "min": 91.22,
+    "max": 91.51
+   },
+   "sep_last_epoch_362": {
+    "values": [
+     7.722306361143616,
+     7.852139505846747,
+     7.97326458459613
+    ],
+    "mean": 7.849236817195497,
+    "sd_sample": 0.12550428949109693,
+    "n": 3,
+    "min": 7.722306361143616,
+    "max": 7.97326458459613
+   },
+   "sep_selected_epoch": {
+    "values": [
+     3.685287116587847,
+     5.6495516163179245,
+     6.414208719100075
+    ],
+    "mean": 5.249682484001949,
+    "sd_sample": 1.4077197059069766,
+    "n": 3,
+    "min": 3.685287116587847,
+    "max": 6.414208719100075
+   },
+   "selected_epochs": [
+    200,
+    260,
+    260
+   ]
+  },
+  "published_n3": {
+   "runs": [
+    "published seed 42 (bcl 0 / dol 0, Colab A100)",
+    "seed 123 (GB10)",
+    "seed 456 (GB10)"
+   ],
+   "S1": {
+    "values": [
+     90.52,
+     90.54,
+     90.44
+    ],
+    "mean": 90.5,
+    "sd_sample": 0.052915026221294716,
+    "n": 3,
+    "min": 90.44,
+    "max": 90.54
+   },
+   "S1-TTA": {
+    "values": [
+     91.45,
+     91.4,
+     91.1
+    ],
+    "mean": 91.31666666666668,
+    "sd_sample": 0.1892969448600146,
+    "n": 3,
+    "min": 91.1,
+    "max": 91.45
+   },
+   "S2": {
+    "values": [
+     90.37,
+     90.51,
+     90.44
+    ],
+    "mean": 90.44,
+    "sd_sample": 0.07000000000000028,
+    "n": 3,
+    "min": 90.37,
+    "max": 90.51
+   },
+   "S2-TTA": {
+    "values": [
+     91.39,
+     91.51,
+     91.22
+    ],
+    "mean": 91.37333333333333,
+    "sd_sample": 0.14571661996263233,
+    "n": 3,
+    "min": 91.22,
+    "max": 91.51
+   },
+   "sep_last_epoch_362": {
+    "values": [
+     3.27559844104723,
+     7.852139505846747,
+     7.97326458459613
+    ],
+    "mean": 6.367000843830035,
+    "sd_sample": 2.6779179287506163,
+    "n": 3,
+    "min": 3.27559844104723,
+    "max": 7.97326458459613
+   },
+   "sep_selected_epoch": {
+    "values": [
+     3.223847307007888,
+     5.6495516163179245,
+     6.414208719100075
+    ],
+    "mean": 5.095869214141962,
+    "sd_sample": 1.6656904384672504,
+    "n": 3,
+    "min": 3.223847307007888,
+    "max": 6.414208719100075
+   },
+   "selected_epochs": [
+    320,
+    260,
+    260
+   ]
+  },
+  "printed_2dp": {
+   "matched_n3": {
+    "S1": "90.52 +/- 0.07",
+    "S1-TTA": "91.30 +/- 0.17",
+    "S2": "90.52 +/- 0.09",
+    "S2-TTA": "91.35 +/- 0.15",
+    "sep_last_epoch_362": "7.85 +/- 0.13",
+    "sep_selected_epoch": "5.25 +/- 1.41"
+   },
+   "published_n3": {
+    "S1": "90.50 +/- 0.05",
+    "S1-TTA": "91.32 +/- 0.19",
+    "S2": "90.44 +/- 0.07",
+    "S2-TTA": "91.37 +/- 0.15",
+    "sep_last_epoch_362": "6.37 +/- 2.68",
+    "sep_selected_epoch": "5.10 +/- 1.67"
+   }
+  },
+  "delta_matched_minus_published_mean": {
+   "S1": 0.02,
+   "S1-TTA": -0.02,
+   "S2": 0.0833,
+   "S2-TTA": -0.0267,
+   "sep_last_epoch_362": 1.4822359733654622,
+   "sep_selected_epoch": 0.15381326985998633
+  },
+  "note": "the published n = 3 headline (S1-TTA 91.32 +/- 0.19) is not replaced; the matched n = 3 is reported next to it (PREDICTIONS.md)"
+ },
+ "predictions": {
+  "source": "CR/experiments/f2_gamma0_s42/PREDICTIONS.md (written 2026-09-25, before launch)",
+  "P1": {
+   "registered": "S1-TTA lies within the seed-123/456 range, [91.10, 91.40]",
+   "observed_s1_tta_pct": 91.39,
+   "interval_pct": [
+    91.1,
+    91.4
+   ],
+   "result": "PASS",
+   "margin_to_nearest_bound_pp": 0.01,
+   "margin_in_test_images": 1,
+   "caveat_registered": "if the three seeds are exchangeable, a third draw falls between the other two with probability 1/3; P1 is a strict check"
+  },
+  "P1b": {
+   "registered": "S1-TTA lies within +/-0.30 pp of the seed-123/456 mean (91.25), i.e. in [90.95, 91.55]",
+   "observed_s1_tta_pct": 91.39,
+   "interval_pct": [
+    90.95,
+    91.55
+   ],
+   "result": "PASS",
+   "distance_from_center_pp": 0.14
+  },
+  "P2": {
+   "registered": "the deepest-block sep (layer-3 sep_curr_nl at Stage-1 epoch 362) is near 7.9, like seeds 123/456, rather than 3.28. Band: [6.9, 8.9]. Decision rule: >= 5.6 counts as 'like seeds 123/456'; < 5.6 counts as 'like the published seed 42'",
+   "metric": "layer-3 sep_curr_nl at Stage-1 epoch 362 (segments concatenated by (epoch, layer))",
+   "observed": 7.722306361143616,
+   "observed_2dp": 7.72,
+   "band": [
+    6.9,
+    8.9
+   ],
+   "result": "PASS",
+   "decision_rule_threshold": 5.6,
+   "decision_rule_outcome": "like seeds 123/456"
+  },
+  "not_registered": {
+   "S2_pct": 90.62,
+   "S2-TTA_pct": 91.31,
+   "seeds_123_456_S2-TTA": [
+    91.51,
+    91.22
+   ],
+   "selected_epoch_sep": 3.685287116587847,
+   "note": "reported without a prediction (PREDICTIONS.md 'Not registered')"
+  },
+  "registered_outcome_branch": {
+   "branch": "P2 holds (sep >= 5.6) and P1b holds",
+   "registered_sentence_filled": "Rerunning seed 42 in the seed-123/456 configuration gives S1-TTA 91.39 (seeds 123/456: 91.40, 91.10) and deepest-block separation 7.72 (7.85, 7.97). The 3.28 of the published seed-42 run therefore reflects its configuration (block_curr_lambda 0, depth_order_lambda 0), not seed variance.",
+   "required_qualifiers": [
+    "the separation value is the last Stage-1 epoch (362); at the validation-selected epoch the new seed 42 gives 3.69 (epoch 200), close to the published seed 42's 3.22 (epoch 320) and below seeds 123/456 (5.65/6.41, epoch 260); see sep_convention_caveat",
+    "one re-run of one seed; it does not separate block_curr_lambda from depth_order_lambda",
+    "hardware: the new seed 42 ran on a Colab NVIDIA A100-SXM4-40GB; seeds 123/456 ran on a DGX Spark NVIDIA GB10; the published seed 42 also ran on a Colab NVIDIA A100-SXM4-40GB",
+    "the new run was resumed twice (epoch-3 and epoch-274 checkpoints; RNG restored, DataLoader workers re-seeded)"
+   ],
+   "p1_fails_but_p1b_holds_rule_applies": false,
+   "scope_note": "the registered sentence rests on one re-run seed: in the same seed and split, moving to the seed-123/456 loss weights moved the last-epoch deepest sep from 3.28 to 7.72 (both runs on Colab A100). So seed 42 with this split does not by itself produce the low last-epoch separation under the matched configuration. The evidence is one re-run. It does not separate block_curr_lambda from depth_order_lambda, and it does not exclude run-level nondeterminism (resumes; torch 2.10.0+cu128 vs 2.11.0+cu128; trainer code identity is verified only through config.json) as a smaller contributor"
+  },
+  "sep_convention_caveat": "P2 is registered on the last Stage-1 epoch (362) and passes (7.72). The paper's tab:gamma0_multiseed note prints the separation at each run's validation-selected epoch (3.22/5.65/6.41 at epochs 320/260/260). On that convention the new seed 42 gives 3.69 at epoch 200: below seeds 123/456 and close to the published seed 42's 3.22, because its validation accuracy peaked 60 epochs earlier, while separation was still rising. At matched epochs the new run stays much closer to seeds 123/456 than to the published seed 42 (epoch 200: new 3.69, seeds 123/456 3.51/3.67, published seed 42 2.48), but it mostly sits slightly below them: at the 10 common evaluation epochs from 200 to 362 it lies 0.80 below to 0.10 above the seed-123/456 mean; it is below both seeds at 7, inside their range at 2 and above both at 1 of those epochs. The published seed 42 lies 1.11 to 4.86 below that mean (below both seeds at 10 of 10). Any sentence that uses the registered result must say that it refers to the last epoch, and it must also report the selected-epoch value."
+ },
+ "disclosures": [
+  "hardware mixing: the matched-config n = 3 combines the new seed 42, trained on a Colab NVIDIA A100-SXM4-40GB (torch 2.11.0+cu128, CUDA 12.8, cuDNN 91900, Python 3.13.15, x86_64), with seeds 123/456, trained on a DGX Spark NVIDIA GB10 (torch 2.9.1+cu130, CUDA 13.0, cuDNN 91300, Python 3.12.3, aarch64). Its SD therefore mixes seed and hardware/software variation. The published n = 3 mixes the same two platforms (published seed 42 on a Colab NVIDIA A100-SXM4-40GB, torch 2.10.0+cu128, CUDA 12.8, cuDNN 91002, Python 3.12.12, x86_64), so the new-vs-published seed-42 comparison is on the same GPU model but not the same software stack.",
+  "resumes: the new seed-42 run was trained in 4 Colab segments; 2 resumes (from the epoch-3 checkpoint into segment 3 and from the epoch-274 checkpoint into segment 4), both with rng_restored = true in events.jsonl. The persistent DataLoader workers are re-seeded on resume, so the run is reproducible from its checkpoints but not bitwise equal to an uninterrupted run.",
+  "segment 2's console log reports Stage-1 checkpoint saves for epochs 1-4, but segment 3 loaded the epoch-3 checkpoint, so the last logged save did not persist on Drive (most likely not yet synced when the CLI VM was lost; inference, not recorded in the files); epoch 4 was therefore trained twice",
+  "selected checkpoint: the validation-selected Stage-1 epoch is 200 (val 0.9128) in ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045; S1/S1-TTA therefore come from a backbone trained in segments 2-3 only; the Stage-2 head (S2/S2-TTA) and the epoch-362 sep (P2) come from segment 4, after the second resume",
+  "console log: the Drive trainer log has no trainer output for segment 3 (START header only) and no header for segment 1; segment 3 is documented by its run-directory jsonl files; its CUDA-RNG restore is not separately recorded (events.jsonl records rng_restored = true; segment 4's console line confirms python, numpy, torch CPU and torch CUDA)",
+  "checkpoint files are on Google Drive only and were not inspected; the selected epoch is identified from the logs (first val eval attaining best_s1, strict '>' update), as in results/e1_tier1_sep_acc.json",
+  "software differs from the plan's note: the F2 segments ran torch 2.11.0+cu128 with Python 3.13.15 and cuDNN 91900 (PREDICTIONS.md listed the published seed 42's torch 2.10.0+cu128 and CR/.venv's 2.14.0+cu130 as known differences)",
+  "P1 passes by 1 test image(s): S1-TTA 91.39 against the upper bound 91.40; the registered caveat applies (P1 is a strict check)"
+ ]
+}

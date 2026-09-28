@@ -57,17 +57,17 @@ def perm_p_global(x, y, stat, rng, n=N_PERM):
     return obs, (cnt + 1) / (n + 1)
 
 
-def centred(v, groups):
+def centered(v, groups):
     v = np.asarray(v, dtype=np.float64)
     out = v.copy()
-    for g in set(groups):
+    for g in sorted(set(groups)):
         m = np.array([gg == g for gg in groups])
         out[m] = v[m] - v[m].mean()
     return out
 
 
 def within_stat(sep, acc, groups):
-    cs, ca = centred(sep, groups), centred(acc, groups)
+    cs, ca = centered(sep, groups), centered(acc, groups)
     if np.allclose(cs, 0) or np.allclose(ca, 0):
         return float("nan")
     return float(np.corrcoef(cs, ca)[0, 1])
@@ -76,7 +76,7 @@ def within_stat(sep, acc, groups):
 def within_perm(sep, acc, groups, rng, n=N_PERM):
     obs = within_stat(sep, acc, groups)
     acc = np.asarray(acc, dtype=np.float64)
-    idx = {g: np.where(np.array(groups) == g)[0] for g in set(groups)}
+    idx = {g: np.where(np.array(groups) == g)[0] for g in sorted(set(groups))}  # sorted: p independent of PYTHONHASHSEED
     cnt = 0
     for _ in range(n):
         a = acc.copy()
@@ -153,7 +153,7 @@ def main():
             analysis[lab] = dict(
                 accuracy_protocol=ACC_KEYS[lab],
                 across_points=dict(n=len(points), spearman=rho, perm_p_two_sided=p_rho, n_perm=N_PERM),
-                within_config=dict(statistic="Pearson r of config-centred sep vs config-centred acc",
+                within_config=dict(statistic="Pearson r of config-centered sep vs config-centered acc",
                                    r=w_r, stratified_perm_p_two_sided=w_p, n_perm=N_PERM, n_configs=len(cfgs)),
                 across_configs=dict(n_configs=len(cfgs), configs=cfgs, sep_means=ms, acc_means_pct=ma,
                                     spearman=b_rho, exact_perm_p_two_sided=b_p),

@@ -40,6 +40,13 @@ Figures (vector PDF, written to --output-dir, default CR/paper/figures):
       quantities; the y-axis now says what is plotted (final-epoch Stage-2 validation accuracy,
       5k split) instead of "S2 Test Accuracy".  Values: results/fig_accuracy_vs_ratio_values.json.
 
+  early_exit -> fig_early_exit_pareto.pdf       (Part I, item C14 / E2)
+      Validation-selected early exit: test accuracy delta vs. FLOPs saved per run, CIFAR-10 L4/D128
+      (9 arms, seed 42) and the CIFAR-100 trio (9 runs), one panel per selection rule (T, T', D);
+      color + marker = objective family (cumulative vs. block-local / hardness-gated repairs).
+      Source: results/e2_exit.json via analysis/early_exit.py.  Values (incl. the paired CIFAR-100
+      repaired-minus-cumulative comparisons): results/fig_early_exit_pareto_values.json.
+
 CPU only; no torch import.  Run:
   CUDA_VISIBLE_DEVICES='' python analysis/camera_ready/make_figures.py --fig all
 """
@@ -58,6 +65,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import matplotlib.patches as mpatches  # noqa: E402
+import matplotlib.ticker  # noqa: E402,F401
 from matplotlib.lines import Line2D  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -101,7 +109,7 @@ N_FD = 1024
 BLUE, VERMILLION, GREEN = "#0072B2", "#D55E00", "#009E73"
 INK, INK2, GRID = "#222222", "#555555", "#e6e6e6"
 VARIANT_STYLE = {   # gamma -> (color, marker, legend label)
-    0.0: (BLUE, "o", r"$\gamma=0$ (block-local)"),
+    0.0: (BLUE, "o", r"$\gamma=0$ (history-free)"),
     0.7: (VERMILLION, "s", r"$\gamma=0.7$ (CP-FAIR-style)"),
     1.0: (GREEN, "^", r"$\gamma=1.0$ (LCFF)"),
 }
@@ -456,7 +464,7 @@ def fig_dissociation_summary(out_dir: Path, results_dir: Path):
     order = [  # key, direct label, color, marker; labels sit centered above each error bar
         ("cumulative", r"Cumulative ($\gamma{>}0$)", VERMILLION, "s"),
         ("gated_k0", r"Adaptive $\kappa{=}0$", GREEN, "^"),
-        ("gamma0", r"$\gamma{=}0$ (block-local)", BLUE, "o"),
+        ("gamma0", r"$\gamma{=}0$ (history-free)", BLUE, "o"),
     ]
     pts = {}
     for key, *_ in order:
@@ -800,12 +808,127 @@ def fig_loss_bpff(out_dir: Path, results_dir: Path):
     return out
 
 
+# ============================================================================= E2 early exit (C14)
+EE_FAMILY_STYLE = {  # objective family -> (color, marker, legend label); same hues as the trio figures
+    "cumulative": (VERMILLION, "s", r"cumulative ($\gamma{=}0.7$; C10 also LCFF $\gamma{=}1.0$)"),
+    "gamma0": (BLUE, "o", r"repaired: history-free $\gamma{=}0$"),
+    "gated": (GREEN, "^", r"repaired: hardness-gated"),
+}
+EE_RULES = (("T_iso_val", "T: shallowest depth with\nval. acc. $\\geq$ full depth"),
+            ("T_argmax_val", "T$'$: val.-best depth"),
+            ("D_dynamic_exit", "D: dynamic exit\n(val.-chosen margin)"))
+
+
+def _dodge(points, xr, yr, wx=0.046, wy=0.075, step=0.018):
+    """Horizontal offsets (data units) that keep markers from overlapping. A marker spans about wx of the
+    axis width and wy of its height (xr, yr = axis ranges); points are placed in family order (cumulative,
+    gamma0, gated), then by y, and each moves only if it would overlap an already placed marker, by the
+    smallest multiple of step*xr that clears it (cumulative tries left first, gated right first)."""
+    order = {"cumulative": 0, "gamma0": 1, "gated": 2}
+    first = {"cumulative": -1, "gamma0": 1, "gated": 1}
+    off, placed = [0.0] * len(points), []
+    for i in sorted(range(len(points)), key=lambda i: (order[points[i]["family"]], points[i]["y"])):
+        x, y, sgn = points[i]["x"], points[i]["y"], first[points[i]["family"]]
+        for k in [0] + [m * s for m in range(1, 60) for s in (sgn, -sgn)]:
+            xo = x + k * step * xr
+            if all(abs(xo - px) >= wx * xr or abs(y - py) >= wy * yr for px, py in placed):
+                off[i] = k * step * xr
+                placed.append((xo, y))
+                break
+    return off
+
+
+def fig_early_exit_pareto(out_dir: Path, results_dir: Path):
+    """Validation-selected early exit (E2): test delta vs FLOPs saved, per run, both families.
+
+    Rows: CIFAR-10 L4/D128 (9 arms, seed 42) and the CIFAR-100 L4/D256 trio (3 variants x 3 seeds);
+    columns: the three validation-selection rules. Color + marker = objective family, so the reader can
+    see whether repaired arms exit earlier than cumulative ones. All values come from results/e2_exit.json
+    via analysis/early_exit.py; the derived summaries (incl. the paired CIFAR-100 comparisons) are written
+    to results/fig_early_exit_pareto_values.json.
+    """
+    import early_exit as E
+    e2 = E.load(results_dir)
+    S = E.summarize(e2)
+    R = e2["runs"]
+    rows = (("c10", "CIFAR-10 (L4/D128)", S["c10_all"]["members"], 0.2),
+            ("c100", "CIFAR-100 (L4/D256)", S["c100_all"]["members"], 0.5))
+    fig, axes = plt.subplots(2, 3, figsize=(FULL_WIDTH, 3.2), layout="constrained", sharey="row")
+    plotted = {}
+    for i, (ds, row_label, names, ystep) in enumerate(rows):
+        dep = S["flops_saved_pct_by_depth"][ds]            # depth 1..4 -> % saved
+        ys = [E.op(R[n], rule)["delta_pp"] for n in names for rule, _ in EE_RULES]
+        pad = 0.12 * (max(ys) - min(ys))
+        for j, (rule, title) in enumerate(EE_RULES):
+            ax = axes[i, j]
+            pts = [dict(name=n, family=E.family_of(n), x=E.op(R[n], rule)["saved_pct"], y=E.op(R[n], rule)["delta_pp"])
+                   for n in names]
+            # Truncation picks one of four depths, so exact ties are dodged into family slots. Dynamic exit
+            # saves 64-75% in every run, so its column is zoomed (x from 61 to 79) and dodged at that scale.
+            zoom = rule == "D_dynamic_exit"
+            xlim = (61.0, 79.0) if zoom else (-8.0, 84.0)
+            off = _dodge(pts, xlim[1] - xlim[0], (max(ys) - min(ys)) + 2 * pad)
+            for d, x in zip((1, 2, 3, 4), dep):
+                if not xlim[0] < x < xlim[1]:
+                    continue
+                ax.axvline(x, color=GRID, lw=0.6, zorder=0)
+                ax.text(x, 1.0, f"$d{{=}}{d}$", transform=ax.get_xaxis_transform(), ha="center", va="bottom",
+                        fontsize=5.8, color=INK2)
+            ax.axhline(0.0, color="#9a9a9a", lw=0.7, zorder=1)
+            for fam in ("cumulative", "gamma0", "gated"):
+                sel = [k for k, p in enumerate(pts) if p["family"] == fam]
+                col, mk, _ = EE_FAMILY_STYLE[fam]
+                ax.scatter([pts[k]["x"] + off[k] for k in sel], [pts[k]["y"] for k in sel], s=24, marker=mk,
+                           color=col, edgecolors="white", linewidths=0.6, zorder=3 if fam == "cumulative" else 2)
+            ax.set_xlim(*xlim)
+            ax.set_ylim(min(ys) - pad, max(ys) + pad)
+            ax.yaxis.set_major_locator(matplotlib.ticker.MultipleLocator(ystep))
+            if zoom:
+                ax.set_xticks([65, 70, 75])
+                ax.text(0.03, 0.03, "x-axis zoomed", transform=ax.transAxes, fontsize=5.8, color=INK2,
+                        ha="left", va="bottom")
+            else:
+                ax.set_xticks([dep[3], dep[2], dep[1], dep[0]])
+                ax.set_xticklabels([f"{x:.0f}" for x in (dep[3], dep[2], dep[1], dep[0])])
+            if i == 0:
+                ax.set_title(title, fontsize=7.2, pad=10)
+            if j == 0:
+                ax.set_ylabel(f"{row_label}\ntest $\\Delta$ (pp)")
+            plotted[f"{ds}/{rule}"] = [dict(p, x_plotted=p["x"] + o) for p, o in zip(pts, off)]
+    fig.supxlabel("FLOPs saved vs. full depth (%)", fontsize=8)
+    handles = [Line2D([], [], ls="", marker=mk, color=col, mec="white", mew=0.6, ms=5.8, label=lab)
+               for col, mk, lab in EE_FAMILY_STYLE.values()]
+    fig.legend(handles=handles, loc="outside upper center", ncol=3, frameon=False, fontsize=6.6,
+               handletextpad=0.3, columnspacing=1.2)
+    save_pdf(fig, out_dir, "fig_early_exit_pareto.pdf")
+    plt.close(fig)
+    out = {
+        "generated_by": "analysis/make_figures.py --fig early_exit (summaries: analysis/early_exit.py)",
+        "generated_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
+        "figure": str(out_dir / "fig_early_exit_pareto.pdf"),
+        "source": str(results_dir / "e2_exit.json"),
+        "source_sha256": sha256(results_dir / "e2_exit.json"),
+        "protocol": e2["_header"]["description"] + " Selection on each run's own 5k validation split; one test "
+                    "evaluation; delta = selected-point minus full-depth test accuracy of the same checkpoint.",
+        "units": "saved_pct / exit_acc_pct / full_acc_pct in %, delta_pp and paired differences in pp; "
+                 "SD = sample SD (ddof=1)",
+        "families": {"cumulative": "constant-gamma cumulative goodness (C10 gamma=0.7 and LCFF gamma=1.0; C100 gamma=0.7)",
+                     "gamma0": "block-local repair (gamma=0)", "gated": "hardness-gated repair",
+                     "repaired": "gamma0 + gated"},
+        "plot_note": "overlapping markers are offset horizontally (x_plotted - x) for visibility only",
+        "summary": S,
+        "points": plotted,
+    }
+    write_json(results_dir / "fig_early_exit_pareto_values.json", out)
+    return out
+
+
 # ============================================================================= main
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--fig", default="all",
                     choices=["all", "grad_fd", "loss_bpff", "margins", "dissociation_summary",
-                             "accuracy_vs_ratio"])
+                             "accuracy_vs_ratio", "early_exit"])
     ap.add_argument("--output-dir", type=Path, default=C.CR / "figures")
     ap.add_argument("--results-dir", type=Path, default=C.RESULTS)
     ap.add_argument("--fd-npz", type=Path, default=GRAD_ATT_NPZ,
@@ -833,6 +956,9 @@ def main():
     if a.fig in ("all", "accuracy_vs_ratio"):
         print("Figure: fig_accuracy_vs_ratio")
         fig_accuracy_vs_ratio(out_dir, a.results_dir)
+    if a.fig in ("all", "early_exit"):
+        print("Figure: fig_early_exit_pareto")
+        fig_early_exit_pareto(out_dir, a.results_dir)
 
 
 if __name__ == "__main__":

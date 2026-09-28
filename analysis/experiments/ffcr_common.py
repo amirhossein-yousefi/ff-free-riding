@@ -28,13 +28,15 @@ from pathlib import Path
 sys.dont_write_bytecode = True
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
 
-HOME = Path(FF_HOME)
+# resolved once at import: setup_env() changes the working directory, so relative values must not be
+# re-interpreted afterwards
+HOME = Path(FF_HOME).resolve()
 PR = HOME / "amir-porjects"
 CF = PR / "cifar_10_fair" / "making_v1_v4_fair_comparison"
-CR = Path(FF_OUT)                    # output root (was the camera-ready repository)
+CR = Path(FF_OUT).resolve()          # output root (was the camera-ready repository)
 FFN = HOME / "ff-next"
 EXP = CR / "experiments"
-WORK = Path(FF_WORK) / "_work"       # symlinked data dirs + dummy trainer ckpt/run dirs
+WORK = Path(FF_WORK).resolve() / "_work"  # symlinked data dirs + dummy trainer ckpt/run dirs
 RESULTS = CR / "results"
 
 GA = CF / "basic_fair_revised_valfix_cp_fair_hardness_gated" / "ff_gated_ablation"
@@ -43,7 +45,7 @@ RT = CF / "revised_training"
 TRIO_RUNS = RT / "extracted" / "ff_cifar100_multiseed"
 C10_GATED_MS = RT / "extracted" / "ff_cifar10_gated_multiseed"
 TRIO_CKPT = FFN / "checkpoints" / "trio"                      # flat layout, read-only
-GATED_K0_CKPT = Path(FF_WORK) / "ckpts" / "gated_k0_d128"      # stage1_best extracted from the gated multiseed archive (see RELEASE_CHECKPOINTS.md)
+GATED_K0_CKPT = Path(FF_WORK).resolve() / "ckpts" / "gated_k0_d128"      # stage1_best extracted from the gated multiseed archive (see RELEASE_CHECKPOINTS.md)
 MR = CF / "mgc_rebuttal"
 
 DATA_LINKS = {

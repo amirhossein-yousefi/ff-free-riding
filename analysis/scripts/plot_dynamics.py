@@ -37,7 +37,7 @@ VARIANTS = {
         'color': '#2171b5',
         'marker': 'o',
     },
-    '$\\gamma{=}0$ (purely local)': {
+    '$\\gamma{=}0$ (history-free)': {
         'layer_metrics': [
             BASE / 'ablations/ff_ablation/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260311_120026/layer_metrics.jsonl',
             BASE / 'ablations/no_all_collab/runs/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260312_132043/layer_metrics.jsonl',

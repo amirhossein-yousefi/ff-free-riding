@@ -3,7 +3,7 @@
   "description": "Compute budget of the runs reported in the paper, from raw run logs (checklist item 8).",
   "method": "* Device: env.json::device0 of the run directory. Run directories without env.json get a device\n    only when it is documented elsewhere (see DEVICE_NOTES); otherwise \"unknown\".\n  * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.\n  * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2\n    epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive\n    epoch_metrics.jsonl timestamps of every listed segment of the run. The estimate covers resumed\n    runs (whose earlier segments may be missing or partial) and excludes data download, setup and\n    final evaluation, so it is slightly below the logged wall time of an uninterrupted run.\n  * BP controls log per-epoch training time (history.jsonl::time_sec); their cost is its sum.\n  * Runner-log durations (BP anchors, frozen-backbone readouts) pair the START and DONE/exit lines.\n  * Every run directory is named explicitly (timestamps included); nothing is globbed.",
   "generated_by": "analysis/compute_budget.py",
-  "generated": "2026-09-25",
+  "generated": "2026-09-28",
   "submitted_checklist_values_superseded": {
    "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE) / ~15 A100-h (CIFAR-100 dense) measured",
    "Tiny ImageNet": "~8 h per seed (submitted; that is the last resumed segment) vs ~29 A100-h per seed measured",
@@ -245,6 +245,209 @@
     "logged_wall_h_last_segment": 8.73,
     "has_final_test_eval": true
    }
+  ],
+  "f1_block0_control": [
+   {
+    "label": "f1a_cum_sam_s42",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed42_20260926_224359"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 139.7,
+    "median_stage2_epoch_s": 24.3,
+    "est_full_run_h": 7.05,
+    "logged_wall_h_last_segment": 7.24,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1a_cum_sam_s123",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed123_20260926_142507"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 141.9,
+    "median_stage2_epoch_s": 24.4,
+    "est_full_run_h": 7.16,
+    "logged_wall_h_last_segment": 7.39,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1a_cum_sam_s456",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed456_20260926_142503"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 146.1,
+    "median_stage2_epoch_s": 25.0,
+    "est_full_run_h": 7.38,
+    "logged_wall_h_last_segment": 7.59,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1b_cum_noaux_s42",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed42_20260925_101141"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 274.4,
+    "median_stage2_epoch_s": 56.4,
+    "est_full_run_h": 13.88,
+    "logged_wall_h_last_segment": 14.03,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1b_cum_noaux_s123",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed123_20260926_134435"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 255.6,
+    "median_stage2_epoch_s": 52.9,
+    "est_full_run_h": 12.92,
+    "logged_wall_h_last_segment": 13.06,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1b_cum_noaux_s456",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed456_20260927_161811"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 256.7,
+    "median_stage2_epoch_s": 53.2,
+    "est_full_run_h": 12.98,
+    "logged_wall_h_last_segment": 13.11,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1c_mgc_keepl0_s42",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed42_20260926_001337"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 270.9,
+    "median_stage2_epoch_s": 53.2,
+    "est_full_run_h": 13.69,
+    "logged_wall_h_last_segment": 13.52,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1c_mgc_keepl0_s123",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed123_20260927_024824"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 258.7,
+    "median_stage2_epoch_s": 53.2,
+    "est_full_run_h": 13.08,
+    "logged_wall_h_last_segment": 13.5,
+    "has_final_test_eval": true
+   },
+   {
+    "label": "f1c_mgc_keepl0_s456",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f1_mgc_block0/runs/ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed456_20260926_224355"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     180,
+     10
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 153.4,
+    "median_stage2_epoch_s": 25.6,
+    "est_full_run_h": 7.74,
+    "logged_wall_h_last_segment": 7.9,
+    "has_final_test_eval": true
+   }
+  ],
+  "f2_gamma0_s42": [
+   {
+    "label": "f2_gamma0_s42_matched",
+    "segments": [
+     "amir-porjects/neuroips_review/camera_ready/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_130729",
+     "amir-porjects/neuroips_review/camera_ready/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045",
+     "amir-porjects/neuroips_review/camera_ready/experiments/f2_gamma0_s42/runs/ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 311.3,
+    "median_stage2_epoch_s": 64.8,
+    "est_full_run_h": 31.67,
+    "logged_wall_h_last_segment": 8.11,
+    "has_final_test_eval": true,
+    "segments_recorded_wall_h": {
+     "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260925_130729": 0.36,
+     "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260926_105045": 23.93,
+     "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339": 8.11
+    },
+    "sum_segments_recorded_wall_h": 32.4,
+    "note": "full-run estimate (median epoch time x configured epochs) excludes the repeated epoch 4 and the setup of each segment; segments_recorded_wall_h = run_start -> run_end (segment 4) or -> last epoch row (segments 2-3, whose VMs were lost/stopped); a first segment (..._20260925_080227) logged no epoch and is excluded"
+   }
   ]
  },
  "camera_ready_gpu_summary": {
@@ -296,6 +499,39 @@
      8.85,
      5
     ]
+   }
+  },
+  "f1_block0_control": {
+   "A100": {
+    "n_runs": 4,
+    "per_run_h_min": 7.05,
+    "per_run_h_max": 7.74,
+    "sum_h": 29.3,
+    "uninterrupted_runs_logged_wall_h": [
+     7.24,
+     7.9,
+     4
+    ]
+   },
+   "GB10": {
+    "n_runs": 5,
+    "per_run_h_min": 12.92,
+    "per_run_h_max": 13.88,
+    "sum_h": 66.5,
+    "uninterrupted_runs_logged_wall_h": [
+     13.06,
+     14.03,
+     5
+    ]
+   }
+  },
+  "f2_gamma0_s42": {
+   "A100": {
+    "n_runs": 1,
+    "per_run_h_min": 31.67,
+    "per_run_h_max": 31.67,
+    "sum_h": 31.7,
+    "uninterrupted_runs_logged_wall_h": null
    }
   }
  },
@@ -476,19 +712,17 @@
   "aborted_epoch_span_h": 4.87
  },
  "camera_ready_totals_h": {
-  "A100": 108.3,
-  "GB10": 40.3,
+  "A100": 169.3,
+  "GB10": 106.8,
   "method": "full-run estimates (median epoch time x configured epochs) + runner-log durations"
  },
  "camera_ready_totals_wall_h": {
-  "A100": 114.8,
-  "GB10": 40.9,
+  "A100": 176.6,
+  "GB10": 108.1,
   "method": "logged run_start->run_end for uninterrupted runs, full-run estimate for resumed runs, + runner-log durations"
  },
- "in_progress_not_included": [
-  "F1 MGC block-0 control (experiments/f1_mgc_block0, DGX Spark GB10), started 2026-09-25",
-  "F2 CIFAR-10 gamma=0 seed-42 rerun (experiments/f2_gamma0_s42, DGX Spark GB10), queued after F1"
- ],
+ "in_progress_not_included": [],
+ "f1_f2_note": "F1 (experiments/f1_mgc_block0; 9 runs, GB10 and Colab A100) and F2 (experiments/f2_gamma0_s42; Colab A100, 3 segments with 2 resumes) finished 2026-09-28 and are included in camera_ready_gpu_runs and the totals.",
  "submitted_paper_runs": {
   "c10_d256_moe_a100": [
    {
@@ -1920,8 +2154,8 @@
   "text-domain runs (9; logs inside the text-run archive)"
  ],
  "totals_measured_h": {
-  "A100": 761.0,
-  "GB10": 1844.9,
+  "A100": 822.0,
+  "GB10": 1911.4,
   "unknown": 0.0
  },
  "cpu_recomputations": {
@@ -1929,6 +2163,13 @@
    344.0,
    202.1,
    205.5
+  ],
+  "f1_fd_ema_accuracy_gates_s": {
+   "fd_a42_published": 288.1,
+   "fd_b42_published": 188.6
+  },
+  "f1_fd_threads": [
+   8
   ],
   "e6_chunks": {
    "test_00000_03400.json": 415.1,
@@ -2045,7 +2286,99 @@
     }
    }
   },
+  "e2_exit_dump_s": {
+   "c100_cumulative_seed123": 7721.4,
+   "c100_cumulative_seed42": 7707.4,
+   "c100_cumulative_seed456": 7690.8,
+   "c100_gamma0_seed123": 8123.2,
+   "c100_gamma0_seed42": 7761.8,
+   "c100_gamma0_seed456": 7737.7,
+   "c100_gated_k0_seed123": 7826.0,
+   "c100_gated_k0_seed42": 7656.9,
+   "c100_gated_k0_seed456": 7660.7,
+   "c10_gated_adaptive_prev_only_seed42": 345.3,
+   "c10_gated_adaptive_prev_t1_k2_seed42": 340.5,
+   "c10_gated_adaptive_t1_k0_seed42": 599.8,
+   "c10_gated_adaptive_t1_k2_seed42": 363.1,
+   "c10_gated_adaptive_t1_k4_seed42": 337.7,
+   "c10_gated_adaptive_t3_k0_seed42": 345.9,
+   "c10_gated_baseline_constant_seed42": 358.0,
+   "c10_gated_lcff_prefix_seed42": 350.6,
+   "c10_gated_no_all_collab_seed42": 331.4
+  },
+  "e2_exit_dump_c10_minutes_min_max": [
+   5.5,
+   10.0
+  ],
+  "e2_exit_dump_c100_hours_min_max": [
+   2.13,
+   2.26
+  ],
+  "e2_exit_select_s": 20.5,
+  "e2_exit_total_h": 20.4,
+  "e1_tier2_run_s": {
+   "c100_cumulative_seed123__ema_eval": 924.3,
+   "c100_cumulative_seed42__ema_eval": 928.9,
+   "c100_cumulative_seed456__ema_eval": 922.6,
+   "c100_gamma0_seed123__ema_eval": 963.7,
+   "c100_gamma0_seed42__ema_eval": 968.1,
+   "c100_gamma0_seed456__ema_eval": 947.3,
+   "c100_gated_k0_seed123__ema_eval": 1001.9,
+   "c100_gated_k0_seed42__ema_eval": 940.4,
+   "c100_gated_k0_seed456__ema_eval": 922.2,
+   "c10_cp_fair_seed123__ema_eval": 1111.2,
+   "c10_cp_fair_seed42__ema_eval": 1110.1,
+   "c10_cp_fair_seed456__ema_eval": 1123.0,
+   "c10_cp_fair_seed789__ema_eval": 1119.3,
+   "c10_gamma0_seed123__ema_eval": 1274.3,
+   "c10_gamma0_seed456__ema_eval": 2431.0,
+   "c10_gated_adaptive_t1_k0_seed42__ema_eval": 204.6,
+   "c10_gated_k0_seed123__ema_eval": 248.5,
+   "c10_gated_k0_seed456__ema_eval": 249.1,
+   "c10_mgc_c1_seed42__ema_eval": 209.1,
+   "c10_mgc_c1_seed42__raw_train": 523.7
+  },
+  "e1_tier2_run_minutes_min_max": [
+   3.4,
+   40.5
+  ],
+  "e1_tier2_total_h": 5.0,
+  "e1_e2_cpu_batch": {
+   "log": "experiments/logs/batch.log (START/END line per step; per-step logs next to it)",
+   "runner": "experiments/run_cpu_batch.sh",
+   "device": "CPU only (CUDA_VISIBLE_DEVICES=''), 6 torch threads, steps run one after another",
+   "start": "2026-09-25 07:19:29",
+   "end": "2026-09-26 08:20:06",
+   "wall_s": 90037.0,
+   "wall_h": 25.0,
+   "n_steps": 42,
+   "n_failed": 0,
+   "executed": {
+    "e2_dumps": {
+     "n_steps": 17,
+     "sum_s": 72756,
+     "sum_h": 20.21
+    },
+    "e1_points": {
+     "n_steps": 17,
+     "sum_s": 17219,
+     "sum_h": 4.78
+    },
+    "aggregation": {
+     "n_steps": 4,
+     "sum_s": 59,
+     "sum_h": 0.02
+    }
+   },
+   "skipped_output_present": [
+    "e1_mgc_raw_train",
+    "e1_mgc_ema_eval",
+    "e2_dump_c10_gated_adaptive_t1_k0_seed42",
+    "e1_c10_gated_adaptive_t1_k0_seed42"
+   ],
+   "note": "The skipped steps were run before the batch as smoke tests; their own run times are in e2_exit_dump_s / e1_tier2_run_s, so e2_exit_total_h + e1_tier2_total_h exceeds the batch wall time by those runs. The E2 selector was re-run once afterwards (FLOP-model fix; e2_exit_select_s)."
+  },
   "threads": 6,
-  "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads. The E1 tier-2 / E2 CPU batch was still running when this file was written and is not included."
+  "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads (8 for the F1 F_d snapshot, f1_fd_threads). E2 (experiments/e2_exit) is included: one score dump per checkpoint (val + test, all depths) plus the selector. E1 tier 2 (experiments/e1_sep) is included: one run per checkpoint (test gate + 20-batch sep measurement) for the 18 points, plus the two MGC-D128 seed-42 code-validation runs; the aggregation step (<1 min) is not counted. E1 tier 2 and E2 ran CPU-only as one sequential batch; e1_e2_cpu_batch gives its wall time from the batch log."
  }
 }

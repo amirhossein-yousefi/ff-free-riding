@@ -34,7 +34,7 @@ def main():
         summary = json.load(f)
 
     label_map = {
-        0.0: r"$\gamma=0$ (purely local)",
+        0.0: r"$\gamma=0$ (history-free)",
         0.7: r"$\gamma=0.7$ (CP-FAIR-style)",
         1.0: r"$\gamma=1.0$ (LCFF)",
     }

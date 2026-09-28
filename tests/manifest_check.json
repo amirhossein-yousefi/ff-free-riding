@@ -2,7 +2,7 @@
  "_meta": {
   "description": "supplement/tests/check_manifest_commands.py: each repro_manifest.csv command (env + FF_SEED) replayed through the trainer's main() until config.json, compared with the reference run's config.json; allowed differences: device, keys added by the camera-ready trainers, and block_curr_depth_slope when block_curr_lambda = 0 (LCFF D256)."
  },
- "n_checks": 43,
+ "n_checks": 53,
  "n_failed": 0,
  "n_skipped": 0,
  "tests": {
@@ -987,6 +987,177 @@
     },
     "inert_diff_accepted": {},
     "run": "ff_cifar10_hinge_g0_L4_D128_bs512_seed456_20260725_210209",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row43_tab:f1_control|(a) cumulative + current-block auxiliary, SAM on (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed123_20260926_142507",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row43_tab:f1_control|(a) cumulative + current-block auxiliary, SAM on (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed42_20260926_224359",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row43_tab:f1_control|(a) cumulative + current-block auxiliary, SAM on (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1a_cum_sam_L4_D128_bs512_seed456_20260926_142503",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row44_tab:f1_control|(b) cumulative, current-block auxiliary removed (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed123_20260926_134435",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row44_tab:f1_control|(b) cumulative, current-block auxiliary removed (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed42_20260925_101141",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row44_tab:f1_control|(b) cumulative, current-block auxiliary removed (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1b_cum_noaux_L4_D128_bs512_seed456_20260927_161811",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row45_tab:f1_control|(c) MGC with block 0's auxiliary kept (n=3)|seed123": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed123_20260927_024824",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row45_tab:f1_control|(c) MGC with block 0's auxiliary kept (n=3)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed42_20260926_001337",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row45_tab:f1_control|(c) MGC with block 0's auxiliary kept (n=3)|seed456": {
+   "detail": {
+    "diff_vs_run_config": {
+     "barrier_margin": [
+      "<MISSING>",
+      2.0
+     ],
+     "barrier_type": [
+      "<MISSING>",
+      "softplus"
+     ]
+    },
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_f1c_mgc_keepl0_L4_D128_bs512_seed456_20260926_224355",
+    "unexpected": {}
+   },
+   "status": "pass"
+  },
+  "row46_tab:gamma0_multiseed|gamma=0 seed 42 rerun in the seed-123/456 configuration (F2)|seed42": {
+   "detail": {
+    "diff_vs_run_config": {},
+    "inert_diff_accepted": {},
+    "run": "ff_cifar10_cifar10_gamma0_seed42_matched_L4_D256_bs512_seed42_20260927_212339",
     "unexpected": {}
    },
    "status": "pass"
