@@ -457,7 +457,8 @@ def t_ladder():
            checkpoint-conditional). Each readout is fit on the run's own 5k validation split and evaluated
            once on the full 10k test (S1 single crop, EMA weights); top-1 \%, mean $\pm$ sample SD over
            3 seeds, in parentheses the gain over R0. R2 equals R1 restricted to positive weights, so the
-           two coincide whenever the fitted R1 weights are positive. The trio span stays at most
+           two coincide whenever the fitted R1 weights are positive. The trio span (max $-$ min of the
+           unrounded variant means) stays at most
            {num(max(L['trio_span_pp_per_rung'].values()))}\,pp at every rung, while the learned weights help the
            $\gamma{{=}}0$ and $\kappa{{=}}0$ variants more than the cumulative one (last row: paired 5000-resample
            bootstrap over the test set).
