@@ -1,0 +1,24 @@
+BEGIN:VCALENDAR
+PRODID:-//Amirhossein Yousefiramandi//FF free-riding project page//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:0cce3e2d-7ae8-57ad-bff3-64e84b75129b
+DTSTAMP:20261019T000000Z
+SEQUENCE:0
+DTSTART:20261211T133000Z
+DTEND:20261211T153000Z
+SUMMARY:NeurIPS 2026 poster: Cumulative-Goodness Free-Riding in Forward-For
+ ward Networks: Real\, Repairable\, but Not Accuracy-Dominant
+LOCATION:Paris Poster Hall\, NeurIPS 2026 (Paris)
+DESCRIPTION:Poster session of the NeurIPS 2026 paper by Amirhossein Yousefi
+ ramandi (Independent Researcher): Paris Poster Hall\, Fri\, Dec 11\, 2026
+ \, 14:30-16:30 CET (Paris time). The NeurIPS schedule lists it as Sat\, De
+ c 12\, 2026\, 12:30-2:30 AM AEDT (UTC+11)\, the same session.\n\nProject p
+ age: https://amirhossein-yousefi.github.io/ff-free-riding/\nPaper (arXiv)
+ : https://arxiv.org/abs/2605.06240\nOpenReview: https://openreview.net/for
+ um?id=TN0FvatX6A
+URL:https://amirhossein-yousefi.github.io/ff-free-riding/
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,142 @@
+/* Component "redistribution" (SPEC_FINAL.md §5.4). Scoped under #viz-redistribution; tokens and shared classes of
+   site.css only. Block shades mix --own into --surface (they follow the theme); block 3 is the darkest step and is
+   outlined. Data marks never transition; chart heights are reserved (no layout shift). */
+#viz-redistribution {
+  --rd-b0: color-mix(in srgb, var(--own) 58%, var(--surface));
+  --rd-b1: color-mix(in srgb, var(--own) 72%, var(--surface));
+  --rd-b2: color-mix(in srgb, var(--own) 86%, var(--surface));
+  --rd-b3: var(--own);
+  --rd-rest: color-mix(in srgb, var(--own) 22%, var(--surface));
+}
+
+/* (A) toy playground: controls */
+#viz-redistribution .rd-controls { align-items: flex-start; }
+#viz-redistribution .rd-range { flex: 1 1 300px; }
+#viz-redistribution .rd-out { font-style: italic; color: var(--illus); white-space: nowrap; }
+#viz-redistribution .rd-ticks { position: relative; height: 18px; margin: -2px 0 2px; font-size: var(--fs-xs); font-style: italic; color: var(--muted); }
+#viz-redistribution .rd-tick { position: absolute; top: 0; left: calc(10px + var(--x, 0) * (100% - 20px)); transform: translateX(-50%); white-space: nowrap; line-height: 18px; }
+#viz-redistribution .rd-tick--start { transform: translateX(-10px); }
+#viz-redistribution .rd-tick--end { transform: translateX(calc(-100% + 10px)); }
+#viz-redistribution .rd-tick--mark { color: var(--ink); }
+#viz-redistribution .rd-tick--mark::before { content: ""; position: absolute; left: 50%; top: -7px; width: 1.5px; height: 6px; background: var(--ink); }
+
+/* (A) panels */
+#viz-redistribution .rd-a__grid { display: grid; gap: var(--s-5); }
+@media (min-width: 900px) { #viz-redistribution .rd-a__grid { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: var(--s-7); } }
+#viz-redistribution .rd-panel, #viz-redistribution .rd-b__col { min-width: 0; }
+#viz-redistribution .rd-panel__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; min-height: 34px; margin-bottom: var(--s-2); }
+#viz-redistribution .rd-panel__title { font-size: 1rem; }
+#viz-redistribution .rd-pred { margin: 0; padding: 3px 12px; border: 1.5px dashed var(--line-strong); border-radius: var(--r-pill); font-size: .9375rem; font-style: italic; color: var(--illus); white-space: nowrap; }
+#viz-redistribution .rd-pred b { font-style: normal; color: var(--ink-strong); }
+#viz-redistribution .rd-pred.is-changed { border-style: solid; border-color: var(--ink-strong); background: var(--ink-strong); color: var(--bg); }
+#viz-redistribution .rd-pred.is-changed b { color: var(--bg); }
+#viz-redistribution .rd-chart--cols { min-height: 327px; }
+#viz-redistribution .rd-chart--mar { min-height: 232px; }
+#viz-redistribution .rd-svg { display: block; width: 100%; height: auto; overflow: visible; }
+#viz-redistribution .rd-note { margin: var(--s-2) 0 0; font-size: var(--fs-sm); color: var(--muted); }
+
+/* SVG text (12-13 px; toy values italic in --illus) and marks */
+#viz-redistribution .rd-t { font-family: var(--font-sans); font-size: 13px; fill: var(--ink); }
+#viz-redistribution .rd-t--sum, #viz-redistribution .rd-t--cell, #viz-redistribution .rd-t--val { font-style: italic; fill: var(--illus); font-variant-numeric: tabular-nums; }
+#viz-redistribution .rd-t--sum { font-weight: 700; }
+#viz-redistribution .rd-t--lab { fill: var(--ink-strong); font-weight: 600; }
+#viz-redistribution .rd-t--pred, #viz-redistribution .rd-t--b3, #viz-redistribution .rd-t--hot { fill: var(--ink-strong); font-weight: 700; }
+#viz-redistribution .rd-t--dir { font-style: normal; }
+#viz-redistribution .rd-t--sm, #viz-redistribution .rd-t--note, #viz-redistribution .rd-t--kept { font-size: 12px; fill: var(--muted); }
+#viz-redistribution .rd-t--note { font-style: italic; }
+#viz-redistribution .rd-t--kept { font-weight: 600; }
+#viz-redistribution .rd-t--move { fill: var(--ink-strong); font-weight: 600; }
+#viz-redistribution .rd-seg--b0 { fill: var(--rd-b0); }
+#viz-redistribution .rd-seg--b1 { fill: var(--rd-b1); }
+#viz-redistribution .rd-seg--b2 { fill: var(--rd-b2); }
+#viz-redistribution .rd-seg--b3 { fill: var(--rd-b3); }
+#viz-redistribution .rd-ring { fill: none; stroke: var(--ink-strong); stroke-width: 2; }
+#viz-redistribution .rd-sw--b3 { stroke: var(--ink-strong); stroke-width: 1.5; }
+#viz-redistribution .rd-mbar--sum { fill: var(--accent); }
+#viz-redistribution .rd-hl { fill: var(--tint); }
+#viz-redistribution .rd-axis { stroke: var(--axis); }
+#viz-redistribution .rd-gridrule { stroke: var(--grid); }
+#viz-redistribution .rd-ref { stroke: var(--muted); stroke-width: 1.25; stroke-dasharray: 5 4; }
+#viz-redistribution .rd-arc, #viz-redistribution .rd-brace { fill: none; stroke: var(--ink-strong); stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+#viz-redistribution .rd-arrow { fill: var(--ink-strong); }
+#viz-redistribution .rd-break { fill: none; stroke: var(--surface); stroke-width: 2; }
+
+/* (A) readouts and caption */
+#viz-redistribution .rd-tray { margin-top: var(--s-5); }
+#viz-redistribution .rd-controls + .rd-tray { margin: 0 0 var(--s-5); }   /* phones: the readouts under the slider */
+#viz-redistribution .rd-tray .tray__val { font-size: 1.25rem; }
+#viz-redistribution .rd-tray > div:first-child .tray__val { font-size: 1.75rem; line-height: 1.15; }
+#viz-redistribution .rd-tray .is-flipped .tray__val { color: var(--ink-strong); }
+#viz-redistribution .rd-quote { display: block; margin-top: var(--s-2); color: var(--ink-strong); }
+#viz-redistribution .rd-quote__src { color: var(--muted); font-size: var(--fs-sm); white-space: nowrap; }
+
+/* (B) measured */
+#viz-redistribution .rd-b__row { display: grid; gap: var(--s-5); }
+@media (min-width: 900px) {
+  #viz-redistribution .rd-b__row { grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: 0; }
+  #viz-redistribution .rd-b__row > :first-child { padding-right: var(--s-6); }
+  #viz-redistribution .rd-b__row > :last-child { padding-left: var(--s-6); border-left: 1px solid var(--line); }
+}
+@media (max-width: 899px) { #viz-redistribution .rd-b__row > :last-child { padding-top: var(--s-5); border-top: 1px solid var(--line); } }
+#viz-redistribution .rd-b__title { margin: 0 0 2px; font-size: 1.0625rem; }
+#viz-redistribution .rd-b__sub { margin: 0 0 var(--s-4); font-size: .9375rem; color: var(--muted); }
+#viz-redistribution .rd-b__small { margin: var(--s-2) 0 0; font-size: .9375rem; line-height: 1.5; }
+#viz-redistribution .rd-strong { font-weight: 700; color: var(--ink-strong); }
+#viz-redistribution .rd-strip__row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px var(--s-4); }
+#viz-redistribution .rd-strip__bar { display: flex; gap: 2px; flex: 1 1 200px; max-width: 320px; height: 24px; }
+#viz-redistribution .rd-strip__bar > span { display: flex; align-items: center; min-width: 2px; overflow: hidden; font-size: .8125rem; line-height: 1; white-space: nowrap; }
+#viz-redistribution .rd-strip__rest { flex: 1 1 auto; padding-left: 10px; border-radius: 4px 0 0 4px; background: var(--rd-rest); color: var(--ink-strong); }
+#viz-redistribution .rd-strip__b3 { flex: 0 0 calc(var(--b3, .5) * 100% - 2px); justify-content: flex-end; padding-right: 10px; border-radius: 0 4px 4px 0; background: var(--rd-b3); box-shadow: inset 0 0 0 2px var(--ink-strong); color: var(--surface); font-weight: 700; }
+#viz-redistribution .rd-strip__lbl { margin: 0; font-size: 1rem; white-space: nowrap; }
+#viz-redistribution .rd-strip__step, #viz-redistribution .rd-b__keep { margin: 4px 0; font-size: var(--fs-sm); font-style: italic; color: var(--muted); }
+#viz-redistribution .rd-b__keep { margin-top: var(--s-3); font-size: .9375rem; }
+#viz-redistribution .rd-big { margin: var(--s-3) 0 0; font-size: clamp(2rem, 1.55rem + 1.3vw, 2.625rem); font-weight: 700; line-height: 1.05; letter-spacing: -.01em; color: var(--ink-strong); }
+#viz-redistribution .rd-big__sep { font-weight: 400; color: var(--muted); }
+#viz-redistribution .rd-big__cap { margin: 4px 0 0; font-size: 1rem; }
+#viz-redistribution .rd-b__col > .src { margin-top: var(--s-3); }
+#viz-redistribution .rd-trio { display: flex; flex-wrap: wrap; align-items: flex-start; gap: var(--s-3) var(--s-5); }
+#viz-redistribution .rd-trio__text { flex: 1 1 220px; min-width: 0; }
+#viz-redistribution .rd-trio__text .rd-big { margin-top: 0; }
+#viz-redistribution .rd-waffle { display: grid; flex: none; grid-template-columns: repeat(10, 11px); gap: 3px; padding: 4px; border-radius: var(--r-sm); }
+#viz-redistribution .rd-waffle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+#viz-redistribution .rd-cell { width: 11px; height: 11px; border-radius: 2px; box-shadow: inset 0 0 0 1px var(--axis); }
+#viz-redistribution .rd-cell--on { background: var(--accent); box-shadow: none; }
+#viz-redistribution .rd-mgc { margin-top: var(--s-5); padding-top: var(--s-4); border-top: 1px solid var(--line); }
+#viz-redistribution .rd-mgc__head { margin: 0; font-size: 1.0625rem; color: var(--ink-strong); }
+#viz-redistribution .rd-who { margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--line); }
+#viz-redistribution .rd-who__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-3) var(--s-5); }
+#viz-redistribution .rd-who__head .rd-b__title { flex: 1 1 280px; margin-bottom: 6px; }
+#viz-redistribution .rd-tiles { display: grid; gap: var(--s-4); margin-top: var(--s-4); }
+@media (min-width: 640px) { #viz-redistribution .rd-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+#viz-redistribution .rd-tile { padding: var(--s-4) var(--s-5); border: 1px solid var(--line); border-radius: var(--r-md); }
+#viz-redistribution .rd-tile__title { margin: 0; font-weight: 700; color: var(--ink-strong); }
+#viz-redistribution .rd-tile__sub { margin: 0 0 var(--s-3); font-size: var(--fs-sm); color: var(--muted); }
+#viz-redistribution .rd-tile__rows { display: grid; gap: 4px; margin: 0; }
+#viz-redistribution .rd-tile__row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-3); font-size: .9375rem; }
+#viz-redistribution .rd-tile__row .arm { white-space: normal; }
+#viz-redistribution .rd-tile__row dd { margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.25; color: var(--ink-strong); font-variant-numeric: tabular-nums; }
+#viz-redistribution .rd-tile__foot { margin: var(--s-3) 0 0; font-size: var(--fs-sm); font-style: italic; color: var(--muted); }
+#viz-redistribution .rd-who__all { margin-top: var(--s-4); color: var(--muted); }
+#viz-redistribution .rd-seedval { border-radius: 4px; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+#viz-redistribution .rd-seedval.is-on { background: var(--tint); box-shadow: 0 0 0 2px var(--tint); font-weight: 700; color: var(--ink-strong); }
+#viz-redistribution figcaption .src { display: block; margin-top: var(--s-2); }
+#viz-redistribution .rd-tip { left: var(--tip-x, 0); top: var(--tip-y, 0); }
+@media (max-width: 639px) {
+  #viz-redistribution .rd-tile { padding: var(--s-3) var(--s-4); }
+  #viz-redistribution .rd-strip__bar { max-width: none; }
+}
+/* browsers without color-mix(): the same steps as opacity of --own */
+@supports not (color: color-mix(in srgb, red, red)) {
+  #viz-redistribution .rd-seg--b0, #viz-redistribution .rd-seg--b1, #viz-redistribution .rd-seg--b2 { fill: var(--own); }
+  #viz-redistribution .rd-seg--b0 { fill-opacity: .58; }
+  #viz-redistribution .rd-seg--b1 { fill-opacity: .72; }
+  #viz-redistribution .rd-seg--b2 { fill-opacity: .86; }
+  #viz-redistribution .rd-strip__rest { background: var(--tint); }
+}
+@media (forced-colors: active) {
+  #viz-redistribution .rd-seg--b0, #viz-redistribution .rd-seg--b1, #viz-redistribution .rd-seg--b2, #viz-redistribution .rd-seg--b3,
+  #viz-redistribution .rd-mbar--sum, #viz-redistribution .rd-arrow, #viz-redistribution .rd-t { fill: CanvasText; }
+  #viz-redistribution .rd-ring { stroke: Highlight; }
+  #viz-redistribution .rd-hl { fill: Canvas; stroke: Highlight; }
+  #viz-redistribution .rd-cell--on, #viz-redistribution .rd-strip__b3 { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+}

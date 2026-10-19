@@ -1,0 +1,147 @@
+/* Component "cumulative" (SPEC_FINAL.md §5.1): how cumulative goodness works. Every rule is scoped under
+   #viz-cumulative and uses only the tokens and shared classes of site.css (no raw colors). Charts are drawn at
+   their container's width (viewBox = rendered size, so chart text renders at its CSS size: 12-18 px). Marks
+   never transition (charts redraw instantly); site.css sets every duration to 0 under reduced motion. */
+
+/* ---- layout: (A) and (B) side by side from 1000 px, (C) full width below ---- */
+#viz-cumulative .cum { display: grid; gap: var(--s-5); }
+#viz-cumulative .cum > .fig { margin: 0; min-width: 0; }
+@media (min-width: 1000px) {
+  #viz-cumulative .cum { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #viz-cumulative .cum-c { grid-column: 1 / -1; }
+}
+#viz-cumulative .cum-fig { container-type: inline-size; }
+#viz-cumulative .fig__caption .src { display: block; }
+#viz-cumulative .cum-controls { margin-bottom: var(--s-4); }
+
+/* ---- chart surfaces and text ---- */
+#viz-cumulative .cum-net,
+#viz-cumulative .cum-chart { position: relative; min-width: 0; }
+#viz-cumulative .cum-net { min-height: var(--cum-net-h, 196px); }
+#viz-cumulative .cum-svg--a { position: absolute; left: 0; top: var(--cum-net-top, 0px); }   /* out of flow: .cum-net's height comes from the layout */
+#viz-cumulative .cum-chart--b { min-height: 224px; }
+#viz-cumulative .cum-chart--c { min-height: 256px; border-radius: var(--r-md); }
+#viz-cumulative .cum-svg { display: block; width: 100%; height: auto; overflow: visible; }
+#viz-cumulative svg text { font-family: var(--font-sans); }
+#viz-cumulative .cum-t { font-size: 13px; fill: var(--ink); }
+#viz-cumulative .cum-t--muted { fill: var(--muted); }
+#viz-cumulative .cum-t--small { font-size: 12px; fill: var(--muted); }
+#viz-cumulative .cum-t--strong { fill: var(--ink-strong); font-weight: 700; }
+#viz-cumulative .cum-t--block { font-size: 13.5px; fill: var(--ink-strong); }
+#viz-cumulative .cum-t--pill { font-size: 12.5px; fill: var(--ink-strong); }
+#viz-cumulative .cum-t--tag { font-size: 13px; fill: var(--ink-strong); }
+#viz-cumulative .cum-t--toy { fill: var(--illus); font-style: italic; }
+#viz-cumulative .cum-t--hist { fill: var(--hist-text); font-style: italic; font-weight: 700; }
+#viz-cumulative .cum-t--share { font-size: 14px; fill: var(--ink-strong); }
+#viz-cumulative .cum-t--key { font-size: 18px; font-weight: 700; fill: var(--ink-strong); }
+#viz-cumulative .cum-svg .tick { font-size: 12.5px; fill: var(--tick); font-variant-numeric: tabular-nums; }
+#viz-cumulative .cum-svg--wide .cum-t { font-size: 14px; }
+#viz-cumulative .cum-svg--wide .cum-t--block { font-size: 14.5px; }
+#viz-cumulative .cum-svg--wide .cum-t--small { font-size: 12.5px; }
+
+/* ---- marks (poster grammar: own = slate, inherited history = vermillion tint with a vermillion outline) ---- */
+#viz-cumulative .cum-own { fill: var(--own); }
+#viz-cumulative .cum-hist { fill: var(--hist-fill); stroke: var(--hist); stroke-width: 1.5; }
+#viz-cumulative .cum-seg--0 { fill: color-mix(in srgb, var(--own) 34%, var(--surface)); }
+#viz-cumulative .cum-seg--1 { fill: color-mix(in srgb, var(--own) 55%, var(--surface)); }
+#viz-cumulative .cum-seg--2 { fill: color-mix(in srgb, var(--own) 77%, var(--surface)); }
+#viz-cumulative .cum-seg--3 { fill: var(--own); }
+#viz-cumulative .cum-grid { stroke: var(--grid); stroke-width: 1; }
+#viz-cumulative .cum-axis,
+#viz-cumulative .cum-base { stroke: var(--axis); stroke-width: 1; }
+#viz-cumulative .cum-box { fill: var(--tint); stroke: var(--line-strong); stroke-width: 1; }
+#viz-cumulative .cum-pill { fill: var(--surface); stroke: var(--ink); stroke-width: 1.2; }
+#viz-cumulative .cum-fwd,
+#viz-cumulative .cum-rail { fill: none; stroke: var(--axis); stroke-width: 1.4; }
+#viz-cumulative .cum-fwd-head,
+#viz-cumulative .cum-rail-head { fill: var(--axis); }
+#viz-cumulative .cum-back { fill: none; stroke: var(--ink-strong); stroke-width: 2.2; stroke-linecap: round; }
+#viz-cumulative .cum-back-head,
+#viz-cumulative .cum-loss-head { fill: var(--ink-strong); }
+#viz-cumulative .cum-loss { fill: none; stroke: var(--ink-strong); stroke-width: 1.8; }
+#viz-cumulative .cum-dash { fill: none; stroke: var(--accent); stroke-width: 1.4; stroke-dasharray: 4 3; }
+#viz-cumulative .cum-dash-head { fill: var(--accent); }
+#viz-cumulative .cum-tag,
+#viz-cumulative .cum-panel { fill: var(--surface); stroke: var(--accent); stroke-width: 1.5; }
+#viz-cumulative .cum-sel,
+#viz-cumulative .cum-active { fill: var(--tint); }
+#viz-cumulative .cum-pict__frame { fill: var(--tint); stroke: var(--line-strong); stroke-width: 1; }
+#viz-cumulative .cum-pict__hill { fill: var(--toy); }
+#viz-cumulative .cum-pict__sun { fill: var(--surface); stroke: var(--axis); stroke-width: 1.5; }
+#viz-cumulative .cum-hit { fill: transparent; }
+
+/* ---- (A) the two training pictures ---- */
+#viz-cumulative .cum-strips { display: grid; gap: var(--s-3) var(--s-5); margin: 0 0 var(--s-4); padding: 0 0 var(--s-4); border-bottom: 1px solid var(--line); }
+@container (min-width: 500px) { #viz-cumulative .cum-strips { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+#viz-cumulative .cum-strip { display: grid; gap: 6px; align-content: start; }
+#viz-cumulative .cum-strip__svg { display: block; width: 236px; max-width: 100%; height: auto; overflow: visible; }
+#viz-cumulative .cum-strip__text { margin: 0; font-size: var(--fs-sm); line-height: 1.45; }
+#viz-cumulative .cum-read { margin: 0; font-size: .9375rem; line-height: 1.5; font-style: italic; color: var(--illus); }
+#viz-cumulative .cum-tray.cum-tray--a { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); }
+#viz-cumulative .cum-a { display: flex; flex-direction: column; }
+#viz-cumulative .cum-a > .cum-net { flex: 1 0 auto; }            /* the drawing takes the row's spare height (JS fills it) */
+#viz-cumulative .cum-a > .fig__caption { padding-top: var(--s-4); }
+
+/* ---- (B) slider, presets, readouts ---- */
+#viz-cumulative .cum-b > .eq { margin: 0 0 var(--s-4); }
+#viz-cumulative .cum-b > .eq--card { background: var(--surface-2); border-color: transparent; box-shadow: none; }
+#viz-cumulative .cum-b__controls { display: grid; gap: var(--s-4); align-items: start; }
+#viz-cumulative .cum-presets { display: grid; gap: 6px; min-width: 0; }
+#viz-cumulative .cum-presets__label { font-size: var(--fs-sm); font-weight: 700; color: var(--ink-strong); }
+#viz-cumulative .cum-presets__row { display: flex; flex-wrap: wrap; gap: 8px; }
+#viz-cumulative .cum-preset .glyph { width: .75em; height: .75em; }
+#viz-cumulative .cum-preset[aria-current="true"] { background: var(--tint); border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+#viz-cumulative .cum-presets__hint { margin: 0; font-size: var(--fs-sm); color: var(--muted); }
+#viz-cumulative .range-field output { font-style: italic; color: var(--illus); }
+#viz-cumulative .cum-legend { margin: 0 0 var(--s-2); }
+#viz-cumulative .cum-sw { width: 14px; height: 14px; flex: none; overflow: visible; }
+#viz-cumulative .cum-legend__note { color: var(--muted); }
+#viz-cumulative .cum-pred { margin: var(--s-2) 0 0; font-size: .9375rem; line-height: 1.5; }
+#viz-cumulative .cum-tray .tray__val { font-size: 1.25rem; }
+#viz-cumulative .cum-tray .measured__val { font-size: 1.25rem; }
+#viz-cumulative .cum-chip.is-none .measured__val { font-size: 1.0625rem; line-height: 1.4; font-style: italic; color: var(--illus); }
+#viz-cumulative .cum-b__presets { margin: var(--s-4) 0 0; }
+@media (min-width: 720px) { #viz-cumulative .cum-tray { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+
+/* ---- (C) measured chart and its reading ---- */
+#viz-cumulative .cum-c__body { display: grid; gap: var(--s-5); align-items: center; }
+#viz-cumulative .cum-c__read { container: cumread / inline-size; min-width: 0; }
+@container (min-width: 780px) {
+  #viz-cumulative .cum-c__body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); }
+}
+#viz-cumulative .cum-axis-title { margin: 0 0 10px; font-size: var(--fs-sm); color: var(--muted); }
+#viz-cumulative .cum-chart--c:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+#viz-cumulative .cum-tip { position: absolute; z-index: 5; }
+#viz-cumulative .cum-tip__src { margin-top: 2px; font-size: .8125rem; }
+#viz-cumulative .cum-stat .measured__val { font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem); line-height: 1.15; }
+#viz-cumulative .cum-c__cap { margin: var(--s-4) 0 var(--s-3); font-size: 1.0625rem; line-height: 1.5; color: var(--ink-strong); }
+#viz-cumulative .cum-c__hint { margin: 0; font-size: var(--fs-sm); line-height: 1.45; color: var(--muted); }
+#viz-cumulative .cum-mini { margin: 0 0 var(--s-4); }
+#viz-cumulative .cum-mini__key { margin: 0 0 6px; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+#viz-cumulative .cum-mini__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+#viz-cumulative .cum-mini__row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(64px, 1fr) 3.2em; align-items: center; gap: 4px 12px; padding: 5px 8px; border-radius: var(--r-sm); font-size: .9375rem; }
+#viz-cumulative .cum-mini__row[aria-current="true"] { background: var(--tint); font-weight: 700; color: var(--ink-strong); }
+#viz-cumulative .cum-mini__name { display: inline-flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; }
+#viz-cumulative .cum-mini__name .glyph { width: .75em; height: .75em; }
+#viz-cumulative .cum-mini__bar { position: relative; display: block; height: 12px; border-radius: 3px; background: var(--hist-fill); box-shadow: inset 0 0 0 1px var(--hist); overflow: hidden; }
+#viz-cumulative .cum-mini__own { position: absolute; left: 0; top: 0; bottom: 0; width: var(--own-share, 0%); background: var(--own); border-right: 2px solid var(--surface); }
+#viz-cumulative .cum-mini__row[aria-current="true"] .cum-mini__own { border-right-color: var(--tint); }
+#viz-cumulative .cum-mini__val { text-align: right; font-variant-numeric: tabular-nums; }
+/* the run list lays out by the width of its own column (narrow beside the chart at 780-1000 px figure widths) */
+@container cumread (max-width: 380px) {
+  #viz-cumulative .cum-mini__row { grid-template-columns: minmax(0, 1fr) 3.2em; padding: 6px 8px; }
+  #viz-cumulative .cum-mini__name { grid-column: 1 / -1; white-space: normal; }
+}
+
+/* ---- forced colors: keep identity through shapes and outlines ---- */
+@media (forced-colors: active) {
+  #viz-cumulative .cum-own, #viz-cumulative .cum-seg--0, #viz-cumulative .cum-seg--1,
+  #viz-cumulative .cum-seg--2, #viz-cumulative .cum-seg--3 { fill: CanvasText; }
+  #viz-cumulative .cum-hist { fill: Canvas; stroke: CanvasText; }
+  #viz-cumulative .cum-t, #viz-cumulative .cum-svg .tick { fill: CanvasText; }
+  #viz-cumulative .cum-active, #viz-cumulative .cum-sel { fill: Highlight; opacity: .25; }
+  #viz-cumulative .cum-mini__bar { forced-color-adjust: none; background: Canvas; box-shadow: inset 0 0 0 1px CanvasText; }
+  #viz-cumulative .cum-mini__own { forced-color-adjust: none; background: CanvasText; border-right-color: Canvas; }
+  #viz-cumulative .cum-preset[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+  #viz-cumulative .cum-mini__row[aria-current="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+}

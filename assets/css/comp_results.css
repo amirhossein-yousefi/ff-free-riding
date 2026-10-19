@@ -1,0 +1,143 @@
+/* Component "results" (SPEC_FINAL §5.3): every rule is scoped under #viz-results and uses site.css tokens only.
+   Chart heights are reserved; marks change opacity only (0s under prefers-reduced-motion); data never tweens.
+   Written without CSS nesting, so browsers without native nesting style it too. */
+#viz-results .rs-fig { container: rs / inline-size; }
+#viz-results .rs-fig + .rs-fig { margin-top: var(--s-5); }
+#viz-results .rs-lede { margin: calc(-1 * var(--s-2)) 0 var(--s-4); max-width: 860px; font-size: .9375rem; color: var(--muted); }
+#viz-results .controls { align-items: flex-start; }
+#viz-results .rs-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+#viz-results .rs-glyph { width: .8em; height: .8em; flex: none; overflow: visible; }
+#viz-results .rs-check input { width: 16px; height: 16px; margin: 0; accent-color: var(--accent); }
+#viz-results .rs-hint { display: block; margin-top: 4px; font-size: var(--fs-xs); color: var(--muted); }
+#viz-results .is-disabled .rs-check { color: var(--muted); border-style: dashed; background: none; cursor: not-allowed; }
+#viz-results .rs-take { margin: 0 0 var(--s-5); max-width: 980px; }
+/* phones: the arm chips and the seed switch under the charts, then the reading (moved by the component) */
+#viz-results .rs-controls--more { margin: var(--s-5) 0 var(--s-4); }
+#viz-results .rs-controls--more + .rs-take { margin-bottom: var(--s-4); }
+#viz-results .rs-panels { display: grid; gap: var(--s-5); }
+#viz-results .rs-panel { min-width: 0; }
+#viz-results .rs-panel h4 { margin: 0; font-size: 1rem; }
+#viz-results .rs-sub { margin: 2px 0 var(--s-2); font-size: var(--fs-sm); color: var(--muted); }
+#viz-results .rs-legend { margin: 0 0 var(--s-2); }
+#viz-results .rs-legend li.is-off { text-decoration: line-through; color: var(--muted); }
+#viz-results .rs-chart--sep { min-height: 260px; }
+#viz-results .rs-chart--acc { min-height: 310px; }
+
+/* chart text (12-13.5 px) and furniture */
+#viz-results .rs-svg { display: block; overflow: visible; }
+#viz-results .rs-svg text { font-family: var(--font-sans); font-size: 13px; fill: var(--ink); }
+#viz-results .rs-svg .rs-lbl, #viz-results .rs-svg .rs-val { font-size: 13.5px; }
+#viz-results .rs-svg .rs-val { font-weight: 700; fill: var(--ink-strong); font-variant-numeric: tabular-nums; }
+#viz-results .rs-svg .rs-tick { fill: var(--tick); font-variant-numeric: tabular-nums; }
+#viz-results .rs-svg .rs-strong { font-weight: 700; fill: var(--ink-strong); }
+#viz-results .rs-svg .rs-grp { fill: var(--muted); }
+#viz-results .rs-svg .rs-an { paint-order: stroke; stroke: var(--surface); stroke-width: 5px; stroke-linejoin: round; }
+#viz-results .rs-svg .rs-onband { stroke: var(--band); }
+#viz-results .rs-grid { stroke: var(--grid); }
+#viz-results .rs-axis, #viz-results .rs-zero { stroke: var(--axis); }
+#viz-results .rs-zero { stroke-width: 1.25; }
+#viz-results .is-ref-hl .rs-zero { stroke: var(--ink-strong); stroke-width: 2; }
+#viz-results .rs-band { fill: var(--band); }
+#viz-results .rs-edge { stroke: var(--band-edge); }
+#viz-results .rs-brk, #viz-results .rs-sd { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+#viz-results .rs-pred { fill: none; stroke: var(--ink-strong); stroke-width: 2; }
+#viz-results .rs-tipmark { fill: var(--ink-strong); }
+
+/* marks: linking dims the other arms; one Tab stop per chart with a visible ring on the focused mark */
+#viz-results .rs-mark { outline: none; transition: opacity var(--dur) var(--ease); }
+#viz-results .is-dim { opacity: .2; }
+#viz-results .rs-legend .is-dim { opacity: .35; }
+#viz-results .rs-hit { fill: transparent; pointer-events: all; }
+#viz-results .rs-mark:hover .rs-hit { fill: var(--line); }
+#viz-results .rs-focus { fill: none; stroke: var(--focus); stroke-width: 2; opacity: 0; }
+#viz-results .rs-mark:focus-visible .rs-focus { opacity: 1; }
+#viz-results .rs-ring { stroke: var(--surface); stroke-width: 2; paint-order: stroke; }
+#viz-results .rs-wh { fill: none; stroke-width: 2; stroke-linecap: round; }
+#viz-results .rs-seed { fill: var(--surface); stroke-width: 1.4; }
+
+/* arm colors as a custom property (--c) per arm style; hollow and dashed variants for control arms */
+#viz-results .rs-s--cum { --c: var(--arm-cum); }
+#viz-results .rs-s--free { --c: var(--arm-free); }
+#viz-results .rs-s--gated { --c: var(--arm-gated); }
+#viz-results .rs-s--mgc, #viz-results .rs-s--mgc-hollow { --c: var(--arm-mgc); }
+#viz-results .rs-s--neutral, #viz-results .rs-s--ff, #viz-results .rs-s--ff-start { --c: var(--arm-neutral); }
+#viz-results .rs-s--bp, #viz-results .rs-s--bp-start { --c: var(--accent); }
+#viz-results .rs-s--start, #viz-results .rs-s--seedkey { --c: var(--ink); }
+#viz-results .rs-bar, #viz-results .rs-shape, #viz-results .rs-glyph path { fill: var(--c); }
+#viz-results .rs-wh, #viz-results .rs-seed { stroke: var(--c); }
+#viz-results .rs-glyph path { stroke-width: 1.4; }   /* before the hollow rules below, which override it */
+#viz-results .rs-s--neutral .rs-bar, #viz-results .rs-s--mgc-hollow .rs-bar { fill: var(--surface); stroke: var(--c); stroke-width: 1.8; paint-order: normal; }
+#viz-results .rs-s--neutral .rs-bar { stroke-dasharray: 2.6 1.6; }
+#viz-results .rs-s--neutral .rs-shape, #viz-results .rs-s--neutral path,
+#viz-results .rs-s--mgc-hollow .rs-shape, #viz-results .rs-s--mgc-hollow path,
+#viz-results .rs-s--ff-start .rs-shape, #viz-results .rs-s--ff-start path,
+#viz-results .rs-s--bp-start .rs-shape, #viz-results .rs-s--bp-start path,
+#viz-results .rs-s--start .rs-shape, #viz-results .rs-s--start path,
+#viz-results .rs-s--seedkey .rs-shape, #viz-results .rs-s--seedkey path { fill: var(--surface); stroke: var(--c); stroke-width: 1.8; paint-order: normal; }
+#viz-results .rs-s--neutral .rs-shape, #viz-results .rs-s--neutral path { stroke-dasharray: 2.6 1.6; }
+
+/* readout filter: the other stage's columns are dimmed, never removed */
+#viz-results .rs-fig[data-readout="s1"] .rs-col--s2.rs-col, #viz-results .rs-fig[data-readout="s2"] .rs-col--s1.rs-col { opacity: .2; }
+#viz-results .rs-fig[data-readout="s1"] .rs-col--s2.rs-xl, #viz-results .rs-fig[data-readout="s2"] .rs-col--s1.rs-xl { fill: var(--muted); }
+#viz-results .rs-col { transition: opacity var(--dur) var(--ease); }
+
+/* text under the charts */
+#viz-results .rs-below { margin-top: var(--s-2); }
+#viz-results .rs-caveat { margin: 0; font-size: .875rem; }
+#viz-results .rs-caveat p { margin: 0 0 4px; }
+#viz-results .rs-tag { display: inline-flex; align-items: center; gap: 5px; margin-right: 6px; font-weight: 700; color: var(--ink-strong); }
+#viz-results .rs-link { min-height: 28px; padding: 0; border: 0; background: none; color: var(--accent); font: 700 .875rem/1.3 var(--font-sans); text-decoration: underline; text-underline-offset: .18em; cursor: pointer; }
+#viz-results .rs-link:hover { color: var(--accent-strong); }
+#viz-results .rs-small, #viz-results .rs-keys { margin: 0; font-size: .875rem; color: var(--muted); }
+#viz-results .rs-keys { display: grid; gap: 2px; padding: 0; list-style: none; color: var(--ink); }
+#viz-results .rs-keys li { display: flex; align-items: center; gap: 7px; }
+#viz-results .rs-panel--sep:not(.is-narrow) .rs-keys { display: none; }
+#viz-results .rs-caption { max-width: 980px; }
+#viz-results .rs-note { margin: 0 0 var(--s-2); }
+
+/* (B) what moves accuracy: one row per suspect on a shared 0-100% axis */
+#viz-results .rs-controls--b { align-items: center; justify-content: space-between; }
+#viz-results .rs-bp { height: auto; padding: 6px 14px; line-height: 1.3; text-align: left; }
+#viz-results .rs-bp[aria-pressed="false"] { background: var(--surface); color: var(--ink-strong); text-decoration: none; }
+#viz-results .rs-bp[aria-pressed="false"] .rs-glyph { opacity: .45; }
+#viz-results .rs-bp[aria-pressed="true"] { background: var(--tint); box-shadow: inset 0 0 0 1.5px var(--accent); }
+#viz-results .rs-mv__row { display: grid; grid-template-columns: minmax(0, 230px) minmax(0, 1fr) minmax(0, 190px); gap: 0 var(--s-5); align-items: center; padding: 6px 0; border-top: 1px solid var(--line); }
+#viz-results .rs-mv__row--axis { padding: 0; border: 0; }
+#viz-results .rs-mv__name b { display: block; }
+#viz-results .rs-mv__name span, #viz-results .rs-mv__note { display: block; font-size: var(--fs-sm); line-height: 1.4; color: var(--muted); }
+#viz-results .rs-mv__track { min-width: 0; height: 66px; }
+#viz-results .rs-mv__row--axis .rs-mv__track { height: auto; }
+#viz-results .rs-mv__effect { text-align: right; }
+#viz-results .rs-mv__big { display: block; font-size: var(--fs-stat); font-weight: 700; line-height: 1.25; color: var(--ink-strong); white-space: nowrap; }
+#viz-results .rs-mv__note.is-hidden { visibility: hidden; }
+#viz-results .rs-gap { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#viz-results .rs-axislabel { margin: 0; font-size: var(--fs-sm); color: var(--muted); text-align: center; }
+
+@container rs (min-width: 860px) {
+  #viz-results .rs-panels { grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: var(--s-6); }
+}
+@container rs (max-width: 699px) {
+  #viz-results .rs-mv__row { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name effect" "track track"; gap: 4px var(--s-3); padding: var(--s-3) 0 2px; }
+  #viz-results .rs-mv__name { grid-area: name; }
+  #viz-results .rs-mv__track { grid-area: track; }
+  #viz-results .rs-mv__effect { grid-area: effect; align-self: start; }
+  #viz-results .rs-mv__row--axis { grid-template-areas: "track track"; padding: 0; }
+  #viz-results .rs-mv__row--axis .rs-mv__name, #viz-results .rs-mv__row--axis .rs-mv__effect { display: none; }
+  #viz-results .rs-mv__note { max-width: 150px; margin-left: auto; }
+}
+/* the narrowest phones: the effect goes under the suspect's name, so neither has to break mid-word */
+@container rs (max-width: 300px) {
+  #viz-results .rs-mv__row { grid-template-columns: minmax(0, 1fr); grid-template-areas: "name" "effect" "track"; }
+  #viz-results .rs-mv__row--axis { grid-template-areas: "track"; }
+  #viz-results .rs-mv__effect { text-align: left; }
+  #viz-results .rs-mv__note { max-width: none; margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #viz-results .rs-mark, #viz-results .rs-col { transition: none; }
+}
+@media (forced-colors: active) {
+  #viz-results .rs-bar, #viz-results .rs-shape, #viz-results .rs-glyph path, #viz-results .rs-tipmark { fill: CanvasText; }
+  #viz-results .rs-wh, #viz-results .rs-seed, #viz-results .rs-sd, #viz-results .rs-brk, #viz-results .rs-pred { stroke: CanvasText; }
+  #viz-results .rs-focus { stroke: Highlight; }
+  #viz-results .rs-band { fill: Canvas; }
+}

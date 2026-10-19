@@ -1,0 +1,171 @@
+/* Component "theory" (SPEC_FINAL.md §5.2). Every rule is scoped under #viz-theory and uses only the tokens and
+   shared classes of site.css (no raw colors). Chart heights are reserved here, so nothing shifts when the charts
+   draw. Transitions only on control chrome (var(--dur)); site.css sets every duration to 0 under reduced motion. */
+
+#viz-theory[data-state="live"] [data-live] { display: grid; gap: var(--s-5); }
+#viz-theory .th-fig { margin: 0; min-width: 0; }
+#viz-theory .fig__caption .src { display: block; }
+#viz-theory .th-more { font-weight: 600; white-space: nowrap; }
+#viz-theory .th-def { display: block; margin-bottom: var(--s-2); font-size: 1.0625rem; font-weight: 700; color: var(--ink-strong); }
+#viz-theory .th-def__src { font-size: var(--fs-sm); font-weight: 400; color: var(--muted); }
+
+/* ---- (A) controls: presets + barrier, then the three ranges */
+#viz-theory .th-controls { display: grid; gap: var(--s-4); align-items: start; }
+#viz-theory .th-controls__top { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6); align-items: flex-end; justify-content: space-between; }
+#viz-theory .th-controls__ranges { display: grid; gap: var(--s-3) var(--s-6); }
+@media (min-width: 760px) { #viz-theory .th-controls__ranges { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+#viz-theory .th-presets { min-width: 0; }
+#viz-theory .th-presets__row { display: flex; flex-wrap: wrap; gap: 6px; }
+#viz-theory .th-preset { min-height: 36px; padding: 0 14px; border: 1px solid var(--line-strong); border-radius: var(--r-pill); background: var(--surface); color: var(--ink); font: 500 .9375rem/1.2 var(--font-sans); cursor: pointer; transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease); }
+#viz-theory .th-preset:hover { background: var(--tint); border-color: var(--accent); }
+#viz-theory .th-preset[aria-pressed="true"] { background: var(--tint); border-color: var(--accent); color: var(--ink-strong); font-weight: 700; box-shadow: inset 0 0 0 1px var(--accent); }
+#viz-theory .th-range { flex: none; }
+#viz-theory .th-range output { min-width: 3.4em; text-align: right; font-style: italic; color: var(--illus); }
+#viz-theory .th-rticks { position: relative; height: 2.6em; font-size: var(--fs-xs); line-height: 1.3; color: var(--muted); }
+#viz-theory .th-rtick { position: absolute; top: 0; left: calc(10px + (100% - 20px) * var(--f, 0)); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; white-space: nowrap; }
+#viz-theory .th-rtick--start { left: 0; transform: none; align-items: flex-start; }
+#viz-theory .th-rtick--end { left: auto; right: 0; transform: none; align-items: flex-end; }
+#viz-theory .th-rtick__sub { font-style: italic; }
+@media (max-width: 559px) {
+  #viz-theory .th-presets, #viz-theory .th-barrier { width: 100%; }
+  #viz-theory .th-preset { flex: 1 1 calc(50% - 6px); padding: 0 8px; }
+}
+
+/* ---- charts: SVG drawn at the container's size (text in px, never below 12) */
+#viz-theory .th-charts { display: grid; gap: var(--s-5); }
+@media (min-width: 900px) { #viz-theory .th-charts { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); } }
+#viz-theory .th-chart { min-width: 0; }
+#viz-theory .th-chart__title { margin: 0 0 var(--s-2); font-size: 1rem; line-height: 1.4; }
+#viz-theory .th-chart__sub { font-weight: 400; color: var(--muted); }
+#viz-theory .th-plot { position: relative; width: 100%; }
+#viz-theory .th-plot--a { height: 312px; }
+#viz-theory .th-plot--fd { height: 272px; }
+#viz-theory .th-plot--gate { height: 268px; }
+@media (max-width: 639px) { #viz-theory .th-plot--a { height: 300px; } #viz-theory #theory-loss-plot { height: 336px; } #viz-theory .th-plot--fd { height: 250px; } #viz-theory .th-plot--gate { height: 250px; } }
+@media (min-width: 1000px) { #viz-theory .th-plot--gate { height: 336px; } }   /* beside the measured card: no empty band under the chart */
+#viz-theory .th-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+#viz-theory .th-svg text { font-family: var(--font-sans); font-size: 13px; fill: var(--ink); }
+#viz-theory .th-svg .th-tick { fill: var(--tick); font-variant-numeric: tabular-nums; }
+#viz-theory .th-svg .th-sup, #viz-theory .th-svg .th-sub { font-size: 12px; }
+#viz-theory .th-svg .th-axis-title { fill: var(--muted); }
+#viz-theory .th-svg .th-lbl { font-size: 13.5px; }
+#viz-theory .th-svg .th-strong { font-weight: 700; fill: var(--ink-strong); }
+#viz-theory .th-svg .th-muted { fill: var(--muted); }
+#viz-theory .th-svg .th-lbl--hist, #viz-theory .th-svg .th-lbl--hist .th-strong, #viz-theory .th-svg .th-hist-text { fill: var(--hist-text); }
+#viz-theory .th-svg .th-it { font-style: italic; }
+#viz-theory .th-svg .th-val { font-variant-numeric: tabular-nums; fill: var(--ink-strong); }
+#viz-theory .th-svg .th-val--on { font-weight: 700; }
+#viz-theory .th-halo { paint-order: stroke fill; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+#viz-theory .th-grid { stroke: var(--grid); stroke-width: 1; }
+#viz-theory .th-grid--one, #viz-theory .th-axis { stroke: var(--axis); stroke-width: 1; }
+#viz-theory .th-curve { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linejoin: round; }
+#viz-theory .th-ratio { fill: none; stroke: var(--accent); stroke-width: 2.25; stroke-linejoin: round; stroke-linecap: round; }
+#viz-theory .th-band { fill: var(--band); }
+#viz-theory .th-band-edge { fill: none; stroke: var(--band-edge); stroke-width: 1; }
+#viz-theory .th-hatch { stroke: var(--line-strong); stroke-width: 1.2; }
+#viz-theory .th-tan { stroke-width: 2.5; stroke-linecap: round; }
+#viz-theory .th-tan--own { stroke: var(--own); }
+#viz-theory .th-tan--hist { stroke: var(--hist); }
+#viz-theory .th-pt, #viz-theory .th-mark { stroke: var(--surface); stroke-width: 2; paint-order: stroke; }
+#viz-theory .th-pt--own { fill: var(--own); }
+#viz-theory .th-pt--hist { fill: var(--hist); }
+#viz-theory .th-chev { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+#viz-theory .th-chev--own { stroke: var(--own); }
+#viz-theory .th-chev--hist { stroke: var(--hist); }
+#viz-theory .th-arrow { fill: none; stroke: var(--hist); stroke-width: 1.75; stroke-linecap: round; }
+#viz-theory .th-arrowhead { fill: var(--hist); }
+#viz-theory .th-leader { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 1.5 3; }
+#viz-theory .th-leader--hist { stroke: var(--hist); }
+#viz-theory .th-drop { stroke: var(--hist); stroke-width: 1.5; stroke-dasharray: 3 3; }
+#viz-theory .th-zero-tick { stroke: var(--accent); stroke-width: 2; }
+#viz-theory .th-line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+#viz-theory .th-line--cum { stroke: var(--arm-cum); }
+#viz-theory .th-line--free { stroke: var(--arm-free); }
+#viz-theory .th-line--under { stroke-width: 3; }
+#viz-theory .th-line--gated { stroke: var(--arm-gated); stroke-width: 2.5; }
+#viz-theory .m--cum { fill: var(--arm-cum); }
+#viz-theory .m--free { fill: var(--arm-free); }
+#viz-theory .m--gated { fill: var(--arm-gated); }
+#viz-theory .th-kappa { stroke: var(--ink); stroke-width: 1.25; stroke-dasharray: 4 4; }
+#viz-theory .th-col { fill: var(--tint); }
+#viz-theory .th-hit { fill: transparent; }
+#viz-theory .th-fdpt { outline: none; }
+#viz-theory .th-focusring { fill: none; stroke: none; stroke-width: 2; }
+#viz-theory .th-fdpt:focus-visible .th-focusring, #viz-theory .th-fdpt.is-active .th-focusring { stroke: var(--focus); }
+
+/* ---- (A) readouts: illustration tray (dashed, italic) beside the measured chip */
+#viz-theory .th-tray { grid-template-columns: minmax(0, 1fr); gap: var(--s-3) var(--s-5); margin-top: var(--s-5); }
+@media (min-width: 640px) {
+  #viz-theory .th-tray { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #viz-theory .th-regime, #viz-theory .th-measured { grid-column: 1 / -1; }
+}
+@media (min-width: 900px) {
+  #viz-theory .th-tray { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.3fr); }
+  #viz-theory .th-regime { grid-column: 1 / 3; }
+  #viz-theory .th-measured { grid-column: 3; grid-row: 1 / span 2; align-self: start; }
+}
+#viz-theory .tray__val sup, #viz-theory .measured__val sup { font-size: .62em; }
+#viz-theory .th-meter { display: block; max-width: 220px; height: 6px; margin-top: 8px; border-radius: 3px; background: var(--hist-fill); overflow: hidden; }
+#viz-theory .th-meter__fill { display: block; width: var(--w, 0%); height: 100%; background: var(--hist); }
+#viz-theory .th-regime { margin: 0; font-size: .9375rem; line-height: 1.5; font-style: italic; color: var(--illus); }
+#viz-theory .measured__src i { font-style: italic; }
+
+/* ---- (B) and (C): full-width frames, each laid out in two columns from 1000 px (balanced heights, no holes) */
+#viz-theory .th-pair { display: grid; gap: var(--s-5); }
+@media (min-width: 1000px) {
+  #viz-theory .th-b, #viz-theory .th-c { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: var(--s-7); align-items: start; }
+  #viz-theory .th-b > .fig__head, #viz-theory .th-c > .fig__head { grid-column: 1 / -1; }
+  #viz-theory .th-b > .th-legend { grid-column: 1; grid-row: 2; }
+  #viz-theory .th-b > .th-plot { grid-column: 1; grid-row: 3; }
+  #viz-theory .th-b > .th-note { grid-column: 1; grid-row: 4; }
+  #viz-theory .th-b > .fig__caption { grid-column: 2; grid-row: 2 / span 3; margin-top: 0; }
+  #viz-theory .th-c { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  #viz-theory .th-c > .eq { grid-column: 1; grid-row: 2; align-self: center; }
+  #viz-theory .th-c > .th-controls--gate { grid-column: 2; grid-row: 2; margin-bottom: var(--s-4); }
+  #viz-theory .th-c > .th-legend, #viz-theory .th-c > .th-gate, #viz-theory .th-c > .fig__caption { grid-column: 1 / -1; }
+  #viz-theory .th-c .th-gate { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); column-gap: var(--s-7); align-items: start; }
+}
+#viz-theory .th-legend { margin: 0 0 var(--s-2); }
+/* phones: the sliders between the loss chart and the readouts, then the ratio chart (moved by the component) */
+#viz-theory .th-controls--phone { margin: var(--s-4) 0 0; }
+#viz-theory .th-controls--phone + .th-tray { margin-top: var(--s-4); }
+#viz-theory .th-charts--ratio { margin-top: var(--s-5); }
+#viz-theory .th-note { margin: var(--s-2) 0 0; font-size: var(--fs-sm); line-height: 1.45; color: var(--muted); }
+#viz-theory .th-c { container-type: inline-size; }
+#viz-theory .th-c > .eq { margin: 0 0 var(--s-4); padding: 0; border: 0; background: none; box-shadow: none; }
+#viz-theory .th-controls--gate { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--s-3) var(--s-6); }
+#viz-theory .th-gate { display: grid; gap: var(--s-4); }
+#viz-theory .th-gate__chart { min-width: 0; }
+@container (min-width: 720px) { #viz-theory .th-gate { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: start; } }
+#viz-theory .th-runs { min-width: 0; }
+#viz-theory .th-runs__state { margin: 6px 0 var(--s-2); font-size: .9375rem; line-height: 1.45; color: var(--ink); }
+#viz-theory .th-runs__tbl { font-size: .875rem; }
+#viz-theory .th-runs__tbl th, #viz-theory .th-runs__tbl td { padding: 6px 8px; }
+#viz-theory .th-runs__tbl th:first-child { padding-left: 0; }
+#viz-theory .th-runs__tbl tr.is-current th, #viz-theory .th-runs__tbl tr.is-current td { background: var(--tint); }
+#viz-theory .th-runs__tbl thead th { white-space: normal; }
+#viz-theory .th-runs__tbl thead th.num { width: 1%; min-width: 5.6em; }
+@media (max-width: 559px) {   /* phones: each run is a row header over its two values (no sideways scroll) */
+  #viz-theory .th-runs__tbl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  #viz-theory .th-runs__tbl, #viz-theory .th-runs__tbl tbody { display: block; }
+  #viz-theory .th-runs__tbl tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2px 12px; padding: 8px 6px; border-bottom: 1px solid var(--line); }
+  #viz-theory .th-runs__tbl tr.is-current { background: var(--tint); }
+  #viz-theory .th-runs__tbl tr.is-current th, #viz-theory .th-runs__tbl tr.is-current td { background: none; }
+  #viz-theory .th-runs__tbl th[scope="row"], #viz-theory .th-runs__tbl td { padding: 0; border: 0; text-align: left; }
+  #viz-theory .th-runs__tbl th[scope="row"] { grid-column: 1 / -1; }
+  #viz-theory .th-runs__tbl td::before { content: attr(data-label); display: block; font-size: .75rem; font-weight: 700; letter-spacing: .04em; color: var(--muted); }
+}
+#viz-theory .th-runs .arm { white-space: normal; }
+#viz-theory .th-runs__note { margin: var(--s-2) 0 0; font-size: var(--fs-sm); line-height: 1.45; color: var(--muted); }
+#viz-theory .th-runs__quote { margin: var(--s-3) 0 0; padding-left: var(--s-3); border-left: 3px solid var(--hist); font-size: .9375rem; line-height: 1.45; color: var(--ink-strong); }
+#viz-theory .th-runs__cite { color: var(--muted); }
+#viz-theory .th-runs .measured__src { margin-top: var(--s-2); }
+
+@media (forced-colors: active) {
+  #viz-theory .th-curve, #viz-theory .th-ratio, #viz-theory .th-line, #viz-theory .th-tan, #viz-theory .th-arrow, #viz-theory .th-chev,
+  #viz-theory .th-kappa, #viz-theory .th-drop, #viz-theory .th-band-edge, #viz-theory .th-zero-tick { stroke: CanvasText; }
+  #viz-theory .th-pt, #viz-theory .th-mark, #viz-theory .th-arrowhead, #viz-theory .th-svg text { fill: CanvasText; }
+  #viz-theory .th-meter__fill { background: CanvasText; }
+  #viz-theory .th-fdpt:focus-visible .th-focusring, #viz-theory .th-fdpt.is-active .th-focusring { stroke: Highlight; }
+  #viz-theory .th-preset[aria-pressed="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
