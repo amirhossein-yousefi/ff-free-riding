@@ -2,7 +2,10 @@
 
 **Amirhossein Yousefiramandi** (Independent Researcher) · NeurIPS 2026 (poster)
 
-- **Paper:** [arXiv:2605.06240](https://arxiv.org/abs/2605.06240)
+- **Paper:** [arXiv:2605.06240](https://arxiv.org/abs/2605.06240) ·
+  [OpenReview](https://openreview.net/forum?id=TN0FvatX6A)
+- **Project page:** <https://amirhossein-yousefi.github.io/ff-free-riding/> (interactive figures, poster,
+  slides, and the Paris poster session)
 - **Code** (this repository): <https://github.com/amirhossein-yousefi/ff-free-riding> (Apache-2.0,
   full text in [`LICENSE`](LICENSE))
 - **Checkpoints:** <https://huggingface.co/Amirhossein75/ff-free-riding> (CC BY 4.0). This is a
