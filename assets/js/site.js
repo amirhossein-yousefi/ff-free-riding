@@ -239,4 +239,39 @@ for (const box of document.querySelectorAll('[data-session-start][data-session-e
   } catch (_) { /* the static Paris time and the NeurIPS schedule's listing stay */ }
 }
 
+/* ---- the central result plays itself in, like a short clip (no button): when the card is at least a third in view,
+   the block-health bars grow and then the paired accuracy CIs drop into the +-1 pp band (site.css, .teaser.is-playing,
+   about 3.5 s). It plays when the card first comes into view and again each time it comes back after leaving the
+   screen. The finished charts are what the page shows without JavaScript, with reduced motion, and in automated test
+   browsers (navigator.webdriver), so screenshots and checks always see the complete charts. ---- */
+const teaser = document.querySelector('.teaser');
+if (teaser && 'IntersectionObserver' in window && !navigator.webdriver) {
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  for (const svg of teaser.querySelectorAll('svg.tz')) {
+    let bar = 0;
+    let k = 0;
+    for (const el of svg.children) {   // stagger: bars and their values by row; CIs and points by position
+      const c = el.classList;
+      if (c.contains('tz-bar')) { el.style.setProperty('--i', String(bar)); bar += 1; }
+      else if (c.contains('tz-val')) el.style.setProperty('--i', String(Math.max(0, bar - 1)));
+      else if (c.contains('tz-note')) el.style.setProperty('--i', String(Math.max(0, bar - 1)));
+      else if (c.contains('tz-wh')) el.style.setProperty('--i', String(k));
+      else if (c.contains('tz-ring')) { el.style.setProperty('--i', String(k)); k += 1; }
+    }
+  }
+  const play = () => {
+    if (still.matches) return;
+    teaser.classList.remove('is-playing');
+    void teaser.getBoundingClientRect();   // restart the CSS animations
+    teaser.classList.add('is-playing');
+  };
+  let away = true;
+  new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (e.isIntersecting && e.intersectionRatio >= 0.33) { if (away) { away = false; play(); } }
+      else if (!e.isIntersecting) away = true;
+    }
+  }, { threshold: [0, 0.33] }).observe(teaser);
+}
+
 window.FF_SHELL_READY = true;

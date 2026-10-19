@@ -991,6 +991,57 @@ function mount(root, undo, fail) {
   placeA();
   phoneA.addEventListener('change', placeA);
 
+  /* automatic sweep (no button), like a short clip: the first time the loss chart is at least 60 % in view, and again
+     each time it comes back after leaving the screen, the inherited margin P sweeps from 0 to the default batch mean
+     (block 3, γ = 0.7: P = +5.41, Tab. 4) in about 3.5 s, so the tangent flattens and R falls on the log scale while
+     the reader watches; it ends exactly on that preset (state, sliders, readouts, the shaded F_d block). It stops for
+     good once the reader touches the figure (pointer or key), and it never runs with reduced motion, without
+     IntersectionObserver, or in automated test browsers (navigator.webdriver: the component tests check the stable
+     default state). The live region stays silent during the sweep. */
+  if ('IntersectionObserver' in window && !navigator.webdriver) {
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let rafS = 0;
+    let touched = false;
+    let away = true;
+    const stopSweep = (restore) => {
+      if (!rafS) return;
+      cancelAnimationFrame(rafS);
+      rafS = 0;
+      if (restore) applyPreset(def.id, false);
+    };
+    const sweep = safe(() => {
+      if (touched || still.matches || rafS) return;
+      const P1 = val(def.P);
+      const T = 3500;
+      let t0 = 0;
+      applyPreset(def.id, false);
+      const step = safe((now) => {
+        if (!t0) t0 = now;
+        const u = Math.min(1, (now - t0) / T);
+        const e = u < 0.5 ? 2 * u * u : 1 - ((-2 * u + 2) ** 2) / 2;   // ease in and out
+        st.P = Math.round(P1 * e * 100) / 100;
+        st.preset = null;
+        rP.input.value = st.P;
+        syncInputsA();
+        readoutsA(false);
+        shadeFd();
+        redrawA();
+        if (u < 1) rafS = requestAnimationFrame(step);
+        else { rafS = 0; applyPreset(def.id, false); }
+      });
+      rafS = requestAnimationFrame(step);
+    });
+    const touch = () => { touched = true; stopSweep(false); };
+    figA.addEventListener('pointerdown', touch, true);
+    figA.addEventListener('keydown', touch, true);
+    new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.6) { if (away) { away = false; sweep(); } }
+        else if (!e.isIntersecting) { away = true; stopSweep(true); }
+      }
+    }, { threshold: [0, 0.6] }).observe(lossPlot);
+  }
+
   // first render (synchronous, so a failure shows up here and the static version comes back)
   ratioSubText();
   syncInputsA();

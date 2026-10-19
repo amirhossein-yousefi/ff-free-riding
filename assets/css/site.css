@@ -224,8 +224,8 @@ main:focus { outline: none; }
 /* ---------------------------------------------------------------- 6. Hero */
 .hero { background: linear-gradient(180deg, var(--hero-top) 0%, var(--bg) 100%); padding: var(--s-5) 0 var(--s-7); }
 .hero__grid { display: grid; gap: var(--s-6); align-items: start; }
-.venue { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 var(--s-4); padding: 3px 12px 3px 3px; border: 1px solid var(--line-strong); border-radius: var(--r-pill); background: var(--surface); font-size: .875rem; font-weight: 700; color: var(--ink-strong); }
-.venue__conf { padding: 3px 10px; border-radius: var(--r-pill); background: var(--bar); color: var(--on-bar); }
+/* the venue: a plain label in the eyebrow style (no outline or fill, so it does not read as a button or a switch) */
+.venue { margin: 0 0 var(--s-3); font-size: .8125rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
 .hero__title { margin: 0 0 var(--s-4); }
 .hero__topic { display: block; margin-bottom: var(--s-2); font-size: var(--fs-topic); font-weight: 600; line-height: 1.3; color: var(--accent); }
 .hero__verdict { display: block; font-size: var(--fs-verdict); font-weight: 700; line-height: 1.06; letter-spacing: -.02em; color: var(--ink-strong); }
@@ -276,6 +276,10 @@ main:focus { outline: none; }
 .more:hover { text-decoration: underline; }
 .scope-line { margin: var(--s-4) 0 0; font-size: var(--fs-sm); color: var(--muted); max-width: 620px; }
 .tldr__jump { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: var(--s-3) 0 0; }
+/* the testbed check under the TL;DR: the prior-FF calibration in one line (paper wording; the table is #calibration) */
+.testbed { margin: var(--s-4) 0 0; padding: 10px 14px; background: var(--tint); border-left: 3px solid var(--accent); border-radius: 0 var(--r-md) var(--r-md) 0; font-size: .9375rem; line-height: 1.55; color: var(--ink); }
+.testbed strong { color: var(--ink-strong); }
+.testbed .more { margin-left: 2px; }
 
 @media (min-width: 960px) {
   .hero { padding: 40px 0 var(--s-8); }
@@ -285,6 +289,20 @@ main:focus { outline: none; }
 /* ---------------------------------------------------------------- 7. Cards and the teaser */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-md); }
 .teaser { padding: var(--s-5); }
+/* the central result plays itself in, automatically (no button), like a short clip: bars grow, then the paired CIs drop
+   into the +-1 pp band, about 3.5 s in all, when the card first comes into view and again each time it comes back
+   after leaving (site.js). The charts are complete without JavaScript or with reduced motion: the animation only ever
+   starts from, and ends on, the finished state. */
+@media (prefers-reduced-motion: no-preference) {
+  .teaser.is-playing .tz-bar { transform-box: fill-box; transform-origin: 0 50%; animation: tz-grow .8s cubic-bezier(.2, .7, .2, 1) calc(.15s + var(--i, 0) * .32s) both; }
+  .teaser.is-playing .tz-val, .teaser.is-playing .tz-note { animation: tz-fade .35s ease-out calc(.8s + var(--i, 0) * .32s) both; }
+  .teaser.is-playing .tz-band, .teaser.is-playing .tz-band-edge { animation: tz-fade .6s ease-out 1.75s both; }
+  .teaser.is-playing .tz-wh { animation: tz-fade .3s ease-out calc(2.05s + var(--i, 0) * .14s) both; }
+  .teaser.is-playing .tz-ring { transform-box: fill-box; transform-origin: 50% 50%; animation: tz-drop .45s cubic-bezier(.2, .7, .3, 1.25) calc(2.05s + var(--i, 0) * .14s) both; }
+}
+@keyframes tz-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes tz-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tz-drop { from { opacity: 0; transform: translateY(-16px) scale(.6); } to { opacity: 1; transform: none; } }
 @media (max-width: 639px) { .teaser { padding: 14px; } }
 .teaser__title { font-size: 1.3125rem; margin: 0 0 var(--s-4); }
 .panel + .panel { margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--line); }
@@ -730,7 +748,7 @@ details.tbl-toggle[open] > summary { margin-bottom: var(--s-4); }
 @media (forced-colors: active) {
   .tz-m--cum, .tz-m--free, .tz-m--gated, .tz-m--mgc, .tz-bar { fill: CanvasText; }
   .tz-wh { stroke: CanvasText; }
-  .step__num, .venue__conf, .resultbar__head, .verdictbar, .qa__badge, .theorem__tag, .badge--measured { forced-color-adjust: none; background: Highlight; color: HighlightText; }
+  .step__num, .resultbar__head, .verdictbar, .qa__badge, .theorem__tag, .badge--measured { forced-color-adjust: none; background: Highlight; color: HighlightText; }
   .progress__bar { background: Highlight; }
   input[type="range"].range::-moz-range-track { background: GrayText; }
   input[type="range"].range::-webkit-slider-runnable-track { background: GrayText; }
