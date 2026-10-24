@@ -1,5 +1,49 @@
 # Changelog
 
+## Expanded checkpoint release (2026-10-24)
+
+The Hugging Face repository now holds the Stage-1 checkpoints (`stage1_best.pt`) of 29 runs
+instead of 4:
+
+- **Added:** seeds 123/456 of the CIFAR-100 γ=0, κ=0, cumulative and MGC arms; all seeds of the
+  CIFAR-10 squared-hinge (both arms), MGC-D128 and CP-FAIR runs; the Tiny ImageNet γ=0 runs
+  (seeds 42/123/456); and the CIFAR-10 NoMem-L2 run (seed 42). The four seed-42 CIFAR-100 files of
+  the first release are unchanged.
+- **`release_manifest.json`:**
+  - `availability` is "public_hf" for the 29 files.
+  - Eight new entries: the Stage-1 and Stage-2 files of the three Tiny ImageNet runs and of the
+    NoMem-L2 run. The four Stage-1 files are public; the four Stage-2 heads are available on
+    request. The manifest now lists 106 checkpoint files of 53 runs.
+  - A `public` subset. The `minimal` subset stays as the record of the first release.
+  - Resumed-run disclosures for the three Tiny ImageNet runs and for two gated-ablation runs that
+    were missing them (`gated_l4_adaptive_prev_only_seed42`, `gated_l8_adaptive_t1_k4_seed42`).
+  - For every public file, the checks made before the upload: `lineage_check` and
+    `loading_spot_check`. RELEASE_CHECKPOINTS.md and the model card describe them.
+  - More paper tables per group, for example Tables 13 and 36, which re-score checkpoint files
+    (Table 13: the nine CIFAR-100 trio files and the nine CIFAR-10 L4/D128 gated-ablation files;
+    Table 36: 18 files of the trio, CP-FAIR, CIFAR-10 γ=0 and CIFAR-10 L4/D128 κ=0 runs), and
+    `_meta.not_covered`, which names runs of the paper whose checkpoints the manifest does not
+    list. The earlier documents called the listed files every result-bearing checkpoint
+    of the paper, which overstated their coverage.
+- **`release/stage_release.py`:** `--subset public` stages the Hugging Face release, and `--subset
+  minimal` now stages the 4 files of the first release. A staged file that fails its SHA-256 check
+  is now deleted from `--dest`.
+- **Model card, `RELEASE_CHECKPOINTS.md`, README and `preds_cifar100/README.md`:** updated for the
+  29 public files. The model card gives the trainer and test-set normalization of each checkpoint
+  group, the logged numbers of every public file, and the run history of the resumed runs. The
+  documented commands use `hf`, because current `huggingface_hub` releases no longer run
+  `huggingface-cli`.
+- **`repro_manifest.csv`:** the notes of the two `tab:readouts` rows and of the trio
+  paired-bootstrap row of `tab:dissociation_merged` (their Stage-1 checkpoints are all public now),
+  and of the Tiny ImageNet row (the runs' Stage-2 head used `head_hidden=1536`; the trainer's
+  default is 2048).
+
+- **`analysis/experiments/ffcr_common.py`:** two comments only. The gated-ablation
+  `adaptive_prev_only` seed-42 run was resumed (Stage-1 epochs 1-174, then 175-180), not
+  restarted; its selected epoch (180) is in the final segment, so no result changes.
+
+The paper and the trainers are unchanged.
+
 ## Update after the first public release: F1, F2, E1 tier 2 and E2
 
 The paper now reports two camera-ready GPU experiments that were still running when this repository

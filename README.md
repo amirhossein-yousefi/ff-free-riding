@@ -8,10 +8,12 @@
   slides, and the Paris poster session)
 - **Code** (this repository): <https://github.com/amirhossein-yousefi/ff-free-riding> (Apache-2.0,
   full text in [`LICENSE`](LICENSE))
-- **Checkpoints:** <https://huggingface.co/Amirhossein75/ff-free-riding> (CC BY 4.0). This is a
-  minimal release: the seed-42 Stage-1 checkpoints of the four CIFAR-100 arms of Table 3. The
-  other result-bearing checkpoints are listed with SHA-256 in
-  [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md) and are available on request.
+- **Checkpoints:** <https://huggingface.co/Amirhossein75/ff-free-riding> (CC BY 4.0): the
+  Stage-1 checkpoints of 29 runs, which are every seed of the CIFAR-100 trio and MGC arms, the
+  CIFAR-10 squared-hinge, MGC-D128, CP-FAIR and NoMem-L2 runs, and the Tiny ImageNet γ=0 runs.
+  [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md) lists all 106 checkpoint files of the release
+  (53 runs) with SHA-256. The other 77, which are the Stage-2 heads and the Stage-1 files of the
+  remaining CIFAR-10 runs, are available on request.
 
 This repository contains the training code, analysis scripts, metric summaries and reproduction
 manifest for the paper. It is the camera-ready version of the anonymized supplement submitted
@@ -35,8 +37,9 @@ FF_VERSION_TAG=cifar100_gamma0_seed42 FF_NUM_BLOCKS=4 FF_D_MODEL=256 FF_NUM_HEAD
 
 To evaluate a released checkpoint, see the loading snippet in the model card
 ([`release/MODEL_CARD.md`](release/MODEL_CARD.md), also the README of the Hugging Face
-repository). It rebuilds the network with `trainers/cp_fair_cifar100.py` and scores the CIFAR-100
-test set with the paper's Stage-1 goodness-sum readout. To get S2 numbers, retrain the Stage-2
+repository). It rebuilds the network with the checkpoint group's trainer (for example
+`trainers/cp_fair_cifar100.py` for the CIFAR-100 files) and scores the test set with the paper's
+Stage-1 goodness-sum readout. To get S2 numbers, retrain the Stage-2
 probe from a released Stage-1 checkpoint as described in
 [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md#retraining-the-stage-2-probe).
 
@@ -60,7 +63,7 @@ The same metadata is in [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repo
 | --- | --- |
 | CIFAR-10 main FF runs (γ=0, CP-FAIR, ablations) | Trainer + env commands; metric summaries bundled |
 | CIFAR-100 dissociation trio (γ=0 / κ=0 / cumulative, 3 seeds) | Trainer + env commands; the nine S2-TTA prediction files bundled in `preds_cifar100/` |
-| Tiny ImageNet γ=0 (3 seeds) | Trainer + seed pins |
+| Tiny ImageNet γ=0 (3 seeds) | Trainer + seed pins; for the runs' Stage-2 head set `head_hidden=1536` in `FFConfig` (the trainer defaults to 2048 and has no environment variable for it; see `repro_manifest.csv`) |
 | L4/D128 and L8/D128 hardness-gated runs | Trainer + env commands (SAM setting per seed in the manifest) |
 | Missing-gradient compensation (MGC), CIFAR-100 and CIFAR-10 D128 | Opt-in flags in the shipped trainers (`FF_USE_MGC=1`) |
 | MGC control at CIFAR-10 L4/D128 (F1: SAM-matched cumulative arm, auxiliary removed, block-0 auxiliary kept; 3 seeds each; Table 6, App. B.1.1) | Trainer flags + env commands in the manifest; `analysis/camera_ready/f1_analysis.py` (paired statistics, scoring of the registered predictions) and `analysis/experiments/f1_mgc_block0/` (F_d snapshot, registered predictions); results `metric_summaries/camera_ready/f1_block0_control.json` |
@@ -71,10 +74,10 @@ The same metadata is in [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repo
 | Gradient-attenuation snapshot (Fig. 1) and its EMA-weight recomputation | `analysis/snapshot_grad_attenuation.py`, `analysis/experiments/e3_fd/` |
 | Separation vs. accuracy at the selected checkpoints (E1: logged, and recomputed on the checkpoints) | `analysis/experiments/e1_sep/` (CPU; E1 tier 2 and E2 run together with `analysis/experiments/run_cpu_batch.sh`) |
 | Validation-selected early exit (E2; the cumulative runs exit early too, so the saving is not specific to the repairs) | `analysis/experiments/e2_exit/` (CPU); table and figure from `analysis/camera_ready/make_tables.py` / `make_figures.py --fig early_exit` |
-| Paired-bootstrap dissociation statistics | `analysis/paired_dissociation_stats.py` on `preds_cifar100/` (S2-TTA; the other protocols need the full prediction sets, regenerated from the checkpoints, most of them available on request) |
+| Paired-bootstrap dissociation statistics | `analysis/paired_dissociation_stats.py` on `preds_cifar100/` (S2-TTA; the other protocols need the full prediction sets, regenerated from the checkpoints: the Stage-1 files are public, the Stage-2 heads available on request) |
 | Block-locality audit, including the depth-order path | `scripts/reproduce_locality_audit.sh` |
 | Text-domain runs (App. K) | Wrapper trainer + recipe (`analysis/text_domain_README.md`) |
-| Trained checkpoints | Public on Hugging Face: the 4 seed-42 Stage-1 checkpoints of the CIFAR-100 γ=0 / κ=0 / cumulative / MGC arms (CC BY 4.0). All 98 result-bearing checkpoints are listed with SHA-256, and the other 94 are available on request: [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md), model card [`release/MODEL_CARD.md`](release/MODEL_CARD.md) |
+| Trained checkpoints | Public on Hugging Face (CC BY 4.0): the Stage-1 checkpoints of 29 runs, which are all seeds of the CIFAR-100 γ=0 / κ=0 / cumulative / MGC arms, the CIFAR-10 squared-hinge, MGC-D128, CP-FAIR and NoMem-L2 runs, and the Tiny ImageNet γ=0 runs. All 106 checkpoint files of the release (53 runs) are listed with SHA-256, and the other 77 are available on request: [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md), model card [`release/MODEL_CARD.md`](release/MODEL_CARD.md) |
 
 ## Layout
 
@@ -107,7 +110,7 @@ metric_summaries/              v1 summaries (aggregated_gated_l4d128.json correc
 preds_cifar100/                the nine CIFAR-100 trio S2-TTA test-prediction files (30 MB; paired bootstrap; CC BY 4.0)
 notebooks/                     Colab launchers (Drive sync + resume)
 scripts/                       push-button reproduction wrappers
-release/stage_release.py       stages and verifies the checkpoint release (--subset minimal: the 4 public files; the script itself uploads nothing)
+release/stage_release.py       stages and verifies the checkpoint release (--subset public: the 29 public files; the script itself uploads nothing)
 release/MODEL_CARD.md          Hugging Face model card of the checkpoint release (license: cc-by-4.0)
 repro_manifest.csv             paper row -> trainer -> env -> reference run -> expected value
 CITATION.cff                   citation metadata (GitHub "Cite this repository")

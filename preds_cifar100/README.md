@@ -10,8 +10,8 @@ column of the trio Δ rows in Table 3 (`tab:dissociation_merged`), the S2-TTA co
 table in App. B.7 (`tab:trio_perseed`), and the S2-TTA disagreement rates.
 
 Paths below refer to the code repository (<https://github.com/amirhossein-yousefi/ff-free-riding>),
-which is where these files are published. They are not duplicated in the minimal checkpoint
-release (<https://huggingface.co/Amirhossein75/ff-free-riding>).
+which is where these files are published. They are not duplicated in the checkpoint release on
+the Hugging Face Hub (<https://huggingface.co/Amirhossein75/ff-free-riding>).
 The files are byte-identical (SHA-256) to `preds_stage2_test_tta.npz` in the result-bearing run
 directories listed in `analysis/camera_ready/config.py` (`TRIO_RUNS`). They are unchanged from the
 v1 supplement.
@@ -21,8 +21,9 @@ the full prediction sets of those runs (about 127 MB for the trio alone). Those 
 bundled because the archive would exceed 100 MB. You can regenerate them from the checkpoints
 listed in `RELEASE_CHECKPOINTS.md`:
 
-- The seed-42 Stage-1 checkpoints of the trio and of MGC are public; they give S1 and S1-TTA.
-- The others, including every Stage-2 head, are available on request.
+- The Stage-1 checkpoints of the trio and MGC runs (seeds 42/123/456) and of the CIFAR-10 CP-FAIR
+  runs are public; they give S1 and S1-TTA.
+- The Stage-2 heads and the CIFAR-10 γ=0 seed-123/456 checkpoints are available on request.
 - The exception is the CIFAR-10 γ=0 seed-42 run, whose checkpoint is not recoverable.
 
 The camera-ready values are in `metric_summaries/camera_ready/c100_trio_paired.json`,

@@ -3,19 +3,22 @@
 SHA-256, and write SHA256SUMS. Nothing is uploaded; see RELEASE_CHECKPOINTS.md for the upload step to
 https://huggingface.co/Amirhossein75/ff-free-riding.
 
-Two subsets (release_manifest.json, _meta.subsets):
+Three subsets (release_manifest.json, _meta.subsets):
 
-  --subset minimal   the public Hugging Face release: the 4 files with availability "public_hf"
-                     (seed-42 stage1_best of the CIFAR-100 gamma=0, gated kappa=0, cumulative and MGC
-                     arms of main-text Table 3; 846 MB). Writes README.md (the model card,
+  --subset public    the public Hugging Face release (since 2026-10-24): the 29 files with availability
+                     "public_hf" (the Stage-1 networks of the CIFAR-100 trio and MGC arms, the CIFAR-10
+                     squared-hinge, MGC-D128 and CP-FAIR runs, the Tiny ImageNet gamma=0 runs and the
+                     CIFAR-10 NoMem-L2 run; 14.3 GB). Writes README.md (the model card,
                      release/MODEL_CARD.md), release_manifest.json (the full manifest; each entry's
-                     `availability` says whether it is on the Hub) and SHA256SUMS (the 4 checkpoints).
-  --subset full      every result-bearing checkpoint (98 files, about 55 GB), for sharing the
+                     `availability` says whether it is on the Hub) and SHA256SUMS (the public checkpoints).
+  --subset minimal   the first public release (2026-10-01): the 4 seed-42 stage1_best files of the
+                     CIFAR-100 gamma=0, gated kappa=0, cumulative and MGC arms (846 MB); same outputs.
+  --subset full      every checkpoint listed in the manifest (106 files, about 61 GB), for sharing the
                      "on_request" files; also copies the bundled CIFAR-100 prediction files
                      (preds_cifar100/) to predictions/preds_cifar100/, and SHA256SUMS lists the
                      checkpoints and every file under predictions/. This is the default.
 
-    FF_HOME=/path/to/archive/root python release/stage_release.py --subset minimal --dest ./hf_release [--copy]
+    FF_HOME=/path/to/archive/root python release/stage_release.py --subset public --dest ./hf_release [--copy]
 
 FF_HOME is the directory that contains amir-porjects/ and ff-next/ (every `source` in the manifest is
 relative to it). Regular files are hard-linked into --dest (use --copy on another filesystem, or to
@@ -47,8 +50,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", default=os.path.join(os.path.dirname(HERE), "release_manifest.json"))
     ap.add_argument("--dest", required=True)
-    ap.add_argument("--subset", choices=("full", "minimal"), default="full",
-                    help="minimal: the 4 public Hugging Face files; full: all 98 files (default)")
+    ap.add_argument("--subset", choices=("full", "public", "minimal"), default="full",
+                    help="public: the Hugging Face release (availability public_hf); minimal: the first "
+                         "4-file release; full: every listed file (default)")
     ap.add_argument("--copy", action="store_true", help="copy instead of hard-linking regular files")
     ap.add_argument("--only-group", default=None)
     args = ap.parse_args()
@@ -57,11 +61,16 @@ def main():
         sys.exit("set FF_HOME to the directory that contains amir-porjects/ and ff-next/")
     man = json.load(open(args.manifest))
     entries = man["checkpoints"]
-    if args.subset == "minimal":
+    if args.subset == "public":
         entries = [e for e in entries if e.get("availability") == "public_hf"]
-        want = man["_meta"]["subsets"]["minimal"]
+        want = man["_meta"]["subsets"]["public"]
         if sorted(e["hf_path"] for e in entries) != sorted(want["files"]):
-            sys.exit("manifest inconsistent: availability flags differ from _meta.subsets.minimal.files")
+            sys.exit("manifest inconsistent: availability flags differ from _meta.subsets.public.files")
+    elif args.subset == "minimal":
+        want = set(man["_meta"]["subsets"]["minimal"]["files"])
+        entries = [e for e in entries if e["hf_path"] in want]
+        if len(entries) != len(want) or any(e.get("availability") != "public_hf" for e in entries):
+            sys.exit("manifest inconsistent: _meta.subsets.minimal.files are not all listed as public_hf")
     os.makedirs(args.dest, exist_ok=True)
     sums, bad = [], []
     for e in entries:
@@ -85,7 +94,8 @@ def main():
             got = sha256_file(dst)
             if got != e["sha256"]:
                 bad.append((e["hf_path"], got))
-                print(f"SHA-256 MISMATCH {e['hf_path']}", flush=True)
+                os.remove(dst)  # never leave a file that failed its check in --dest
+                print(f"SHA-256 MISMATCH {e['hf_path']} (removed from --dest)", flush=True)
                 continue
             print(f"staged {e['hf_path']}", flush=True)
         sums.append(f"{e['sha256']}  {e['hf_path']}")
@@ -94,7 +104,7 @@ def main():
     shutil.copyfile(os.path.join(HERE, "MODEL_CARD.md"), os.path.join(args.dest, "README.md"))
     if args.subset == "full":
         # The full bundle also carries the CIFAR-100 trio S2-TTA prediction files; the public
-        # (minimal) release leaves them in the code repository (preds_cifar100/).
+        # release leaves them in the code repository (preds_cifar100/).
         preds = os.path.join(os.path.dirname(HERE), "preds_cifar100")
         if os.path.isdir(preds):
             shutil.copytree(preds, os.path.join(args.dest, "predictions", "preds_cifar100"), dirs_exist_ok=True)

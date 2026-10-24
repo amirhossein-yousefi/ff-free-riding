@@ -92,7 +92,8 @@ def _ga_ckpt(arm):
 REG = {}
 
 # C10 gated L4/D128 seed-42 arms (GA). All trained by the (unfixed) hardness_gated trainer,
-# SAM off. prev_only uses the completed re-run _042603 (the _192927 dir is an aborted start).
+# SAM off. prev_only was resumed: _20260314_192927 logged Stage-1 epochs 1-174 and _20260315_042603
+# resumed at epoch 175 (its selected epoch, 180, is in that segment).
 GA_ARMS = {
     "baseline_constant": "20260313_232043",
     "lcff_prefix": "20260315_084228",
@@ -169,7 +170,8 @@ REG["c10_mgc_c1_seed42"] = dict(
 # segment (the last segment's Stage-1 log does not start at epoch 1). The best-val epoch -- and so
 # the stage1_best checkpoint -- can lie in an earlier segment, so logs are read across segments.
 # (Segments that restarted from scratch -- c100 gamma0 s42 _20260417_215649, c100 gated_k0 s123
-# _20260423_102837, GA prev_only _20260314_192927 -- are NOT prior segments.)
+# _20260423_102837 -- are NOT prior segments. GA prev_only _20260314_192927 is a prior segment, but its
+# selected epoch (180) lies in the final one, so it is not registered here.)
 PRIOR_SEGMENTS = {
     "c10_cp_fair_seed42": [CPF / "runs" / "ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_bs512_seed42_20260218_144731"],
     "c10_cp_fair_seed123": [CPF / "runs_seed123" / "ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_bs512_seed123_20260318_001952"],

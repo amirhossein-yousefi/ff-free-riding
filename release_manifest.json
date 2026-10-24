@@ -4,14 +4,14 @@
   "generated": "2026-09-25",
   "hf_repo": "https://huggingface.co/Amirhossein75/ff-free-riding",
   "code_repo": "https://github.com/amirhossein-yousefi/ff-free-riding",
-  "release_policy": "Minimal public release: only the 4 files with availability 'public_hf' (subset 'minimal': the seed-42 stage1_best checkpoints of the four central CIFAR-100 arms of main-text Table 3, gamma=0, gated kappa=0, cumulative gamma=0.7 and MGC) are uploaded to the Hugging Face repository. Every other file listed here ('on_request') is available from the author on request (amir.usefi75@gmail.com); its SHA-256 below lets the recipient verify it. The Stage-2 heads (stage2_best.pt) are not public: retrain the Stage-2 probe from a released stage1_best.pt (RELEASE_CHECKPOINTS.md, 'Retraining the Stage-2 probe').",
+  "release_policy": "Public release (since 2026-10-24): the 29 files with availability 'public_hf' (subset 'public') are on the Hugging Face repository: the Stage-1 networks (stage1_best.pt) of the CIFAR-100 trio and MGC arms (seeds 42/123/456), the CIFAR-10 squared-hinge (both arms), MGC-D128 and CP-FAIR runs (all seeds), the Tiny ImageNet gamma=0 runs (seeds 42/123/456) and the CIFAR-10 NoMem-L2 run (seed 42). The first release (2026-10-01, subset 'minimal') held the 4 seed-42 CIFAR-100 files. Every other file listed here ('on_request': the Stage-2 heads of all 53 runs and the Stage-1 networks of the remaining 24 CIFAR-10 runs) is available from the author on request (amir.usefi75@gmail.com); its SHA-256 below lets the recipient verify it. To get Stage-2 numbers from a public Stage-1 file, retrain the Stage-2 probe (RELEASE_CHECKPOINTS.md, 'Retraining the Stage-2 probe').",
   "availability_values": {
    "public_hf": "uploaded to the Hugging Face repository at hf_path (license CC BY 4.0)",
    "on_request": "not on the Hub; available from the author on request. hf_path is the path that release/stage_release.py --subset full gives the file when it is staged for sharing"
   },
   "subsets": {
    "minimal": {
-    "description": "public Hugging Face release: seed-42 stage1_best of the CIFAR-100 gamma=0, gated kappa=0, cumulative gamma=0.7 and MGC arms (main-text Table 3)",
+    "description": "the first public Hugging Face release (2026-10-01): seed-42 stage1_best of the CIFAR-100 gamma=0, gated kappa=0, cumulative gamma=0.7 and MGC arms (main-text Table 3); all four are also in the public subset",
     "n_files": 4,
     "total_bytes": 845889156,
     "files": [
@@ -22,26 +22,64 @@
     ]
    },
    "full": {
-    "description": "every result-bearing checkpoint listed in this manifest (the 4 public files plus the 94 available on request)",
-    "n_files": 98,
-    "total_bytes": 54444410714
+    "description": "every checkpoint file listed in this manifest: stage1_best and stage2_best of 53 runs in 12 groups (the 29 public files plus the 77 available on request)",
+    "n_files": 106,
+    "total_bytes": 60602002234
+   },
+   "public": {
+    "description": "the public Hugging Face release since 2026-10-24: every file with availability 'public_hf'",
+    "n_files": 29,
+    "total_bytes": 14291136349,
+    "files": [
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_P2_seed789_stage1_best.pt",
+     "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage1_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage1_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage1_best.pt"
+    ]
    }
   },
   "hashing": "SHA-256 over the full file bytes (Python hashlib, 8 MiB chunks). Archive members were streamed from the Google Drive export zips without extraction; zipfile verified each member's CRC-32. Extracted copies were cross-checked against their archive member's CRC-32.",
   "source_paths": "relative to FF_HOME (the root that contains amir-porjects/ and ff-next/); 'archive.zip::member' means a member of that zip file",
   "files_per_run": "stage1_best.pt (validation-selected Stage-1 network incl. EMA weights; S1/S1-TTA numbers) and stage2_best.pt (Stage-1 network + Stage-2 head; S2/S2-TTA numbers). *_last.pt resume files are not part of the release.",
-  "n_files": 98,
-  "total_bytes": 54444410714,
+  "n_files": 106,
+  "total_bytes": 60602002234,
   "resumed_runs_note": "None of these trainers saved RNG state in checkpoints, so a resumed run is not a bitwise continuation of an uninterrupted run; the camera-ready trainers save and restore it.",
   "lineage_notes": [
    "MGC-D128 seed 42 comes from the local DGX Spark (GB10) run (mgc_rebuttal/checkpoints); seeds 123/456 from Colab.",
    "Squared-hinge seed 42 (both arms) comes from the Colab run in mgc_rebuttal/checkpoints_from_drive. The mgc_rebuttal/checkpoints/ff_cifar10_hinge_*seed42* files are from aborted DGX runs (no final evaluation) and are NOT released.",
-   "CIFAR-100 trio: stage1_best from the extracted copies in ff-next/checkpoints/trio (CRC-32 equal to the archive members), stage2_best streamed from ff_cifar100_multiseed-20260425T214118Z-3-00{1..7}.zip."
+   "CIFAR-100 trio: stage1_best from the extracted copies in ff-next/checkpoints/trio (CRC-32 equal to the archive members), stage2_best streamed from ff_cifar100_multiseed-20260425T214118Z-3-00{1..7}.zip.",
+   "Tiny ImageNet gamma=0: stage1_best and stage2_best are streamed from the ff_tiny_imagenet_multiseed Drive export zips (tiny_imagenet_fair/from_drive_2); the final run directory of each seed names both files in its final test evaluation.",
+   "CIFAR-10 NoMem-L2 seed 42: the original run in basic_fair_revised_valfix_do_this_first (one run directory, Stage-1 epochs 1-362, 300 Stage-2 epochs)."
   ],
   "not_released": [
-   "CIFAR-10 gamma=0 L4/D256 seed 42 (the published run): checkpoint not recoverable; the only seed-42 gamma=0 checkpoints left come from the component-ablation run, not the published run.",
-   "Tiny ImageNet, text-domain and BP-control runs: not part of this release (run logs and metrics only).",
-   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): seed-42 run not retained."
+   "CIFAR-10 gamma=0 L4/D256 seed 42 (the published run): checkpoint not recoverable. The other CIFAR-10 gamma=0 L4/D256 seed-42 checkpoints come from different runs, the component ablation (tab:component_ablation) and the seed-42 rerun in the seed-123/456 configuration (tab:gamma0_multiseed), which this manifest does not list.",
+   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): seed-42 run not retained.",
+   "Text-domain and BP-control runs: not part of this release (run logs and metrics only)."
   ],
   "groups": {
    "c100_trio": {
@@ -51,13 +89,21 @@
      "tab:dissociation_merged",
      "tab:readouts (seed 42)",
      "tab:probes",
-     "tab:readout_ladder"
+     "tab:readout_ladder",
+     "tab:trio_perseed",
+     "tab:related_work_3ds (CIFAR-100 gamma=0 means)",
+     "tab:early_exit (re-scored from these files)",
+     "tab:e1_aligned (recomputed on these files)",
+     "tab:dissociation_full (CIFAR-100 rows)",
+     "tab:cifar100_comparison (gamma=0 means)",
+     "tab:mgc_full (CIFAR-100 cumulative reference row and paired differences)"
     ],
     "trainer": "trainers/cp_fair_cifar100.py (v1 file; flags off)"
    },
    "mgc_c100": {
     "title": "MGC (c0=1) CIFAR-100 L4/D256 dense, no SAM, 362+20 epochs, seeds 42/123/456",
     "paper": [
+     "tab:dissociation_merged",
      "tab:mgc_full",
      "tab:readouts"
     ],
@@ -67,7 +113,8 @@
     "title": "MGC (c0=1) CIFAR-10 L4/D128, SAM on, 180+10 epochs, seeds 42/123/456",
     "paper": [
      "tab:mgc_full",
-     "tab:gradshare (seed-42 MGC arm, stage1_best)"
+     "tab:gradshare (seed-42 MGC arm, stage1_best)",
+     "tab:f1_control (MGC row)"
     ],
     "trainer": "trainers/cp_fair_hardness_gated.py with FF_USE_MGC=1 (rebuttal file mgc_trainer.py)"
    },
@@ -84,15 +131,24 @@
      "tab:main_results",
      "tab:multiseed",
      "tab:freeriding (seed 42)",
-     "tab:dissociation_merged (CIFAR-10 pair)"
+     "tab:dissociation_merged (CIFAR-10 pair)",
+     "tab:full_main_results (CP-FAIR row)",
+     "tab:bp_ff_ablation (seed 42)",
+     "tab:per_class (seed 42)",
+     "tab:e1_aligned (recomputed on these files)",
+     "tab:gamma_sweep_perlayer (seed 42)"
     ],
     "trainer": "trainers/cp_fair_cifar10.py (produced by its pre-locality-fix predecessor)"
    },
    "c10_gamma0": {
-    "title": "CIFAR-10 gamma=0, L4/D256, SAM on, 362+20 epochs, seeds 123/456 (the seed-42 checkpoint is not recoverable)",
+    "title": "CIFAR-10 gamma=0, L4/D256, SAM on, 362+20 epochs, seeds 123/456 (the published seed-42 checkpoint is not recoverable)",
     "paper": [
      "tab:gamma0_multiseed",
-     "tab:dissociation_merged (CIFAR-10 pair)"
+     "tab:dissociation_merged (CIFAR-10 pair)",
+     "tab:main_results (gamma=0 row; seeds 123/456 of its 3-seed means)",
+     "tab:full_main_results (gamma=0 row; seeds 123/456 of its 3-seed means)",
+     "tab:related_work_3ds (CIFAR-10 gamma=0 means; seeds 123/456)",
+     "tab:e1_aligned (recomputed on these files)"
     ],
     "trainer": "trainers/cp_fair_cifar10.py with FF_GAMMA_SCALE=0 (v1 file)"
    },
@@ -102,14 +158,22 @@
      "tab:dissociation_full",
      "tab:gated",
      "Fig. 1 / F_d (baseline_constant, no_all_collab, lcff_prefix)",
-     "tab:gradshare (gamma=0.7, gamma=0)"
+     "tab:gradshare (gamma=0.7, gamma=0)",
+     "tab:early_exit (all nine arms re-scored from these files)",
+     "tab:e1_aligned (adaptive_t1_k0, recomputed on its file)",
+     "tab:gated_k0_multiseed (L4 row, seed 42 = adaptive_t1_k0)",
+     "tab:mgc_full (caption: seed-42 SAM-off anchors baseline_constant, no_all_collab, adaptive_t1_k0)",
+     "tab:depth_comparison (L4 column)",
+     "tab:accuracy_degradation (L4 column)"
     ],
     "trainer": "trainers/cp_fair_hardness_gated.py (produced by its pre-locality-fix predecessor)"
    },
    "gated_k0_l4_d128": {
     "title": "CIFAR-10 hardness-gated kappa=0 L4/D128, SAM on, 180+10 epochs, seeds 123/456",
     "paper": [
-     "tab:gated_k0_multiseed (L4 row)"
+     "tab:gated_k0_multiseed (L4 row)",
+     "tab:e1_aligned (recomputed on these files)",
+     "tab:dissociation_full (L4/D128 gated kappa=0 3-seed row)"
     ],
     "trainer": "trainers/cp_fair_hardness_gated.py (v1 file; flags off)"
    },
@@ -119,18 +183,43 @@
      "tab:dissociation_full (L8 block)",
      "tab:gated_k0_multiseed (L8 row, seed 42)",
      "tab:L8_sep",
-     "tab:L8_gpos"
+     "tab:L8_gpos",
+     "tab:depth_comparison (L8 column)",
+     "tab:accuracy_degradation (L8 column)",
+     "tab:depth_truncation_L8"
     ],
     "trainer": "trainers/cp_fair_hardness_gated.py with FF_NUM_BLOCKS=8 (produced by its pre-locality-fix predecessor)"
    },
    "gated_k0_l8_d128": {
     "title": "CIFAR-10 hardness-gated kappa=0 L8/D128, SAM off, 180+10 epochs, seeds 123/456",
     "paper": [
-     "tab:gated_k0_multiseed (L8 row)"
+     "tab:gated_k0_multiseed (L8 row)",
+     "tab:dissociation_full (L8/D128 gated kappa=0 3-seed row)"
     ],
     "trainer": "trainers/cp_fair_hardness_gated.py with FF_NUM_BLOCKS=8 FF_USE_SAM=0 (v1 file)"
+   },
+   "tin_gamma0": {
+    "title": "Tiny ImageNet gamma=0 (block-local), L4/D256 dense, P4, no SAM, 362+20 epochs, seeds 42/123/456",
+    "paper": [
+     "tab:tiny_imagenet_multiseed",
+     "tab:related_work_3ds (Tiny ImageNet gamma=0 means)",
+     "tab:tiny_imagenet_config (seed 42)",
+     "tab:dissociation_full (Tiny ImageNet row)"
+    ],
+    "trainer": "trainers/cp_fair_tiny_imagenet.py (gamma_scale=0; the runs' Stage-2 head used head_hidden=1536, the trainer's default is 2048)"
+   },
+   "c10_nomem_l2": {
+    "title": "CIFAR-10 NoMem-L2 (no memory cross-attention, L2-normalized tokens, uniform current-block weight 0.5), L4/D256, 32-expert MoE (top-4), SAM on, 362+300 epochs, seed 42",
+    "paper": [
+     "tab:full_main_results (NoMem-L2 row)",
+     "tab:per_class (NoMem-L2 column)",
+     "sec:secondary_analysis (App. N Stage-2 summary over the seed-42 variants of tab:full_main_results)"
+    ],
+    "trainer": "trainers/cp_fair_cifar10.py with block_curr_lambda=0.5, block_curr_depth_slope=0, depth_order_lambda=0.1, depth_margin_neg=0.05, epochs_stage2=300 (the file's cfg stores all but the slope; produced by the do-this-first variant of its predecessor)"
    }
-  }
+  },
+  "updated": "2026-10-24",
+  "not_covered": "This manifest lists the checkpoints of 53 of the paper's runs. It does not list the checkpoints of the paper's other runs, for example the single-seed CIFAR-10 variants of tab:main_results and tab:full_main_results other than NoMem-L2 (such as BASELINE, MULTI-TECH, GREEDY-FREEZE, CP-FAIR-LC and DP-FAIR), the component ablation (tab:component_ablation), arms (a)-(c) of the MGC control (tab:f1_control), the CIFAR-10 gamma=0 seed-42 rerun (tab:gamma0_multiseed) and seeds 123/456 of the CIFAR-100 32-expert gamma=0.7 baseline (tab:cifar100_multiseed)."
  },
  "checkpoints": [
   {
@@ -153,7 +242,26 @@
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed42_L4_D256_P2_seed42_stage1_best.pt",
    "availability": "public_hf",
    "reproduces": "Table 3 (tab:dissociation_merged) seed-42 gamma=0 inputs: S1 66.17, S1-TTA 66.92 (test top-1 %); frozen backbone of the seed-42 gamma=0 column of tab:readouts",
-   "identity_verification": "re-predicted S1 no-TTA 66.18 vs run log 66.17 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)"
+   "identity_verification": "re-predicted S1 no-TTA 66.18 vs run log 66.17 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0267
+   }
   },
   {
    "group": "c100_trio",
@@ -187,8 +295,28 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed123_L4_D256_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260421_015141)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260421_015141)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 gamma=0 inputs: S1 66.36, S1-TTA 66.80",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0197
+   }
   },
   {
    "group": "c100_trio",
@@ -223,8 +351,28 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed456_L4_D256_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260422_012047)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260422_012047)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 gamma=0 inputs: S1 66.57, S1-TTA 67.07",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0248
+   }
   },
   {
    "group": "c100_trio",
@@ -261,7 +409,26 @@
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_P2_seed42_stage1_best.pt",
    "availability": "public_hf",
    "reproduces": "Table 3 (tab:dissociation_merged) seed-42 gated kappa=0 inputs: S1 66.07, S1-TTA 66.85; frozen backbone of the seed-42 kappa=0 column of tab:readouts",
-   "identity_verification": "re-predicted S1 no-TTA 66.07 vs run log 66.07 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)"
+   "identity_verification": "re-predicted S1 no-TTA 66.07 vs run log 66.07 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.007
+   }
   },
   {
    "group": "c100_trio",
@@ -295,7 +462,27 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_P2_seed123_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 gated kappa=0 inputs: S1 66.17, S1-TTA 67.09",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.008
+   }
   },
   {
    "group": "c100_trio",
@@ -329,8 +516,28 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260424_065206)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260424_065206)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 gated kappa=0 inputs: S1 66.82, S1-TTA 68.10",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0074
+   }
   },
   {
    "group": "c100_trio",
@@ -367,7 +574,26 @@
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed42_L4_D256_P2_seed42_stage1_best.pt",
    "availability": "public_hf",
    "reproduces": "Table 3 (tab:dissociation_merged) seed-42 cumulative gamma=0.7 inputs: S1 66.70, S1-TTA 67.18; frozen backbone of the seed-42 cumulative column of tab:readouts",
-   "identity_verification": "re-predicted S1 no-TTA 66.70 vs run log 66.70 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)"
+   "identity_verification": "re-predicted S1 no-TTA 66.70 vs run log 66.70 (analysis/recovered/verify_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0058
+   }
   },
   {
    "group": "c100_trio",
@@ -401,8 +627,28 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed123_L4_D256_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260418_190627)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260418_190627)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 cumulative gamma=0.7 inputs: S1 66.55, S1-TTA 67.24",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0065
+   }
   },
   {
    "group": "c100_trio",
@@ -437,8 +683,28 @@
     "crc32_matches": true
    },
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed456_L4_D256_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260419_141800)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260419_141800)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 cumulative gamma=0.7 inputs: S1 67.10, S1-TTA 67.82",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0057
+   }
   },
   {
    "group": "c100_trio",
@@ -469,7 +735,26 @@
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed42_stage1_best.pt",
    "availability": "public_hf",
    "reproduces": "Table 3 (tab:dissociation_merged) seed-42 MGC inputs: S1 66.05, S1-TTA 66.79; frozen backbone of the MGC (s42) column of tab:readouts",
-   "identity_verification": "re-predicted S1 66.06 vs gate 66.05 (analysis/recovered/verify_drive_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)"
+   "identity_verification": "re-predicted S1 66.06 vs gate 66.05 (analysis/recovered/verify_drive_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0171
+   }
   },
   {
    "group": "mgc_c100",
@@ -497,8 +782,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T02:21:42",
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 65.35 vs gate 65.36 (analysis/recovered/verify_drive_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 65.35 vs gate 65.36 (analysis/recovered/verify_drive_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
+   "reproduces": "Table 3 (tab:dissociation_merged) and tab:mgc_full, seed-123 MGC: S1 65.36, S1-TTA 66.30",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0135
+   }
   },
   {
    "group": "mgc_c100",
@@ -526,9 +831,29 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T19:27:24",
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "identity_verification": "re-predicted S1 65.80 vs gate 65.79 (analysis/recovered/verify_drive_ckpts.py; also metric_summaries/camera_ready/s2ff_mgc.json)",
-   "resumed_run": "resumed; layer_metrics/epoch_metrics of the final run directory start at Stage-1 epoch 192 (final evaluation complete)"
+   "resumed_run": "resumed; layer_metrics/epoch_metrics of the final run directory start at Stage-1 epoch 192 (final evaluation complete)",
+   "reproduces": "Table 3 (tab:dissociation_merged) and tab:mgc_full, seed-456 MGC: S1 65.79, S1-TTA 66.66",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0126
+   }
   },
   {
    "group": "mgc_c100",
@@ -557,7 +882,27 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T11:48:43",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed42_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 42: S1 85.23, S1-TTA 86.64",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.3762
+   }
   },
   {
    "group": "mgc_d128",
@@ -585,8 +930,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-23T22:22:52",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 85.88 vs gate 85.88 (analysis/recovered/verify_drive_ckpts.py)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 85.88 vs gate 85.88 (analysis/recovered/verify_drive_ckpts.py)",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 123: S1 85.88, S1-TTA 87.09",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 63,
+    "max_abs_score_diff": 0.6002
+   }
   },
   {
    "group": "mgc_d128",
@@ -614,8 +979,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T05:57:06",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 85.24 vs gate 85.25 (analysis/recovered/verify_drive_ckpts.py)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 85.24 vs gate 85.25 (analysis/recovered/verify_drive_ckpts.py)",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 456: S1 85.25, S1-TTA 86.89",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 1.1438
+   }
   },
   {
    "group": "mgc_d128",
@@ -643,7 +1028,27 @@
    "source_kind": "file",
    "file_mtime": "2026-07-23T23:24:02",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed42_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-42 gamma=0.7 inputs: S1 85.22, S1-TTA 86.59",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 63,
+    "max_abs_score_diff": 0.2811
+   }
   },
   {
    "group": "hinge",
@@ -671,8 +1076,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T19:56:34",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 85.76 vs gate 85.77 (analysis/recovered/verify_drive_ckpts.py)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 85.76 vs gate 85.77 (analysis/recovered/verify_drive_ckpts.py)",
+   "reproduces": "tab:hinge seed-123 gamma=0.7 inputs: S1 85.77, S1-TTA 87.10",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.3723
+   }
   },
   {
    "group": "hinge",
@@ -700,9 +1125,29 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T13:53:48",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "identity_verification": "re-predicted S1 85.64 vs gate 85.63 (analysis/recovered/verify_drive_ckpts.py)",
-   "resumed_run": "resumed; the layer log is a suffix starting at Stage-1 epoch 171 (final evaluation complete)"
+   "resumed_run": "resumed; the layer log is a suffix starting at Stage-1 epoch 171 (final evaluation complete)",
+   "reproduces": "tab:hinge seed-456 gamma=0.7 inputs: S1 85.63, S1-TTA 86.86",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.1832
+   }
   },
   {
    "group": "hinge",
@@ -731,7 +1176,27 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T07:22:00",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed42_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-42 gamma=0 inputs: S1 85.59, S1-TTA 86.80",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4249
+   }
   },
   {
    "group": "hinge",
@@ -759,8 +1224,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T04:45:24",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 85.85 vs gate 85.85 (analysis/recovered/verify_drive_ckpts.py)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 85.85 vs gate 85.85 (analysis/recovered/verify_drive_ckpts.py)",
+   "reproduces": "tab:hinge seed-123 gamma=0 inputs: S1 85.85, S1-TTA 86.96",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.3972
+   }
   },
   {
    "group": "hinge",
@@ -788,8 +1273,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T21:41:50",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "identity_verification": "re-predicted S1 85.26 vs gate 85.27 (analysis/recovered/verify_drive_ckpts.py)"
+   "availability": "public_hf",
+   "identity_verification": "re-predicted S1 85.26 vs gate 85.27 (analysis/recovered/verify_drive_ckpts.py)",
+   "reproduces": "tab:hinge seed-456 gamma=0 inputs: S1 85.27, S1-TTA 86.30",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4544
+   }
   },
   {
    "group": "hinge",
@@ -817,8 +1322,28 @@
    "source_kind": "file",
    "file_mtime": "2026-02-23T04:08:59",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260218_144731)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260218_144731)",
+   "reproduces": "tab:multiseed seed 42: S1 90.45, S1-TTA 91.36",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0999
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -847,8 +1372,28 @@
    "source_kind": "file",
    "file_mtime": "2026-03-22T18:56:19",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_P2_seed123_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260318_001952)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260318_001952)",
+   "reproduces": "tab:multiseed seed 123: S1 90.45, S1-TTA 91.34",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.1096
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -877,8 +1422,28 @@
    "source_kind": "file",
    "file_mtime": "2026-03-27T19:18:26",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_P2_seed456_stage1_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260324_135535)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260324_135535)",
+   "reproduces": "tab:multiseed seed 456: S1 90.43, S1-TTA 91.39",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.1003
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -907,7 +1472,27 @@
    "source_kind": "file",
    "file_mtime": "2026-04-02T12:27:24",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_P2_seed789_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:multiseed seed 789: S1 90.09, S1-TTA 91.22",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_s1tta_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.1482
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -1187,7 +1772,8 @@
    "source_kind": "file",
    "file_mtime": "2026-03-15T23:13:57",
    "hf_path": "checkpoints/gated_l4_d128_seed42/ff_cifar10_adaptive_prev_only_L4_D128_P2_seed42_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260314_192927, Stage-1 epochs 1-174)"
   },
   {
    "group": "gated_l4_d128_seed42",
@@ -1201,7 +1787,8 @@
    "source_kind": "file",
    "file_mtime": "2026-03-15T23:14:58",
    "hf_path": "checkpoints/gated_l4_d128_seed42/ff_cifar10_adaptive_prev_only_L4_D128_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260314_192927, Stage-1 epochs 1-174)"
   },
   {
    "group": "gated_l4_d128_seed42",
@@ -1481,7 +2068,8 @@
    "source_kind": "file",
    "file_mtime": "2026-03-18T05:47:14",
    "hf_path": "checkpoints/gated_l8_d128_seed42/ff_cifar10_adaptive_t1_k4_L8_L8_D128_P2_seed42_stage1_best.pt",
-   "availability": "on_request"
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260316_182534, Stage-1 epochs 1-43)"
   },
   {
    "group": "gated_l8_d128_seed42",
@@ -1495,7 +2083,8 @@
    "source_kind": "file",
    "file_mtime": "2026-03-18T05:47:52",
    "hf_path": "checkpoints/gated_l8_d128_seed42/ff_cifar10_adaptive_t1_k4_L8_L8_D128_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260316_182534, Stage-1 epochs 1-43)"
   },
   {
    "group": "gated_l8_d128_seed42",
@@ -1608,6 +2197,232 @@
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/gated_k0_l8_d128/ff_cifar10_cifar10_gated_k0_L8_seed456_L8_D128_P2_seed456_stage2_best.pt",
    "availability": "on_request"
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed42",
+   "stage": "stage1_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 232472607,
+   "sha256": "2ac2d23d6facec8a6464b8f9fe5c3c0b8e97e6af5d06939fff6cd85a46146c1b",
+   "crc32": "87b7b6be",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-001.zip::ff_tiny_imagenet_multiseed/checkpoints_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage1_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage1_best.pt",
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260411_081714)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 42: S1 48.75 / S1-TTA 49.44 (test = the labeled Tiny ImageNet validation split)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_equal_paper_per_seed_values": true,
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0072
+   }
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed123",
+   "stage": "stage1_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 232474827,
+   "sha256": "4381293b00bb06e4d2ec6e738ca17f9d6fd86c930bb237bb80dda81b67b10a26",
+   "crc32": "da1a6612",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-001.zip::ff_tiny_imagenet_multiseed/checkpoints_seed123/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage1_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage1_best.pt",
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260412_200131)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 123: S1 48.45 / S1-TTA 49.16 (test = the labeled Tiny ImageNet validation split)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_equal_paper_per_seed_values": true,
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0057
+   }
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed456",
+   "stage": "stage1_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 232474827,
+   "sha256": "bd1b08ba4ef6e43d1be21d75711ebd56b95350dc839875ee6d2efd59c40a1b49",
+   "crc32": "1713bbb4",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-002.zip::ff_tiny_imagenet_multiseed/checkpoints_seed456/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage1_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage1_best.pt",
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260414_060008)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 456: S1 48.41 / S1-TTA 48.67 (test = the labeled Tiny ImageNet validation split)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_s1_equal_paper_per_seed_values": true,
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0065
+   }
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed42",
+   "stage": "stage2_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 535042691,
+   "sha256": "a42d38224ca8ffcdb547bfad7f871c7f286939a5a17df07ac7254baaac1179f7",
+   "crc32": "02deff87",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-001.zip::ff_tiny_imagenet_multiseed/checkpoints_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage2_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage2_best.pt",
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260411_081714)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 42: S2-TTA top-1 52.60 / top-5 77.10",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "run_end_names_file": true,
+    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true
+   }
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed123",
+   "stage": "stage2_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 535045063,
+   "sha256": "e2005ac186b6dabdd0324eab581bac6f91922e253ce4446e99160585eac799f6",
+   "crc32": "ade752e3",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-002.zip::ff_tiny_imagenet_multiseed/checkpoints_seed123/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage2_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage2_best.pt",
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260412_200131)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 123: S2-TTA top-1 52.42 / top-5 76.92",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "run_end_names_file": true,
+    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true
+   }
+  },
+  {
+   "group": "tin_gamma0",
+   "run": "tin_gamma0_seed456",
+   "stage": "stage2_best",
+   "lineage": "Colab A100 (ff_tiny_imagenet_multiseed Drive export 2026-04-15); archive member",
+   "size_bytes": 535045063,
+   "sha256": "bbedea198b61c43925816ff0344f5e9d204dbae8ac3f957ea18b22e9009b8c42",
+   "crc32": "0b6f7fa4",
+   "source": "amir-porjects/tiny_imagenet_fair/from_drive_2/ff_tiny_imagenet_multiseed-20260415T151058Z-3-002.zip::ff_tiny_imagenet_multiseed/checkpoints_seed456/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage2_best.pt",
+   "source_kind": "archive_member",
+   "archive_crc32_verified_on_read": true,
+   "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage2_best.pt",
+   "availability": "on_request",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260414_060008)",
+   "reproduces": "tab:tiny_imagenet_multiseed seed 456: S2-TTA top-1 51.95 / top-5 77.15",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "run_end_names_file": true,
+    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true
+   }
+  },
+  {
+   "group": "c10_nomem_l2",
+   "run": "c10_nomem_l2_seed42",
+   "stage": "stage1_best",
+   "lineage": "original training run (basic_fair_revised_valfix_do_this_first)",
+   "size_bytes": 1776232933,
+   "sha256": "957cf6e18c384ef3f41282f116771fa2f5f0e8b5fb9a9cc262e051f707203db8",
+   "crc32": "ea3fb64e",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_do_this_first/checkpoints/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage1_best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-02-01T07:30:43",
+   "hf_path": "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "tab:full_main_results, NoMem-L2 row (seed 42): validation 91.84 at the selected epoch, test S1 90.56 / S1-TTA 91.31; tab:per_class (NoMem-L2 column)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "logged_values_equal_paper_row": true,
+    "best_s1_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_strict": true,
+    "cfg_keys_are_ffconfig_fields": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-24",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0375
+   }
+  },
+  {
+   "group": "c10_nomem_l2",
+   "run": "c10_nomem_l2_seed42",
+   "stage": "stage2_best",
+   "lineage": "original training run (basic_fair_revised_valfix_do_this_first)",
+   "size_bytes": 2078803509,
+   "sha256": "4c9a6c49c2b546837d8a3131b19beaffec2806ec8619b3258a01c86b7fa37431",
+   "crc32": "ab51480f",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_do_this_first/checkpoints/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage2_best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-02-01T22:17:49",
+   "hf_path": "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage2_best.pt",
+   "availability": "on_request",
+   "reproduces": "App. N (sec:secondary_analysis) Stage-2 summary over the 12 seed-42 variants of tab:full_main_results: S2-TTA 91.19 vs S1-TTA 91.31 (-0.12 pp; 300 Stage-2 epochs)",
+   "lineage_check": {
+    "date": "2026-10-24",
+    "final_test_eval_names_file": true,
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "loads_with_weights_only_true": true
+   }
   }
  ]
 }
