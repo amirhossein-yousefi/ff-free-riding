@@ -78,8 +78,8 @@
   ],
   "not_released": [
    "CIFAR-10 gamma=0 L4/D256 seed 42 (the published run): checkpoint not recoverable. The other CIFAR-10 gamma=0 L4/D256 seed-42 checkpoints come from different runs, the component ablation (tab:component_ablation) and the seed-42 rerun in the seed-123/456 configuration (tab:gamma0_multiseed), which this manifest does not list.",
-   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): seed-42 run not retained.",
-   "Text-domain and BP-control runs: not part of this release (run logs and metrics only)."
+   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): checkpoints of all three seeds kept, but not listed or released.",
+   "Text-domain and BP-control runs: checkpoints kept, but not part of this release."
   ],
   "groups": {
    "c100_trio": {
@@ -218,8 +218,8 @@
     "trainer": "trainers/cp_fair_cifar10.py with block_curr_lambda=0.5, block_curr_depth_slope=0, depth_order_lambda=0.1, depth_margin_neg=0.05, epochs_stage2=300 (the file's cfg stores all but the slope; produced by the do-this-first variant of its predecessor)"
    }
   },
-  "updated": "2026-10-24",
-  "not_covered": "This manifest lists the checkpoints of 53 of the paper's runs. It does not list the checkpoints of the paper's other runs, for example the single-seed CIFAR-10 variants of tab:main_results and tab:full_main_results other than NoMem-L2 (such as BASELINE, MULTI-TECH, GREEDY-FREEZE, CP-FAIR-LC and DP-FAIR), the component ablation (tab:component_ablation), arms (a)-(c) of the MGC control (tab:f1_control), the CIFAR-10 gamma=0 seed-42 rerun (tab:gamma0_multiseed) and seeds 123/456 of the CIFAR-100 32-expert gamma=0.7 baseline (tab:cifar100_multiseed)."
+  "updated": "2026-10-25",
+  "not_covered": "This manifest lists the checkpoints of 53 of the paper's runs. It does not list the checkpoints of the paper's other runs, for example the single-seed CIFAR-10 variants of tab:main_results and tab:full_main_results other than NoMem-L2 (such as BASELINE, MULTI-TECH, GREEDY-FREEZE, CP-FAIR-LC and DP-FAIR), the component ablation (tab:component_ablation), arms (a)-(c) of the MGC control (tab:f1_control), the CIFAR-10 gamma=0 seed-42 rerun (tab:gamma0_multiseed) and the three seeds of the CIFAR-100 32-expert gamma=0.7 baseline (tab:cifar100_multiseed)."
  },
  "checkpoints": [
   {

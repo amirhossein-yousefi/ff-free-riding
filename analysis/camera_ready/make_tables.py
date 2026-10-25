@@ -534,8 +534,8 @@ def t_bp_rows():
         return R[key]["per_seed"]["42"]["n_params_millions"]
 
     spec = [
-        ("plain_cnn_bp", f"Plain CNN ({mparams('plain_cnn_bp'):.2f}\\,M, ch.\\ 64/128/256)", "BP", "strong"),
-        ("plain_cnn_ff", f"Plain CNN ({mparams('plain_cnn_ff'):.2f}\\,M, ch.\\ 64/128/256)", "FF", "FF-pipeline"),
+        ("plain_cnn_bp", f"Plain CNN ({mparams('plain_cnn_bp'):.2f}\\,M, ch.\\ 64/128/256)", "BP", "weak"),
+        ("plain_cnn_ff", f"Plain CNN ({mparams('plain_cnn_ff'):.2f}\\,M, ch.\\ 64/128/256)", "FF", "weak"),
         ("bp_weak", f"FF backbone (stripped, {mparams('bp_weak'):.2f}\\,M)", "BP", "weak"),
         ("bp_strong", f"FF backbone (stripped, {mparams('bp_strong'):.2f}\\,M)", "BP", "BP-strong"),
     ]
@@ -923,7 +923,7 @@ def t_gamma0_multiseed():
     assert (torch_pub, torch_new) == ("2.10", "2.11"), (torch_pub, torch_new)
     body = rf"""\begin{{table}}[h]
   \caption{{Multi-seed stability of $\gamma{{=}}0$ (history-free). All runs share the architecture, optimizer
-           (SAM + AdamW) and schedule (L4, D256, 32 experts top-4, bs512, 362+20 epochs), but the published
+           (adaptive SAM + AdamW) and schedule (L4, D256, 32 experts top-4, bs512, 362+20 epochs), but the published
            seed~42 used $\lambda_\text{{curr}}{{=}}\lambda_\text{{depth}}{{=}}0$, whereas seeds 123 and 456 used
            $\lambda_\text{{curr}}{{=}}0.25$ and $\lambda_\text{{depth}}{{=}}0.2$ (all other settings are identical),
            so the published $n{{=}}3$ pools two configurations; it remains the headline.

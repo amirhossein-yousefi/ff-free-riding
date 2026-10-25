@@ -388,13 +388,13 @@ The 77 files marked `"availability": "on_request"` are available from the author
 The following are not available at all:
 
 - the published CIFAR-10 γ=0 L4/D256 seed-42 checkpoint, which is not recoverable;
-- the text-domain and BP-control checkpoints (the paper reports their run logs and metrics only);
-- the seed-42 run of the CIFAR-100 32-expert γ=0.7 baseline, which was not retained.
+- the text-domain and BP-control checkpoints (kept, but not released);
+- the checkpoints of the CIFAR-100 32-expert γ=0.7 baseline (kept, but not released).
 
 The manifest does not cover every run of the paper. For example, it does not list the checkpoints
 of the single-seed CIFAR-10 variants of Tables 1 and 27 other than NoMem-L2, the
 component ablation (Table 26), arms (a)–(c) of the MGC control (Table 6), the CIFAR-10 γ=0 seed-42
-rerun (Table 22) or seeds 123/456 of the CIFAR-100 32-expert γ=0.7 baseline (Table 38).
+rerun (Table 22) or the three seeds of the CIFAR-100 32-expert γ=0.7 baseline (Table 38).
 
 ## Integrity
 

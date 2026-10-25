@@ -46,7 +46,7 @@ takes from it are carried in `metric_summaries/camera_ready/`.
 | `f2_analysis.py` | `f2_gamma0_s42.json`: the γ=0 seed-42 rerun (F2). Stitches its three Colab segments (resume events, epochs trained twice), reads the four test protocols and the deepest-block separation, compares with the published seed 42 and seeds 123/456, computes the matched and published n=3, and scores the registered predictions. |
 | `early_exit.py` | the early-exit summaries that `make_tables.py` and `make_figures.py` share, all derived from `e2_exit.json` and asserted equal to the selector's own family aggregates (the figure's values: `fig_early_exit_pareto_values.json`) |
 | `check_numbers.py` | traces every numeral added to the paper since the submitted version to a results JSON |
-| `compute_budget.py` | `compute_budget.json` (device and GPU-hours of every reported run, including the F1 and F2 runs, from `env.json`, `epoch_metrics.jsonl` timestamps and runner logs, and the CPU time of the camera-ready recomputations, including the E1 tier-2 / E2 batch from its log and the F1 F_d snapshot; the checklist's compute statement) |
+| `compute_budget.py` | `compute_budget.json` (device and GPU-hours of the reported runs it times, including the F1 and F2 runs, from `env.json` (or, for runs without one, a note or their median epoch time), `epoch_metrics.jsonl` and `events.jsonl` timestamps, runner logs and the `history.jsonl` epoch times of the seed-42 stripped-backbone BP/FF runs; the reported runs it does not time, under `not_measured_reported_runs`; and the CPU time of the camera-ready recomputations, including the E1 tier-2 / E2 batch from its log and the F1 F_d snapshot; the checklist's compute statement) |
 
 ## `readouts/`
 

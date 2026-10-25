@@ -76,7 +76,7 @@ The same metadata is in [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repo
 | Validation-selected early exit (E2; the cumulative runs exit early too, so the saving is not specific to the repairs) | `analysis/experiments/e2_exit/` (CPU); table and figure from `analysis/camera_ready/make_tables.py` / `make_figures.py --fig early_exit` |
 | Paired-bootstrap dissociation statistics | `analysis/paired_dissociation_stats.py` on `preds_cifar100/` (S2-TTA; the other protocols need the full prediction sets, regenerated from the checkpoints: the Stage-1 files are public, the Stage-2 heads available on request) |
 | Block-locality audit, including the depth-order path | `scripts/reproduce_locality_audit.sh` |
-| Text-domain runs (App. K) | Wrapper trainer + recipe (`analysis/text_domain_README.md`) |
+| Text-domain runs (App. K) | Original runner `trainers/text_original/` + recipe (`analysis/text_domain_README.md`) |
 | Trained checkpoints | Public on Hugging Face (CC BY 4.0): the Stage-1 checkpoints of 29 runs, which are all seeds of the CIFAR-100 γ=0 / κ=0 / cumulative / MGC arms, the CIFAR-10 squared-hinge, MGC-D128, CP-FAIR and NoMem-L2 runs, and the Tiny ImageNet γ=0 runs. All 106 checkpoint files of the release (53 runs) are listed with SHA-256, and the other 77 are available on request: [`RELEASE_CHECKPOINTS.md`](RELEASE_CHECKPOINTS.md), model card [`release/MODEL_CARD.md`](release/MODEL_CARD.md) |
 
 ## Layout
@@ -87,7 +87,8 @@ trainers/
   cp_fair_cifar100.py          CIFAR-100 trainer (dense dissociation trio; MGC via FF_USE_MGC=1)
   cp_fair_tiny_imagenet.py     Tiny ImageNet trainer (γ=0)
   cp_fair_hardness_gated.py    CIFAR-10 hardness-gated trainer (L4/L8 D128; MGC, squared hinge, F1 flags)
-  cp_fair_text_domain.py       text-domain wrapper (frozen BERT stem + FF blocks; App. K)
+  cp_fair_text_domain.py       earlier text-domain wrapper (does not run; kept for the recorded SHA-256)
+  text_original/               the original text-domain runner behind App. K (frozen BERT + FF blocks)
   cp_fair_core.py              shared FF block library (its own main() is an exploratory D384 config)
   bp_control.py                compact BP control re-implementation
   bp_original/                 the original BP/FF calibration scripts behind Table 2
@@ -128,8 +129,14 @@ camera-ready trainers may differ; `tests/manifest_check.json`).
 
 ## Reproducing the headline results
 
-All trainers read their configuration from environment variables, so one trainer file produces
-every variant.
+The image trainers read their configuration from environment variables, so one trainer file
+produces most variants. A few rows need a configuration edit (an `FFConfig` field without an
+environment variable): the aspect-isolation, EMA, NL-only and NI-only rows of Tables 42 and 43
+(`analysis/component_ablation_README.md`), NoMem-L2 (Table 27; its lineage row in
+`RELEASE_CHECKPOINTS.md`) and the Stage-2 head width of the Tiny ImageNet runs
+(`repro_manifest.csv`). Nine of the 13 CIFAR-10 variants of Table 27 (BASELINE, MULTI-TECH,
+GREEDY-FREEZE, TOPK-DEPTH, PREFIX-FREEZE, FIXED-NL, BLOCK0-LABEL, GAMMA-RAMP and DP-FAIR) and
+the stripped-backbone FF row of Table 2 have no bundled trainer.
 
 ### CIFAR-10 γ=0 (Table 1; S1-TTA 91.32 ± 0.19 %)
 
@@ -270,7 +277,10 @@ state (Python, NumPy, torch CPU/CUDA), which is restored on resume; v1 checkpoin
 ## Hardware
 
 The reported runs were trained on NVIDIA A100-SXM4-40GB GPUs (Google Colab) and on NVIDIA DGX
-Spark (GB10) machines; every run directory's `env.json` records the device and software versions. Reduce
+Spark (GB10) machines. The `env.json` of most run directories records the device and software
+versions; the Table 2 calibration runs and the rerun of the BP-strong seed-42 run, four seed-42
+L8/D128 gated-ablation arms and the text-domain runs have none, and `metric_summaries/camera_ready/compute_budget.json` gives each
+timed run's device and how it was established. Reduce
 `batch_size` or `n_experts` if you run out of memory. The tests, the locality audit and the
 analysis scripts run on CPU.
 

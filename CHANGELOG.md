@@ -1,5 +1,71 @@
 # Changelog
 
+## Camera-ready corrections (2026-10-25)
+
+- **Text domain (App. K):** the original runner that produced the nine text-domain runs is now
+  bundled in `trainers/text_original/` (`cp_fair_text_benchmark.py` and its launcher
+  `run_cp_fair_text_multirun.py`). Its README gives the runs' exact command and the changes
+  from the run copies: the import of the released `trainers/cp_fair_core.py` and three reworded
+  docstring lines. The earlier wrapper
+  `trainers/cp_fair_text_domain.py` does not run (it calls functions that
+  `trainers/cp_fair_cifar10.py` does not define); it is kept unchanged because
+  `tests/equivalence_results.json` records its SHA-256. `analysis/text_domain_README.md`, the
+  README and the `tab:text_domain_full` row of `repro_manifest.csv` now point to the original
+  runner, and the text README no longer calls every published target an FF method (the AG News
+  target is Karimi et al.'s layer-wise triplet-loss method).
+- **Augmentation of the Table 2 calibration rows:** both plain-CNN rows (BP and FF) used random
+  crop and flip only, not strong augmentation, and the BP-strong row uses the FF trainers'
+  per-view recipe (one view; the FF runs draw three). `analysis/bp_controls_README.md`,
+  `analysis/camera_ready/make_tables.py` and `make_figures.py`, and
+  `metric_summaries/camera_ready/fig3_4_bpff_values.json` now say so; no number changes. The
+  unreported parameter-matched "Plain CNN big" BP run also used crop and flip only.
+  `trainers/bp_control.py`'s `aug_strong` docstring ("matched to the FF training pipeline") is
+  wrong; the file is unchanged (its SHA-256 is recorded), and the README says how it differs.
+- **Optimizer wording:** the generated `t_gamma0_multiseed` caption now says adaptive SAM: every
+  SAM-on run used the trainers' `sam_adaptive=True` mode, whose ascent step is scaled element-wise
+  by |w| (paper App. D.3).
+- **Compute budget:** `analysis/camera_ready/compute_budget.py` now labels the three seed-42 BP/FF
+  control runs timed in the paper's training-cost appendix as DGX Spark (GB10) runs, not Colab A100
+  runs: the BP-strong run is bitwise identical to its GB10 rerun (all 362 epochs' training loss
+  and `preds_test.npz`), and the run names follow local time. The measured totals in
+  `metric_summaries/camera_ready/compute_budget.json` become 844.6 A100-hours and 2,202.2
+  GB10-hours (were 822.0 and 1,911.4): the relabeling moves about 20 hours from the A100 to the
+  GB10 total, and the seed-42 run of the CIFAR-100 32-expert baseline (42.4 A100-hours) and the
+  FIXED-NL and BLOCK0-LABEL runs (270.8 GB10-hours), listed as untimed before, are now timed. The
+  HNM k-sweep and aspect/EMA deep-dive runs and the incomplete GAMMA-RAMP run stay untimed;
+  `not_measured_reported_runs` now gives their estimated cost. The JSON's method note now says
+  how runs without an `env.json` get their device (a note, or the median epoch time for four
+  L8/D128 arms).
+- **Component ablation, γ=0 row:** that leave-one-out run also set `block_curr_lambda=0` and
+  `depth_order_lambda=0` (the configuration of the published γ=0 seed-42 run), so it removes
+  γ accumulation and two loss terms, not γ alone. `analysis/component_ablation_README.md` and the
+  `tab:component_ablation` row of `repro_manifest.csv` now say so and give its full setting; the
+  README gave `FF_GAMMA_SCALE=0` alone ("γ=0 only") and the manifest said each row drops one
+  flag. `FF_GAMMA_SCALE=0` alone keeps the default block-curr and depth-order weights (the
+  seed-123/456 configuration of `tab:gamma0_multiseed`). The paper's Sec. 4.5 and
+  Tab. 26 are corrected the same way.
+- **Docs:** `analysis/component_ablation_README.md` now gives the paper's leave-one-out effects
+  (it printed placeholder ± values), the components without an environment-variable hook, and the
+  k values of the HNM sweep (4, 8, 16; k=1 is the no-HNM row). The `tab:main_results` Multi-Tech row
+  of `repro_manifest.csv` names its original trainer (`atlas_ff.py`, not bundled) instead of a
+  configuration edit that `cp_fair_cifar10.py` cannot make. The CIFAR-100 32-expert baseline's
+  checkpoints (all three seeds) are kept but not released; the manifest, `RELEASE_CHECKPOINTS.md`,
+  the model card and the `tab:cifar100_multiseed` row said its seed-42 run was not retained.
+  `analysis/bp_controls_README.md` no longer says the compact trainer reproduces the four
+  parameter-matched runs (two of them are FF runs), and it now gives the recipe of the reported
+  rows next to that of `bp_control.py`. The text-domain and BP-control checkpoints are kept but not
+  released (the docs said the paper reports only their run logs and metrics). The Multi-Tech row
+  of `repro_manifest.csv` now cites the original run's `final_test_eval` and its SAM setting.
+  `analysis/component_ablation_README.md` names the trainer's `FFConfig` dataclass (it said
+  `Config`). The README and `requirements.txt` no longer say that every run directory has an
+  `env.json`, and `requirements.txt` now also lists PyTorch 2.14.0+cu130 (the five GB10 runs of
+  the MGC control) and Python 3.13 (its four Colab runs and the γ=0 seed-42 rerun). The README
+  now lists the rows that need a configuration edit and the nine Table 27 variants (and the
+  stripped-backbone FF row of Table 2) that have no bundled trainer;
+  `analysis/component_ablation_README.md` gives the settings of the NL-only and NI-only rows
+  (`sff_ni_weight`) and of both EMA rows (`use_ema`, `use_ema_hnm`); the Greedy-Freeze row of
+  `repro_manifest.csv` gives its SAM setting.
+
 ## Expanded checkpoint release (2026-10-24)
 
 The Hugging Face repository now holds the Stage-1 checkpoints (`stage1_best.pt`) of 29 runs

@@ -1,6 +1,6 @@
 {
  "generated_by": "analysis/make_figures.py --fig loss_bpff",
- "generated_utc": "2026-09-25T03:25:14+00:00",
+ "generated_utc": "2026-10-25T00:46:15+00:00",
  "figure": "amir-porjects/neuroips_review/camera_ready/paper/figures/fig3_4_loss_bpff_cr.pdf",
  "ported_from": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/NeurIPS_FF_Net_Last_submitted/supplement_code/analysis/generate_figures.py :: fig3_4_loss_and_bpff (lines 288-394)",
  "protocol_panel_b": "single-crop (no TTA) test top-1 on the 10k CIFAR-10 test set; mean +- sample SD (ddof=1) over seeds 42/123/456 where n=3",
@@ -57,7 +57,7 @@
    "key": "plain_cnn_bp",
    "arch": "Plain CNN",
    "training": "BP",
-   "aug": "strong",
+   "aug": "weak",
    "n": 3,
    "per_seed": {
     "42": 89.86,
@@ -77,7 +77,7 @@
    "key": "plain_cnn_ff",
    "arch": "Plain CNN",
    "training": "FF",
-   "aug": "FF-pipeline",
+   "aug": "weak",
    "n": 3,
    "per_seed": {
     "42": 29.41,

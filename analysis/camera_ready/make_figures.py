@@ -683,8 +683,8 @@ def collect_bpff_values():
     assert fm_ff["eval_tta"] is False
     ev_cp = final_test_eval(CP_FAIR_RUN)
     vals["panel_b"] = [
-        bp_row("plain_cnn_bp", "Plain CNN", "BP", "strong", "BP"),
-        bp_row("plain_cnn_ff", "Plain CNN", "FF", "FF-pipeline", "FF"),
+        bp_row("plain_cnn_bp", "Plain CNN", "BP", "weak", "BP"),
+        bp_row("plain_cnn_ff", "Plain CNN", "FF", "weak", "FF"),
         bp_row("bp_weak", "Stripped FF backbone", "BP", "weak", "BP"),
         bp_row("bp_strong", "Stripped FF backbone", "BP", "BP-strong", "BP"),
         {"key": "ff_stripped", "arch": "Stripped FF backbone", "training": "FF", "aug": "FF-pipeline",

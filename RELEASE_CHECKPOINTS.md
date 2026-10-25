@@ -191,8 +191,9 @@ The re-scoring behind Tables 13 and 36 (`metric_summaries/camera_ready/e2_exit.j
 ## Not available (neither public nor on request)
 
 - CIFAR-10 gamma=0 L4/D256 seed 42 (the published run): checkpoint not recoverable. The other CIFAR-10 gamma=0 L4/D256 seed-42 checkpoints come from different runs, the component ablation (tab:component_ablation) and the seed-42 rerun in the seed-123/456 configuration (tab:gamma0_multiseed), which this manifest does not list.
-- CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): seed-42 run not retained.
-- Text-domain and BP-control runs: not part of this release (run logs and metrics only).
+- CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): checkpoints of all three seeds kept,
+  but not listed or released.
+- Text-domain and BP-control runs: checkpoints kept, but not part of this release.
 
 ## Not covered by the release
 
@@ -202,7 +203,7 @@ The manifest lists the checkpoints of 53 of the paper's runs. It does not list t
 - the component ablation (Table 26);
 - arms (a)–(c) of the MGC control (Table 6);
 - the CIFAR-10 γ=0 seed-42 rerun (Table 22);
-- seeds 123/456 of the CIFAR-100 32-expert γ=0.7 baseline (Table 38).
+- the three seeds of the CIFAR-100 32-expert γ=0.7 baseline (Table 38).
 
 ## Hugging Face repository layout (<https://huggingface.co/Amirhossein75/ff-free-riding>)
 

@@ -1,11 +1,11 @@
 {
  "_meta": {
   "description": "Compute budget of the runs reported in the paper, from raw run logs (checklist item 8).",
-  "method": "* Device: env.json::device0 of the run directory. Run directories without env.json get a device\n    only when it is documented elsewhere (see DEVICE_NOTES); otherwise \"unknown\".\n  * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.\n  * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2\n    epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive\n    epoch_metrics.jsonl timestamps of every listed segment of the run. The estimate covers resumed\n    runs (whose earlier segments may be missing or partial) and excludes data download, setup and\n    final evaluation, so it is slightly below the logged wall time of an uninterrupted run.\n  * BP controls log per-epoch training time (history.jsonl::time_sec); their cost is its sum.\n  * Runner-log durations (BP anchors, frozen-backbone readouts) pair the START and DONE/exit lines.\n  * Every run directory is named explicitly (timestamps included); nothing is globbed.",
+  "method": "* Device: env.json::device0 of the run directory. Run directories without env.json get a device\n    from a note (GB10_BY_RUNNER, GB10_BY_RERUN) or, for the four seed-42 L8/D128 gated arms, from\n    the median Stage-1 epoch time (device_source says which); otherwise \"unknown\".\n  * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.\n  * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2\n    epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive\n    epoch_metrics.jsonl timestamps of every listed segment of the run. The estimate covers resumed\n    runs (whose earlier segments may be missing or partial) and excludes data download, setup and\n    final evaluation, so it is slightly below the logged wall time of an uninterrupted run.\n  * BP controls log per-epoch training time (history.jsonl::time_sec); their cost is its sum.\n  * Runner-log durations (BP anchors, frozen-backbone readouts) pair the START and DONE/exit lines.\n  * Every run directory is named explicitly (timestamps included); nothing is globbed.",
   "generated_by": "analysis/compute_budget.py",
-  "generated": "2026-09-28",
+  "generated": "2026-10-25",
   "submitted_checklist_values_superseded": {
-   "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE) / ~15 A100-h (CIFAR-100 dense) measured",
+   "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE, SAM, default HNM k=8->16; 24 h with random negatives) / ~15 A100-h (CIFAR-100 dense) measured",
    "Tiny ImageNet": "~8 h per seed (submitted; that is the last resumed segment) vs ~29 A100-h per seed measured",
    "hardware": "'A100 (Colab and an internal DGX)' (submitted) vs A100 on Colab plus a DGX Spark with a GB10 GPU (env.json)",
    "total": "~289 A100-h across 56 runs (submitted) vs the totals below"
@@ -1218,6 +1218,44 @@
     "est_full_run_h": 95.57,
     "logged_wall_h_last_segment": 1.09,
     "has_final_test_eval": true
+   },
+   {
+    "label": "sweep_fixed_nl",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/v1_fair_split/runs/ff_cifar10_v1_fair_valsplit_workersfix_depthmetrics_L4_D256_bs128_seed42_20260121_111852"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     460,
+     300
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 1009.9,
+    "median_stage2_epoch_s": 212.5,
+    "est_full_run_h": 146.75,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
+   },
+   {
+    "label": "sweep_block0_label",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/v2_fair_valsplit_workersfix/runs/ff_cifar10_v2_fair_valsplit_workersfix_L4_D256_bs128_seed42_20260202_171622"
+    ],
+    "device": "NVIDIA GB10",
+    "device_source": "env.json",
+    "epochs_configured": [
+     460,
+     300
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 835.0,
+    "median_stage2_epoch_s": 208.7,
+    "est_full_run_h": 124.09,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
    }
   ],
   "c10_l4_d128_gated_s42": [
@@ -1917,6 +1955,26 @@
     "est_full_run_h": 139.91,
     "logged_wall_h_last_segment": 144.19,
     "has_final_test_eval": true
+   },
+   {
+    "label": "c100_32e_s42",
+    "segments": [
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/from_colab/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation_c100/runs/ff_cifar100_c100_baseline_constant_L4_D256_bs256_seed42_20260319_002027",
+     "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/basic_fair_revised_valfix_cp_fair/from_colab/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation_c100/runs/ff_cifar100_c100_baseline_constant_L4_D256_bs256_seed42_20260320_022903"
+    ],
+    "device": "NVIDIA A100-SXM4-40GB",
+    "device_source": "env.json",
+    "epochs_configured": [
+     362,
+     20
+    ],
+    "epochs_source": "config.json",
+    "first_logged_stage1_epoch": 1,
+    "median_stage1_epoch_s": 381.8,
+    "median_stage2_epoch_s": 724.7,
+    "est_full_run_h": 42.42,
+    "logged_wall_h_last_segment": null,
+    "has_final_test_eval": false
    }
   ],
   "tiny_imagenet": [
@@ -1985,7 +2043,7 @@
     "segments": [
      "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223"
     ],
-    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device": "NVIDIA GB10 (DGX Spark; the BP-strong run is bitwise identical to its GB10 rerun; final_metrics.json records only 'cuda')",
     "device_source": "note",
     "epochs_logged": 362,
     "sum_epoch_time_h": 2.74,
@@ -1996,7 +2054,7 @@
     "segments": [
      "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157"
     ],
-    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device": "NVIDIA GB10 (DGX Spark; the BP-strong run is bitwise identical to its GB10 rerun; final_metrics.json records only 'cuda')",
     "device_source": "note",
     "epochs_logged": 362,
     "sum_epoch_time_h": 5.32,
@@ -2007,7 +2065,7 @@
     "segments": [
      "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106"
     ],
-    "device": "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')",
+    "device": "NVIDIA GB10 (DGX Spark; the BP-strong run is bitwise identical to its GB10 rerun; final_metrics.json records only 'cuda')",
     "device_source": "note",
     "epochs_logged": 362,
     "sum_epoch_time_h": 11.81,
@@ -2027,10 +2085,10 @@
   },
   "c10_d256_moe_gb10": {
    "GB10": {
-    "n_runs": 14,
+    "n_runs": 16,
     "per_run_h_min": 34.0,
-    "per_run_h_max": 123.89,
-    "sum_h": 1395.1,
+    "per_run_h_max": 146.75,
+    "sum_h": 1665.9,
     "uninterrupted_runs_logged_wall_h": [
      38.52,
      142.76,
@@ -2125,6 +2183,13 @@
      144.19,
      2
     ]
+   },
+   "A100": {
+    "n_runs": 1,
+    "per_run_h_min": 42.42,
+    "per_run_h_max": 42.42,
+    "sum_h": 42.4,
+    "uninterrupted_runs_logged_wall_h": null
    }
   },
   "tiny_imagenet": {
@@ -2137,7 +2202,7 @@
    }
   },
   "bp_ff_controls_s42": {
-   "A100": {
+   "GB10": {
     "n_runs": 3,
     "per_run_h_min": 2.74,
     "per_run_h_max": 11.81,
@@ -2147,15 +2212,14 @@
   }
  },
  "not_measured_reported_runs": [
-  "13-variant sweep rows fixed-nl, block0-label and gamma-ramp (logs not identified in the local archive)",
-  "CIFAR-100 32-expert gamma=0.7 baseline seed 42 (run not retained)",
+  "13-variant sweep row gamma-ramp (incomplete, Stage 1 only: two GB10 segments in basic_fair_depthfix_valfix/runs log Stage-1 epochs 1-202, about 69 GB10-hours for the 202 logged epochs at the median epoch time)",
   "plain-CNN BP/FF seed-42 rows of Table 2 (no per-epoch timing logged)",
-  "HNM k-sweep and aspect/EMA deep-dive ablations",
+  "HNM k-sweep and aspect/EMA deep-dive ablations (11 Colab A100 runs; env.json and epoch_metrics.jsonl inside the new_ablation*/ff_*_ablation-*.zip archives; about 337 A100-hours by the same estimate)",
   "text-domain runs (9; logs inside the text-run archive)"
  ],
  "totals_measured_h": {
-  "A100": 822.0,
-  "GB10": 1911.4,
+  "A100": 844.6,
+  "GB10": 2202.2,
   "unknown": 0.0
  },
  "cpu_recomputations": {

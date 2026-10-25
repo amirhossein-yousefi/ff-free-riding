@@ -6,7 +6,8 @@ under FF_HOME (read-only). Paths come from environment variables (analysis/READM
 
 Method
   * Device: env.json::device0 of the run directory. Run directories without env.json get a device
-    only when it is documented elsewhere (see DEVICE_NOTES); otherwise "unknown".
+    from a note (GB10_BY_RUNNER, GB10_BY_RERUN) or, for the four seed-42 L8/D128 gated arms, from
+    the median Stage-1 epoch time (device_source says which); otherwise "unknown".
   * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.
   * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2
     epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive
@@ -179,7 +180,11 @@ def runner_pairs(log: Path, start_re: str, end_re: str):
 
 
 GB10_BY_RUNNER = "NVIDIA GB10 (DGX Spark; launched by a local runner script that waits on nvidia-smi; no env.json)"
-A100_BY_APPENDIX = "NVIDIA A100-SXM4-40GB (Colab; stated in the training-cost appendix; final_metrics.json records only 'cuda')"
+# The three seed-42 BP/FF control runs timed in the training-cost appendix ran on the local DGX Spark: the
+# BP-strong run is bitwise identical (train_loss of all 362 epochs, preds_test.npz SHA-256) to its GB10 rerun in
+# mgc_rebuttal/bp_anchors, and the run names follow local time (Colab runs are named in UTC). The submitted
+# appendix said Colab A100.
+GB10_BY_RERUN = "NVIDIA GB10 (DGX Spark; the BP-strong run is bitwise identical to its GB10 rerun; final_metrics.json records only 'cuda')"
 
 MR = C.MR
 GA = C.GA
@@ -320,6 +325,12 @@ SUB = {
         ff_run([CF / "basic_fair_revised_valfix_dp_fair/runs/ff_cifar10_cifar10_dp_fair_progressive_depth_L4_D256_bs512_seed42_20260213_145420",
                 CF / "basic_fair_revised_valfix_dp_fair/runs/ff_cifar10_cifar10_dp_fair_progressive_depth_L4_D256_bs512_seed42_20260218_131415"],
                label="sweep_dp_fair"),
+        # FIXED-NL and BLOCK0-LABEL (batch 128, 460+300 epochs) log no final_test_eval event; their Stage-1
+        # preds_*.npz give the Tab. 27 values (90.53/91.15 and 90.11/90.82)
+        ff_run([CF / "v1_fair_split/runs/ff_cifar10_v1_fair_valsplit_workersfix_depthmetrics_L4_D256_bs128_seed42_20260121_111852"],
+               label="sweep_fixed_nl"),
+        ff_run([CF / "v2_fair_valsplit_workersfix/runs/ff_cifar10_v2_fair_valsplit_workersfix_L4_D256_bs128_seed42_20260202_171622"],
+               label="sweep_block0_label"),
     ],
     # CIFAR-10 L4/D128 gated ablation, seed 42, SAM off, nine arms
     "c10_l4_d128_gated_s42": [
@@ -336,7 +347,7 @@ SUB = {
             ["ff_cifar10_adaptive_prev_t1_k2_L4_D128_bs512_seed42_20260315_044213"],
         ]
     ],
-    # CIFAR-10 L8/D128 gated ablation, seed 42, SAM off (arms without env.json: device unknown)
+    # CIFAR-10 L8/D128 gated ablation, seed 42, SAM off (arms without env.json: device inferred from epoch time below)
     "c10_l8_d128_gated_s42": [
         ff_run([GA8 / n], label=n.split("_L8_")[0][11:]) for n in [
             "ff_cifar10_baseline_constant_L8_L8_D128_bs512_seed42_20260318_204046",
@@ -370,6 +381,10 @@ SUB = {
     "c100_32e_baseline": [
         ff_run([C.PR / "cifar_100_fair/runs/ff_cifar100_c100_baseline_constant_s123_L4_D256_bs256_seed123_20260405_094547"], label="c100_32e_s123"),
         ff_run([C.PR / "cifar_100_fair/runs/ff_cifar100_c100_baseline_constant_s456_L4_D256_bs256_seed456_20260411_095313"], label="c100_32e_s456"),
+        # seed 42 (Colab A100, resumed at Stage-1 epoch 217; its test-only evaluation run gives Tab. 38's seed-42 row)
+        ff_run([CPF / "from_colab/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation_c100/runs/ff_cifar100_c100_baseline_constant_L4_D256_bs256_seed42_20260319_002027",
+                CPF / "from_colab/basic_fair_revised_valfix_cp_fair_hardness_gated/ff_gated_ablation_c100/runs/ff_cifar100_c100_baseline_constant_L4_D256_bs256_seed42_20260320_022903"],
+               label="c100_32e_s42"),
     ],
     "tiny_imagenet": [
         ff_run([TINY / "from_drive_1/extracted/ff_tiny_imagenet_training/runs_seed42/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_bs256_seed42_20260411_081714",
@@ -379,9 +394,9 @@ SUB = {
         ff_run([TINY / "extracted_seeds/ff_tiny_imagenet_multiseed/runs_seed456/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_bs256_seed456_20260414_212958"], label="tiny_s456"),
     ],
     "bp_ff_controls_s42": [
-        bp_run(C.BP_RUNS["bp_weak"][42], A100_BY_APPENDIX),
-        bp_run(C.BP_RUNS["bp_strong"][42], A100_BY_APPENDIX),
-        bp_run(CF / "ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106", A100_BY_APPENDIX),
+        bp_run(C.BP_RUNS["bp_weak"][42], GB10_BY_RERUN),
+        bp_run(C.BP_RUNS["bp_strong"][42], GB10_BY_RERUN),
+        bp_run(CF / "ff_backbone_stripped/runs_ff_backbone_stripped/ff_backbone_stripped_cifar10_L4_D256_P2_seed42_20260306_153106", GB10_BY_RERUN),
     ],
 }
 
@@ -591,7 +606,7 @@ out = {
         "generated_by": "analysis/compute_budget.py",
         "generated": NOW,
         "submitted_checklist_values_superseded": {
-            "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE) / ~15 A100-h (CIFAR-100 dense) measured",
+            "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE, SAM, default HNM k=8->16; 24 h with random negatives) / ~15 A100-h (CIFAR-100 dense) measured",
             "Tiny ImageNet": "~8 h per seed (submitted; that is the last resumed segment) vs ~29 A100-h per seed measured",
             "hardware": "'A100 (Colab and an internal DGX)' (submitted) vs A100 on Colab plus a DGX Spark with a GB10 GPU (env.json)",
             "total": "~289 A100-h across 56 runs (submitted) vs the totals below",
@@ -617,10 +632,9 @@ out = {
     "submitted_paper_runs": SUB,
     "submitted_paper_summary": sub_summary,
     "not_measured_reported_runs": [
-        "13-variant sweep rows fixed-nl, block0-label and gamma-ramp (logs not identified in the local archive)",
-        "CIFAR-100 32-expert gamma=0.7 baseline seed 42 (run not retained)",
+        "13-variant sweep row gamma-ramp (incomplete, Stage 1 only: two GB10 segments in basic_fair_depthfix_valfix/runs log Stage-1 epochs 1-202, about 69 GB10-hours for the 202 logged epochs at the median epoch time)",
         "plain-CNN BP/FF seed-42 rows of Table 2 (no per-epoch timing logged)",
-        "HNM k-sweep and aspect/EMA deep-dive ablations",
+        "HNM k-sweep and aspect/EMA deep-dive ablations (11 Colab A100 runs; env.json and epoch_metrics.jsonl inside the new_ablation*/ff_*_ablation-*.zip archives; about 337 A100-hours by the same estimate)",
         "text-domain runs (9; logs inside the text-run archive)",
     ],
     "totals_measured_h": {k: round(v, 1) for k, v in tot.items()},
