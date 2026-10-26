@@ -2,7 +2,7 @@
 window.SITE_DATA = window.SITE_DATA || {};
 window.SITE_DATA.theory = {
  "meta": {
-  "generated": "2026-10-25T15:12:00Z",
+  "generated": "2026-10-26T07:20:32Z",
   "facts_sha256": "c6ce3d2e33eb83aab25330edb8173e497e9a0f39418929c4ac3d27e544513181",
   "paper_sha256": "3890e493114cb3f96c8712d72ef59af8b4f1bf190daf7c9b590c9e658ae472c3"
  },
