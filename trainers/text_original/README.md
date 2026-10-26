@@ -41,6 +41,10 @@ IMDb and AG News through Hugging Face `datasets`, 20 Newsgroups through scikit-l
 used no SAM (`--use_sam` is off by default). Gradients are clipped at norm 1.0 in Stage 1 (per
 block) and in Stage 2 (`TextFFConfig.grad_clip`).
 
+The networks (`stage1_best.pt`) and Stage-2 heads (`stage2_best.pt`) of the nine runs are public in
+the checkpoint release (group `text_domain`); the model card (`release/MODEL_CARD.md`) gives the
+loading code, which builds the network with this runner's classes.
+
 `trainers/cp_fair_text_domain.py`, the earlier wrapper, does not run: it calls functions that
 `trainers/cp_fair_cifar10.py` does not define. It is kept unchanged because
 `tests/equivalence_results.json` records its SHA-256; use the scripts in this folder instead.

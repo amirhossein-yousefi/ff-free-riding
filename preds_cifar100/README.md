@@ -21,9 +21,10 @@ the full prediction sets of those runs (about 127 MB for the trio alone). Those 
 bundled because the archive would exceed 100 MB. You can regenerate them from the checkpoints
 listed in `RELEASE_CHECKPOINTS.md`:
 
-- The Stage-1 checkpoints of the trio and MGC runs (seeds 42/123/456) and of the CIFAR-10 CP-FAIR
-  runs are public; they give S1 and S1-TTA.
-- The Stage-2 heads and the CIFAR-10 γ=0 seed-123/456 checkpoints are available on request.
+- The Stage-1 checkpoints and Stage-2 files of the trio and MGC runs (seeds 42/123/456) and of the
+  CIFAR-10 CP-FAIR runs are public. The Stage-1 files give S1 and S1-TTA; the Stage-2 files, which
+  hold the original Stage-2 heads, give S2 and S2-TTA.
+- The CIFAR-10 γ=0 seed-123/456 checkpoints are available on request.
 - The exception is the CIFAR-10 γ=0 seed-42 run, whose checkpoint is not recoverable.
 
 The camera-ready values are in `metric_summaries/camera_ready/c100_trio_paired.json`,

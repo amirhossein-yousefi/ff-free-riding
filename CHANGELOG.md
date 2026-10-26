@@ -1,5 +1,27 @@
 # Changelog
 
+## Checkpoint-release addendum (2026-10-26)
+
+- **Stage-2 files:** the `stage2_best.pt` of the 29 runs with public Stage-1 files are now public on
+  the Hugging Face Hub, including the four seed-42 CIFAR-100 runs of the first release. Each holds the
+  run's Stage-1 network, identical to its `stage1_best.pt`, and the original Stage-2 head.
+- **BP calibration networks** (group `bp_calibration`): the nine CIFAR-10 BP networks behind the BP
+  rows of Table 2 (plain CNN + BP; stripped FF backbone + BP with weak and with strong augmentation;
+  seeds 42/123/456) are public. Each file is its run's validation-selected `checkpoints/best.pt`.
+- **Text-domain networks** (group `text_domain`): the Stage-1 networks and Stage-2 heads of the nine
+  frozen-BERT runs of App. K (Table 44; IMDb, 20 Newsgroups and AG News, seeds 42/43/44) are public.
+- The public release now holds 85 files of 47 runs (40.3 GB). `release_manifest.json` lists 133 files of
+  71 runs (65.6 GB); the other 48, the Stage-1 and Stage-2 files of the 24 CIFAR-10 γ=0,
+  gated-ablation and hardness-gated κ=0 runs, remain available on request.
+  `RELEASE_CHECKPOINTS.md` records every file's SHA-256 and the checks run on CPU before upload, and
+  the model card (`release/MODEL_CARD.md`) adds loading code for the Stage-2, BP and text-domain files.
+- `release/stage_release.py` also stages files that are members of a tarball inside a zip
+  (`archive.zip::run.tar.gz::member`), as the text-domain files are, and writes each staged file
+  under a temporary name until its SHA-256 check passes.
+- The paper's NeurIPS checklist describes the release before this addendum: 29 public Stage-1 files
+  and a manifest of 106 files of 53 runs, all image classifiers trained on CIFAR-10, CIFAR-100 and
+  Tiny ImageNet, with the text-domain and BP checkpoints not released.
+
 ## Camera-ready corrections (2026-10-25)
 
 - **Text domain (App. K):** the original runner that produced the nine text-domain runs is now

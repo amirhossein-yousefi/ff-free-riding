@@ -5,15 +5,16 @@ https://huggingface.co/Amirhossein75/ff-free-riding.
 
 Three subsets (release_manifest.json, _meta.subsets):
 
-  --subset public    the public Hugging Face release (since 2026-10-24): the 29 files with availability
-                     "public_hf" (the Stage-1 networks of the CIFAR-100 trio and MGC arms, the CIFAR-10
-                     squared-hinge, MGC-D128 and CP-FAIR runs, the Tiny ImageNet gamma=0 runs and the
-                     CIFAR-10 NoMem-L2 run; 14.3 GB). Writes README.md (the model card,
-                     release/MODEL_CARD.md), release_manifest.json (the full manifest; each entry's
+  --subset public    the public Hugging Face release (since 2026-10-26): the 85 files with availability
+                     "public_hf" (40.3 GB): stage1_best and stage2_best of the CIFAR-100 trio and MGC
+                     arms, the CIFAR-10 squared-hinge, MGC-D128, CP-FAIR and NoMem-L2 runs and the Tiny
+                     ImageNet gamma=0 runs; the best.pt of the nine CIFAR-10 BP calibration runs; and
+                     stage1_best and stage2_best of the nine text-domain runs. Writes README.md (the model
+                     card, release/MODEL_CARD.md), release_manifest.json (the full manifest; each entry's
                      `availability` says whether it is on the Hub) and SHA256SUMS (the public checkpoints).
-  --subset minimal   the first public release (2026-10-01): the 4 seed-42 stage1_best files of the
+  --subset minimal   the first release (uploaded 2026-09-25): the 4 seed-42 stage1_best files of the
                      CIFAR-100 gamma=0, gated kappa=0, cumulative and MGC arms (846 MB); same outputs.
-  --subset full      every checkpoint listed in the manifest (106 files, about 61 GB), for sharing the
+  --subset full      every checkpoint listed in the manifest (133 files, about 66 GB), for sharing the
                      "on_request" files; also copies the bundled CIFAR-100 prediction files
                      (preds_cifar100/) to predictions/preds_cifar100/, and SHA256SUMS lists the
                      checkpoints and every file under predictions/. This is the default.
@@ -23,8 +24,9 @@ Three subsets (release_manifest.json, _meta.subsets):
 FF_HOME is the directory that contains amir-porjects/ and ff-next/ (every `source` in the manifest is
 relative to it). Regular files are hard-linked into --dest (use --copy on another filesystem, or to
 keep the staged files independent of the sources); archive members ("archive.zip::member") are
-streamed out of the zip. The script is resumable: files already present with the right SHA-256 are
-skipped. CPU and disk only.
+streamed out of the zip, and members of a tarball inside a zip ("archive.zip::run.tar.gz::member")
+out of both. Each file is written as <name>.part and renamed only after its SHA-256 check passes. The
+script is resumable: files already present with the right SHA-256 are skipped. CPU and disk only.
 """
 import argparse
 import hashlib
@@ -32,6 +34,7 @@ import json
 import os
 import shutil
 import sys
+import tarfile
 import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -81,22 +84,44 @@ def main():
         if not (os.path.exists(dst) and os.path.getsize(dst) == e["size_bytes"] and sha256_file(dst) == e["sha256"]):
             if os.path.exists(dst):
                 os.remove(dst)
+            # write under a temporary name; the file takes its final name only after its SHA-256 check,
+            # so an interrupted or failed copy never leaves a partial file under a release path
+            part = dst + ".part"
+            if os.path.exists(part):
+                os.remove(part)
             if e["source_kind"] == "file":
                 src = os.path.join(home, e["source"])
                 if args.copy:
-                    shutil.copyfile(src, dst)
+                    shutil.copyfile(src, part)
                 else:
-                    os.link(src, dst)
-            else:
+                    os.link(src, part)
+            elif e["source_kind"] == "archive_member":
                 zpath, member = e["source"].split("::", 1)
-                with zipfile.ZipFile(os.path.join(home, zpath)) as zf, zf.open(member) as fi, open(dst, "wb") as fo:
+                with zipfile.ZipFile(os.path.join(home, zpath)) as zf, zf.open(member) as fi, open(part, "wb") as fo:
                     shutil.copyfileobj(fi, fo, CH)
-            got = sha256_file(dst)
+            elif e["source_kind"] == "tar_member":
+                # a member of a .tar.gz that is itself a member of a zip: stream both layers
+                zpath, tpath, member = e["source"].split("::", 2)
+                found = False
+                with zipfile.ZipFile(os.path.join(home, zpath)) as zf, zf.open(tpath) as zt, \
+                        tarfile.open(fileobj=zt, mode="r|gz") as tf, open(part, "wb") as fo:
+                    for ti in tf:
+                        if ti.name == member:
+                            shutil.copyfileobj(tf.extractfile(ti), fo, CH)
+                            found = True
+                            break
+                if not found:
+                    os.remove(part)
+                    sys.exit(f"{member} not found in {zpath}::{tpath} ({e['hf_path']})")
+            else:
+                sys.exit(f"unknown source_kind {e['source_kind']!r} ({e['hf_path']})")
+            got = sha256_file(part)
             if got != e["sha256"]:
                 bad.append((e["hf_path"], got))
-                os.remove(dst)  # never leave a file that failed its check in --dest
+                os.remove(part)  # never leave a file that failed its check in --dest
                 print(f"SHA-256 MISMATCH {e['hf_path']} (removed from --dest)", flush=True)
                 continue
+            os.replace(part, dst)
             print(f"staged {e['hf_path']}", flush=True)
         sums.append(f"{e['sha256']}  {e['hf_path']}")
     n_ckpt = len(sums)

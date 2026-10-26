@@ -45,7 +45,9 @@ the FF goodness function, so this is not a like-for-like strict-FF comparison.
 
 `tab:text_domain_full` in `appendix/H_text_domain.tex` lists per-row
 mean ± SD and the target each row exceeds. The machine-readable per-run
-metrics and `dataset_aggregates.json` are inside the text-run archive
-(metrics available on request; the archive's checkpoints are not released); the aggregate values are IMDb 87.25 ± 0.15,
+metrics and `dataset_aggregates.json` are inside the text-run archive (available on request). The
+networks and Stage-2 heads of all nine runs are public (group `text_domain` of the checkpoint release,
+[`RELEASE_CHECKPOINTS.md`](../RELEASE_CHECKPOINTS.md)), and the model card lists each run's test
+values and gives the loading code. The aggregate values are IMDb 87.25 ± 0.15,
 20 Newsgroups 62.66 ± 0.24 and AG News 93.36 ± 0.07 (Stage-2 test top-1, %,
 mean ± sample SD).

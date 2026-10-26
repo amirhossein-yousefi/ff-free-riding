@@ -26,6 +26,11 @@ copies was the seed plumbing). Pass `--seed` explicitly: the scripts'
 argparse default (42) overrides `FF_SEED`. `scripts/reproduce_table2_bp_controls.sh`
 runs all twelve.
 
+The nine BP networks of these rows (plain CNN + BP and both stripped-backbone BP rows, seeds
+42/123/456) are public in the checkpoint release (group `bp_calibration`,
+[`RELEASE_CHECKPOINTS.md`](../RELEASE_CHECKPOINTS.md)); each file is its run's validation-selected
+`checkpoints/best.pt`. The plain-CNN FF row is not part of the release.
+
 Two parameter-matched BP controls from the v1 supplement are not reported in the paper; they are
 single-seed:
 

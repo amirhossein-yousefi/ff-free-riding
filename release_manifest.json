@@ -4,14 +4,14 @@
   "generated": "2026-09-25",
   "hf_repo": "https://huggingface.co/Amirhossein75/ff-free-riding",
   "code_repo": "https://github.com/amirhossein-yousefi/ff-free-riding",
-  "release_policy": "Public release (since 2026-10-24): the 29 files with availability 'public_hf' (subset 'public') are on the Hugging Face repository: the Stage-1 networks (stage1_best.pt) of the CIFAR-100 trio and MGC arms (seeds 42/123/456), the CIFAR-10 squared-hinge (both arms), MGC-D128 and CP-FAIR runs (all seeds), the Tiny ImageNet gamma=0 runs (seeds 42/123/456) and the CIFAR-10 NoMem-L2 run (seed 42). The first release (2026-10-01, subset 'minimal') held the 4 seed-42 CIFAR-100 files. Every other file listed here ('on_request': the Stage-2 heads of all 53 runs and the Stage-1 networks of the remaining 24 CIFAR-10 runs) is available from the author on request (amir.usefi75@gmail.com); its SHA-256 below lets the recipient verify it. To get Stage-2 numbers from a public Stage-1 file, retrain the Stage-2 probe (RELEASE_CHECKPOINTS.md, 'Retraining the Stage-2 probe').",
+  "release_policy": "Public release: the 85 files with availability 'public_hf' (subset 'public') are on the Hugging Face repository. They are stage1_best.pt and stage2_best.pt of the CIFAR-100 trio and MGC arms (seeds 42/123/456), the CIFAR-10 squared-hinge (both arms), MGC-D128 and CP-FAIR runs (all seeds), the Tiny ImageNet gamma=0 runs (seeds 42/123/456) and the CIFAR-10 NoMem-L2 run (seed 42); the best.pt of the nine CIFAR-10 BP runs behind the BP rows of Table 2 (group bp_calibration); and stage1_best.pt and stage2_best.pt of the nine text-domain runs of App. K (group text_domain). Release history: the 4 seed-42 CIFAR-100 Stage-1 files (uploaded 2026-09-25, subset 'minimal'); 25 further Stage-1 files (2026-10-24); the Stage-2 files of these 29 runs and the bp_calibration and text_domain groups (2026-10-26). The other 48 files listed here ('on_request': stage1_best.pt and stage2_best.pt of the 24 CIFAR-10 gamma=0, gated-ablation and hardness-gated kappa=0 runs) are available from the author on request (amir.usefi75@gmail.com); their SHA-256 below lets the recipient verify them.",
   "availability_values": {
    "public_hf": "uploaded to the Hugging Face repository at hf_path (license CC BY 4.0)",
    "on_request": "not on the Hub; available from the author on request. hf_path is the path that release/stage_release.py --subset full gives the file when it is staged for sharing"
   },
   "subsets": {
    "minimal": {
-    "description": "the first public Hugging Face release (2026-10-01): seed-42 stage1_best of the CIFAR-100 gamma=0, gated kappa=0, cumulative gamma=0.7 and MGC arms (main-text Table 3); all four are also in the public subset",
+    "description": "the first public Hugging Face release (uploaded 2026-09-25): seed-42 stage1_best of the CIFAR-100 gamma=0, gated kappa=0, cumulative gamma=0.7 and MGC arms (main-text Table 3); all four are also in the public subset",
     "n_files": 4,
     "total_bytes": 845889156,
     "files": [
@@ -22,64 +22,121 @@
     ]
    },
    "full": {
-    "description": "every checkpoint file listed in this manifest: stage1_best and stage2_best of 53 runs in 12 groups (the 29 public files plus the 77 available on request)",
-    "n_files": 106,
-    "total_bytes": 60602002234
+    "description": "every checkpoint file listed in this manifest: 133 files of 71 runs in 14 groups (the 85 public files plus the 48 available on request)",
+    "n_files": 133,
+    "total_bytes": 65567276464
    },
    "public": {
-    "description": "the public Hugging Face release since 2026-10-24: every file with availability 'public_hf'",
-    "n_files": 29,
-    "total_bytes": 14291136349,
+    "description": "the public Hugging Face release: every file with availability 'public_hf' (since 2026-10-26)",
+    "n_files": 85,
+    "total_bytes": 40281074872,
     "files": [
+     "checkpoints/bp_calibration/bp_strong_seed123_best.pt",
+     "checkpoints/bp_calibration/bp_strong_seed42_best.pt",
+     "checkpoints/bp_calibration/bp_strong_seed456_best.pt",
+     "checkpoints/bp_calibration/bp_weak_seed123_best.pt",
+     "checkpoints/bp_calibration/bp_weak_seed42_best.pt",
+     "checkpoints/bp_calibration/bp_weak_seed456_best.pt",
+     "checkpoints/bp_calibration/plain_cnn_bp_seed123_best.pt",
+     "checkpoints/bp_calibration/plain_cnn_bp_seed42_best.pt",
+     "checkpoints/bp_calibration/plain_cnn_bp_seed456_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed123_L4_D256_P2_seed123_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed42_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed456_L4_D256_P2_seed456_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed123_L4_D256_P2_seed123_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed42_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed456_L4_D256_P2_seed456_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_P2_seed123_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_P2_seed456_stage2_best.pt",
      "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_P2_seed123_stage2_best.pt",
      "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_P2_seed456_stage2_best.pt",
      "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_P2_seed789_stage1_best.pt",
+     "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_P2_seed789_stage2_best.pt",
      "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed123_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed42_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed456_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed123_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed42_stage2_best.pt",
      "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed456_stage2_best.pt",
      "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed123_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed123_stage2_best.pt",
      "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed42_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed42_stage2_best.pt",
      "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed456_stage1_best.pt",
+     "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed456_stage2_best.pt",
      "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed123_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed123_stage2_best.pt",
      "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed42_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed42_stage2_best.pt",
      "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed456_stage1_best.pt",
+     "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed456_stage2_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+     "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+     "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+     "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
      "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage1_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage2_best.pt",
      "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage1_best.pt",
-     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage1_best.pt"
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage2_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage1_best.pt",
+     "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage2_best.pt"
     ]
    }
   },
-  "hashing": "SHA-256 over the full file bytes (Python hashlib, 8 MiB chunks). Archive members were streamed from the Google Drive export zips without extraction; zipfile verified each member's CRC-32. Extracted copies were cross-checked against their archive member's CRC-32.",
-  "source_paths": "relative to FF_HOME (the root that contains amir-porjects/ and ff-next/); 'archive.zip::member' means a member of that zip file",
-  "files_per_run": "stage1_best.pt (validation-selected Stage-1 network incl. EMA weights; S1/S1-TTA numbers) and stage2_best.pt (Stage-1 network + Stage-2 head; S2/S2-TTA numbers). *_last.pt resume files are not part of the release.",
-  "n_files": 106,
-  "total_bytes": 60602002234,
+  "hashing": "SHA-256 over the full file bytes (Python hashlib, 8 MiB chunks). Archive members were streamed from the Google Drive export zips without extraction; zipfile verified each member's CRC-32 (for tar_member sources: the CRC-32 of the enclosing .tar.gz). Extracted copies were cross-checked against their archive member's CRC-32.",
+  "source_paths": "relative to FF_HOME (the root that contains amir-porjects/ and ff-next/); 'archive.zip::member' means a member of that zip file; 'archive.zip::run.tar.gz::member' means a member of a .tar.gz that is itself a member of that zip file",
+  "files_per_run": "FF runs (every group except bp_calibration and text_domain): stage1_best.pt (validation-selected Stage-1 network incl. EMA weights; S1/S1-TTA numbers) and stage2_best.pt (the same Stage-1 network plus the Stage-2 head; S2/S2-TTA numbers; its epoch_stage1 is the run's last Stage-1 epoch, not the selected one). bp_calibration: the run's checkpoints/best.pt (the validation-selected BP network), published as <run>_best.pt. text_domain: stage1_best.pt (validation-selected FF network, raw and EMA weights) and stage2_best.pt (the Stage-2 head only; it runs on the stage1_best.pt EMA network), published as <run>_stage1_best.pt and <run>_stage2_best.pt. *_last.pt resume files are not part of the release.",
+  "n_files": 133,
+  "total_bytes": 65567276464,
   "resumed_runs_note": "None of these trainers saved RNG state in checkpoints, so a resumed run is not a bitwise continuation of an uninterrupted run; the camera-ready trainers save and restore it.",
   "lineage_notes": [
    "MGC-D128 seed 42 comes from the local DGX Spark (GB10) run (mgc_rebuttal/checkpoints); seeds 123/456 from Colab.",
    "Squared-hinge seed 42 (both arms) comes from the Colab run in mgc_rebuttal/checkpoints_from_drive. The mgc_rebuttal/checkpoints/ff_cifar10_hinge_*seed42* files are from aborted DGX runs (no final evaluation) and are NOT released.",
    "CIFAR-100 trio: stage1_best from the extracted copies in ff-next/checkpoints/trio (CRC-32 equal to the archive members), stage2_best streamed from ff_cifar100_multiseed-20260425T214118Z-3-00{1..7}.zip.",
    "Tiny ImageNet gamma=0: stage1_best and stage2_best are streamed from the ff_tiny_imagenet_multiseed Drive export zips (tiny_imagenet_fair/from_drive_2); the final run directory of each seed names both files in its final test evaluation.",
-   "CIFAR-10 NoMem-L2 seed 42: the original run in basic_fair_revised_valfix_do_this_first (one run directory, Stage-1 epochs 1-362, 300 Stage-2 epochs)."
+   "CIFAR-10 NoMem-L2 seed 42: the original run in basic_fair_revised_valfix_do_this_first (one run directory, Stage-1 epochs 1-362, 300 Stage-2 epochs).",
+   "bp_calibration: each file is the run's checkpoints/best.pt (seed 42 from making_v1_v4_fair_comparison/ablations, the submitted runs; seeds 123/456 from mgc_rebuttal/bp_anchors, the rebuttal runs); the run's final_metrics.json names it and its test top-1 is the value behind Table 2.",
+   "text_domain: stage1_best.pt and stage2_best.pt are streamed from the per-run tarballs (archives/<run>.tar.gz) inside the CP_FAIR_TEXT Drive export zips (text_domain/CP_FAIR_TEXT-20260415T151629Z-3-00{1,2,3}.zip); each tarball holds one run directory, with config.json, final_metrics.json and the Stage-1/Stage-2 histories."
   ],
   "not_released": [
    "CIFAR-10 gamma=0 L4/D256 seed 42 (the published run): checkpoint not recoverable. The other CIFAR-10 gamma=0 L4/D256 seed-42 checkpoints come from different runs, the component ablation (tab:component_ablation) and the seed-42 rerun in the seed-123/456 configuration (tab:gamma0_multiseed), which this manifest does not list.",
-   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): checkpoints of all three seeds kept, but not listed or released.",
-   "Text-domain and BP-control runs: checkpoints kept, but not part of this release."
+   "CIFAR-100 32-expert MoE gamma=0.7 baseline (tab:cifar100_multiseed): checkpoints of all three seeds kept, but not listed or released."
   ],
   "groups": {
    "c100_trio": {
@@ -216,10 +273,26 @@
      "sec:secondary_analysis (App. N Stage-2 summary over the seed-42 variants of tab:full_main_results)"
     ],
     "trainer": "trainers/cp_fair_cifar10.py with block_curr_lambda=0.5, block_curr_depth_slope=0, depth_order_lambda=0.1, depth_margin_neg=0.05, epochs_stage2=300 (the file's cfg stores all but the slope; produced by the do-this-first variant of its predecessor)"
+   },
+   "bp_calibration": {
+    "title": "CIFAR-10 BP calibration rows of Table 2: plain CNN + BP (weak augmentation), stripped FF backbone + BP with weak and with strong (FF per-view) augmentation; 362 epochs, AdamW, single-crop test top-1; seeds 42/123/456",
+    "paper": [
+     "tab:bp_ff_ablation (Table 2, BP rows: mean and SD over the three seeds)",
+     "sec:bp_ff_ablation"
+    ],
+    "trainer": "trainers/bp_original/plain_cnn_bp_cifar10.py (plain_cnn_bp), ff_backbone_stripped_bp_cifar10.py (bp_weak), ff_backbone_stripped_bp_strongaug_cifar10.py (bp_strong)"
+   },
+   "text_domain": {
+    "title": "Text domain (frozen bert-base-uncased sentence embeddings, 8 virtual tokens), FF L4/D256, 16-expert MoE (top-4), gamma=0, no SAM: IMDb, 20 Newsgroups and AG News, seeds 42/43/44",
+    "paper": [
+     "tab:text_domain_full (Table 44, App. K: 3-seed means)",
+     "sec:textdomain"
+    ],
+    "trainer": "trainers/text_original/cp_fair_text_benchmark.py (with trainers/cp_fair_core.py); the networks run on bert-base-uncased embeddings, which the files do not contain"
    }
   },
-  "updated": "2026-10-25",
-  "not_covered": "This manifest lists the checkpoints of 53 of the paper's runs. It does not list the checkpoints of the paper's other runs, for example the single-seed CIFAR-10 variants of tab:main_results and tab:full_main_results other than NoMem-L2 (such as BASELINE, MULTI-TECH, GREEDY-FREEZE, CP-FAIR-LC and DP-FAIR), the component ablation (tab:component_ablation), arms (a)-(c) of the MGC control (tab:f1_control), the CIFAR-10 gamma=0 seed-42 rerun (tab:gamma0_multiseed) and the three seeds of the CIFAR-100 32-expert gamma=0.7 baseline (tab:cifar100_multiseed)."
+  "updated": "2026-10-26",
+  "not_covered": "This manifest lists the checkpoints of 71 of the paper's runs. It does not list the checkpoints of the paper's other runs, for example the single-seed CIFAR-10 variants of tab:main_results and tab:full_main_results other than NoMem-L2 (such as BASELINE, MULTI-TECH, GREEDY-FREEZE, CP-FAIR-LC and DP-FAIR), the component ablation (tab:component_ablation), arms (a)-(c) of the MGC control (tab:f1_control), the CIFAR-10 gamma=0 seed-42 rerun (tab:gamma0_multiseed) and the three seeds of the CIFAR-100 32-expert gamma=0.7 baseline (tab:cifar100_multiseed), and the FF rows of tab:bp_ff_ablation (Table 2) on the plain CNN (3 seeds) and on the stripped backbone (seed 42)."
  },
  "checkpoints": [
   {
@@ -275,7 +348,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed42_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-42 gamma=0 inputs: S2 68.27, S2-TTA 68.94",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0284
+   }
   },
   {
    "group": "c100_trio",
@@ -330,8 +424,29 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed123_L4_D256_P2_seed123_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260421_015141)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260421_015141)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 gamma=0 inputs: S2 68.60, S2-TTA 69.16",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0231
+   }
   },
   {
    "group": "c100_trio",
@@ -386,8 +501,29 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gamma0_seed456_L4_D256_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260422_012047)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260422_012047)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 gamma=0 inputs: S2 68.76, S2-TTA 69.60",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.023
+   }
   },
   {
    "group": "c100_trio",
@@ -442,7 +578,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed42_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-42 gated kappa=0 inputs: S2 68.29, S2-TTA 68.64",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0166
+   }
   },
   {
    "group": "c100_trio",
@@ -496,7 +653,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed123_L4_D256_P2_seed123_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 gated kappa=0 inputs: S2 68.02, S2-TTA 68.79",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0297
+   }
   },
   {
    "group": "c100_trio",
@@ -551,8 +729,29 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_gated_k0_seed456_L4_D256_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260424_065206)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260424_065206)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 gated kappa=0 inputs: S2 69.00, S2-TTA 69.77",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0243
+   }
   },
   {
    "group": "c100_trio",
@@ -607,7 +806,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed42_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-42 cumulative gamma=0.7 inputs: S2 68.09, S2-TTA 68.57",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0317
+   }
   },
   {
    "group": "c100_trio",
@@ -662,8 +882,29 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed123_L4_D256_P2_seed123_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260418_190627)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260418_190627)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-123 cumulative gamma=0.7 inputs: S2 68.36, S2-TTA 68.88",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0426
+   }
   },
   {
    "group": "c100_trio",
@@ -718,8 +959,29 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/c100_trio/ff_cifar100_cifar100_cumulative_seed456_L4_D256_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260419_141800)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260419_141800)",
+   "reproduces": "Table 3 (tab:dissociation_merged) seed-456 cumulative gamma=0.7 inputs: S2 69.07, S2-TTA 69.42",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/c100_trio.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0243
+   }
   },
   {
    "group": "mgc_c100",
@@ -768,7 +1030,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T07:13:42",
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) and tab:mgc_full, seed-42 MGC: S2 68.71, S2-TTA 69.19",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0387
+   }
   },
   {
    "group": "mgc_c100",
@@ -817,7 +1100,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T04:25:46",
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed123_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "Table 3 (tab:dissociation_merged) and tab:mgc_full, seed-123 MGC: S2 67.70, S2-TTA 68.78",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0286
+   }
   },
   {
    "group": "mgc_c100",
@@ -867,8 +1171,29 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T21:32:08",
    "hf_path": "checkpoints/mgc_c100/ff_cifar100_mgc_c100_L4_D256_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed; layer_metrics/epoch_metrics of the final run directory start at Stage-1 epoch 192 (final evaluation complete)"
+   "availability": "public_hf",
+   "resumed_run": "resumed; layer_metrics/epoch_metrics of the final run directory start at Stage-1 epoch 192 (final evaluation complete)",
+   "reproduces": "Table 3 (tab:dissociation_merged) and tab:mgc_full, seed-456 MGC: S2 68.30, S2-TTA 69.29",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_c100.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar100.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0207
+   }
   },
   {
    "group": "mgc_d128",
@@ -916,7 +1241,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T11:57:41",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 42: S2 86.00, S2-TTA 87.05",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4606
+   }
   },
   {
    "group": "mgc_d128",
@@ -965,7 +1311,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-23T22:26:38",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed123_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 123: S2 86.48, S2-TTA 87.60",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4137
+   }
   },
   {
    "group": "mgc_d128",
@@ -1014,7 +1381,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T06:00:44",
    "hf_path": "checkpoints/mgc_d128/ff_cifar10_mgc_c1_L4_D128_P2_seed456_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:mgc_full, CIFAR-10 L4/D128 seed 456: S2 85.73, S2-TTA 87.17",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/mgc_d128.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.6503
+   }
   },
   {
    "group": "hinge",
@@ -1062,7 +1450,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-23T23:27:52",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-42 gamma=0.7 inputs: S2 85.65, S2-TTA 87.04",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.433
+   }
   },
   {
    "group": "hinge",
@@ -1111,7 +1520,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T20:51:02",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed123_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-123 gamma=0.7 inputs: S2 86.00, S2-TTA 87.20",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4585
+   }
   },
   {
    "group": "hinge",
@@ -1161,8 +1591,29 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T13:58:24",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g07_L4_D128_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed; the layer log is a suffix starting at Stage-1 epoch 171 (final evaluation complete)"
+   "availability": "public_hf",
+   "resumed_run": "resumed; the layer log is a suffix starting at Stage-1 epoch 171 (final evaluation complete)",
+   "reproduces": "tab:hinge seed-456 gamma=0.7 inputs: S2 86.18, S2-TTA 87.01",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.2124
+   }
   },
   {
    "group": "hinge",
@@ -1210,7 +1661,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-24T07:25:54",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed42_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-42 gamma=0 inputs: S2 85.56, S2-TTA 86.95",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.2616
+   }
   },
   {
    "group": "hinge",
@@ -1259,7 +1731,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T04:49:16",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed123_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-123 gamma=0 inputs: S2 86.33, S2-TTA 87.25",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.1687
+   }
   },
   {
    "group": "hinge",
@@ -1308,7 +1801,28 @@
    "source_kind": "file",
    "file_mtime": "2026-07-25T22:42:16",
    "hf_path": "checkpoints/hinge/ff_cifar10_hinge_g0_L4_D128_P2_seed456_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:hinge seed-456 gamma=0 inputs: S2 85.61, S2-TTA 86.59",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "metric_summaries/camera_ready/hinge.json",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_hardness_gated.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.3605
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -1357,8 +1871,29 @@
    "source_kind": "file",
    "file_mtime": "2026-02-23T11:50:10",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260218_144731)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260218_144731)",
+   "reproduces": "tab:multiseed seed 42: S2 90.42, S2-TTA 91.27",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.5108
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -1407,8 +1942,29 @@
    "source_kind": "file",
    "file_mtime": "2026-03-24T08:18:09",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed123_L4_D256_P2_seed123_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260318_001952)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260318_001952)",
+   "reproduces": "tab:multiseed seed 123: S2 90.39, S2-TTA 91.21",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4906
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -1457,8 +2013,29 @@
    "source_kind": "file",
    "file_mtime": "2026-03-29T15:41:38",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed456_L4_D256_P2_seed456_stage2_best.pt",
-   "availability": "on_request",
-   "resumed_run": "resumed across two run-directory segments (earlier segment _20260324_135535)"
+   "availability": "public_hf",
+   "resumed_run": "resumed across two run-directory segments (earlier segment _20260324_135535)",
+   "reproduces": "tab:multiseed seed 456: S2 90.59, S2-TTA 91.44",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.2557
+   }
   },
   {
    "group": "c10_cp_fair",
@@ -1506,7 +2083,28 @@
    "source_kind": "file",
    "file_mtime": "2026-04-03T19:47:55",
    "hf_path": "checkpoints/c10_cp_fair/ff_cifar10_cifar10_cp_fair_clean_progressive_seed789_L4_D256_P2_seed789_stage2_best.pt",
-   "availability": "on_request"
+   "availability": "public_hf",
+   "reproduces": "tab:multiseed seed 789: S2 90.19, S2-TTA 91.19",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:multiseed (per-seed rows)",
+    "best_s2_equals_run_end": true,
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 2.2061
+   }
   },
   {
    "group": "c10_gamma0",
@@ -2312,15 +2910,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed42_L4_D256_P4_seed42_stage2_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "resumed_run": "resumed across two run-directory segments (earlier segment _20260411_081714)",
    "reproduces": "tab:tiny_imagenet_multiseed seed 42: S2-TTA top-1 52.60 / top-5 77.10",
    "lineage_check": {
-    "date": "2026-10-24",
-    "run_end_names_file": true,
-    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:tiny_imagenet_multiseed (per-seed rows)",
     "best_s2_equals_run_end": true,
-    "cfg_equals_config_json": true
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0445
    }
   },
   {
@@ -2335,15 +2946,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed123_L4_D256_P4_seed123_stage2_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "resumed_run": "resumed across two run-directory segments (earlier segment _20260412_200131)",
    "reproduces": "tab:tiny_imagenet_multiseed seed 123: S2-TTA top-1 52.42 / top-5 76.92",
    "lineage_check": {
-    "date": "2026-10-24",
-    "run_end_names_file": true,
-    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:tiny_imagenet_multiseed (per-seed rows)",
     "best_s2_equals_run_end": true,
-    "cfg_equals_config_json": true
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0378
    }
   },
   {
@@ -2358,15 +2982,28 @@
    "source_kind": "archive_member",
    "archive_crc32_verified_on_read": true,
    "hf_path": "checkpoints/tin_gamma0/ff_tiny_imagenet_tiny_imagenet_cp_fair_seed456_L4_D256_P4_seed456_stage2_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "resumed_run": "resumed across two run-directory segments (earlier segment _20260414_060008)",
    "reproduces": "tab:tiny_imagenet_multiseed seed 456: S2-TTA top-1 51.95 / top-5 77.15",
    "lineage_check": {
-    "date": "2026-10-24",
-    "run_end_names_file": true,
-    "logged_s2_tta_equal_paper_per_seed_values": true,
+    "date": "2026-10-26",
+    "final_test_eval_names_file": true,
+    "logged_s2_values_equal_paper_values": true,
+    "paper_values_from": "tab:tiny_imagenet_multiseed (per-seed rows)",
     "best_s2_equals_run_end": true,
-    "cfg_equals_config_json": true
+    "cfg_equals_config_json": true,
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_tiny_imagenet.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.0839
    }
   },
   {
@@ -2414,14 +3051,1189 @@
    "source_kind": "file",
    "file_mtime": "2026-02-01T22:17:49",
    "hf_path": "checkpoints/c10_nomem_l2/ff_cifar10_cifar10_opt_do_this_first_ynorm_nomem_resid_L4_D256_P2_seed42_stage2_best.pt",
-   "availability": "on_request",
+   "availability": "public_hf",
    "reproduces": "App. N (sec:secondary_analysis) Stage-2 summary over the 12 seed-42 variants of tab:full_main_results: S2-TTA 91.19 vs S1-TTA 91.31 (-0.12 pp; 300 Stage-2 epochs)",
    "lineage_check": {
-    "date": "2026-10-24",
+    "date": "2026-10-26",
     "final_test_eval_names_file": true,
     "best_s2_equals_run_end": true,
     "cfg_equals_config_json": true,
-    "loads_with_weights_only_true": true
+    "backbone_equals_public_stage1_file": true,
+    "best_s1_equals_stage1_file": true,
+    "public_trainer": "trainers/cp_fair_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_net_ema_and_head_state_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 64,
+    "single_crop_stage2_predictions_equal_saved": 64,
+    "max_abs_score_diff": 0.4939
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "plain_cnn_bp_seed42",
+   "stage": "bp_best",
+   "lineage": "original training run (submitted version; making_v1_v4_fair_comparison/ablations)",
+   "size_bytes": 13820613,
+   "sha256": "ec91c970758bf841097880cd3ad0de489ab0ffff3a7cfdb32589fd8d704fb460",
+   "crc32": "32d6022e",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed42_20260306_104748/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-03-06T11:23:01",
+   "hf_path": "checkpoints/bp_calibration/plain_cnn_bp_seed42_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), Plain CNN + BP (weak augmentation), seed 42: test top-1 89.86 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/plain_cnn_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 89.85,
+    "logged_test_top1": 89.86,
+    "cpu_minus_logged_correct_images": -1
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "plain_cnn_bp_seed123",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 13820613,
+   "sha256": "864cedf3c32acd7e9063e82cd8b9065fc1dc89c8c448995577584ff1ac2eadd9",
+   "crc32": "6323684d",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed123_20260726_005331/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-26T01:24:42",
+   "hf_path": "checkpoints/bp_calibration/plain_cnn_bp_seed123_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), Plain CNN + BP (weak augmentation), seed 123: test top-1 89.98 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/plain_cnn_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 89.98,
+    "logged_test_top1": 89.98,
+    "cpu_minus_logged_correct_images": 0
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "plain_cnn_bp_seed456",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 13820613,
+   "sha256": "2fa46a0301ca6fb599864685013c530d079283b61a346adf9ca90606b4173d60",
+   "crc32": "439914d2",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/plain_cnn_ff_baseline/runs_plain_cnn_bp/bp_plaincnn_plain_cnn_bp_cifar10_v1_seed456_20260726_085009/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-26T09:30:14",
+   "hf_path": "checkpoints/bp_calibration/plain_cnn_bp_seed456_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), Plain CNN + BP (weak augmentation), seed 456: test top-1 90.39 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/plain_cnn_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 90.4,
+    "logged_test_top1": 90.39,
+    "cpu_minus_logged_correct_images": 1
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_weak_seed42",
+   "stage": "bp_best",
+   "lineage": "original training run (submitted version; making_v1_v4_fair_comparison/ablations; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "f9a48b227fc0f5d992d6e771ad58cadff29898eb2405d861e501990da996bdb7",
+   "crc32": "43d16b21",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260307_035223/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-03-07T06:37:19",
+   "hf_path": "checkpoints/bp_calibration/bp_weak_seed42_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, weak augmentation, seed 42: test top-1 86.90 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 86.91,
+    "logged_test_top1": 86.9,
+    "cpu_minus_logged_correct_images": 1,
+    "predictions_equal_saved": 9999,
+    "max_abs_logit_diff": 0.0199
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_weak_seed123",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "bf04311efc21bd8f1d328edcbf133a5e4e8aa087687db6a4d4bf8a6009e8b1a2",
+   "crc32": "58e71f81",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_221323/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-26T00:53:23",
+   "hf_path": "checkpoints/bp_calibration/bp_weak_seed123_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, weak augmentation, seed 123: test top-1 87.29 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 87.3,
+    "logged_test_top1": 87.29,
+    "cpu_minus_logged_correct_images": 1,
+    "predictions_equal_saved": 9998,
+    "max_abs_logit_diff": 0.0331
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_weak_seed456",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "7a0b317a5611b22e3ff0a338cd97f8b5280ac3de46954aaa4831908d125e8648",
+   "crc32": "988b717c",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp/runs_ff_backbone_bp/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_061013/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-26T08:49:07",
+   "hf_path": "checkpoints/bp_calibration/bp_weak_seed456_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, weak augmentation, seed 456: test top-1 88.11 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 88.11,
+    "logged_test_top1": 88.11,
+    "cpu_minus_logged_correct_images": 0,
+    "predictions_equal_saved": 10000,
+    "max_abs_logit_diff": 0.0228
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_strong_seed42",
+   "stage": "bp_best",
+   "lineage": "original training run (submitted version; making_v1_v4_fair_comparison/ablations; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "ba8127bed716cf0ee9efc1f75e98750215429397097c3409c36aebbb6ccf7529",
+   "crc32": "354db9ac",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/ablations/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed42_20260310_143157/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-03-10T19:53:40",
+   "hf_path": "checkpoints/bp_calibration/bp_strong_seed42_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, strong augmentation (the FF per-view recipe, one view), seed 42: test top-1 93.90 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_strongaug_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 93.89,
+    "logged_test_top1": 93.9,
+    "cpu_minus_logged_correct_images": -1,
+    "predictions_equal_saved": 9999,
+    "max_abs_logit_diff": 0.0095
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_strong_seed123",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "390abfdee6c4b79ca80b73d96192db4b1ab71e248f00ee194fe3b56ae3f8930e",
+   "crc32": "7569e66e",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed123_20260725_173842/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-25T20:23:19",
+   "hf_path": "checkpoints/bp_calibration/bp_strong_seed123_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, strong augmentation (the FF per-view recipe, one view), seed 123: test top-1 94.00 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_strongaug_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 93.98,
+    "logged_test_top1": 94.0,
+    "cpu_minus_logged_correct_images": -2,
+    "predictions_equal_saved": 9998,
+    "max_abs_logit_diff": 0.0085
+   }
+  },
+  {
+   "group": "bp_calibration",
+   "run": "bp_strong_seed456",
+   "stage": "bp_best",
+   "lineage": "original training run (rebuttal; making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors; NVIDIA GB10)",
+   "size_bytes": 66560075,
+   "sha256": "12c5a72a6828fccef7dfc7019c06fef1de2332c6ed88558600a62940b6c4ddf6",
+   "crc32": "1fb34ecf",
+   "source": "amir-porjects/cifar_10_fair/making_v1_v4_fair_comparison/mgc_rebuttal/bp_anchors/ff_backbone_stripped_bp_strongaug/runs_ff_backbone_bp_strongaug/bp_stripped_backbone_cifar10_L4_D256_P2_seed456_20260726_013559/checkpoints/best.pt",
+   "source_kind": "file",
+   "file_mtime": "2026-07-26T04:19:01",
+   "hf_path": "checkpoints/bp_calibration/bp_strong_seed456_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 2 (tab:bp_ff_ablation), FF backbone (stripped) + BP, strong augmentation (the FF per-view recipe, one view), seed 456: test top-1 93.65 (single crop; the table prints the 3-seed mean and SD)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "final_metrics_names_file": true,
+    "cfg_equals_config_json": true,
+    "version_tag_names_trainer": true,
+    "epoch_and_best_val_equal_final_metrics_and_history": true,
+    "paper_value_equals_final_metrics": true,
+    "paper_values_from": "metric_summaries/camera_ready/bp_calibration.json",
+    "public_trainer": "trainers/bp_original/ff_backbone_stripped_bp_strongaug_cifar10.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_model_strict": true,
+    "n_params_equal_final_metrics": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "test_images": 10000,
+    "cpu_test_top1": 93.65,
+    "logged_test_top1": 93.65,
+    "cpu_minus_logged_correct_images": 0,
+    "predictions_equal_saved": 10000,
+    "max_abs_logit_diff": 0.008
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed42",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462854447,
+   "sha256": "0f8537cfee811e658065f45aea5ec58cdf4a18c71675130482599abd215214af",
+   "crc32": "73ed76b2",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed42.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed42/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-13T22:51:04Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "7e17f45d190fb4e678a42398a879d31cd8500a6f09d75b08a696bba637444963",
+    "tarball_size": 472003953,
+    "tarball_crc32": "990ffc87"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 42: Stage-1 test top-1 86.89 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 26,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 86.9,
+    "logged_test_top1": 86.89,
+    "cpu_minus_logged_correct_texts": 1,
+    "val_texts": 2500,
+    "cpu_val_top1_at_selected_epoch_tau": 87.56,
+    "logged_selection_val_top1": 87.6
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed42",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "43aa9fc8c011305a359bfdc0a58039d20b629c51c82af7d221af4b2422ca2c18",
+   "crc32": "7763a315",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed42.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed42/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-13T23:02:17Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "7e17f45d190fb4e678a42398a879d31cd8500a6f09d75b08a696bba637444963",
+    "tarball_size": 472003953,
+    "tarball_crc32": "990ffc87"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 42: Stage-2 test top-1 87.24 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 3,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 87.25,
+    "logged_test_top1": 87.24,
+    "cpu_minus_logged_correct_texts": 1,
+    "val_texts": 2500,
+    "cpu_val_top1": 87.84,
+    "logged_selection_val_top1": 87.84
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed43",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462854447,
+   "sha256": "ee9690c9fdd072bdb4e9406b81a8074350ba6e38d9a7c46c08fbdb64d8e240cf",
+   "crc32": "5414eb62",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed43.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed43/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-13T23:29:31Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "45a628430cd0b29a0a98b532f408eb000ea9fbc10b45a6bf68f536e578a498a7",
+    "tarball_size": 471995973,
+    "tarball_crc32": "9b611014"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 43: Stage-1 test top-1 86.91 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 32,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 86.89,
+    "logged_test_top1": 86.91,
+    "cpu_minus_logged_correct_texts": -5,
+    "val_texts": 2500,
+    "cpu_val_top1_at_selected_epoch_tau": 87.48,
+    "logged_selection_val_top1": 87.48
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed43",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "10a018e9717a38cf0b51abde4bf7e2034c19edba9d97dd52e107023b352beb55",
+   "crc32": "1614a445",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed43.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed43/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-13T23:36:09Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "45a628430cd0b29a0a98b532f408eb000ea9fbc10b45a6bf68f536e578a498a7",
+    "tarball_size": 471995973,
+    "tarball_crc32": "9b611014"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 43: Stage-2 test top-1 87.10 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 2,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 87.1,
+    "logged_test_top1": 87.1,
+    "cpu_minus_logged_correct_texts": -1,
+    "val_texts": 2500,
+    "cpu_val_top1": 87.6,
+    "logged_selection_val_top1": 87.6
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed44",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462854447,
+   "sha256": "d8ea65e07f1a3e4573a358ec4767fcdbf07558c0672e0f55e2af129d44336ce7",
+   "crc32": "0038572b",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed44.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed44/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-13T23:59:45Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "ec05d6c7805d9625ac0832f128b7f65124cc34fc4a876f07ef2d5b0a2db4277e",
+    "tarball_size": 472012436,
+    "tarball_crc32": "5f460244"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 44: Stage-1 test top-1 87.11 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 28,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 87.11,
+    "logged_test_top1": 87.11,
+    "cpu_minus_logged_correct_texts": -1,
+    "val_texts": 2500,
+    "cpu_val_top1_at_selected_epoch_tau": 88.6,
+    "logged_selection_val_top1": 88.64
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_imdb_seed44",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "e1ef077edabbeffb887fcea9230e1996c9c962ffa991713adb636c4831017091",
+   "crc32": "22a8a833",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/imdb_bert_base_uncased_L4_D256_V8_seed44.tar.gz::imdb_bert_base_uncased_L4_D256_V8_seed44/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T00:09:35Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "ec05d6c7805d9625ac0832f128b7f65124cc34fc4a876f07ef2d5b0a2db4277e",
+    "tarball_size": 472012436,
+    "tarball_crc32": "5f460244"
+   },
+   "hf_path": "checkpoints/text_domain/imdb_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), IMDb seed 44: Stage-2 test top-1 87.41 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 4,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 25000,
+    "cpu_test_top1": 87.4,
+    "logged_test_top1": 87.41,
+    "cpu_minus_logged_correct_texts": -2,
+    "val_texts": 2500,
+    "cpu_val_top1": 89.04,
+    "logged_selection_val_top1": 89.04
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed42",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 463038767,
+   "sha256": "a780df67b079ad5fd05f09f287d5cd2f87fdab59024e49e5aa40905a540dd3d8",
+   "crc32": "1624dc10",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed42.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed42/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T00:30:04Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "86ad1fd70f76e3787737f3af1424d55e5db5a2f22b6368d64f504159a5fe927d",
+    "tarball_size": 472167114,
+    "tarball_crc32": "610cba9d"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 42: Stage-1 test top-1 61.64 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 34,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 61.64,
+    "logged_test_top1": 61.64,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 1132,
+    "cpu_val_top1_at_selected_epoch_tau": 67.67,
+    "logged_selection_val_top1": 67.67
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed42",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "829fb9a4eee367c271c6cbe1328657eda175089d839a7e5c71690ed3062def07",
+   "crc32": "f63ba767",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed42.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed42/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T00:32:52Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "86ad1fd70f76e3787737f3af1424d55e5db5a2f22b6368d64f504159a5fe927d",
+    "tarball_size": 472167114,
+    "tarball_crc32": "610cba9d"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 42: Stage-2 test top-1 62.44 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 6,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 62.47,
+    "logged_test_top1": 62.44,
+    "cpu_minus_logged_correct_texts": 2,
+    "val_texts": 1132,
+    "cpu_val_top1": 68.82,
+    "logged_selection_val_top1": 68.82
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed43",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 463038767,
+   "sha256": "c59827625a8e5c957a60ca61c65348353be8a1fbb95c75e4e50a98f292165386",
+   "crc32": "83bab08b",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed43.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed43/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T00:53:13Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "9a4c8344e088e74a5a1490521ce4e9ac15d65c77320c8fc65d504f2b955babdd",
+    "tarball_size": 472168994,
+    "tarball_crc32": "317a6e30"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 43: Stage-1 test top-1 61.71 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 35,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 61.71,
+    "logged_test_top1": 61.71,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 1132,
+    "cpu_val_top1_at_selected_epoch_tau": 63.52,
+    "logged_selection_val_top1": 63.52
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed43",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "598631d8b425434514e4d06b6e168a7704e211292ee1ebd4d452f69f9a6fe76f",
+   "crc32": "629c322f",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed43.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed43/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T00:56:13Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "9a4c8344e088e74a5a1490521ce4e9ac15d65c77320c8fc65d504f2b955babdd",
+    "tarball_size": 472168994,
+    "tarball_crc32": "317a6e30"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 43: Stage-2 test top-1 62.61 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 8,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 62.61,
+    "logged_test_top1": 62.61,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 1132,
+    "cpu_val_top1": 65.99,
+    "logged_selection_val_top1": 65.99
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed44",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 463038767,
+   "sha256": "067e55d3f48efd9e78e6797bb1d7c5bc259843691befd31f776d5dba78b44d18",
+   "crc32": "0bf3b73b",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed44.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed44/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T01:16:58Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "1a0f9deaceb5484f53d0b55557d6640a574f2c2a80168f8ee7e6f64a21d61564",
+    "tarball_size": 472161848,
+    "tarball_crc32": "8bd35ed1"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 44: Stage-1 test top-1 62.16 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 35,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 62.16,
+    "logged_test_top1": 62.16,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 1132,
+    "cpu_val_top1_at_selected_epoch_tau": 66.08,
+    "logged_selection_val_top1": 65.99
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_20newsgroups_seed44",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 46270286,
+   "sha256": "790dff470ff423caaeadf48ed643b1786849d8dd197e34b6dee6aabbb8b6cc1b",
+   "crc32": "2b142514",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/20newsgroups_bert_base_uncased_L4_D256_V8_seed44.tar.gz::20newsgroups_bert_base_uncased_L4_D256_V8_seed44/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T01:20:05Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "1a0f9deaceb5484f53d0b55557d6640a574f2c2a80168f8ee7e6f64a21d61564",
+    "tarball_size": 472161848,
+    "tarball_crc32": "8bd35ed1"
+   },
+   "hf_path": "checkpoints/text_domain/20newsgroups_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), 20 Newsgroups seed 44: Stage-2 test top-1 62.92 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 8,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7532,
+    "cpu_test_top1": 62.92,
+    "logged_test_top1": 62.92,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 1132,
+    "cpu_val_top1": 67.49,
+    "logged_selection_val_top1": 67.49
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed42",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462874927,
+   "sha256": "f628c300db6dfc82feed3ac4e1c9db4b5a472ac7ca2e738fc665f18470dd3e0c",
+   "crc32": "db96cd1d",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-003.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed42.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed42/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T02:26:23Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "730833c899a8bfcca18ef18ed2080332756b0d44208def097fa5444f4f057f02",
+    "tarball_size": 454319410,
+    "tarball_crc32": "9f053380"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed42_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 42: Stage-1 test top-1 93.45 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 19,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.45,
+    "logged_test_top1": 93.45,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 12000,
+    "cpu_val_top1_at_selected_epoch_tau": 93.36,
+    "logged_selection_val_top1": 93.36
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed42",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 26841934,
+   "sha256": "388485f897f5f125962ad1ca48fb76f1a8799f06778ce7d9569970d059640f23",
+   "crc32": "d5a5e172",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-003.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed42.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed42/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T02:49:48Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "730833c899a8bfcca18ef18ed2080332756b0d44208def097fa5444f4f057f02",
+    "tarball_size": 454319410,
+    "tarball_crc32": "9f053380"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed42_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 42: Stage-2 test top-1 93.45 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 8,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.45,
+    "logged_test_top1": 93.45,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 12000,
+    "cpu_val_top1": 93.26,
+    "logged_selection_val_top1": 93.26
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed43",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462874927,
+   "sha256": "a64698e4b7d049b62546b31c64f082b81d0ff92805d91cf0c7c168e6755ce845",
+   "crc32": "901df73a",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed43.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed43/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T03:39:11Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "f40b248517e60d9786f5fe61fac2677505798c270dbb6f0f86d24a6e405ecc1c",
+    "tarball_size": 454342031,
+    "tarball_crc32": "0c185a87"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed43_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 43: Stage-1 test top-1 93.24 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 15,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.24,
+    "logged_test_top1": 93.24,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 12000,
+    "cpu_val_top1_at_selected_epoch_tau": 93.13,
+    "logged_selection_val_top1": 93.14
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed43",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 26841934,
+   "sha256": "6262bf566c4061c97368ebf67b29a0bd77ff6382548db81c6ba7e06a425b20f1",
+   "crc32": "25ef0c1d",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-001.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed43.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed43/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T04:13:17Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "f40b248517e60d9786f5fe61fac2677505798c270dbb6f0f86d24a6e405ecc1c",
+    "tarball_size": 454342031,
+    "tarball_crc32": "0c185a87"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed43_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 43: Stage-2 test top-1 93.34 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 6,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.33,
+    "logged_test_top1": 93.34,
+    "cpu_minus_logged_correct_texts": -1,
+    "val_texts": 12000,
+    "cpu_val_top1": 93.15,
+    "logged_selection_val_top1": 93.17
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed44",
+   "stage": "stage1_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 462874927,
+   "sha256": "27e76519473485683067cdb2472d341c6420bb03172a1b3af2d7344be418c156",
+   "crc32": "a1252add",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed44.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed44/stage1_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T05:19:46Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "3e07fda53bf8287c91394edb82e691cf211dfbb1dbb2b2c2aeaca0b1516af85a",
+    "tarball_size": 454317475,
+    "tarball_crc32": "c42f4f85"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed44_stage1_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 44: Stage-1 test top-1 93.46 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 20,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "public_trainer_loads_ema_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.46,
+    "logged_test_top1": 93.46,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 12000,
+    "cpu_val_top1_at_selected_epoch_tau": 93.27,
+    "logged_selection_val_top1": 93.27
+   }
+  },
+  {
+   "group": "text_domain",
+   "run": "text_ag_news_seed44",
+   "stage": "stage2_best",
+   "lineage": "Colab GPU (CP_FAIR_TEXT Drive export 2026-04-15); member of the run tarball inside the export zip",
+   "size_bytes": 26841934,
+   "sha256": "27ce497b9285b5aa7f42887ba238a9eb69fe3a92fd347101c2998bec131d3eb5",
+   "crc32": "7f94bd35",
+   "source": "amir-porjects/text_domain/CP_FAIR_TEXT-20260415T151629Z-3-002.zip::CP_FAIR_TEXT/imdb_20ng_agnews_3seeds/archives/ag_news_bert_base_uncased_L4_D256_V8_seed44.tar.gz::ag_news_bert_base_uncased_L4_D256_V8_seed44/stage2_best.pt",
+   "source_kind": "tar_member",
+   "tar_mtime": "2026-04-14T05:37:17Z",
+   "archive_crc32_verified_on_read": true,
+   "archive_crosscheck": {
+    "tarball_sha256": "3e07fda53bf8287c91394edb82e691cf211dfbb1dbb2b2c2aeaca0b1516af85a",
+    "tarball_size": 454317475,
+    "tarball_crc32": "c42f4f85"
+   },
+   "hf_path": "checkpoints/text_domain/ag_news_bert_base_uncased_L4_D256_V8_seed44_stage2_best.pt",
+   "availability": "public_hf",
+   "reproduces": "Table 44 (tab:text_domain_full), AG News seed 44: Stage-2 test top-1 93.30 (the table prints 3-seed means and SDs)",
+   "lineage_check": {
+    "date": "2026-10-26",
+    "run_tarball_holds_one_run_dir": true,
+    "final_metrics_equal_archived_copies": true,
+    "cfg_equals_config_json": true,
+    "best_val_equals_final_metrics_and_history_max": true,
+    "selected_epoch": 3,
+    "table44_means_equal_paper": true,
+    "public_trainer": "trainers/text_original/cp_fair_text_benchmark.py",
+    "loads_with_weights_only_true": true,
+    "core_attentive_head_loads_head_strict": true
+   },
+   "loading_spot_check": {
+    "date": "2026-10-26",
+    "device": "cpu",
+    "embeddings": "bert-base-uncased mean pooling, re-encoded (float16 cache)",
+    "router_tau_final": 0.75,
+    "test_texts": 7600,
+    "cpu_test_top1": 93.3,
+    "logged_test_top1": 93.3,
+    "cpu_minus_logged_correct_texts": 0,
+    "val_texts": 12000,
+    "cpu_val_top1": 93.37,
+    "logged_selection_val_top1": 93.36
    }
   }
  ]
