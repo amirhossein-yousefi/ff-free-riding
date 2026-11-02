@@ -1,5 +1,10 @@
 # Changelog
 
+## Camera-ready update (2026-11-02)
+
+- The NeurIPS checklist of the camera-ready (items 4, 5 and 9 to 13) now describes the checkpoint
+  release of the 2026-10-26 addendum below. No code, data or checkpoint changed.
+
 ## Checkpoint-release addendum (2026-10-26)
 
 - **Stage-2 files:** the `stage2_best.pt` of the 29 runs with public Stage-1 files are now public on
@@ -18,9 +23,9 @@
 - `release/stage_release.py` also stages files that are members of a tarball inside a zip
   (`archive.zip::run.tar.gz::member`), as the text-domain files are, and writes each staged file
   under a temporary name until its SHA-256 check passes.
-- The paper's NeurIPS checklist describes the release before this addendum: 29 public Stage-1 files
-  and a manifest of 106 files of 53 runs, all image classifiers trained on CIFAR-10, CIFAR-100 and
-  Tiny ImageNet, with the text-domain and BP checkpoints not released.
+- At the time of this addendum, the paper's NeurIPS checklist described the earlier release: 29 public
+  Stage-1 files and a manifest of 106 files of 53 runs, all image classifiers trained on CIFAR-10,
+  CIFAR-100 and Tiny ImageNet, with the text-domain and BP checkpoints not released.
 
 ## Camera-ready corrections (2026-10-25)
 
