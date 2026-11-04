@@ -73,7 +73,7 @@ The same metadata is in [`CITATION.cff`](CITATION.cff) (GitHub's "Cite this repo
 | Frozen-backbone readouts (strict-FF block, CE block) | `analysis/readouts/` |
 | BP/FF calibration rows of Table 2 (n=3) | Original run scripts in `trainers/bp_original/` |
 | Gradient-attenuation snapshot (Fig. 1) and its EMA-weight recomputation | `analysis/snapshot_grad_attenuation.py`, `analysis/experiments/e3_fd/` |
-| Separation vs. accuracy at the selected checkpoints (E1: logged, and recomputed on the checkpoints) | `analysis/experiments/e1_sep/` (CPU; E1 tier 2 and E2 run together with `analysis/experiments/run_cpu_batch.sh`) |
+| Separation vs. accuracy at the selected checkpoints (E1: logged, and recomputed on the checkpoints, on training batches and on test images) | `analysis/experiments/e1_sep/` (CPU; E1 tier 2 and E2 run together with `analysis/experiments/run_cpu_batch.sh`); test images: `analysis/experiments/e1_sep_test/` (run on a GPU for the paper, opt-in) |
 | Validation-selected early exit (E2; the cumulative runs exit early too, so the saving is not specific to the repairs) | `analysis/experiments/e2_exit/` (CPU); table and figure from `analysis/camera_ready/make_tables.py` / `make_figures.py --fig early_exit` |
 | Paired-bootstrap dissociation statistics | `analysis/paired_dissociation_stats.py` on `preds_cifar100/` (S2-TTA; the other protocols need the full prediction sets, regenerated from the checkpoints, whose Stage-1 files and Stage-2 heads are public for the trio and MGC runs) |
 | Block-locality audit, including the depth-order path | `scripts/reproduce_locality_audit.sh` |
@@ -105,7 +105,8 @@ analysis/
                                selected early exit), E3 (F_d on EMA weights), E6 (L8 κ=0 seed-42 test
                                evaluation); run_cpu_batch.sh runs E1 tier 2 and E2 (CPU only);
                                f1_mgc_block0/ (F_d snapshot of the MGC control) and the registered
-                               predictions of the F1/F2 GPU runs
+                               predictions of the F1/F2 GPU runs; e1_sep_test/ (E1 on test
+                               images, measured on a GPU)
   *_README.md                  recipes for the BP, component-ablation and text-domain rows
 metric_summaries/              v1 summaries (aggregated_gated_l4d128.json corrected) + camera_ready/ results
                                (incl. compute_budget.json)
@@ -283,7 +284,7 @@ versions; the Table 2 calibration runs and the rerun of the BP-strong seed-42 ru
 L8/D128 gated-ablation arms and the text-domain runs have none, and `metric_summaries/camera_ready/compute_budget.json` gives each
 timed run's device and how it was established. Reduce
 `batch_size` or `n_experts` if you run out of memory. The tests, the locality audit and the
-analysis scripts run on CPU.
+analysis scripts run on CPU (`analysis/experiments/e1_sep_test/` was run on a GPU for the paper).
 
 ## Colab notebooks
 

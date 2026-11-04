@@ -210,9 +210,13 @@ E1_CONFIG = {
 
 # ----------------------------------------------------------------- setup
 def setup_env(threads=6):
-    """Must be called before importing torch-heavy trainer modules."""
-    assert os.environ.get("CUDA_VISIBLE_DEVICES", None) == "", \
-        "run with CUDA_VISIBLE_DEVICES='' (these recomputations run on CPU)"
+    """Must be called before importing torch-heavy trainer modules. CPU only, unless FFCR_ALLOW_GPU=1, which
+    e1_sep_test/measure_sep_split.py --device cuda needs (the "Test images" column of App. Tab. e1_aligned was
+    measured on a GPU in FP32, TF32 off)."""
+    allow_gpu = os.environ.get("FFCR_ALLOW_GPU") == "1"
+    if not allow_gpu:
+        assert os.environ.get("CUDA_VISIBLE_DEVICES", None) == "", \
+            "run with CUDA_VISIBLE_DEVICES='' (these recomputations run on CPU)"
     (WORK / "ckpt_dummy").mkdir(parents=True, exist_ok=True)
     (WORK / "runs_dummy").mkdir(parents=True, exist_ok=True)
     for name, target in DATA_LINKS.items():
@@ -231,7 +235,8 @@ def setup_env(threads=6):
     except RuntimeError:
         pass
     torch.set_float32_matmul_precision("highest")
-    assert not torch.cuda.is_available(), "CUDA must be hidden"
+    if not allow_gpu:
+        assert not torch.cuda.is_available(), "CUDA must be hidden"
     return torch
 
 

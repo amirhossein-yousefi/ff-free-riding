@@ -46,7 +46,7 @@ takes from it are carried in `metric_summaries/camera_ready/`.
 | `f2_analysis.py` | `f2_gamma0_s42.json`: the γ=0 seed-42 rerun (F2). Stitches its three Colab segments (resume events, epochs trained twice), reads the four test protocols and the deepest-block separation, compares with the published seed 42 and seeds 123/456, computes the matched and published n=3, and scores the registered predictions. |
 | `early_exit.py` | the early-exit summaries that `make_tables.py` and `make_figures.py` share, all derived from `e2_exit.json` and asserted equal to the selector's own family aggregates (the figure's values: `fig_early_exit_pareto_values.json`) |
 | `check_numbers.py` | traces every numeral added to the paper since the submitted version to a results JSON |
-| `compute_budget.py` | `compute_budget.json` (device and GPU-hours of the reported runs it times, including the F1 and F2 runs, from `env.json` (or, for runs without one, a note or their median epoch time), `epoch_metrics.jsonl` and `events.jsonl` timestamps, runner logs and the `history.jsonl` epoch times of the seed-42 stripped-backbone BP/FF runs; the reported runs it does not time, under `not_measured_reported_runs`; and the CPU time of the camera-ready recomputations, including the E1 tier-2 / E2 batch from its log and the F1 F_d snapshot; the checklist's compute statement) |
+| `compute_budget.py` | `compute_budget.json` (device and GPU-hours of the reported runs it times, including the F1 and F2 runs, from `env.json` (or, for runs without one, a note or their median epoch time), `epoch_metrics.jsonl` and `events.jsonl` timestamps, runner logs and the `history.jsonl` epoch times of the seed-42 stripped-backbone BP/FF runs; the reported runs it does not time, under `not_measured_reported_runs`; the CPU time of the camera-ready recomputations, including the E1 tier-2 / E2 batch from its log and the F1 F_d snapshot; and the GPU time of the E1 test-image measurement (`gpu_recomputations`); the checklist's compute statement) |
 
 ## `readouts/`
 
@@ -88,10 +88,14 @@ needs `FF_HOME`; `FF_WORK_DIR` and `FF_OUT_DIR` are optional. Per-run outputs go
 distributed. The κ=0 L4/D128 seed-123/456 points of E1 read their `stage1_best` checkpoints from
 `<FF_WORK_DIR>/ckpts/gated_k0_d128/` (extracted from the gated multiseed archive; `RELEASE_CHECKPOINTS.md`).
 CR-18 (E1 tier 2) and CR-19 (E2) in docstrings and JSON headers are camera-ready plan item numbers.
+The test-image column of the E1 table (`e1_sep_test/`) is the one GPU measurement here: it was measured
+with `FFCR_ALLOW_GPU=1` and `--device cuda` (FP32, TF32 off; without the variable `setup_env` keeps everything
+on the CPU, where the script also runs) and writes to `<FF_OUT_DIR>/experiments/e1_sep_test/out/`.
 
 | Folder | Experiment | Results |
 |---|---|---|
 | `e1_sep/` | E1: separation versus accuracy at each run's selected checkpoint (tier 1: logged values at the best-validation epoch; tier 2: recomputed on the EMA checkpoints through the trainer's own diagnostic path) | `e1_tier1_sep_acc.json` (19 points), `e1_sep_tier2.json` (18 points) |
+| `e1_sep_test/` | E1 on test images: `measure_sep_split.py --splits test train_clean` repeats tier 2's measurement on the official test set instead of augmented training batches (the same 18 checkpoints; the column "Test images" of the E1 table) and, as a control, on as many clean images of each run's training split; `aggregate_e1_test_results.py` applies tier 2's statistics | `e1_test_sep.json` (18 points, with the control) |
 | `e2_exit/` | E2: validation-selected early exit. `dump_val_test_block_data.py` dumps each run's per-depth cumulative class scores on its own validation split and on the test split (identity-gated against the logged test accuracy); `select_exit.py` chooses a truncation depth (rules T, T′) or a dynamic-exit threshold (rule D) on validation only and evaluates each choice once on test | `e2_exit.json` |
 | `e3_fd/` | E3: F_d and gradient attenuation on EMA weights with the correct normalization | `e3_fd_ema.json` |
 | `e6_l8/` | E6: test evaluation of the L8/D128 κ=0 seed-42 checkpoints | `e6_l8_k0_s42.json` |

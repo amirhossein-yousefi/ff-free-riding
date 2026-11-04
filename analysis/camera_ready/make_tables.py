@@ -661,18 +661,23 @@ def t_early_exit():
 
 # ============================================================================= E1: aligned-checkpoint separation (A11)
 def t_e1_aligned():
-    """Per-seed deepest-block sep at the validation-selected checkpoints, two measurements side by side:
+    """Per-seed deepest-block sep at the validation-selected checkpoints, three measurements side by side:
     tier 1 = logged training-time value at the checkpoint epoch (19 points, e1_tier1_sep_acc.json);
     tier 2 = recomputed on the stage1_best EMA checkpoint in eval mode (18 points, e1_sep_tier2.json; the
-    published C10 gamma=0 seed-42 checkpoint is lost). The two use different weights/mode/negatives, so the
-    caption tells the reader to compare within a column only. The correlations are quoted in the
-    fig:accuracy_vs_ratio caption (hand-typed there, verified against the same JSONs)."""
-    t1, t2 = J("e1_tier1_sep_acc"), J("e1_sep_tier2")
+    published C10 gamma=0 seed-42 checkpoint is lost); test images = the tier-2 recomputation on the official
+    test set instead of training batches (the same 18 checkpoints, e1_test_sep.json). Tier 1 uses different
+    weights/mode/negatives from the two recomputations, so the caption tells the reader to read its column on
+    its own. The correlations are quoted in the fig:accuracy_vs_ratio caption (hand-typed there, verified
+    against the same JSONs)."""
+    t1, t2, t3 = J("e1_tier1_sep_acc"), J("e1_sep_tier2"), J("e1_test_sep")
     assert t1["gates"]["all_passed"] and not t2["_header"]["missing_or_failed"]
+    assert not t3["_header"]["missing_or_failed"]
     t1p = {}
     for p in t1["points"]:
         t1p.setdefault(p["config"], []).append(p)
     t2p = {(p["config"], p["seed"]): p for p in t2["points"]}
+    t3p = {(p["config"], p["seed"]): p for p in t3["points"]}
+    assert sorted(t3p) == sorted(t2p), sorted(set(t3p) ^ set(t2p))
     # (label, tier-1 config, {seed: tier-2 config or None}, {seed: run_cfg assertions}, {seed: footnote mark})
     tri = {s: "c100_d256_%s" for s in (42, 123, 456)}
     spec = [
@@ -692,14 +697,14 @@ def t_e1_aligned():
     ]
     assert sorted(x[1] for x in spec if x) == sorted(t1p), sorted(t1p)
     assert sorted((c, s) for x in spec if x for s, c in x[2].items() if c) == sorted(t2p), sorted(t2p)
-    rows, n_hi, n_t2 = [], 0, 0
+    rows, n_hi, n_t2, n_hi3 = [], 0, 0, 0
     for x in spec:
         if x is None:
             rows.append("\\midrule")
             continue
         label, c1, c2s, want, mark = x
         if rows and rows[-1] != "\\midrule":
-            rows.append("\\addlinespace")
+            rows.append("\\addlinespace[3pt]")   # 3pt instead of the default 0.5em keeps the table on its page
         a = sorted(t1p[c1], key=lambda p: p["seed"])
         assert [p["seed"] for p in a] == sorted(c2s), (c1, [p["seed"] for p in a])
         for i, p in enumerate(a):
@@ -708,7 +713,7 @@ def t_e1_aligned():
                 assert p["run_cfg"][k] == v, (c1, s, k, p["run_cfg"][k])
             logged = f"{p['sep_deep_at_best_epoch']:.2f}"
             if c2s[s] is None:
-                rec = "---"
+                rec = tst = "---"
             else:
                 q = t2p[(c2s[s], s)]   # tier 2 is read at the same checkpoint epoch and quotes the same accuracies
                 assert q["epoch_stage1"] == p["stage1_best_epoch"]
@@ -718,10 +723,17 @@ def t_e1_aligned():
                 n_hi += q["sep_tier2"] > q["sep_tier1_logged_at_ckpt_epoch"]
                 n_t2 += 1
                 rec = f"{q['sep_tier2']:.2f}"
+                r3 = t3p[(c2s[s], s)]  # the same checkpoint (SHA-256), epoch and accuracies as tier 2
+                assert r3["ckpt_sha256"] == q["ckpt_sha256"] and r3["epoch_stage1"] == q["epoch_stage1"]
+                for prot in ("S2-TTA", "S1"):
+                    assert abs(100 * r3["acc"][prot] - p["acc_test_pct"][prot]) < 1e-6
+                n_hi3 += r3["sep_test"] > q["sep_tier2"]
+                tst = f"{r3['sep_test']:.2f}"
             seed = f"{s}$^{{\\mathrm{{{mark[s]}}}}}$" if s in mark else str(s)
-            rows.append(" & ".join([label if i == 0 else "", seed, logged, rec,
+            rows.append(" & ".join([label if i == 0 else "", seed, logged, rec, tst,
                                     f"{p['acc_test_pct']['S2-TTA']:.2f}", f"{p['acc_test_pct']['S1']:.2f}"]) + " \\\\")
     assert n_t2 == t2["_header"]["n_points"] == 18 and len(t1["points"]) == 19
+    assert t3["_header"]["n_points"] == n_t2
     # measurement details, all read from the tier-2 JSON
     P2 = t2["points"]
     assert len({p["n_batches"] for p in P2}) == 1 and len({p["data_seed"] for p in P2}) == 1
@@ -734,41 +746,53 @@ def t_e1_aligned():
     n_strict, n_fb = sum(d <= 1 for d in d_img), sum(d == 2 for d in d_img)
     cv = t2["code_validation_mgc_d128_seed42"]["raw_train"]
     assert cv["vs_gradshare"]["pass_"]
+    # test-image measurement details, all read from the test JSON
+    P3 = t3["points"]
+    ex3 = {ds: sorted({p["n_images"] for p in P3 if p["dataset"] == ds}) for ds in ("cifar10", "cifar100")}
+    assert all(len(v) == 1 for v in ex3.values()), ex3
+    assert all(p["n_images"] == p["n_batches"] * p["batch_size"] for p in P3)
+    se3_max = max(p["sep_test_se"] for p in P3)
+    se_all = max(se_max, se3_max)
+    assert se_all <= round(se_all, 2) + 1e-12, se_all      # the caption prints "<= {se_all:.2f}"
+    hi3 = f"all {n_t2}" if n_hi3 == n_t2 else f"{n_hi3} of {n_t2}"
     words = dict(enumerate(["zero", "one", "two", "three", "four", "five"]))
     body = rf"""\begin{{table}}[!htb]
   \caption{{\textbf{{Deepest-block separation at the validation-selected checkpoints}} (exploratory; per-seed
            analysis of Fig.~\ref{{fig:accuracy_vs_ratio}}).
-           \emph{{Logged}}: $\text{{sep}}^\text{{cur}}_\text{{nl}}$ of the deepest block as logged during training in the
-           epoch of the selected Stage-1 checkpoint (training mode, raw weights, epoch mean).
-           \emph{{Recomputed}}: the same quantity recomputed on that checkpoint's EMA weights in eval mode through the
-           trainer's own diagnostic code (hard negatives mined by the EMA teacher; {n_batches} consecutive training batches
-           drawn with a fixed seed, i.e.\ {ex['cifar10'][0]:,} images on CIFAR-10 and {ex['cifar100'][0]:,} on CIFAR-100; standard
-           error over batches ${{\leq}}{se_max:.2f}$). The two measurements differ in weights, mode, and negatives (the recomputed value
-           is higher at {n_hi} of {n_t2} points), so compare values within a column only. Accuracies are test top-1 of the
+           \emph{{Logged}}: $\text{{sep}}^\text{{cur}}_\text{{nl}}$ of the deepest block as logged in the epoch of the
+           selected Stage-1 checkpoint (training mode, raw weights, epoch mean).
+           \emph{{Recomputed}}: the same quantity on that checkpoint's EMA weights in eval mode, through the trainer's own
+           diagnostic code (hard negatives mined by the EMA teacher; {n_batches} consecutive augmented training batches drawn
+           with a fixed seed: {ex['cifar10'][0]:,} images on CIFAR-10, {ex['cifar100'][0]:,} on CIFAR-100). \emph{{Test images}}: the same on
+           clean official test images (eval transform; {ex3['cifar10'][0]:,} on CIFAR-10, {ex3['cifar100'][0]:,} on CIFAR-100), higher than
+           \emph{{Recomputed}} at {hi3} points (an effect of the clean images; Fig.~\ref{{fig:accuracy_vs_ratio}}).
+           Standard errors over batches are ${{\leq}}{se_all:.2f}$.
+           \emph{{Logged}} differs from both in weights, mode, and negatives (\emph{{Recomputed}} is higher
+           at {n_hi} of {n_t2} points), so read its column on its own. Accuracies are test top-1 of the
            same checkpoints (S2~TTA: trained head on the frozen EMA backbone, flip TTA; S1: EMA backbone, single crop).
            $^\mathrm{{a}}$Trained with $\lambda_\text{{curr}}{{=}}\lambda_\text{{depth}}{{=}}0$ (seeds 123/456: $0.25$/$0.2$); its
-           published checkpoint is no longer available, so the recomputation covers {n_t2} of the {len(t1['points'])} points.
-           $^\mathrm{{b}}$Trained without SAM (seeds 123/456 with SAM); a separate configuration in the recomputed analysis.
+           published checkpoint is no longer available, so the recomputations cover {n_t2} of the {len(t1['points'])} points.
+           $^\mathrm{{b}}$Trained without SAM (seeds 123/456 with SAM); a separate configuration in the recomputed analyses.
            Each recomputed checkpoint reproduces its logged S1 test accuracy within one test image ({n_strict} points)
-           or {words[max(d_img)]} images ({n_fb} points; TF32 training-time vs.\ FP32 recomputation numerics). As a code check, on the
+           or {words[max(d_img)]} ({n_fb} points; TF32 training vs.\ FP32 recomputation numerics). As a code check, on the
            CIFAR-10 L4/D128 MGC seed-42 checkpoint in training mode the code gives {cv['deepest_sep_curr_nl']:.2f}, against
            {cv['vs_gradshare']['gradshare_block3_margin_curr_nl']:.2f} from the independent gradient-share measurement
            (App.~\ref{{app:gradshare}}).}}
   \label{{tab:e1_aligned}}
   \centering
   \footnotesize
-  \begin{{tabular}}{{llcccc}}
+  \begin{{tabular}}{{llccccc}}
     \toprule
-    & & \multicolumn{{2}}{{c}}{{Deepest-block $\text{{sep}}^\text{{cur}}_\text{{nl}}$}} & \multicolumn{{2}}{{c}}{{Test top-1 (\%)}} \\
-    \cmidrule(lr){{3-4}} \cmidrule(lr){{5-6}}
-    Configuration & Seed & Logged & Recomputed & S2~TTA & S1 \\
+    & & \multicolumn{{3}}{{c}}{{Deepest-block $\text{{sep}}^\text{{cur}}_\text{{nl}}$}} & \multicolumn{{2}}{{c}}{{Test top-1 (\%)}} \\
+    \cmidrule(lr){{3-5}} \cmidrule(lr){{6-7}}
+    Configuration & Seed & Logged & Recomputed & Test images & S2~TTA & S1 \\
     \midrule
 """ + "\n".join("    " + r for r in rows) + r"""
     \bottomrule
   \end{tabular}
 \end{table}
 """
-    write("t_e1_aligned", ["e1_tier1_sep_acc", "e1_sep_tier2"], body)
+    write("t_e1_aligned", ["e1_tier1_sep_acc", "e1_sep_tier2", "e1_test_sep"], body)
 
 
 # ============================================================================= F1: MGC block-0 / auxiliary control

@@ -1,5 +1,25 @@
 # Changelog
 
+## Camera-ready update (2026-11-04)
+
+- **Separation on test images.** The aligned-checkpoint separation table of the paper (App. Tab.
+  `e1_aligned`) has a new column, "Test images": E1 tier 2's measurement of the deepest-block
+  separation repeated on clean official test images instead of augmented training batches, on the same
+  18 checkpoints, with a control on as many clean training images
+  (`metric_summaries/camera_ready/e1_test_sep.json`). `analysis/experiments/e1_sep_test/measure_sep_split.py`
+  measures it, `aggregate_e1_test_results.py` applies tier 2's statistics, `make_tables.py` prints the
+  column, and the last row of `repro_manifest.csv` has the commands. It ran on a GPU in FP32
+  (`FFCR_ALLOW_GPU=1`, `--device cuda`); `ffcr_common.setup_env` stays CPU-only without that variable, and
+  `compute_budget.json` gives its GPU time (`gpu_recomputations`: 1.1 GPU-hours for the test images
+  and the control). After the run, the measurement script
+  got one fix (the network moves to the GPU only after the identity gate, so a gate recomputed in a fresh
+  output directory runs on the CPU), a new default output directory (`<FF_OUT_DIR>/experiments/e1_sep_test/out`)
+  and log and docstring edits; on the checkpoint tested, the fixed script
+  reproduces the first batch of the reported run exactly.
+- The paper's appendix now lists the hard-negative settings that differ from the default k=8→16 on
+  CIFAR-10 (among them 4→8 in the 16-expert D128 runs) and states CIFAR-100's 40→80. No trainer,
+  checkpoint or other result changed.
+
 ## Camera-ready update (2026-11-02)
 
 - The NeurIPS checklist of the camera-ready (items 4, 5 and 9 to 13) now describes the checkpoint

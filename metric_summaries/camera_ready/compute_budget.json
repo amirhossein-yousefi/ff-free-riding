@@ -3,7 +3,7 @@
   "description": "Compute budget of the runs reported in the paper, from raw run logs (checklist item 8).",
   "method": "* Device: env.json::device0 of the run directory. Run directories without env.json get a device\n    from a note (GB10_BY_RUNNER, GB10_BY_RERUN) or, for the four seed-42 L8/D128 gated arms, from\n    the median Stage-1 epoch time (device_source says which); otherwise \"unknown\".\n  * Logged wall time: run_start -> run_end in events.jsonl of the result-bearing segment.\n  * Full-run estimate: median Stage-1 epoch interval x configured Stage-1 epochs + median Stage-2\n    epoch interval x configured Stage-2 epochs, with the medians taken over the consecutive\n    epoch_metrics.jsonl timestamps of every listed segment of the run. The estimate covers resumed\n    runs (whose earlier segments may be missing or partial) and excludes data download, setup and\n    final evaluation, so it is slightly below the logged wall time of an uninterrupted run.\n  * BP controls log per-epoch training time (history.jsonl::time_sec); their cost is its sum.\n  * Runner-log durations (BP anchors, frozen-backbone readouts) pair the START and DONE/exit lines.\n  * Every run directory is named explicitly (timestamps included); nothing is globbed.",
   "generated_by": "analysis/compute_budget.py",
-  "generated": "2026-10-25",
+  "generated": "2026-11-04",
   "submitted_checklist_values_superseded": {
    "D256 L4 run": "~4.5 h (submitted) vs ~30-32 A100-h (CIFAR-10 32-expert MoE, SAM, default HNM k=8->16; 24 h with random negatives) / ~15 A100-h (CIFAR-100 dense) measured",
    "Tiny ImageNet": "~8 h per seed (submitted; that is the last resumed segment) vs ~29 A100-h per seed measured",
@@ -2444,5 +2444,59 @@
   },
   "threads": 6,
   "note": "CPU jobs ran with CUDA hidden and at most 6 torch threads (8 for the F1 F_d snapshot, f1_fd_threads). E2 (experiments/e2_exit) is included: one score dump per checkpoint (val + test, all depths) plus the selector. E1 tier 2 (experiments/e1_sep) is included: one run per checkpoint (test gate + 20-batch sep measurement) for the 18 points, plus the two MGC-D128 seed-42 code-validation runs; the aggregation step (<1 min) is not counted. E1 tier 2 and E2 ran CPU-only as one sequential batch; e1_e2_cpu_batch gives its wall time from the batch log."
+ },
+ "gpu_recomputations": {
+  "e1_test_images": {
+   "source": "results/e1_test_sep.json (points[].seconds and points[].seconds_train_clean; totals as in _header.timing; device from _header.protocol)",
+   "device": "NVIDIA GB10 GPU, FP32 (TF32 off); the GPU was shared with another job during the run",
+   "run_s_test": {
+    "c10_gamma0_seed123": 71.0,
+    "c10_gamma0_seed456": 70.6,
+    "c10_cp_fair_seed42": 70.4,
+    "c10_cp_fair_seed123": 70.7,
+    "c10_cp_fair_seed456": 70.9,
+    "c10_cp_fair_seed789": 70.2,
+    "c10_gated_adaptive_t1_k0_seed42": 15.2,
+    "c10_gated_k0_seed123": 15.0,
+    "c10_gated_k0_seed456": 15.0,
+    "c100_gamma0_seed42": 279.8,
+    "c100_gamma0_seed123": 263.3,
+    "c100_gamma0_seed456": 262.3,
+    "c100_gated_k0_seed42": 119.8,
+    "c100_gated_k0_seed123": 119.4,
+    "c100_gated_k0_seed456": 120.1,
+    "c100_cumulative_seed42": 119.7,
+    "c100_cumulative_seed123": 119.6,
+    "c100_cumulative_seed456": 119.4
+   },
+   "run_s_train_clean_control": {
+    "c10_gamma0_seed123": 69.4,
+    "c10_gamma0_seed456": 69.1,
+    "c10_cp_fair_seed42": 69.1,
+    "c10_cp_fair_seed123": 69.0,
+    "c10_cp_fair_seed456": 69.0,
+    "c10_cp_fair_seed789": 69.0,
+    "c10_gated_adaptive_t1_k0_seed42": 15.0,
+    "c10_gated_k0_seed123": 14.8,
+    "c10_gated_k0_seed456": 14.8,
+    "c100_gamma0_seed42": 279.2,
+    "c100_gamma0_seed123": 264.1,
+    "c100_gamma0_seed456": 262.5,
+    "c100_gated_k0_seed42": 119.6,
+    "c100_gated_k0_seed123": 119.4,
+    "c100_gated_k0_seed456": 120.2,
+    "c100_cumulative_seed42": 119.6,
+    "c100_cumulative_seed123": 119.5,
+    "c100_cumulative_seed456": 119.5
+   },
+   "run_minutes_min_max": [
+    0.25,
+    4.66
+   ],
+   "total_h_test": 0.55,
+   "total_h_train_clean_control": 0.55,
+   "total_h_both": 1.1,
+   "note": "inference only: the 18 E1 points on official test images (App. Tab. e1_aligned, column Test images) and the clean-training-image control (Fig. accuracy_vs_ratio caption); not part of the training-run GPU-hour totals above."
+  }
  }
 }

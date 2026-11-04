@@ -20,7 +20,8 @@ Method
 Usage:  FF_HOME=... FF_OUT_DIR=... python analysis/camera_ready/compute_budget.py   (seconds, CPU only)
   The CPU-recomputation timings are read from the E3/equivalence result JSONs (FF_OUT_DIR/results,
   else this supplement's metric_summaries/camera_ready/) and from the E6 chunk outputs
-  (FF_OUT_DIR/experiments/e6_l8/out); whatever is missing is recorded as null.
+  (FF_OUT_DIR/experiments/e6_l8/out), and the GPU time of the E1 test-image measurement from e1_test_sep.json
+  (same lookup as the result JSONs); whatever is missing is recorded as null.
 """
 from __future__ import annotations
 
@@ -599,6 +600,28 @@ cpu = {
             "ran CPU-only as one sequential batch; e1_e2_cpu_batch gives its wall time from the batch log.",
 }
 
+# E1 test-image column (experiments/e1_sep_test): GPU inference, one measure_sep_split.py run per point; each run
+# records its wall seconds, collected in results/e1_test_sep.json
+_e1t = _opt_json("e1_test_sep.json")
+gpu_recomp = {"e1_test_images": None}
+if _e1t is not None:
+    _e1t_s = {p["name"]: p["seconds"] for p in _e1t["points"]}
+    _e1t_c = {p["name"]: p["seconds_train_clean"] for p in _e1t["points"]}
+    _e1t_all = list(_e1t_s.values()) + list(_e1t_c.values())
+    gpu_recomp["e1_test_images"] = {
+        "source": "results/e1_test_sep.json (points[].seconds and points[].seconds_train_clean; totals as in _header.timing; device from _header.protocol)",
+        "device": _e1t["_header"]["protocol"]["device"] + ("; the GPU was shared with another job during the run" if _e1t["_header"]["protocol"].get("gpu_shared_with_another_job") else ""),
+        "run_s_test": _e1t_s,
+        "run_s_train_clean_control": _e1t_c,
+        "run_minutes_min_max": [round(min(_e1t_all) / 60, 2), round(max(_e1t_all) / 60, 2)],
+        "total_h_test": round(sum(_e1t_s.values()) / 3600, 2),
+        "total_h_train_clean_control": round(sum(_e1t_c.values()) / 3600, 2),
+        "total_h_both": round(sum(_e1t_all) / 3600, 2),
+        "note": "inference only: the 18 E1 points on official test images (App. Tab. e1_aligned, column Test "
+                "images) and the clean-training-image control (Fig. accuracy_vs_ratio caption); not part of the "
+                "training-run GPU-hour totals above.",
+    }
+
 out = {
     "_meta": {
         "description": "Compute budget of the runs reported in the paper, from raw run logs (checklist item 8).",
@@ -639,6 +662,7 @@ out = {
     ],
     "totals_measured_h": {k: round(v, 1) for k, v in tot.items()},
     "cpu_recomputations": cpu,
+    "gpu_recomputations": gpu_recomp,
 }
 C.RESULTS.mkdir(parents=True, exist_ok=True)
 p = C.RESULTS / "compute_budget.json"
